@@ -4,6 +4,8 @@
 Minista is an unofficial Instagram client for Windows Devices Family.
 It has Almost everything that real Instagram has. Other features will be available soon.
 
+## Download
+You can download Minista app from Microsoft Store: [Minista App](https://www.microsoft.com/store/apps/9NG0313G7X4R)
 
 ## Rules
 - Don't update any libraries from this project!!!! Working #Minista on Windows Mobiles depends on these libraries.
@@ -12,9 +14,12 @@ It has Almost everything that real Instagram has. Other features will be availab
 
 ## Donation
 Paypal: [Donate](https://www.paypal.me/rmt4006)
+
 ZarinPal [For Iranian]: [Donate](https://zarinp.al/ramtin)
 
-## Open source libraries
+## Open source projects
+Minista is using these libraries/projects to keep features working.
+
 - [InstagramApiSharp](https://github.com/ramtinak/InstagramApiSharp/issues/243)
 - [NET Standard](https://docs.microsoft.com/en-us/dotnet/standard/net-standard)
 - [Microsoft Uwp Toolkit](https://docs.microsoft.com/en-us/windows/communitytoolkit/)
