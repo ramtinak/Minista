@@ -159,7 +159,7 @@ namespace Minista.Helpers
                     newWidth = 800;
                 }
             }
-            else if (isLandscape)
+            else if (sourceWidth > sourceHeight)
             {
                 if (sourceWidth >= 1080)
                 {

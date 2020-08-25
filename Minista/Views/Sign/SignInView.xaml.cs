@@ -434,7 +434,10 @@ namespace Minista.Views.Sign
                         TextAlignment = TextAlignment.Center,
                         Text = "Use Authentication App"
                     });
-                    index = 2;
+                    if (smsCode)
+                        index = 2;
+                    else
+                        index = 1;
                     SignInVM.TwoFactorVerifyOptions = InstagramApiSharp.Enums.InstaTwoFactorVerifyOptions.AuthenticationApp;
                 }
                 TwoFactorOptionsCmb.SelectedIndex = index;
