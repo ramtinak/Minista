@@ -65,8 +65,9 @@ namespace Minista
             {
                 await MainPage.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
                 {
+                    var canSave = SessionHelper.DontSaveSettings;
                     var user = await Helper.InstaApi.UserProcessor.GetUserInfoByIdAsync(Helper.InstaApi.GetLoggedUser().LoggedInUser.Pk);
-                    if (user.Succeeded)
+                    if (user.Succeeded && canSave)
                     {
                         Helper.CurrentUser = user.Value;
                         Helper.InstaApi.UpdateUser(user.Value.ToUserShort());

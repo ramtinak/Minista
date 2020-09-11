@@ -415,6 +415,7 @@ namespace Minista
                         RealtimeClient = new RealtimeClient(InstaApi);
                     }
                     catch { }
+                    SessionHelper.DontSaveSettings = false;
                 });
             }
             catch { }
@@ -706,10 +707,14 @@ namespace Minista
             var switchToAnotherAccount = false;
             if (InstaApiList.Count > 0)
             {
-                switchToAnotherAccount = true;
-                InstaApiList.Remove(InstaApi);
+                InstaApiList.RemoveInstaApi(InstaApi);
                 InstaApi = null;
-                InstaApi = InstaApiList[0];
+                if (InstaApiList.Count > 0)
+                {
+                    InstaApi = InstaApiList[0];
+                    switchToAnotherAccount = true;
+                }
+                SessionHelper.DontSaveSettings = true;
             }
 
             if (!switchToAnotherAccount)

@@ -189,6 +189,25 @@ static class Helper
             }
         }
     }
+    public static async void RemoveInstaApi(this List<IInstaApi> apis, IInstaApi api)
+    {
+        try
+        {
+            if (api != null && api.IsUserAuthenticated)
+            {
+                var files = await SessionHelper.LocalFolder.GetFilesAsync();
+                if (files?.Count > 0)
+                {
+                    var username = api.GetLoggedUser().LoggedInUser.UserName.ToLower();
+                    var selectedFile = files.FirstOrDefault(x => x.Path.ToLower().EndsWith(username + SessionFileType));
+                    if (selectedFile != null)
+                        await selectedFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                }
+                apis.Remove(api);
+            }
+        }
+        catch { }
+    }
     public static IInstaApi InstaApiTrash { get; set; }
 
     public static List<IInstaApi> InstaApiList { get; set; } = new List<IInstaApi>();
@@ -568,7 +587,6 @@ static class Helper
 #endif
 
                   .Build();
-        api.SetApiVersion(InstaApiVersionType.Version136);
         api.LoadApiVersionFromSessionFile = false;
         api.DontGenerateToken = dontGenerateToken;
         api.SetTimeout(TimeSpan.FromMinutes(2));

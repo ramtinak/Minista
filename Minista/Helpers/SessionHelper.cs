@@ -18,6 +18,7 @@ namespace Minista
         //const string OldStateFile = "Session.bin";
         //static string StateFile = "Session" + SessionFileType;
         public static readonly StorageFolder LocalFolder = ApplicationData.Current.LocalFolder;
+        public static bool DontSaveSettings = false;
         static async void CreateFolder()
         {
             try
