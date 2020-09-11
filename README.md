@@ -35,7 +35,7 @@ Minista is using these libraries/projects to keep features working.
 - [Iconic ZLib](https://github.com/HelloKitty/Iconic.Zlib.Netstandard)
 - [LumiaImagingSDK](https://github.com/microsoft/Lumia-imaging-sdk)
 - [VLC.MediaElement](https://github.com/kakone/VLC.MediaElement)
-
+- [Unigram](https://github.com/UnigramDev/Unigram/)
 
 ## Legal
 This application is in no way affiliated with, authorized, maintained, sponsored or endorsed by Instagram or any of its affiliates or subsidiaries. This is an independent and unofficial application.
