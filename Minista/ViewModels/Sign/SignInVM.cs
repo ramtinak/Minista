@@ -366,6 +366,7 @@ namespace Minista.ViewModels.Sign
                             LoginGridVisibility = Visibility.Collapsed;
                             TwoFactorGridVisibility = Visibility.Visible;
                             break;
+                        case InstaLoginResult.Success: break;
                         default:
                             if (loginResult.Info != null)
                                 if (!loginResult.Info.Message.ToLower().Contains("no errors detected"))
