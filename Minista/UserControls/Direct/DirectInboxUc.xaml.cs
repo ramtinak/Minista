@@ -86,6 +86,7 @@ namespace Minista.UserControls.Direct
         {
             try
             {
+                if (last == null) return;
                 var pk = Helper.InstaApi.GetLoggedUser().LoggedInUser.Pk;
                 var type = last.ItemType;
                 var userId = last.UserId;
