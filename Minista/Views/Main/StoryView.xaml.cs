@@ -827,7 +827,7 @@ namespace Minista.Views.Main
                 SeeMoreButton.Visibility = Items[StoryIndex].StoryItem.StoryCTA?.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
                 ReplyText.Text = string.Empty;
-                if (StoryFeed != null && StoryFeed?.User?.Pk == Helper.CurrentUser.Pk)
+                if (StoryFeed != null && StoryFeed?.User?.Pk == Helper.CurrentUser?.Pk)
                 {
                     var itemX = Items[StoryIndex].StoryItem; 
                     ReplyText.Visibility = ReplyButton.Visibility = ReactionGV.Visibility = Visibility.Collapsed;

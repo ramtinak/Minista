@@ -685,8 +685,11 @@ static class Helper
         {
             if (folder == null)
                 folder = await KnownFolders.PicturesLibrary.CreateFolderAsync(AppName, CreationCollisionOption.FailIfExists);
-
-            await folder.CreateFolderAsync("Stories", CreationCollisionOption.FailIfExists);
+        }
+        catch { }
+        try
+        {
+            await folder?.CreateFolderAsync("Stories", CreationCollisionOption.FailIfExists);
         }
         catch { }
     }

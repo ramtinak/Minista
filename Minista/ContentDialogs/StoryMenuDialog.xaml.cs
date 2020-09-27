@@ -107,15 +107,16 @@ namespace Minista.ContentDialogs
                                 if (item.MediaType == InstaMediaType.Image)
                                 {
                                     var url = item.Images.FirstOrDefault().Uri;
-                                    DownloadHelper.Download(url, item.Images.LastOrDefault().Uri, false, item.User.UserName, null, true, true);
+                                    DownloadHelper.Download(url, item.Images.LastOrDefault().Uri, false, ReelFeed.User.UserName, null, true, true);
                                 }
                                 else
                                 {
                                     var url = item.Videos.FirstOrDefault().Uri;
-                                    DownloadHelper.Download(url, item.Images.LastOrDefault().Uri, true, item.User.UserName, null, true, true);
+                                    DownloadHelper.Download(url, item.Images.LastOrDefault().Uri, true, ReelFeed.User.UserName, null, true, true);
                                 }
                             }
                             catch { }
+                            Hide();
                             break;
 
                         case StoryMenuCommand.Report:

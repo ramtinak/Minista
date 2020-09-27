@@ -498,7 +498,8 @@ namespace Minista.Views.Settings
                 NotificationsToggleButton.IsChecked = false;
             }
             catch { }
-            NavigationService.Navigate(typeof(NotificationsView));
+            "Notification settings will be available in next releases...".ShowMsg();
+            //NavigationService.Navigate(typeof(NotificationsView));
         }
     }
 }
