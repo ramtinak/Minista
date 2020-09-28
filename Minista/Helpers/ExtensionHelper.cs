@@ -614,6 +614,38 @@ namespace Minista
                 {
                     TreatAsUntrusted = false
                 };
+                if (SettingsHelper.Settings.HandleTelegramLinks)
+                {
+                    if (url.Contains("t.me/") || url.Contains("telegram.org/") || url.Contains("telegram.me/"))
+                    {
+                        var u = url;
+                        var start = "";
+                        if (url.Contains("t.me/"))
+                            start = "t.me/";
+                        else if (url.Contains("telegram.org/"))
+                            start = "telegram.org/";
+                        else if (url.Contains("telegram.me/"))
+                            start = "telegram.me/";
+                        if (!string.IsNullOrEmpty(start))
+                        {
+                            u = url.Substring(url.IndexOf(start) + start.Length);
+                            const string join = "joinchat/";
+                            string Replace(string str) => str.Replace("/", "").Replace(" ", "");
+
+                            if (u.ToLower().Contains(join))
+                            {
+                                u = u.Substring(u.IndexOf(join) + join.Length);
+                                url = $"tg://join?invite={Replace(u)}";
+                            }
+                            else if (u.ToLower().Contains("socks?"))
+                                url = $"tg://{Replace(u)}";
+                            else if (u.ToLower().Contains("proxy?"))
+                                url = $"tg://{Replace(u)}";
+                            else
+                                url = $"tg://resolve?domain={Replace(u)}";
+                        }
+                    }
+                }
                 await Windows.System.Launcher.LaunchUriAsync(url.ToUri(), options);
             }
             catch { }

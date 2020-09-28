@@ -16,6 +16,7 @@ namespace Minista.Classes
         public bool DownloadLocationChanged { get; set; } = false;
         public double LockControlX { get; set; } = 0;
         public double LockControlY { get; set; } = 120;
+        public bool HandleTelegramLinks { get; set; } = false;
     } 
     public enum HeaderPosition
     {

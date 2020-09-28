@@ -75,6 +75,8 @@
                                            FontFamily="{StaticResource VazirFont}" />
                                 <ToggleSwitch x:Name="toggleGhostMode"
                                               HorizontalAlignment="Right"
+                                              Style="{StaticResource ToggleSwitchStyle}"
+                                              Margin="0 0 45 0"
                                               Grid.Column="1"
                                               Toggled="ToggleGhostModeToggled" />
                             </Grid>
@@ -107,6 +109,8 @@
                                        FontFamily="{StaticResource VazirFont}" />
                             <ToggleSwitch x:Name="toggleElementSound"
                                           HorizontalAlignment="Right"
+                                          Style="{StaticResource ToggleSwitchStyle}"
+                                          Margin="0 0 45 0"
                                           Grid.Column="1"
                                           Toggled="ToggleElementSoundToggled" />
                         </Grid>
@@ -131,11 +135,49 @@
                                            FontFamily="{StaticResource VazirFont}" />
                                 <ToggleSwitch x:Name="toggleRemoveAds"
                                               HorizontalAlignment="Right"
+                                              Style="{StaticResource ToggleSwitchStyle}"
+                                              Margin="0 0 45 0"
                                               Grid.Column="1"
                                               Toggled="ToggleRemoveAdsToggled" />
                             </Grid>
                             <TextBlock TextWrapping="Wrap"
                                        Text="Removing ads is experimental and limited to the posts only."
+                                       Margin="8 2 4 2"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       FontSize="{StaticResource TinyFontSize}"
+                                       FontFamily="{StaticResource VazirFont}"
+                                       Foreground="#FFCBCBCB" />
+
+                        </StackPanel>
+                        <Rectangle Fill="#FF363636"
+                                   Height="1.5"
+                                   Margin="15 2.5"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" />
+
+                        <StackPanel>
+                            <Grid Margin="0 5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="Handle telegram links"
+                                           Margin="6 4"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                           FontSize="{StaticResource DefaultFontSize}"
+                                           FontFamily="{StaticResource VazirFont}" />
+                                <ToggleSwitch x:Name="toggleOpenTelegramLinks"
+                                              Style="{StaticResource ToggleSwitchStyle}"
+                                              Margin="0 0 45 0"
+                                              HorizontalAlignment="Right"
+                                              Grid.Column="1"
+                                              Toggled="ToggleOpenTelegramLinksToggled" />
+                            </Grid>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="Open telegram links via Telegram clients."
                                        Margin="8 2 4 2"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"
@@ -273,6 +315,8 @@
                                            FontFamily="{StaticResource VazirFont}" />
                                 <ToggleSwitch x:Name="togglePrivateAccount"
                                               HorizontalAlignment="Right"
+                                              Style="{StaticResource ToggleSwitchStyle}"
+                                              Margin="0 0 45 0"
                                               Grid.Column="2"
                                               Toggled="TogglePrivateAccountToggled" />
                             </Grid>

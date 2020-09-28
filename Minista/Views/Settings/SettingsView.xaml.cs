@@ -51,6 +51,7 @@ namespace Minista.Views.Settings
 
                 toggleElementSound.IsOn = SettingsHelper.Settings.ElementSound;
                 toggleRemoveAds.IsOn = SettingsHelper.Settings.RemoveAds;
+                toggleOpenTelegramLinks.IsOn = SettingsHelper.Settings.HandleTelegramLinks;
 
                 ShowSavedLocationFolder();
                 CalculateCacheSize();
@@ -164,6 +165,16 @@ namespace Minista.Views.Settings
 
         }
 
+        private void ToggleOpenTelegramLinksToggled(object sender, RoutedEventArgs e)
+        {
+            if (!CanDoThings) return;
+
+            try
+            {
+                SettingsHelper.Settings.HandleTelegramLinks = toggleOpenTelegramLinks.IsOn;
+            }
+            catch { }
+        }
         private void ToggleElementSoundToggled(object sender, RoutedEventArgs e)
         {
             if (!CanDoThings) return;
@@ -501,5 +512,6 @@ namespace Minista.Views.Settings
             "Notification settings will be available in next releases...".ShowMsg();
             //NavigationService.Navigate(typeof(NotificationsView));
         }
+
     }
 }
