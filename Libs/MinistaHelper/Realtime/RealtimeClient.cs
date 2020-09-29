@@ -288,9 +288,13 @@ namespace InstagramApiSharp.API.RealTime
             this.Log("Stopping realtime server");
             NetworkInformation.NetworkStatusChanged -= OnNetworkStatusChanged;
             _runningTokenSource?.Cancel();
-            _inboundReader?.Dispose();
-            _outboundWriter?.DetachStream();
-            _outboundWriter?.Dispose();
+            try
+            {
+                _inboundReader?.Dispose();
+                _outboundWriter?.DetachStream();
+                _outboundWriter?.Dispose();
+            }
+            catch { }
         }
 
         private async void Restart()
@@ -298,9 +302,13 @@ namespace InstagramApiSharp.API.RealTime
             this.Log("Restarting realtime server");
             NetworkInformation.NetworkStatusChanged -= OnNetworkStatusChanged;
             _runningTokenSource?.Cancel();
-            _inboundReader?.Dispose();
-            _outboundWriter?.DetachStream();
-            _outboundWriter?.Dispose();
+            try
+            {
+                _inboundReader?.Dispose();
+                _outboundWriter?.DetachStream();
+                _outboundWriter?.Dispose();
+            }
+            catch { }
             await Task.Delay(TimeSpan.FromSeconds(3));
             if (Running) return;
             try

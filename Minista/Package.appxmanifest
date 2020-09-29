@@ -26,6 +26,7 @@
           <uap3:AppUriHandler>
             <uap3:Host Name="instagram.com" />
             <uap3:Host Name="www.instagram.com" />
+            <uap3:Host Name="ig.me" />
           </uap3:AppUriHandler>
         </uap3:Extension>
         <uap:Extension Category="windows.fileTypeAssociation">

@@ -33,9 +33,9 @@
                                                 MediaTemplate="{StaticResource MediaTemplate}"
                                                 SuggestedUsersTemplate="{StaticResource SuggestedUsersTemplate}"
                                                 EndOfFeedDemarcatorTemplate="{StaticResource EndOfFeedDemarcatorTemplate}"
-                                                StoryTemplate="{StaticResource StoryTemplate}"
+                                                StoryTemplate="{StaticResource InnerStoryTemplate}"
                                                 UserCardsTemplate="{StaticResource UserCardsTemplate}"/>
-            <DataTemplate x:Key="StoryTemplate">
+            <DataTemplate x:Key="InnerStoryTemplate">
                 <Grid MinWidth="340"
                       MaxWidth="500">
                     <Grid.RowDefinitions>
