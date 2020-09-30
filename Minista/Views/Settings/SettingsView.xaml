@@ -290,17 +290,31 @@
                                        VerticalAlignment="Stretch" />
                         </StackPanel>
                         <StackPanel>
-                            <Grid Margin="0 5">
-                                <ToggleButton x:Name="LoginActivityToggleButton"
-                                              Content="Login Activity"
-                                              Style="{StaticResource HeaderToggleButtonWithoutIconStyle}"
-                                              Background="Transparent"
-                                              Tag=""
-                                              FontSize="{StaticResource DefaultFontSize}"
-                                              FontFamily="{StaticResource VazirFont}"
-                                              Margin="4 0"
-                                              Click="LoginActivityToggleButtonClick" />
-                            </Grid>
+                            <ToggleButton x:Name="PasswordToggleButton"
+                                          Content="Password"
+                                          Style="{StaticResource HeaderToggleButtonWithoutIconStyle}"
+                                          Background="Transparent"
+                                          Tag=""
+                                          FontSize="{StaticResource DefaultFontSize}"
+                                          FontFamily="{StaticResource VazirFont}"
+                                          Margin="4 0"
+                                          Click="PasswordToggleButtonClick" />
+                        </StackPanel>
+                        <Rectangle Fill="#FF363636"
+                                   Height="1.5"
+                                   Margin="15 2.5"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" />
+                        <StackPanel>
+                            <ToggleButton x:Name="LoginActivityToggleButton"
+                                          Content="Login Activity"
+                                          Style="{StaticResource HeaderToggleButtonWithoutIconStyle}"
+                                          Background="Transparent"
+                                          Tag=""
+                                          FontSize="{StaticResource DefaultFontSize}"
+                                          FontFamily="{StaticResource VazirFont}"
+                                          Margin="4 0"
+                                          Click="LoginActivityToggleButtonClick" />
                         </StackPanel>
                         <Rectangle Fill="#FF363636"
                                    Height="1.5"

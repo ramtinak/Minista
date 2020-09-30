@@ -658,8 +658,8 @@
                         <Grid Width="70"
                               Height="70">
                             <Ellipse x:Name="TinyEllipse"
-                                     Height="40"
-                                     Width="40"
+                                     Height="55"
+                                     Width="55"
                                      Stroke="{Binding Broadcast, Mode=TwoWay, Converter={StaticResource SeenColorConverter}}"
                                      StrokeThickness="1"
                                      RenderTransformOrigin="0.5,0.5">
@@ -695,7 +695,7 @@
                                 <Grid.Resources>
                                     <Storyboard x:Key="AnimationStory">
                                         <DoubleAnimation From="1"
-                                                         To="1.5"
+                                                         To="1.15"
                                                          Duration="0:0:0.750"
                                                          Storyboard.TargetName="TinyEllipse"
                                                          AutoReverse="True"
@@ -706,7 +706,7 @@
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation From="1"
-                                                         To="1.5"
+                                                         To="1.15"
                                                          Duration="0:0:0.750"
                                                          AutoReverse="True"
                                                          RepeatBehavior="Forever"
@@ -746,8 +746,8 @@
                         <Grid Width="70"
                               Height="70">
                             <Ellipse x:Name="TinyEllipse"
-                                     Height="40"
-                                     Width="40"
+                                     Height="55"
+                                     Width="55"
                                      Stroke="{Binding PostLives, Mode=TwoWay, Converter={StaticResource SeenColorConverter}}"
                                      StrokeThickness="1"
                                      RenderTransformOrigin="0.5,0.5">
@@ -785,7 +785,7 @@
                                 <Grid.Resources>
                                     <Storyboard x:Key="AnimationStory">
                                         <DoubleAnimation From="1"
-                                                         To="1.5"
+                                                         To="1.15"
                                                          Duration="0:0:0.750"
                                                          Storyboard.TargetName="TinyEllipse"
                                                          AutoReverse="True"
@@ -796,7 +796,7 @@
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation From="1"
-                                                         To="1.5"
+                                                         To="1.15"
                                                          Duration="0:0:0.750"
                                                          AutoReverse="True"
                                                          RepeatBehavior="Forever"

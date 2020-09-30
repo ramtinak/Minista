@@ -238,6 +238,9 @@
       <DependentUpon>LoginActivityView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\Security\LoginActivityViewModel.cs" />
+    <Compile Include="Views\Settings\Security\PasswordView.xaml.cs">
+      <DependentUpon>PasswordView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Stories\StoryItemUc.xaml.cs">
       <DependentUpon>StoryItemUc.xaml</DependentUpon>
     </Compile>
@@ -1126,6 +1129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Settings\Security\LoginActivityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\Security\PasswordView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

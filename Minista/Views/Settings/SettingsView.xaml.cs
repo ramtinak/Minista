@@ -321,15 +321,23 @@ namespace Minista.Views.Settings
                 LogoutToggleButton.IsChecked = false;
             }
             catch { }
+            async void Logout()
+            {
+                try
+                {
+                    await new ContentDialogs.LogoutDialog().ShowAsync();
+                }
+                catch { }
+            }
             try
             {
                 if (Helper.Passcode.IsEnabled)
                 {
                     var psd = new ContentDialogs.PasscodeDialog(true)
                     {
-                        CallMeAnAction = async () =>
+                        CallMeAnAction = () =>
                         {
-                            await new ContentDialogs.LogoutDialog().ShowAsync();
+                            Logout();
                         }
                     };
                     await psd.ShowAsync();
@@ -337,11 +345,7 @@ namespace Minista.Views.Settings
                 }
             }
             catch { }
-            try
-            {
-                await new ContentDialogs.LogoutDialog().ShowAsync();
-            }
-            catch { }
+            Logout();
         }
 
         private async void ToggleClearCacheClick(object sender, RoutedEventArgs e)
@@ -521,6 +525,40 @@ namespace Minista.Views.Settings
             }
             catch { }
             NavigationService.Navigate(typeof(Security.LoginActivityView));
+        }
+
+        private async void PasswordToggleButtonClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                PasswordToggleButton.IsChecked = false;
+            }
+            catch { }
+            void NavigateToPassword()
+            {
+                try
+                {
+                    NavigationService.Navigate(typeof(Security.PasswordView));
+                }
+                catch { }
+            }
+            try
+            {
+                if (Helper.Passcode.IsEnabled)
+                {
+                    var psd = new ContentDialogs.PasscodeDialog(true)
+                    {
+                        CallMeAnAction = () =>
+                        {
+                            NavigateToPassword();
+                        }
+                    };
+                    await psd.ShowAsync();
+                    return;
+                }
+            }
+            catch { }
+            NavigateToPassword();
         }
     }
 }
