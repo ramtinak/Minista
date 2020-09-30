@@ -168,6 +168,7 @@
     </Compile>
     <Compile Include="Converters\DirectItemSendingMessageConverter.cs" />
     <Compile Include="Converters\DirectItemWidthConverter.cs" />
+    <Compile Include="Converters\LoginSessionConverter.cs" />
     <Compile Include="Converters\StoryViewerConverter.cs" />
     <Compile Include="Converters\UserTagCarouselItemVisibilityConverter.cs" />
     <Compile Include="CustomMTC\TVCustomMTC.cs" />
@@ -233,6 +234,10 @@
       <DependentUpon>NotificationsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\NotificationsViewModel.cs" />
+    <Compile Include="Views\Settings\Security\LoginActivityView.xaml.cs">
+      <DependentUpon>LoginActivityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\Security\LoginActivityViewModel.cs" />
     <Compile Include="Views\Stories\StoryItemUc.xaml.cs">
       <DependentUpon>StoryItemUc.xaml</DependentUpon>
     </Compile>
@@ -1117,6 +1122,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Settings\NotificationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\Security\LoginActivityView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

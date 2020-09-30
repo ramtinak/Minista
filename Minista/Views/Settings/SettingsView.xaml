@@ -264,6 +264,58 @@
                     </StackPanel>
 
                 </uiControls:Expander>
+                <uiControls:Expander x:Name="Expander4"
+                                     Margin="0,0,0,10"
+                                     HorizontalContentAlignment="Stretch"
+                                     IsExpanded="True"
+                                     Background="#FF282828"
+                                     ExpandDirection="Down"
+                                     Header="Security">
+                    <StackPanel Margin="5 8 5 5">
+                        <StackPanel HorizontalAlignment="Left"
+                                    Margin="0 2">
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="Login Security"
+                                       Margin="4 0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       FontSize="{StaticResource HeaderFontSize}"
+                                       FontFamily="{StaticResource VazirFont}"
+                                       Foreground="#FFBFBFBF" />
+
+                            <Rectangle Fill="#FF363636"
+                                       Height="1.5"
+                                       Margin="10 2.5"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Grid Margin="0 5">
+                                <ToggleButton x:Name="LoginActivityToggleButton"
+                                              Content="Login Activity"
+                                              Style="{StaticResource HeaderToggleButtonWithoutIconStyle}"
+                                              Background="Transparent"
+                                              Tag=""
+                                              FontSize="{StaticResource DefaultFontSize}"
+                                              FontFamily="{StaticResource VazirFont}"
+                                              Margin="4 0"
+                                              Click="LoginActivityToggleButtonClick" />
+                            </Grid>
+                        </StackPanel>
+                        <Rectangle Fill="#FF363636"
+                                   Height="1.5"
+                                   Margin="15 2.5"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" />
+
+
+            
+
+
+                    </StackPanel>
+
+                </uiControls:Expander>
+
                 <uiControls:Expander x:Name="Expander2"
                                      Margin="0,0,0,10"
                                      HorizontalContentAlignment="Stretch"

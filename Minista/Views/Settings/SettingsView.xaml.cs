@@ -513,5 +513,14 @@ namespace Minista.Views.Settings
             //NavigationService.Navigate(typeof(NotificationsView));
         }
 
+        private void LoginActivityToggleButtonClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoginActivityToggleButton.IsChecked = false;
+            }
+            catch { }
+            NavigationService.Navigate(typeof(Security.LoginActivityView));
+        }
     }
 }
