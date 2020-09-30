@@ -105,10 +105,14 @@ namespace Minista.Views.Settings.Security
                 }
                 if (NewPasswordText.Password != NewPassword2Text.Password)
                     PasswordIsNotSame();
+                else if (NewPasswordText.Password.Length < 6 || NewPassword2Text.Password.Length < 6)
+                    PasswordMustBe();
                 else
                 {
+                    MainPage.Current?.ShowLoading();
                     var result = await Helper.InstaApi.AccountProcessor
                         .ChangePasswordAsync(CurrentPasswordText.Password, NewPasswordText.Password);
+                    MainPage.Current?.HideLoading();
                     if (result.Succeeded)
                     {
                         Helper.ShowNotify("Your password changed successfully.", 4000);
@@ -122,8 +126,12 @@ namespace Minista.Views.Settings.Security
                         Helper.ShowErr(result.Info.Message, result.Info.Exception);
                 }
             }
-            catch { }
+            catch
+            {
+                MainPage.Current?.HideLoading();
+            }
         }
+        void PasswordMustBe() => Helper.ShowNotify("Passwords must be at least 6 characters.", 3500); 
 
         void PasswordIsNotSame() => Helper.ShowNotify("New password and repeated new password is not the same.\r\nPlease check it and try again.", 3500);
     }
