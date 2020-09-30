@@ -16,7 +16,7 @@ namespace Minista.Models.Main
         public StoryModel Story { get => _story; set { _story = value; OnPropertyChanged("Story"); } }
 
         private InstaBroadcast _broadcast;
-        public InstaBroadcast Broadcast { get => _broadcast; set { _broadcast = value; OnPropertyChanged("InstaBroadcast"); } }
+        public InstaBroadcast Broadcast { get => _broadcast; set { _broadcast = value; OnPropertyChanged("Broadcast"); } }
     
         private InstaBroadcastAddToPostLive _postLives;
         public InstaBroadcastAddToPostLive PostLives { get => _postLives; set { _postLives = value; OnPropertyChanged("PostLives"); } }

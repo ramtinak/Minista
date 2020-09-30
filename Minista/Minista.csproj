@@ -181,6 +181,7 @@
     <Compile Include="ItemsGenerators\UserDetails\UserDetailsTaggedMediasGenerator.cs" />
     <Compile Include="ItemsGenerators\UserDetails\UserDetailsTVMediasGenerator.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Selectors\MainStoryTemplateSelector.cs" />
     <Compile Include="Themes\MinistaTheme.cs" />
     <Compile Include="UserControls\LoadingUc.xaml.cs">
       <DependentUpon>LoadingUc.xaml</DependentUpon>

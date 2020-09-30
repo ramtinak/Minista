@@ -34,6 +34,22 @@ namespace Minista.Converters
                 }
                 catch { }
             }
+            else if (value is InstaBroadcast data3)
+            {
+                try
+                {
+                    return new Uri(data3.BroadcastOwner.ProfilePicture);
+                }
+                catch { }
+            }
+            else if (value is InstaBroadcastAddToPostLive data4)
+            {
+                try
+                {
+                    return new Uri(data4.User.ProfilePicture);
+                }
+                catch { }
+            }
             return "";
         }
         public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -66,6 +82,22 @@ namespace Minista.Converters
                         return data2.Owner.Name;
                     else
                         return data2.User.UserName;
+                }
+                catch { }
+            }
+            else if (value is InstaBroadcast data3)
+            {
+                try
+                {
+                    return data3.BroadcastOwner.UserName;
+                }
+                catch { }
+            }
+            else if (value is InstaBroadcastAddToPostLive data4)
+            {
+                try
+                {
+                    return data4.User.UserName;
                 }
                 catch { }
             }
@@ -103,6 +135,7 @@ namespace Minista.Converters
                 }
                 catch { }
             }
+
             return Visibility.Collapsed;
         }
         public object ConvertBack(object value, Type targetType, object parameter, string language)

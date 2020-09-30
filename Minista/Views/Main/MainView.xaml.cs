@@ -388,28 +388,50 @@ namespace Minista.Views.Main
             {
                 if (sender is ListView listView && listView != null)
                 {
-                    if (e.ClickedItem is InstaReelFeed reelFeed && reelFeed != null)
+                    if (e.ClickedItem is StoryWithLiveSupportModel storyWithLiveSupportModel && storyWithLiveSupportModel != null)
                     {
-                        //LatestStoriesLV = listView;
-                        var index = LVStories.Items.IndexOf(reelFeed);
-                        var list = new List<InstaReelFeed>();
-                        foreach (var item in MainVM.Stories)
-                            list.Add(item.ToReelFeed());
+                        if (storyWithLiveSupportModel.Type == StoryType.Story)
+                        {
+                            var list = new List<InstaReelFeed>();
+                            for (int i = 0; i < MainVM.StoriesX.Count; i++)
+                            {
+                                var item = MainVM.StoriesX[i];
+                                if (item.Type == StoryType.Story)
+                                    list.Add(item.Story.ToReelFeed());
+                            }
+                            var first = list.FirstOrDefault(x => x.Id == storyWithLiveSupportModel.Story.Id);
+                            int index = 0;
+                            if (first != null)
+                                index = list.IndexOf(first);
+                            else
+                                index = LVStories.Items.IndexOf(storyWithLiveSupportModel);
+                            Helpers.NavigationService.Navigate(typeof(StoryView), new object[] { list, index });
+                        }
 
-                        Helpers.NavigationService.Navigate(typeof(StoryView), new object[] { list, index });
-                        //StoryMain.StoryFeed = reelFeed;
-                        //StoryMain.Visibility = Visibility.Visible;
-                        //StoryMain.StartTimer();
-                        //try
-                        //{
-                        //    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, /*async*/ () =>
-                        //    {
-                        //        //await Task.Delay(7000);
-                        //        //StoryMain.Visibility = Visibility.Collapsed;
-                        //    });
-                        //}
-                        //catch { }
                     }
+                    // old code
+                    //if (e.ClickedItem is InstaReelFeed reelFeed && reelFeed != null)
+                    //{
+                    //    //LatestStoriesLV = listView;
+                    //    var index = LVStories.Items.IndexOf(reelFeed);
+                    //    var list = new List<InstaReelFeed>();
+                    //    foreach (var item in MainVM.Stories)
+                    //        list.Add(item.ToReelFeed());
+
+                    //    Helpers.NavigationService.Navigate(typeof(StoryView), new object[] { list, index });
+                    //    //StoryMain.StoryFeed = reelFeed;
+                    //    //StoryMain.Visibility = Visibility.Visible;
+                    //    //StoryMain.StartTimer();
+                    //    //try
+                    //    //{
+                    //    //    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, /*async*/ () =>
+                    //    //    {
+                    //    //        //await Task.Delay(7000);
+                    //    //        //StoryMain.Visibility = Visibility.Collapsed;
+                    //    //    });
+                    //    //}
+                    //    //catch { }
+                    //}
                 }
             }
             catch { }
@@ -610,6 +632,18 @@ namespace Minista.Views.Main
             catch { }
         }
 
+        private void LIVEGRIDLoaded(object sender, RoutedEventArgs e)
+        {
+            try 
+            {
+                if (sender is Grid grid && grid != null)
+                {
+                    if (grid.Resources["AnimationStory"] is Storyboard story && story != null)
+                        story.Begin();
+                }
+            }
+            catch { }
+        }
 
 
 
@@ -624,5 +658,6 @@ namespace Minista.Views.Main
         public void ShowBottomLoading() => BottomLoading.Start();
         public void HideBottomLoading() => BottomLoading.Stop();
         #endregion LOADINGS
+
     }
 }

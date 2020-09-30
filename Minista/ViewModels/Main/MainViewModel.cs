@@ -165,24 +165,36 @@ namespace Minista.ViewModels.Main
                             for (int i = 0; i < stories.Value.PostLives.Count; i++)
                             {
                                 var item = stories.Value.PostLives[i];
-                                listX.Add(new StoryWithLiveSupportModel
+                                var xtem = new StoryWithLiveSupportModel
                                 {
                                     PostLives = item,
                                     Type = StoryType.PostLive
-                                });
+                                };
+
+                                try
+                                {
+                                    if (listX.Count - 1 > item.RankedPosition && item.RankedPosition != -1)
+                                        listX.Insert(item.RankedPosition, xtem);
+                                    else
+                                        listX.Add(xtem);
+                                }
+                                catch { listX.Add(xtem); }
                             }
                         }
-
+                        
                         StoriesX.AddRange(listX);
+                        if(StoriesX.Count > 0)
+                            StoreisVisibility = Visibility.Visible;
                     }
                     else
                     {
                         if (stories.Info.ResponseType == ResponseType.LoginRequired)
                             MainPage.Current.LoggedOut();
-                        if (Stories.Count == 0)
+                        //if (Stories.Count == 0)
+                        //    StoreisVisibility = Visibility.Collapsed;
+                        if (StoriesX.Count == 0)
                             StoreisVisibility = Visibility.Collapsed;
-
-                        if(stories.Info.ResponseType == ResponseType.ConsentRequired)
+                        if (stories.Info.ResponseType == ResponseType.ConsentRequired)
                         {
                             ShowNotify("Consent is required!\r\nLet Minista fix it for you ;-)\r\nTrying.... Give me 30 seconds maximum...", 3500);
                             await Task.Delay(TimeSpan.FromSeconds(8));
