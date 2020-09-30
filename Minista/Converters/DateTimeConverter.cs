@@ -114,4 +114,45 @@ namespace Minista.Converters
             throw new NotImplementedException();
         }
     }
+
+    public class DateTimeFullWithoutSomeDatesConverter : IValueConverter
+    {
+        public object Convert(object value)
+        {
+            return Convert(value, value.GetType(), null, string.Empty);
+        }
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var v = DateTime.UtcNow.Subtract(System.Convert.ToDateTime(value));
+            if (v.TotalHours < 1)
+            {
+                if (v.TotalSeconds >= 30)
+                {
+                    if (v.TotalSeconds > 59)
+                        return $"{System.Convert.ToInt32(v.TotalMinutes)} minutes ago";
+                    else
+                    {
+                        if (v.TotalSeconds > 10)
+                            return $"{System.Convert.ToInt32(v.Seconds)} seconds ago";
+                        else
+                            return "Just now";
+                    }
+                }
+                else
+                    return "Just now";
+            }
+            else if (v.TotalHours < 24)
+                return $"{System.Convert.ToInt32(v.TotalHours)} hours ago";
+            else if (v.TotalDays <= 7)
+                return $"{System.Convert.ToInt32(v.TotalDays)} days ago";
+            else 
+                return System.Convert.ToDateTime(value).ToString("MMMM dd", new CultureInfo("en-US"));
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

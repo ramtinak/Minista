@@ -22,7 +22,7 @@ namespace Minista.Converters
                 if (loginSession.IsCurrent)
                     return "Active now";
                 else
-                    return new DateTimeFullConverter().Convert(loginSession.Timestamp.FromUnixTimeSeconds());
+                    return new DateTimeFullWithoutSomeDatesConverter().Convert(loginSession.Timestamp.FromUnixTimeSeconds());
             }
 
             return "";
