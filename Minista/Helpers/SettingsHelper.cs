@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Minista.Helpers;
 using Windows.UI.Xaml;
-
+using MinistaHelper;
 namespace Minista
 {
     internal static class SettingsHelper

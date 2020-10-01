@@ -79,6 +79,7 @@
         <Extension Category="windows.backgroundTasks" EntryPoint="MinistaBH.BackGBH">
           <BackgroundTasks>
             <Task Type="systemEvent" />
+            <Task Type="pushNotification"/>
           </BackgroundTasks>
         </Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="MinistaBH.NotifyQuickReplyTask">

@@ -436,7 +436,6 @@
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\Uploaders\ApiHelper.cs" />
-    <Compile Include="Helpers\ApplicationSettingsHelper.cs" />
     <Compile Include="Helpers\AssetHelper.cs" />
     <Compile Include="Helpers\AsyncHelper.cs" />
     <Compile Include="Helpers\CompositionExtensions.cs" />

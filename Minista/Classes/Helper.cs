@@ -182,7 +182,7 @@ static class Helper
             {
                 try
                 {
-                    if (apis.Any(x => x.GetLoggedUser().UserName.ToLower() != api.GetLoggedUser().UserName.ToLower()))
+                    if (!apis.Any(x => x.GetLoggedUser().UserName.ToLower() != api.GetLoggedUser().UserName.ToLower()))
                         apis.Add(api);
                 }
                 catch { apis.Add(api); }

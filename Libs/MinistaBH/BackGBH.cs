@@ -3,6 +3,7 @@ using InstagramApiSharp.API.Builder;
 using InstagramApiSharp.Classes;
 using InstagramApiSharp.Logger;
 using Microsoft.Toolkit.Uwp.Notifications;
+using MinistaHelper;
 using MinistaHelper.Push;
 using NotifySharp;
 using System;
@@ -12,6 +13,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
+using Windows.Networking.Connectivity;
+using Windows.Networking.Sockets;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage;
@@ -30,9 +33,47 @@ namespace MinistaBH
 
             try
             {
+                var details = (SocketActivityTriggerDetails)taskInstance.TriggerDetails;
+                Debug.WriteLine($"{details.Reason}");
+                var internetProfile = NetworkInformation.GetInternetConnectionProfile();
+                if (internetProfile == null)
+                {
+                    Debug.WriteLine("No internet..");
+                    return;
+                }
+                string selectedUser = null;
+                try
+                {
+                    var obj = ApplicationSettingsHelper.LoadSettingsValue("InstaApiSelectedUsername");
+                    if (obj is string str)
+                        selectedUser = str;
+                }
+                catch { }
                 await CS.Load();
                 A.InstaApiList = CS.InstaApiList;
-                var api = CS.InstaApiList[0];
+                var api = string.IsNullOrEmpty(selectedUser)? 
+                    (CS.InstaApiList.FirstOrDefault(x=>x.GetLoggedUser().LoggedInUser.UserName.ToLower() == selectedUser.ToLower()) ?? CS.InstaApiList[0]) : CS.InstaApiList[0];
+
+                //switch (details.Reason)
+                //{
+                //    case SocketActivityTriggerReason.SocketClosed:
+                //        {
+                //            await Task.Delay(TimeSpan.FromSeconds(5));
+                //            if (!await Utils.TryAcquireSyncLock())
+                //            {
+                //                this.Log("Failed to open SyncLock file after extended wait. Main application might be running. Exit background task.");
+                //                return;
+                //            }
+                //            await instagram.PushClient.StartFresh();
+                //            break;
+                //        }
+                //    default:
+                //        {
+                //            var socket = details.SocketInformation.StreamSocket;
+                //            instagram.PushClient.StartWithExistingSocket(socket);
+                //            break;
+                //        }
+                //}
                 //foreach (var api in CS.InstaApiList)
                 {
                     try

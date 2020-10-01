@@ -44,14 +44,10 @@ namespace MinistaHelper.Push
         public StreamSocket Socket { get; private set; }
 
         private const string HOST_NAME = "mqtt-mini.facebook.com";
-        private const string BACKGROUND_SOCKET_ACTIVITY_NAME = "MinistaBH.BackSAC";
-        private const string BACKGROUND_INTERNET_AVAILABLE_NAME = "MinistaBH.BackGBH";
-        private const string SOCKET_ACTIVITY_ENTRY_POINT = "MinistaBH.BackSAC";
-        private const string INTERNET_AVAILABLE_ENTRY_POINT = "MinistaBH.BackGBH";
+        private const string BACKGROUND_ACTIVITY_ENTRY_POINT = "MinistaBH.BackGBH";
         private const string SOCKET_ID = "mqtt_fbns";
 
         private IBackgroundTaskRegistration _socketActivityTask;
-        private IBackgroundTaskRegistration _internetAvailableTask;
         private IBackgroundTaskRegistration _pushNotifyTask;
 
         public const int KEEP_ALIVE = 900;    // seconds
@@ -91,18 +87,16 @@ namespace MinistaHelper.Push
         {
             foreach (var task in BackgroundTaskRegistration.AllTasks)
             {
-                switch (task.Value.Name)
-                {
-                    case BACKGROUND_SOCKET_ACTIVITY_NAME:
-                        task.Value.Unregister(false);
-                        break;
-                    case BACKGROUND_INTERNET_AVAILABLE_NAME:
-                        task.Value.Unregister(false);
-                        break;
-                    case "MinistaBH.NotifyQuickReplyTask":
-                        task.Value.Unregister(false);
-                        break;
-                }
+                task.Value.Unregister(false);// unregister all tasks for now! what do I need them at all!
+                //switch (task.Value.Name)
+                //{
+                //    case BACKGROUND_ACTIVITY_ENTRY_POINT:
+                //        task.Value.Unregister(false);
+                //        break;
+                //    case "MinistaBH.NotifyQuickReplyTask":
+                //        task.Value.Unregister(false);
+                //        break;
+                //}
             }
         }
 
@@ -117,24 +111,16 @@ namespace MinistaHelper.Push
                 permissionResult == BackgroundAccessStatus.DeniedBySystemPolicy ||
                 permissionResult == BackgroundAccessStatus.Unspecified)
                 return false;
-            BackgroundTaskBuilder backgroundTaskBuilder = null;
+            BackgroundTaskBuilder backgroundTaskBuilder;
             if (CanRunInBG())
             {
                 backgroundTaskBuilder = new BackgroundTaskBuilder
                 {
-                    Name = BACKGROUND_SOCKET_ACTIVITY_NAME,
-                    TaskEntryPoint = SOCKET_ACTIVITY_ENTRY_POINT
+                    Name = BACKGROUND_ACTIVITY_ENTRY_POINT,
+                    TaskEntryPoint = BACKGROUND_ACTIVITY_ENTRY_POINT
                 };
                 backgroundTaskBuilder.SetTrigger(new SocketActivityTrigger());
                 _socketActivityTask = backgroundTaskBuilder.Register();
-
-                //backgroundTaskBuilder = new BackgroundTaskBuilder
-                //{
-                //    Name = INTERNET_AVAILABLE_ENTRY_POINT,
-                //    TaskEntryPoint = INTERNET_AVAILABLE_ENTRY_POINT
-                //};
-                //backgroundTaskBuilder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
-                //_internetAvailableTask = backgroundTaskBuilder.Register();
             }
             backgroundTaskBuilder = new BackgroundTaskBuilder
             {
@@ -155,10 +141,9 @@ namespace MinistaHelper.Push
         {
             if (!_instaApi.IsUserAuthenticated || _runningTokenSource.IsCancellationRequested) return;
             if (DontTransferSocket) return;
-            // Hand over MQTT socket to socket broker
             Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Transferring sockets");
             await SendPing().ConfigureAwait(false);
-            await Task.Delay(TimeSpan.FromSeconds(2));  // grace period
+            await Task.Delay(TimeSpan.FromSeconds(3.5));  // grace period
             Shutdown();
             await Socket.CancelIOAsync();
             Socket.TransferOwnership(
@@ -238,8 +223,9 @@ namespace MinistaHelper.Push
                 Shutdown();
             }
         }
-
-        public async Task StartFresh()
+        bool OnlyOnce = false;
+        public async Task StartFresh() => await StartFresh(false);
+        public async Task StartFresh(bool withBG)
         {
             try
             {
@@ -254,8 +240,9 @@ namespace MinistaHelper.Push
                 Socket = new StreamSocket();
                 Socket.Control.KeepAlive = true;
                 Socket.Control.NoDelay = true;
-                    if (await RequestBackgroundAccess())
+                if (await RequestBackgroundAccess() && !withBG)
                 {
+                    OnlyOnce = false;
                     if (CanRunInBG())
                     {
                         try
@@ -297,6 +284,11 @@ namespace MinistaHelper.Push
             catch (Exception ex)
             {
                 Shutdown();
+                if(!OnlyOnce)
+                {
+                    OnlyOnce = true;
+                    await StartFresh(true);
+                }
             }
             
         }
@@ -497,7 +489,13 @@ namespace MinistaHelper.Push
             var deviceInfo = _instaApi.GetCurrentDevice();
             var user = _instaApi.GetLoggedUser();
             var uri = InstagramApiSharp.Helpers.UriCreator.GetPushRegisterUri();
-            var users = ApiList.Select(s => s.GetLoggedUser().LoggedInUser.Pk);
+            var users = ApiList.Select(s => s.GetLoggedUser().LoggedInUser.Pk).ToList();
+            if (!ApiList.Any(x => x.GetCurrentDevice().DeviceGuid.ToString() != deviceInfo.DeviceGuid.ToString()))
+            {
+                users.Clear();
+                users.Add(user.LoggedInUser.Pk);
+            }
+
             var fields = new Dictionary<string, string>
             {
                 {"device_type", "android_mqtt"},
@@ -509,11 +507,11 @@ namespace MinistaHelper.Push
                 {"_uuid", deviceInfo.DeviceGuid.ToString() },
                 {"users", string.Join(",", users)/*user.LoggedInUser.Pk.ToString()*/ }
             };
-
+            Debug.WriteLine(JsonConvert.SerializeObject(fields, Formatting.Indented));
             var request = _instaApi.HttpHelper.GetDefaultRequest(System.Net.Http.HttpMethod.Post, uri, deviceInfo, fields);
-           var response =  await _instaApi.HttpRequestProcessor.SendAsync(request);
-           Debug.WriteLine(await response.Content.ReadAsStringAsync());
-            
+            var response = await _instaApi.HttpRequestProcessor.SendAsync(request);
+            Debug.WriteLine(await response.Content.ReadAsStringAsync());
+
             ConnectionData.FbnsToken = token;
         }
 

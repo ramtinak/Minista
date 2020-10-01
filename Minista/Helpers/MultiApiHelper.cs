@@ -35,6 +35,27 @@ namespace Minista.Helpers
                             catch { }
                         }
                     }
+                    var canbeMultiple = apiList.Any(x => x.GetCurrentDevice().DeviceGuid.ToString() != Helper.InstaApi.GetCurrentDevice().DeviceGuid.ToString());
+                    if(!canbeMultiple)
+                    {
+                        try
+                        {
+                            var api = Helper.InstaApi ?? apiList[0];
+                            var p = new MinistaHelper.Push.PushClient(apiList.ToList(), api);
+                            p.MessageReceived += PushClientMessageReceived;
+                            p.LogReceived += P_LogReceived;
+                            if (api.GetLoggedUser().LoggedInUser.Pk != currentPK)
+                                p.DontTransferSocket = true;
+                            p.OpenNow();
+                            api.PushClient = p;
+
+                            api.PushClient.Start();
+
+                        }
+                        catch { }
+                    }
+                    else
+
                     foreach (var api in apiList)
                     {
                         try
