@@ -37,7 +37,7 @@ namespace Minista.ContentDialogs
                 var user = Helper.CurrentUser;
                 NameText.Text = user.FullName;
                 UsernameText.Text = user.UserName;
-                BioText.Text = user.Biography;
+                BioText.Text = user.Biography; 
                 WebsiteText.Text = user.ExternalUrl;
                 UserImage.Fill = user.ProfilePicture.GetImageBrush();
                 GenderCombo.SelectedIndex = 0;
