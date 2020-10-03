@@ -23,7 +23,7 @@ using Windows.UI.Notifications;
 
 namespace MinistaBH
 {
-    public sealed class BackGBH : IBackgroundTask
+    public sealed class SocketActivityTask : IBackgroundTask
     {
         readonly CS CS = new CS();
         BackgroundTaskDeferral deferral;
@@ -51,40 +51,38 @@ namespace MinistaBH
                 catch { }
                 await CS.Load();
                 A.InstaApiList = CS.InstaApiList;
-                var api = string.IsNullOrEmpty(selectedUser)? 
+                var api = !string.IsNullOrEmpty(selectedUser)? 
                     (CS.InstaApiList.FirstOrDefault(x=>x.GetLoggedUser().LoggedInUser.UserName.ToLower() == selectedUser.ToLower()) ?? CS.InstaApiList[0]) : CS.InstaApiList[0];
 
-                //switch (details.Reason)
-                //{
-                //    case SocketActivityTriggerReason.SocketClosed:
-                //        {
-                //            await Task.Delay(TimeSpan.FromSeconds(5));
-                //            if (!await Utils.TryAcquireSyncLock())
-                //            {
-                //                this.Log("Failed to open SyncLock file after extended wait. Main application might be running. Exit background task.");
-                //                return;
-                //            }
-                //            await instagram.PushClient.StartFresh();
-                //            break;
-                //        }
-                //    default:
-                //        {
-                //            var socket = details.SocketInformation.StreamSocket;
-                //            instagram.PushClient.StartWithExistingSocket(socket);
-                //            break;
-                //        }
-                //}
+               
                 //foreach (var api in CS.InstaApiList)
                 {
                     try
                     {
-                        var push = new PushClient(CS.InstaApiList,api);
+                        var push = new PushClient(CS.InstaApiList, api)
+                        {
+                            IsRunningFromBackground = true
+                        };
                         push.MessageReceived += A.OnMessageReceived;
                         push.OpenNow();
-                        await push.StartFresh();
+                        push.Start();
 
-                        await Task.Delay(TimeSpan.FromSeconds(5)); 
-                        //push.ConnectionData.SaveToAppSettings();
+                        switch (details.Reason)
+                        {
+                            case SocketActivityTriggerReason.SocketClosed:
+                                {
+                                    await Task.Delay(TimeSpan.FromSeconds(5));
+                                    await push.StartFresh();
+                                    break;
+                                }
+                            default:
+                                {
+                                    var socket = details.SocketInformation.StreamSocket;
+                                    await push.StartWithExistingSocket(socket);
+                                    break;
+                                }
+                        }
+                        await Task.Delay(TimeSpan.FromSeconds(5));
                         await push.TransferPushSocket();
                     }
                     catch { }
@@ -93,7 +91,7 @@ namespace MinistaBH
             catch (Exception e)
             {
                 Debug.WriteLine(e);
-                Debug.WriteLine($"{typeof(BackGBH).FullName}: Can't finish push cycle. Abort.");
+                Debug.WriteLine($"{typeof(SocketActivityTask).FullName}: Can't finish push cycle. Abort.");
             }
             finally
             {

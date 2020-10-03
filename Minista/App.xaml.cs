@@ -1,12 +1,14 @@
 ﻿//using Microsoft.Services.Store.Engagement;
 using Microsoft.Services.Store.Engagement;
 using Minista.Helpers;
+using MinistaHelper.Push;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -321,7 +323,18 @@ namespace Minista
             {
                 if(Helper.InstaApi?.PushClient != null)
                 {
-                    await Helper.InstaApi.PushClient.TransferPushSocket();
+                    await Task.Delay(5500);
+                    await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                    {
+                        try
+                        {
+                            await Task.Delay(5500);
+                            await Helper.InstaApi.PushClient.TransferPushSocket();
+                        }
+                        catch { }
+
+                        });
+                   
                 }
                 //if (MultiApiHelper.Pushs.Count > 0)
                 //    for (int i = 0; i < MultiApiHelper.Pushs.Count; i++)
@@ -339,13 +352,16 @@ namespace Minista
                 deferral.Complete();
             }
         }
-        private void OnResuming(object sender, object e)
+        private async void OnResuming(object sender, object e)
         {
             try
             {
-                if (Helper.InstaApi?.PushClient != null)
+                if (Helper.InstaApi?.PushClient is PushClient push && push != null)
                 {
-                    Helper.InstaApi.PushClient.Start();
+                    if (string.IsNullOrEmpty(push.LatestErr))
+                        push.Start();
+                    else
+                        await push.StartFresh(true);
                 }
                 //if (MultiApiHelper.Pushs.Count > 0)
                 //    for (int i = 0; i < MultiApiHelper.Pushs.Count; i++)

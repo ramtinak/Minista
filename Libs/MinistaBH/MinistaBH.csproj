@@ -121,7 +121,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BackGBH.cs" />
+    <Compile Include="SocketActivityTask.cs" />
     <Compile Include="NotifyQuickReplyTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

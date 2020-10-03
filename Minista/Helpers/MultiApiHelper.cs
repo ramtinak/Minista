@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Media.Control;
 
 namespace Minista.Helpers
 {
@@ -36,12 +37,14 @@ namespace Minista.Helpers
                         }
                     }
                     var canbeMultiple = apiList.Any(x => x.GetCurrentDevice().DeviceGuid.ToString() != Helper.InstaApi.GetCurrentDevice().DeviceGuid.ToString());
-                    if(!canbeMultiple)
+                    if (!canbeMultiple)
                     {
                         try
                         {
                             var api = Helper.InstaApi ?? apiList[0];
                             var p = new MinistaHelper.Push.PushClient(apiList.ToList(), api);
+                            p.ValidateData();
+                            p.FbnsTokenChanged += P_FbnsTokenChanged;
                             p.MessageReceived += PushClientMessageReceived;
                             p.LogReceived += P_LogReceived;
                             if (api.GetLoggedUser().LoggedInUser.Pk != currentPK)
@@ -55,39 +58,49 @@ namespace Minista.Helpers
                         catch { }
                     }
                     else
-
-                    foreach (var api in apiList)
                     {
-                        try
+                        //foreach (var api in apiList)
+                        // open only for one account!
+                        var api = Helper.InstaApi ?? apiList[0];
                         {
-                            var p = new MinistaHelper.Push.PushClient(apiList.ToList(), api);
-                            p.MessageReceived += PushClientMessageReceived;
-                            p.LogReceived += P_LogReceived;
-                            if (api.GetLoggedUser().LoggedInUser.Pk != currentPK)
-                                p.DontTransferSocket = true;
-                            p.OpenNow();
-                            api.PushClient = p;
+                            try
+                            {
+                                var p = new MinistaHelper.Push.PushClient(apiList.ToList(), api);
+                                p.ValidateData();
+                                p.FbnsTokenChanged += P_FbnsTokenChanged;
+                                p.MessageReceived += PushClientMessageReceived;
+                                p.LogReceived += P_LogReceived;
+                                if (api.GetLoggedUser().LoggedInUser.Pk != currentPK)
+                                    p.DontTransferSocket = true;
+                                p.OpenNow();
+                                api.PushClient = p;
 
-                           api.PushClient.Start();
-                            //try
-                            //{
-                            //    await api.PushClient.Shutdown();
-                            //}
-                            //catch { }
-                            //try
-                            //{
-                            //    api.PushClient.MessageReceived -= PushClientMessageReceived;
-                            //}
-                            //catch { }
-                            //api.PushClient.MessageReceived += PushClientMessageReceived;
-                            //await api.PushClient.Start();
+                                api.PushClient.Start();
+                                //try
+                                //{
+                                //    await api.PushClient.Shutdown();
+                                //}
+                                //catch { }
+                                //try
+                                //{
+                                //    api.PushClient.MessageReceived -= PushClientMessageReceived;
+                                //}
+                                //catch { }
+                                //api.PushClient.MessageReceived += PushClientMessageReceived;
+                                //await api.PushClient.Start();
 
+                            }
+                            catch { }
                         }
-                        catch { }
                     }
                 }
             }
             catch { }
+        }
+
+        private static void P_FbnsTokenChanged(object sender, object e)
+        {
+            SessionHelper.SaveCurrentSession();
         }
 
         private static /*async*/ void P_LogReceived(object sender, object e)

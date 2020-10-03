@@ -76,7 +76,7 @@
             <uap:InfoTip>Minista Theme File</uap:InfoTip>
           </uap:FileTypeAssociation>
         </uap:Extension>
-        <Extension Category="windows.backgroundTasks" EntryPoint="MinistaBH.BackGBH">
+        <Extension Category="windows.backgroundTasks" EntryPoint="MinistaBH.SocketActivityTask">
           <BackgroundTasks>
             <Task Type="systemEvent" />
             <Task Type="pushNotification"/>

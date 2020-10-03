@@ -4,6 +4,8 @@
  * 
  * Modifications: Ramtin
  */
+// This class is a painful class, maybe I should deep into it in a later time...
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,20 +34,24 @@ using Windows.Networking.NetworkOperators;
 using Windows.UI.WebUI;
 using System.Linq;
 using Windows.System.Profile;
+using InstagramApiSharp.Helpers;
 
 namespace MinistaHelper.Push
 {
     public class PushClient : IPushClient
     {
+        public string LatestErr { get; private set; }
         public bool DontTransferSocket { get; set; } = false;
+        public event EventHandler<object> FbnsTokenChanged;
         public event EventHandler<PushReceivedEventArgs> MessageReceived;
         public event EventHandler<object> LogReceived; 
-        public FbnsConnectionData ConnectionData { get; } = new FbnsConnectionData();
+        public FbnsConnectionData ConnectionData { get; private set; } = new FbnsConnectionData();
         public StreamSocket Socket { get; private set; }
 
-        private const string HOST_NAME = "mqtt-mini.facebook.com";
-        private const string BACKGROUND_ACTIVITY_ENTRY_POINT = "MinistaBH.BackGBH";
-        private const string SOCKET_ID = "mqtt_fbns";
+        private const string HOST_NAME = "mqtt-mini.facebook.com"; 
+        private const string BACKGROUND_ACTIVITY_ENTRY_NAME_POINT = "MinistaBH.SocketActivityTask";
+        private const string BACKGROUND_ACTIVITY_ENTRY_POINT = "MinistaBH.SocketActivityTask";
+        private const string SOCKET_ID = "mqttfbns";
 
         private IBackgroundTaskRegistration _socketActivityTask;
         private IBackgroundTaskRegistration _pushNotifyTask;
@@ -58,20 +64,30 @@ namespace MinistaHelper.Push
         private DataWriter _outboundWriter;
         private readonly IInstaApi _instaApi;
         private readonly List<IInstaApi> ApiList;
+        public bool IsRunningFromBackground { get; set; } = false;
         public PushClient(List<IInstaApi> apis, IInstaApi api/*, bool tryLoadData = true*/)
         {
             _runningTokenSource = new CancellationTokenSource();
 
             ApiList = apis;
             _instaApi = api ?? throw new ArgumentException("Api can't be null", nameof(api));
-            //if (tryLoadData) ConnectionData.LoadFromAppSettings();
-            ConnectionData = api.ConnectionData ?? new FbnsConnectionData();
+ 
+        }
+        public void ValidateData()
+        {
+            ConnectionData = _instaApi.ConnectionData ?? new FbnsConnectionData();
             // If token is older than 24 hours then discard it
-            if ((DateTimeOffset.Now - ConnectionData.FbnsTokenLastUpdated).TotalHours > 24) ConnectionData.FbnsToken = "";
+            var unix = DateTime.UtcNow.ToUnixTime();
+            if (ConnectionData.FbnsTokenUpdatedAt > 0 && (unix.FromUnixTimeSeconds() - ConnectionData.FbnsTokenUpdatedAt.FromUnixTimeSeconds()).TotalHours > 24)
+            {
+                // token expired, so we need to a new token.
+                ConnectionData.FbnsToken = "";
+                ConnectionData.FbnsTokenUpdatedAt = 0;
+            }
 
             // Build user agent for first time setup
             if (string.IsNullOrEmpty(ConnectionData.UserAgent))
-                ConnectionData.UserAgent = FbnsUserAgent.BuildFbUserAgent(api);
+                ConnectionData.UserAgent = FbnsUserAgent.BuildFbUserAgent(_instaApi);
         }
         public void OpenNow()
         {
@@ -83,27 +99,32 @@ namespace MinistaHelper.Push
                 await StartFresh();
             };
         }
-        public void UnregisterTasks()
+        public void UnregisterTasks() { }
+        public async Task UnregisterTasksAsync()
         {
+            Debug.WriteLine("----------------------BackgroundTaskRegistration.AllTasks----------------------");
             foreach (var task in BackgroundTaskRegistration.AllTasks)
             {
-                task.Value.Unregister(false);// unregister all tasks for now! what do I need them at all!
-                //switch (task.Value.Name)
-                //{
-                //    case BACKGROUND_ACTIVITY_ENTRY_POINT:
-                //        task.Value.Unregister(false);
-                //        break;
-                //    case "MinistaBH.NotifyQuickReplyTask":
-                //        task.Value.Unregister(false);
-                //        break;
-                //}
+                Debug.WriteLine(task.Value.Name);
+                switch (task.Value.Name)
+                {
+                    case BACKGROUND_ACTIVITY_ENTRY_POINT:
+                        //_socketActivityTask = task.Value;
+                        task.Value.Unregister(true);
+                        break;
+                    case "MinistaBH.NotifyQuickReplyTask":
+                        task.Value.Unregister(true);
+                        break;
+                }
             }
+            await Task.Delay(15);
+            Debug.WriteLine("----------------------BackgroundTaskRegistration.AllTasks----------------------");
         }
+
 
         private async Task<bool> RequestBackgroundAccess()
         {
-            if (DontTransferSocket) return false;
-            UnregisterTasks();
+            if (DontTransferSocket || IsRunningFromBackground) return false;
 
             //return false;
             var permissionResult = await BackgroundExecutionManager.RequestAccessAsync();
@@ -111,16 +132,21 @@ namespace MinistaHelper.Push
                 permissionResult == BackgroundAccessStatus.DeniedBySystemPolicy ||
                 permissionResult == BackgroundAccessStatus.Unspecified)
                 return false;
+
+            await UnregisterTasksAsync();
             BackgroundTaskBuilder backgroundTaskBuilder;
             if (CanRunInBG())
             {
-                backgroundTaskBuilder = new BackgroundTaskBuilder
+                if (_socketActivityTask == null)
                 {
-                    Name = BACKGROUND_ACTIVITY_ENTRY_POINT,
-                    TaskEntryPoint = BACKGROUND_ACTIVITY_ENTRY_POINT
-                };
-                backgroundTaskBuilder.SetTrigger(new SocketActivityTrigger());
-                _socketActivityTask = backgroundTaskBuilder.Register();
+                    backgroundTaskBuilder = new BackgroundTaskBuilder
+                    {
+                        Name = BACKGROUND_ACTIVITY_ENTRY_NAME_POINT,
+                        TaskEntryPoint = BACKGROUND_ACTIVITY_ENTRY_POINT
+                    };
+                    backgroundTaskBuilder.SetTrigger(new SocketActivityTrigger());
+                    _socketActivityTask = backgroundTaskBuilder.Register();
+                }
             }
             backgroundTaskBuilder = new BackgroundTaskBuilder
             {
@@ -146,10 +172,12 @@ namespace MinistaHelper.Push
             await Task.Delay(TimeSpan.FromSeconds(3.5));  // grace period
             Shutdown();
             await Socket.CancelIOAsync();
-            Socket.TransferOwnership(
-                SOCKET_ID ,
-                null,
-                TimeSpan.FromSeconds(KEEP_ALIVE - 60));
+
+
+            //Socket.TransferOwnership(
+            //    SOCKET_ID ,
+            //    null,
+            //    TimeSpan.FromSeconds(KEEP_ALIVE - 60));
         }
         private bool CanRunInBG() 
         {
@@ -178,7 +206,10 @@ namespace MinistaHelper.Push
                         if (string.IsNullOrEmpty(ConnectionData.FbnsToken)) // if we don't have any push data, start fresh
                             await StartFresh().ConfigureAwait(false);
                         else
+                        {
+                            //socket.TransferOwnership(SOCKET_ID);
                             await StartWithExistingSocket(socket).ConfigureAwait(false);
+                        }
                     }
                     else
                     {
@@ -201,7 +232,7 @@ namespace MinistaHelper.Push
             try
             {
                 Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Starting with existing socket");
-                Shutdown();
+                //Shutdown();
                 Socket = socket;
                 _inboundReader = new DataReader(socket.InputStream);
                 _outboundWriter = new DataWriter(socket.OutputStream);
@@ -209,7 +240,7 @@ namespace MinistaHelper.Push
                 _inboundReader.InputStreamOptions = InputStreamOptions.Partial;
                 _outboundWriter.ByteOrder = ByteOrder.BigEndian;
                 _runningTokenSource = new CancellationTokenSource();
-                
+
                 StartPollingLoop();
                 await SendPing().ConfigureAwait(false);
                 StartKeepAliveLoop();
@@ -218,19 +249,20 @@ namespace MinistaHelper.Push
             {
                 // pass
             }
-            catch (Exception /*e*/)
+            catch (Exception e)
             {
                 Shutdown();
             }
         }
         bool OnlyOnce = false;
+        int RetryConnection = 0;
         public async Task StartFresh() => await StartFresh(false);
         public async Task StartFresh(bool withBG)
         {
             try
             {
                 Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Starting fresh");
-                Shutdown();
+                //Shutdown();
 
                 var connectPacket = new FbnsConnectPacket
                 {
@@ -240,33 +272,39 @@ namespace MinistaHelper.Push
                 Socket = new StreamSocket();
                 Socket.Control.KeepAlive = true;
                 Socket.Control.NoDelay = true;
-                if (await RequestBackgroundAccess() && !withBG)
-                {
-                    OnlyOnce = false;
-                    if (CanRunInBG())
-                    {
-                        try
-                        {
-                            Socket.EnableTransferOwnership(_socketActivityTask.TaskId, SocketActivityConnectedStandbyAction.Wake);
-                        }
-                        catch (Exception connectedStandby)
-                        {
-                            Log(connectedStandby);
-                            Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Connected standby not available");
-                            try
-                            {
-                                Socket.EnableTransferOwnership(_socketActivityTask.TaskId, SocketActivityConnectedStandbyAction.DoNotWake);
-                            }
-                            catch (Exception e)
-                            {
-                                Log(e);
-                                Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Failed to transfer socket completely!");
-                                Shutdown();
-                                return;
-                            }
-                        }
-                    }
-                }
+                //if (await RequestBackgroundAccess() && !withBG)
+                //{
+                //    OnlyOnce = false;
+                //    if (CanRunInBG())
+                //    {
+                //        try
+                //        {
+                //            Socket.EnableTransferOwnership(_socketActivityTask.TaskId, SocketActivityConnectedStandbyAction.Wake);
+                //        }
+                //        catch (Exception connectedStandby)
+                //        {
+                //            Log(connectedStandby);
+                //            Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Connected standby not available");
+                //            try
+                //            {
+                //                Socket.EnableTransferOwnership(_socketActivityTask.TaskId, SocketActivityConnectedStandbyAction.DoNotWake);
+                //            }
+                //            catch (Exception e)
+                //            {
+                //                Log(e);
+                //                Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Failed to transfer socket completely!");
+                //                if (RetryConnection > 3)
+                //                {
+                //                    Shutdown();
+                //                    await StartFresh(true);
+                //                    RetryConnection++;
+                //                    return;
+                //                }
+                //                return;
+                //            }
+                //        }
+                //    }
+                //}
                
                 //await Socket.ConnectAsync(new HostName("69.171.250.34"), "443", SocketProtectionLevel.Tls12);
                 await Socket.ConnectAsync(new HostName(HOST_NAME), "443", SocketProtectionLevel.Tls12);
@@ -347,7 +385,7 @@ namespace MinistaHelper.Push
                 await FbnsPacketEncoder.EncodePacket(packet, _outboundWriter);
                 Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Pinging Push server");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Failed to ping Push server. Shutting down.");
                 Shutdown();
@@ -481,14 +519,17 @@ namespace MinistaHelper.Push
         internal async Task RegisterClient(string token)
         {
             if (string.IsNullOrEmpty(token)) throw new ArgumentNullException(nameof(token));
-            if (ConnectionData.FbnsToken == token)
-            {
-                ConnectionData.FbnsToken = token;
-                return;
-            }
+            //var tokenChanged = false;
+            //var a = DateTime.UtcNow.ToUnixTime().FromUnixTimeSeconds() - ConnectionData.FbnsTokenUpdatedAt.FromUnixTimeSeconds();
+            //if ((a).TotalHours <= 24 && !string.IsNullOrEmpty(ConnectionData.FbnsToken))
+            //{
+            //    //token = ConnectionData.FbnsToken;
+            //}
+            //else
+            //    tokenChanged = true;
             var deviceInfo = _instaApi.GetCurrentDevice();
             var user = _instaApi.GetLoggedUser();
-            var uri = InstagramApiSharp.Helpers.UriCreator.GetPushRegisterUri();
+            var uri = UriCreator.GetPushRegisterUri();
             var users = ApiList.Select(s => s.GetLoggedUser().LoggedInUser.Pk).ToList();
             if (!ApiList.Any(x => x.GetCurrentDevice().DeviceGuid.ToString() != deviceInfo.DeviceGuid.ToString()))
             {
@@ -513,6 +554,12 @@ namespace MinistaHelper.Push
             Debug.WriteLine(await response.Content.ReadAsStringAsync());
 
             ConnectionData.FbnsToken = token;
+
+            //if (tokenChanged)
+            {
+                ConnectionData.FbnsTokenUpdatedAt = DateTime.UtcNow.ToUnixTime();
+                FbnsTokenChanged?.Invoke(this, "FbnsToken");
+            }
         }
 
         /// <summary>

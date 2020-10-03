@@ -152,7 +152,11 @@ namespace InstagramApiSharp.API.RealTime
                 return;
             }
 
-            if (Running) throw new Exception("Push client is already running");
+            if (Running)
+            {
+                Debug.WriteLine("realtime client is already running");
+                return;
+            }
             var connectPacket = new FbnsConnectPacket
             {
                 Payload = await RealtimePayload.BuildPayload(_instaApi)
