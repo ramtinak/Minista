@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class DirectLeaveChatDialog : ContentDialog
+    public sealed partial class DirectLeaveChatDialog : ContentPopup
     {
         readonly InstaDirectInboxThread Thread;
         public DirectLeaveChatDialog(InstaDirectInboxThread thread)

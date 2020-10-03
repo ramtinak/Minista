@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using InstagramApiSharp.Classes.Models;
 namespace Minista.ContentDialogs
 {
-    public sealed partial class DirectMessageLikersDialog : ContentDialog
+    public sealed partial class DirectMessageLikersDialog : ContentPopup
     {
         private readonly List<InstaUserShort> Users;
         public DirectMessageLikersDialog(List<InstaUserShort> usrrs)

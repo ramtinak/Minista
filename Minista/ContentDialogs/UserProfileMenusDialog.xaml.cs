@@ -23,7 +23,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class UserProfileMenusDialog : ContentDialog
+    public sealed partial class UserProfileMenusDialog : ContentPopup
     {
         enum CommandType
         {

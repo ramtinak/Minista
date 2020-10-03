@@ -19,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class DeleteThreadDialog : ContentDialog
+    public sealed partial class DeleteThreadDialog : ContentPopup
     {
         readonly InstaDirectInboxThread Thread;
         public DeleteThreadDialog(InstaDirectInboxThread thread)

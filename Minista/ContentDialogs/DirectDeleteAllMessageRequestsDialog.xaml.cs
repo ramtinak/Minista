@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class DirectDeleteAllMessageRequestsDialog : ContentDialog
+    public sealed partial class DirectDeleteAllMessageRequestsDialog : ContentPopup
     {
         public DirectDeleteAllMessageRequestsDialog() => InitializeComponent();
         

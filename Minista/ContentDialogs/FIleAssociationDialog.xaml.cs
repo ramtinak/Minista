@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class FileAssociationDialog : ContentDialog
+    public sealed partial class FileAssociationDialog : ContentPopup
     {
         private readonly StorageFile File;
         public FileAssociationDialog(StorageFile file) 

@@ -1,15 +1,14 @@
-﻿<ContentDialog x:Class="Minista.ContentDialogs.UsersDialog"
+﻿<local:ContentPopup x:Class="Minista.ContentDialogs.UsersDialog"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:local="using:Minista"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:converters="using:Minista.Converters"
-               xmlns:telerikPrimatives="using:Telerik.UI.Xaml.Controls.Primitives"
-               mc:Ignorable="d"
-               Background="{x:Null}"
+                    xmlns:telerikPrimatives="using:Telerik.UI.Xaml.Controls.Primitives"
+                    mc:Ignorable="d"
                BorderBrush="Transparent"
-               BorderThickness="0">
+                    BorderThickness="0">
     <ContentDialog.Resources>
         <ResourceDictionary>
             <converters:UsersDialogBoolToColorConverter x:Key="UsersDialogBoolToColorConverter" />
@@ -182,6 +181,10 @@
             </Style>
         </ResourceDictionary>
     </ContentDialog.Resources>
+    <ContentDialog.Title>
+        <Grid >
+        </Grid>
+    </ContentDialog.Title>
     <Grid Background="#F71B1B1B"
           CornerRadius="5"
           Width="320"
@@ -452,7 +455,7 @@
         </Grid>
     </Grid>
     
-</ContentDialog>
+</local:ContentPopup>
 
 <!---->
 

@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class EditProfileDialog : ContentDialog
+    public sealed partial class EditProfileDialog : ContentPopup
     {
         public EditProfileDialog()
         {

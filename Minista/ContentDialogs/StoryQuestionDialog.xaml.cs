@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using Minista.Controls;
 namespace Minista.ContentDialogs
 {
-    public sealed partial class StoryQuestionDialog : ContentDialog
+    public sealed partial class StoryQuestionDialog : ContentPopup
     {
         private readonly StoryQuestionControl StoryQuestion;
         public StoryQuestionDialog(StoryQuestionControl storyControl)

@@ -28,7 +28,7 @@ using Minista.ContentDialogs.Uc;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class UsersDialog : ContentDialog, INotifyPropertyChanged
+    public sealed partial class UsersDialog : ContentPopup, INotifyPropertyChanged
     {
         #region Properties       
         readonly Compositor _compositor;

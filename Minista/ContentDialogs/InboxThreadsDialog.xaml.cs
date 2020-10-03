@@ -23,7 +23,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class InboxThreadsDialog : ContentDialog
+    public sealed partial class InboxThreadsDialog : ContentPopup
     {
         public ObservableCollection<DirectInboxUc> Items { get; set; } = new ObservableCollection<DirectInboxUc>();
         private readonly StorageFile File;

@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class AddPasscodeDialog : ContentDialog
+    public sealed partial class AddPasscodeDialog : ContentPopup
     {
         public AddPasscodeDialog()
         {

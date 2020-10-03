@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class LogoutDialog : ContentDialog
+    public sealed partial class LogoutDialog : ContentPopup
     {
         public LogoutDialog()
         {

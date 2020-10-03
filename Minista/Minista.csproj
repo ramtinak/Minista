@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="Controls\agv\AdaptiveGridViewOriginal.cs" />
     <Compile Include="Controls\ChatRecordButton.cs" />
+    <Compile Include="Controls\ContentPopup.cs" />
     <Compile Include="Controls\GlyphToggleButton.cs" />
     <Compile Include="Controls\LockControl.xaml.cs">
       <DependentUpon>LockControl.xaml</DependentUpon>

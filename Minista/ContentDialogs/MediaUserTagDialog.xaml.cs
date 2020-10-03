@@ -19,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class MediaUserTagDialog : ContentDialog
+    public sealed partial class MediaUserTagDialog : ContentPopup
     {
         readonly ObservableCollection<InstaUserShort> Users = new ObservableCollection<InstaUserShort>();
         readonly InstaMediaType MediaType;

@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class MuteDialog : ContentDialog
+    public sealed partial class MuteDialog : ContentPopup
     {
         readonly InstaUserShort User;
         public MuteDialog(InstaUserShort user)

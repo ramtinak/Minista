@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class UnfollowHashtagDialog : ContentDialog
+    public sealed partial class UnfollowHashtagDialog : ContentPopup
     {
         readonly InstaFollowHashtagInfo HashtagInfo;
         public UnfollowHashtagDialog(InstaFollowHashtagInfo hashtagInfo)

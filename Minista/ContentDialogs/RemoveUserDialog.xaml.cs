@@ -20,7 +20,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class RemoveUserDialog : ContentDialog
+    public sealed partial class RemoveUserDialog : ContentPopup
     {
         readonly InstaUserShort User;
         public RemoveUserDialog(InstaUserShortFriendship userShortFriendship)

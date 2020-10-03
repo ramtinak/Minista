@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class UnfollowUserDialog : ContentDialog
+    public sealed partial class UnfollowUserDialog : ContentPopup
     {
         readonly InstaUserShort User;
         public UnfollowUserDialog(InstaUserShortFriendship userShortFriendship)

@@ -22,7 +22,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class AddOrChooseUserDialog : ContentDialog
+    public sealed partial class AddOrChooseUserDialog : ContentPopup
     {
         private readonly ObservableCollection<UserChoose> Users = new ObservableCollection<UserChoose>();
         public AddOrChooseUserDialog()

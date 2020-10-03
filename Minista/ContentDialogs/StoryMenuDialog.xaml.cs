@@ -23,7 +23,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class StoryMenuDialog : ContentDialog
+    public sealed partial class StoryMenuDialog : ContentPopup
     {
         public InstaStoryItem StoryItem { get; set; }
         public InstaReelFeed ReelFeed { get; set; }

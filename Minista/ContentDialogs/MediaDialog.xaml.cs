@@ -24,7 +24,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista.ContentDialogs
 {
-    public sealed partial class MediaDialog : ContentDialog
+    public sealed partial class MediaDialog : ContentPopup
     {
         enum CommandType
         {
