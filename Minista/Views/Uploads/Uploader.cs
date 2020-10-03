@@ -576,6 +576,8 @@ namespace Minista.Views.Uploads
         {
             var _user = InstaApi.GetLoggedUser();
             var _deviceInfo = InstaApi.GetCurrentDevice();
+            var caption = UploadItem.Caption ?? string.Empty;
+            if (!string.IsNullOrEmpty(caption)) caption = caption.Replace('\r', '\n');
             var data = new JObject
             {
                 {"timezone_offset", InstaApi.GetTimezoneOffset().ToString()},
@@ -585,7 +587,7 @@ namespace Minista.Views.Uploads
                 {"_uid", _user.LoggedInUser.Pk.ToString()},
                 {"_uuid", _deviceInfo.DeviceGuid.ToString()},
                 {"device_id", _deviceInfo.DeviceId},
-                {"caption",UploadItem. Caption ?? string.Empty},
+                {"caption", caption},
                 {"upload_id", UploadId},
                 {
                     "device", new JObject{
