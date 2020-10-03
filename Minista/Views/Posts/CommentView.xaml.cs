@@ -269,10 +269,10 @@ namespace Minista.Views.Posts
                 IResult<InstaComment> result;
                 if (CommentsVM.ReplyComment == null)
                     result = await Helper.InstaApi
-                        .CommentProcessor.CommentMediaAsync(Media.InstaIdentifier, CommentText.Text);
+                        .CommentProcessor.CommentMediaAsync(Media.InstaIdentifier, CommentText.Text); 
                 else
                     result = await Helper.InstaApi.CommentProcessor
-                        .ReplyCommentMediaAsync(Media.InstaIdentifier, CommentsVM.ReplyComment.Pk.ToString(), CommentText.Text);
+                        .ReplyCommentMediaAsync(Media.InstaIdentifier, CommentsVM.ReplyComment.Pk.ToString(), CommentText.Text); 
 
                 if (result.Succeeded)
                 {
