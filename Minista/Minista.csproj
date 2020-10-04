@@ -148,6 +148,9 @@
     <Compile Include="ContentDialogs\InboxThreadsDialog.xaml.cs">
       <DependentUpon>InboxThreadsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContentDialogs\MediaInsightDialog.xaml.cs">
+      <DependentUpon>MediaInsightDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContentDialogs\MediaUserTagDialog.xaml.cs">
       <DependentUpon>MediaUserTagDialog.xaml</DependentUpon>
     </Compile>
@@ -777,6 +780,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ContentDialogs\MediaDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContentDialogs\MediaInsightDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
