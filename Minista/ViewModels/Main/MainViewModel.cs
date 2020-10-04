@@ -34,27 +34,8 @@ namespace Minista.ViewModels.Main
         public Visibility StoreisVisibility { get { return _storeisVisibility; } set { _storeisVisibility = value; OnPropertyChanged("StoreisVisibility"); } }
         public async void FirstRun(bool refresh = false)
         {
-            //var u = await InstaApi.UserProcessor.GetUserAsync("rmt4006");
-            //var s = await InstaApi.StoryProcessor.GetUserStoryAndLivesAsync(u.Value.Pk);
-
-            //var t = "";
-            //var live = await InstaApi.LiveProcessor.GetInfoAsync(t);
-            //var user = await InstaApi.UserProcessor.GetUserInfoByIdAsync(15154078079);
-            //var sss = await InstaApi.CreativeProcessor.GetAssetsAsync();
-
-            ////var inb = await Helper.InstaApi.MessagingProcessor.GetDirectInboxAsync(PaginationParameters.MaxPagesToLoad(1));
-            //var user = await InstaApi.UserProcessor.GetUserAsync("instagram");
-            //var sss = await InstaApi.MessagingProcessor.GetThreadByParticipantsAsync(0, user.Value.Pk);
-            //var aabc = await InstaApi.AccountProcessor.GetNotificationsSettingsAsync("notifications");
-            ////var aabc = await InstaApi.AccountProcessor.GetNotificationsSettingsAsync("email_and_sms");
-            //return;
-            /*await*/
-
-            var aaabx = await InstaApi.UserProcessor.GetFullUserInfoAsync(30808156545);
-            var aaabxxxxxx = await InstaApi.UserProcessor.GetFullUserInfoAsync(InstaApi.GetLoggedUser().LoggedInUser.Pk);
+         
             RefreshStories(refresh);
-            //await Task.Delay(3500);
-            //await PostsGenerator.RunLoadMoreAsync(refresh);
             PostsGenerator.RunLoadMore(refresh);
             InboxViewModel.ResetInstance();
             if (InboxViewModel.Instance != null)
