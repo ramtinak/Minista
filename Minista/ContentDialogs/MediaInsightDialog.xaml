@@ -42,7 +42,7 @@
                         Value="5 0 5 5" />
             </Style>-->
             <DataTemplate x:Key="MetricTemplate">
-                <Grid Margin="5 4">
+                <Grid Margin="5 2.5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
@@ -81,6 +81,16 @@
                                Margin="6 0 5 0" />
                 </Grid>
             </DataTemplate>
+            <Style TargetType="ListViewItem">
+                <Setter Property="HorizontalAlignment"
+                        Value="Stretch" />
+                <Setter Property="HorizontalContentAlignment"
+                        Value="Stretch" />
+                <Setter Property="Margin"
+                        Value="0" />
+                <Setter Property="Padding"
+                        Value="0" />
+            </Style>
         </ResourceDictionary>
     </ContentDialog.Resources>
     <Border CornerRadius="5">
@@ -288,6 +298,8 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TextBlock Style="{StaticResource VazirTextBlock}"
                                    FontSize="{StaticResource DefaultFontSize}"
@@ -306,7 +318,7 @@
                                        Margin="5 0 5 5"
                                        TextAlignment="Center"
                                        Foreground="DarkGray">
-                                Accounts reached<LineBreak /><Run Text="{x:Bind FollowsCount}" /> weren't following <Run Text="{x:Bind UserName}" />
+                                Accounts reached<LineBreak /><Run x:Name="txtNonFollowsCount" />% weren't following <Run Text="{x:Bind UserName}" />
                             </TextBlock>
                         </StackPanel>
                         <ItemsControl Grid.Row="2"
@@ -321,9 +333,20 @@
                                    Margin="6"
                                    TextAlignment="Center"
                                    Foreground="#FF666666"
-                                   TextWrapping="Wrap"
-                                   Text="This is where your was seen the most. It got the most impressions from above informations."/>
+                                   TextWrapping="Wrap">
+                            This is where your was seen the most. It got the most impressions from <Run Text="{x:Bind ImpressionsBottomText}" />
+                        </TextBlock>
                         <Rectangle Grid.Row="5"
+                                   Grid.ColumnSpan="2"
+                                   Height=".8"
+                                   Fill="#FF303030"
+                                   Margin="5" />
+                        <ListView x:Name="LVHashtags" Grid.Row="6"
+                                  ItemsSource="{x:Bind Hashtags}"
+                                  ItemTemplate="{StaticResource MetricTemplate}" 
+                                  IsItemClickEnabled="True"
+                                  ItemClick="HashtagsListViewItemClick"/>
+                        <Rectangle Grid.Row="7"
                                    Grid.ColumnSpan="2"
                                    Height=".8"
                                    Fill="#FF303030"
