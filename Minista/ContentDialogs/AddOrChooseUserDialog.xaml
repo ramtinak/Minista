@@ -10,7 +10,7 @@
     xmlns:behaviors="using:Minista.Behaviors"
     mc:Ignorable="d" Background="{x:Null}" BorderBrush="Transparent" BorderThickness="0">
 
-    <Border CornerRadius="5"  >
+    <Border CornerRadius="5">
         <Grid Background="#FB1B1B1B"
               BorderBrush="{StaticResource DefaultBackgroundColor}" MaxHeight="350"
               CornerRadius="5" MinWidth="300"

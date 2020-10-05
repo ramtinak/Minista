@@ -491,33 +491,57 @@
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <HyperlinkButton Grid.Row="1"
-                             Margin="10 0"
-                             Click="LikersClick"
-                             Visibility="{Binding LikesCount,Converter={StaticResource DoubleToVisibilityConverter}}">
-                <TextBlock FontFamily="{StaticResource VazirFont}"
-                           Foreground="{StaticResource DefaultForegroundColor}"
-                           FontSize="{StaticResource TinyFontSize}">
+            <Grid x:Name="ViewInsightsGrid"
+                  Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Button x:Name="ViewInsightsButton"
+                        Style="{StaticResource ButtonWithoutPadding}"
+                        Margin="6 5"
+                        Background="Transparent"
+                        Foreground="#FF0078D7"
+                        HorizontalAlignment="Left"
+                        Content="View insights"
+                        Click="ViewInsightsButtonClick" />
+                <Rectangle Grid.Row="1"
+                           Height=".8"
+                           Fill="#FF303030"
+                           Margin="5 2" />
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <HyperlinkButton Grid.Row="1"
+                                 Margin="10 0"
+                                 Click="LikersClick"
+                                 Visibility="{Binding LikesCount,Converter={StaticResource DoubleToVisibilityConverter}}">
+                    <TextBlock FontFamily="{StaticResource VazirFont}"
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               FontSize="{StaticResource TinyFontSize}">
                     <Run Text="{Binding LikesCount, Mode=TwoWay}" />
                     <Run Text="likes" />
-                </TextBlock>
-            </HyperlinkButton>
-            <TextBlock Text="{Binding TakenAt, Converter={StaticResource DateTimeFullConverter}}"
-                       Grid.Row="2"
-                       HorizontalAlignment="Stretch"
-                       FontFamily="{StaticResource VazirFont}"
-                       Margin="10 5"
-                       FontSize="{StaticResource TinyTinyFontSize}"
-                       Foreground="{StaticResource DefaultForegroundColor}" />
-            <!--<RichTextBlock x:Name="txtCaption"
+                    </TextBlock>
+                </HyperlinkButton>
+                <TextBlock Text="{Binding TakenAt, Converter={StaticResource DateTimeFullConverter}}"
+                           Grid.Row="2"
+                           HorizontalAlignment="Stretch"
+                           FontFamily="{StaticResource VazirFont}"
+                           Margin="10 5"
+                           FontSize="{StaticResource TinyTinyFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}" />
+                <!--<RichTextBlock x:Name="txtCaption"
                            MaxHeight="220"
                            Grid.Row="2"
                            
@@ -532,63 +556,63 @@
             TextDecorations="None"
                            TextLineBounds="Full"
                            TextReadingOrder="DetectFromContent" />-->
-            <!--MaxHeight="220"-->
-            <Grid Grid.Row="3">
-                <RichTextBlock x:Name="txtCaption"
-                               HorizontalAlignment="Stretch"
-                               FontFamily="{StaticResource VazirFont}"
-                               Foreground="{StaticResource DefaultForegroundColor}"
-                               IsTextSelectionEnabled="False"
-                               TextWrapping="Wrap"
-                               Margin="5"
-                               FontSize="{StaticResource DefaultFontSize}" />
-                <Button x:Name="ShowMoreButton"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Bottom"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        Background="Transparent"
-                        Margin="0"
-                        Visibility="Collapsed"
-                        Style="{StaticResource ButtonWithoutPadding}"
-                        Click="ShowMoreButtonClick">
-                    <Grid HorizontalAlignment="Stretch"
-                          Height="30"
-                          Margin="0"
-                          Padding="0">
-                        <Grid Background="#9A1A1A1A"
-                              CornerRadius="8">
-                            <interactivity:Interaction.Behaviors>
-                                <behaviorsX:Blur x:Name="FadeBehavior"
-                                                 Value="6"
-                                                 Duration="1"
-                                                 Delay="0"
-                                                 EasingType="Linear"
-                                                 AutomaticallyStart="True" />
-                            </interactivity:Interaction.Behaviors>
-                        </Grid>
+                <!--MaxHeight="220"-->
+                <Grid Grid.Row="3">
+                    <RichTextBlock x:Name="txtCaption"
+                                   HorizontalAlignment="Stretch"
+                                   FontFamily="{StaticResource VazirFont}"
+                                   Foreground="{StaticResource DefaultForegroundColor}"
+                                   IsTextSelectionEnabled="False"
+                                   TextWrapping="Wrap"
+                                   Margin="5"
+                                   FontSize="{StaticResource DefaultFontSize}" />
+                    <Button x:Name="ShowMoreButton"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Bottom"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Background="Transparent"
+                            Margin="0"
+                            Visibility="Collapsed"
+                            Style="{StaticResource ButtonWithoutPadding}"
+                            Click="ShowMoreButtonClick">
+                        <Grid HorizontalAlignment="Stretch"
+                              Height="30"
+                              Margin="0"
+                              Padding="0">
+                            <Grid Background="#9A1A1A1A"
+                                  CornerRadius="8">
+                                <interactivity:Interaction.Behaviors>
+                                    <behaviorsX:Blur x:Name="FadeBehavior"
+                                                     Value="6"
+                                                     Duration="1"
+                                                     Delay="0"
+                                                     EasingType="Linear"
+                                                     AutomaticallyStart="True" />
+                                </interactivity:Interaction.Behaviors>
+                            </Grid>
 
-                        <controls:DropShadowPanel BlurRadius="6.0"
-                                                  ShadowOpacity="0.95"
-                                                  OffsetX="3.5"
-                                                  OffsetY="5.5"
-                                                  OffsetZ="0.5"
-                                                  Grid.Row="1"
-                                                  Color="Black"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  Foreground="White">
-                            <TextBlock Text="More..."
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       Foreground="{StaticResource DefaultForegroundColor}" />
-                        </controls:DropShadowPanel>
-                        <Grid Background="Cyan"
-                              Opacity="0" />
-                    </Grid>
-                </Button>
-            </Grid>
-            <!--<RichTextBlock x:Name="txtCaption"
+                            <controls:DropShadowPanel BlurRadius="6.0"
+                                                      ShadowOpacity="0.95"
+                                                      OffsetX="3.5"
+                                                      OffsetY="5.5"
+                                                      OffsetZ="0.5"
+                                                      Grid.Row="1"
+                                                      Color="Black"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      Foreground="White">
+                                <TextBlock Text="More..."
+                                           FontSize="{StaticResource TinyFontSize}"
+                                           FontFamily="{StaticResource VazirFont}"
+                                           Foreground="{StaticResource DefaultForegroundColor}" />
+                            </controls:DropShadowPanel>
+                            <Grid Background="Cyan"
+                                  Opacity="0" />
+                        </Grid>
+                    </Button>
+                </Grid>
+                <!--<RichTextBlock x:Name="txtCaption"
                                
                                Grid.Row="3"
                                HorizontalAlignment="Stretch"
@@ -599,213 +623,146 @@
                                FontSize="{StaticResource DefaultFontSize}" />-->
 
 
-            <!--LinkClicked="CaptionLink_Clicked"-->
-            <!--<Grid >
+                <!--LinkClicked="CaptionLink_Clicked"-->
+                <!--<Grid >
            
             </Grid>-->
-            <!--<controls:MarkdownTextBlock Grid.Row="2"  LinkForeground="#ff5897fc" FontFamily="{StaticResource VazirFont}" Text="{Binding Caption.Text, Converter={StaticResource TextToMarkdownConverter}, Mode=OneWay}" IsTextSelectionEnabled="False" TextWrapping="Wrap" Margin="10,0" FontSize="{StaticResource DefaultFontSize}"/>-->
-            <Grid Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <AppBarButton x:Name="LikeButton"
-                              Content=""
-                              Foreground="{StaticResource DefaultForegroundColor}"
-                              Click="LikeButtonClick"
-                              Background="{x:Null}"
-                              FontSize="{StaticResource BigFontSize}"
-                              FontFamily="{StaticResource SymbolFont}">
-                    <interactivity:Interaction.Behaviors>
-                        <behaviors:PointersEvent />
-                    </interactivity:Interaction.Behaviors>
-                </AppBarButton>
-                <AppBarButton x:Name="CommentButton"
-                              Content=""
-                              Foreground="{StaticResource DefaultForegroundColor}"
-                              Grid.Column="1"
-                              Margin="2 0"
-                              Background="{x:Null}"
-                              FontSize="{StaticResource BigFontSize}"
-                              FontFamily="{StaticResource MaterialSymbolFont}"
-                              Click="CommentsClick"
-                              Visibility="{Binding IsCommentsDisabled,Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
-                    <interactivity:Interaction.Behaviors>
-                        <behaviors:PointersEvent />
-                    </interactivity:Interaction.Behaviors>
-                </AppBarButton>
-                <AppBarButton x:Name="ShareButton"
-                              Content=""
-                              Foreground="{StaticResource DefaultForegroundColor}"
-                              Click="ShareButtonClick"
-                              Grid.Column="2"
-                              Margin="2 0"
-                              Background="{x:Null}"
-                              FontSize="{StaticResource BigFontSize}"
-                              FontFamily="{StaticResource SymbolFont}">
-                    <interactivity:Interaction.Behaviors>
-                        <behaviors:PointersEvent />
-                    </interactivity:Interaction.Behaviors>
-                </AppBarButton>
-                <Grid x:Name="CarouselDotsGrid"
-                      Grid.Column="3"
-                      Margin="0 0 25 0"
-                      HorizontalAlignment="Center">
+                <!--<controls:MarkdownTextBlock Grid.Row="2"  LinkForeground="#ff5897fc" FontFamily="{StaticResource VazirFont}" Text="{Binding Caption.Text, Converter={StaticResource TextToMarkdownConverter}, Mode=OneWay}" IsTextSelectionEnabled="False" TextWrapping="Wrap" Margin="10,0" FontSize="{StaticResource DefaultFontSize}"/>-->
+                <Grid Margin="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
+                    <AppBarButton x:Name="LikeButton"
+                                  Content=""
+                                  Foreground="{StaticResource DefaultForegroundColor}"
+                                  Click="LikeButtonClick"
+                                  Background="{x:Null}"
+                                  FontSize="{StaticResource BigFontSize}"
+                                  FontFamily="{StaticResource SymbolFont}">
+                        <interactivity:Interaction.Behaviors>
+                            <behaviors:PointersEvent />
+                        </interactivity:Interaction.Behaviors>
+                    </AppBarButton>
+                    <AppBarButton x:Name="CommentButton"
+                                  Content=""
+                                  Foreground="{StaticResource DefaultForegroundColor}"
+                                  Grid.Column="1"
+                                  Margin="2 0"
+                                  Background="{x:Null}"
+                                  FontSize="{StaticResource BigFontSize}"
+                                  FontFamily="{StaticResource MaterialSymbolFont}"
+                                  Click="CommentsClick"
+                                  Visibility="{Binding IsCommentsDisabled,Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
+                        <interactivity:Interaction.Behaviors>
+                            <behaviors:PointersEvent />
+                        </interactivity:Interaction.Behaviors>
+                    </AppBarButton>
+                    <AppBarButton x:Name="ShareButton"
+                                  Content=""
+                                  Foreground="{StaticResource DefaultForegroundColor}"
+                                  Click="ShareButtonClick"
+                                  Grid.Column="2"
+                                  Margin="2 0"
+                                  Background="{x:Null}"
+                                  FontSize="{StaticResource BigFontSize}"
+                                  FontFamily="{StaticResource SymbolFont}">
+                        <interactivity:Interaction.Behaviors>
+                            <behaviors:PointersEvent />
+                        </interactivity:Interaction.Behaviors>
+                    </AppBarButton>
+                    <Grid x:Name="CarouselDotsGrid"
+                          Grid.Column="3"
+                          Margin="0 0 25 0"
+                          HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                    <AppBarButton x:Name="CollectionButton"
+                                  Content="{Binding HasViewerSaved, Mode=TwoWay,Converter={StaticResource SaveToCollectionIconConverter}}"
+                                  Click="CollectionButtonClick"
+                                  Foreground="{StaticResource DefaultForegroundColor}"
+                                  Grid.Column="4"
+                                  Margin="2 0"
+                                  Background="{x:Null}"
+                                  FontSize="{StaticResource BigFontSize}"
+                                  FontFamily="{StaticResource MaterialSymbolFont}">
+                        <interactivity:Interaction.Behaviors>
+                            <behaviors:PointersEvent />
+                        </interactivity:Interaction.Behaviors>
+                    </AppBarButton>
+
                 </Grid>
-                <AppBarButton x:Name="CollectionButton"
-                              Content="{Binding HasViewerSaved, Mode=TwoWay,Converter={StaticResource SaveToCollectionIconConverter}}"
-                              Click="CollectionButtonClick"
-                              Foreground="{StaticResource DefaultForegroundColor}"
-                              Grid.Column="4"
-                              Margin="2 0"
-                              Background="{x:Null}"
-                              FontSize="{StaticResource BigFontSize}"
-                              FontFamily="{StaticResource MaterialSymbolFont}">
+                <HyperlinkButton Grid.Row="4"
+                                 Margin="10 0"
+                                 Click="CommentsClick"
+                                 Visibility="{Binding IsCommentsDisabled,Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
                     <interactivity:Interaction.Behaviors>
                         <behaviors:PointersEvent />
                     </interactivity:Interaction.Behaviors>
-                </AppBarButton>
-
-            </Grid>
-            <HyperlinkButton Grid.Row="4"
-                             Margin="10 0"
-                             Click="CommentsClick"
-                             Visibility="{Binding IsCommentsDisabled,Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
-                <interactivity:Interaction.Behaviors>
-                    <behaviors:PointersEvent />
-                </interactivity:Interaction.Behaviors>
-                <TextBlock FontFamily="{StaticResource VazirFont}"
-                           Foreground="{StaticResource DefaultForegroundColor}"
-                           FontSize="{StaticResource TinyFontSize}">
+                    <TextBlock FontFamily="{StaticResource VazirFont}"
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               FontSize="{StaticResource TinyFontSize}">
                     <Run Text="See all (" />
                     <Run Text="{Binding CommentsCount, Mode=TwoWay}" />
                     <Run Text=") comments" />
-                </TextBlock>
-            </HyperlinkButton>
+                    </TextBlock>
+                </HyperlinkButton>
 
-            <Grid Grid.Row="6"
-                  Visibility="{Binding PreviewComments, Converter={StaticResource ChildCommentsVisibilityConverter}}">
-                <Grid x:Name="PreviewCommentsGrid"
-                      Margin="10 4">
+                <Grid Grid.Row="6"
+                      Visibility="{Binding PreviewComments, Converter={StaticResource ChildCommentsVisibilityConverter}}">
+                    <Grid x:Name="PreviewCommentsGrid"
+                          Margin="10 4">
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid DataContext="{Binding PreviewComments[0]}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <HyperlinkButton Padding="0"
-                                         VerticalAlignment="Top"
-                                         FontWeight="Normal"
-                                         FontFamily="{StaticResource VazirFont}"
-                                         FontSize="{StaticResource TinyFontSize}"
-                                         Click="UserButtonPreviewComment1Click">
-                            <interactivity:Interaction.Behaviors>
-                                <behaviors:PointersEvent />
-                            </interactivity:Interaction.Behaviors>
-                            <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       Text="{Binding User.UserName}"
-                                       VerticalAlignment="Center" />
-                        </HyperlinkButton>
-                        <Grid Grid.Column="1"
-                              Margin="4 3 3 3">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Foreground="{StaticResource DefaultForegroundColor}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       DataContextChanged="TextBlockDataContextChanged"
-                                       Tag="{Binding}" />
-
-
-
-                            <AppBarButton VerticalAlignment="Top"
-                                          Click="LikeButtonPrevCommentClick"
-                                          Grid.Column="1"
-                                          Width="42"
-                                          Height="42"
-                                          Foreground="{Binding HasLikedComment, Converter={StaticResource CommentColorConverter}}">
-                                <interactivity:Interaction.Behaviors>
-                                    <behaviors:PointersEvent />
-                                </interactivity:Interaction.Behaviors>
-                                <AppBarButton.Icon>
-                                    <FontIcon Glyph="{Binding HasLikedComment, Converter={StaticResource CommentBooleanConverter}}" />
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Row="1"
-                          Margin="30 0 0 0"
-                          DataContext="{Binding PreviewComments[1]}"
-                          Visibility="{Binding PreviewComments[1],Converter={StaticResource NullableToVisibilityConverter}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="4"
-                                   HorizontalAlignment="Stretch"
-                                   Margin="4"
-                                   Fill="#FF2E2E2E" />
-                        <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid DataContext="{Binding PreviewComments[0]}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-
-
                             <HyperlinkButton Padding="0"
                                              VerticalAlignment="Top"
                                              FontWeight="Normal"
                                              FontFamily="{StaticResource VazirFont}"
                                              FontSize="{StaticResource TinyFontSize}"
-                                             Click="UserButtonPreviewComment2Click">
+                                             Click="UserButtonPreviewComment1Click">
                                 <interactivity:Interaction.Behaviors>
                                     <behaviors:PointersEvent />
                                 </interactivity:Interaction.Behaviors>
                                 <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
-                                           FontSize="{StaticResource DefaultFontSize}"
+                                           FontSize="{StaticResource TinyFontSize}"
                                            Text="{Binding User.UserName}"
                                            VerticalAlignment="Center" />
                             </HyperlinkButton>
-
                             <Grid Grid.Column="1"
-                                  Margin="4 3 4 3">
+                                  Margin="4 3 3 3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
@@ -820,11 +777,11 @@
 
 
 
-                                <AppBarButton VerticalAlignment="Center"
+                                <AppBarButton VerticalAlignment="Top"
                                               Click="LikeButtonPrevCommentClick"
+                                              Grid.Column="1"
                                               Width="42"
                                               Height="42"
-                                              Grid.Column="1"
                                               Foreground="{Binding HasLikedComment, Converter={StaticResource CommentColorConverter}}">
                                     <interactivity:Interaction.Behaviors>
                                         <behaviors:PointersEvent />
@@ -835,52 +792,119 @@
                                 </AppBarButton>
                             </Grid>
                         </Grid>
+                        <Grid Grid.Row="1"
+                              Margin="30 0 0 0"
+                              DataContext="{Binding PreviewComments[1]}"
+                              Visibility="{Binding PreviewComments[1],Converter={StaticResource NullableToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="4"
+                                       HorizontalAlignment="Stretch"
+                                       Margin="4"
+                                       Fill="#FF2E2E2E" />
+                            <Grid Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+
+                                <HyperlinkButton Padding="0"
+                                                 VerticalAlignment="Top"
+                                                 FontWeight="Normal"
+                                                 FontFamily="{StaticResource VazirFont}"
+                                                 FontSize="{StaticResource TinyFontSize}"
+                                                 Click="UserButtonPreviewComment2Click">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:PointersEvent />
+                                    </interactivity:Interaction.Behaviors>
+                                    <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                               FontFamily="{StaticResource VazirFont}"
+                                               FontSize="{StaticResource DefaultFontSize}"
+                                               Text="{Binding User.UserName}"
+                                               VerticalAlignment="Center" />
+                                </HyperlinkButton>
+
+                                <Grid Grid.Column="1"
+                                      Margin="4 3 4 3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Foreground="{StaticResource DefaultForegroundColor}"
+                                               FontFamily="{StaticResource VazirFont}"
+                                               FontSize="{StaticResource TinyFontSize}"
+                                               TextWrapping="Wrap"
+                                               TextAlignment="DetectFromContent"
+                                               DataContextChanged="TextBlockDataContextChanged"
+                                               Tag="{Binding}" />
+
+
+
+                                    <AppBarButton VerticalAlignment="Center"
+                                                  Click="LikeButtonPrevCommentClick"
+                                                  Width="42"
+                                                  Height="42"
+                                                  Grid.Column="1"
+                                                  Foreground="{Binding HasLikedComment, Converter={StaticResource CommentColorConverter}}">
+                                        <interactivity:Interaction.Behaviors>
+                                            <behaviors:PointersEvent />
+                                        </interactivity:Interaction.Behaviors>
+                                        <AppBarButton.Icon>
+                                            <FontIcon Glyph="{Binding HasLikedComment, Converter={StaticResource CommentBooleanConverter}}" />
+                                        </AppBarButton.Icon>
+                                    </AppBarButton>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+
+
+                <Grid Grid.Row="7"
+                      Visibility="{Binding IsCommentsDisabled,Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
+                    <Grid x:Name="CommentGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="CommentText"
+                                 Foreground="{StaticResource DefaultForegroundColor}"
+                                 FontFamily="{StaticResource VazirFont}"
+                                 AcceptsReturn="True"
+                                 PlaceholderText="Type a comment to send"
+                                 IsSpellCheckEnabled="False"
+                                 FontSize="{StaticResource DefaultFontSize}"
+                                 Grid.Row="2"
+                                 TextWrapping="Wrap"
+                                 Style="{StaticResource TextBoxCenter}"
+                                 TextAlignment="DetectFromContent"
+                                 VerticalAlignment="Top"
+                                 MaxHeight="100" />
+                        <Button x:Name="Comment4Button"
+                                Background="#FF1F1F1F"
+                                Content=""
+                                Foreground="{StaticResource DefaultForegroundColor}"
+                                Grid.Column="2"
+                                Margin="2 0"
+                                FontSize="{StaticResource BigFontSize}"
+                                FontFamily="{StaticResource SymbolFont}"
+                                Click="Comment4ButtonClick">
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:PointersEvent />
+                            </interactivity:Interaction.Behaviors>
+                        </Button>
                     </Grid>
                 </Grid>
             </Grid>
-
-
-
-            <Grid Grid.Row="7"
-                  Visibility="{Binding IsCommentsDisabled,Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
-                <Grid x:Name="CommentGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="CommentText"
-                             Foreground="{StaticResource DefaultForegroundColor}"
-                             FontFamily="{StaticResource VazirFont}"
-                             AcceptsReturn="True"
-                             PlaceholderText="Type a comment to send"
-                             IsSpellCheckEnabled="False"
-                             FontSize="{StaticResource DefaultFontSize}"
-                             Grid.Row="2"
-                             TextWrapping="Wrap"
-                             Style="{StaticResource TextBoxCenter}"
-                             TextAlignment="DetectFromContent"
-                             VerticalAlignment="Top"
-                             MaxHeight="100" />
-                    <Button x:Name="Comment4Button"
-                            Background="#FF1F1F1F"
-                            Content=""
-                            Foreground="{StaticResource DefaultForegroundColor}"
-                            Grid.Column="2"
-                            Margin="2 0"
-                            FontSize="{StaticResource BigFontSize}"
-                            FontFamily="{StaticResource SymbolFont}"
-                            Click="Comment4ButtonClick">
-                        <interactivity:Interaction.Behaviors>
-                            <behaviors:PointersEvent />
-                        </interactivity:Interaction.Behaviors>
-                    </Button>
-                </Grid>
-            </Grid>
         </Grid>
-
         <!--<Grid Grid.RowSpan="5"
               Background="{StaticResource DefaultItemBackgroundColor}"
               Visibility="{Binding DontShowHashtagLikeThis, Mode=TwoWay, Converter={StaticResource BooleanToVisibiltyConverter}}">-->

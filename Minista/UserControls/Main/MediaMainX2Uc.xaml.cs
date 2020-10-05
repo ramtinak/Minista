@@ -163,6 +163,18 @@ namespace Minista.UserControls.Main
                 if (Media.Location != null)
                     LocationText.Visibility = Visibility.Visible;
                 else LocationText.Visibility = Visibility.Collapsed;
+                try
+                {
+                    void ShowHideInsights(bool show) => ViewInsightsGrid.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+                    if (Media.User.Pk == Helper.CurrentUser?.Pk)
+                    {
+                        if (Helper.CurrentUser.IsBusiness)
+                            ShowHideInsights(Helper.CurrentUser.IsBusiness);
+                        else
+                            ShowHideInsights(false);
+                    }
+                }
+                catch { }
                 SetCaption(Media);
                 SetLike(Media.HasLiked);
                 SetCarousel(Media);
@@ -1385,6 +1397,10 @@ namespace Minista.UserControls.Main
                 NavigationService.Navigate(typeof(Views.Main.StoryView), Media.User.ToUserShort());
             else
                 NavigationService.Navigate(typeof(Views.Infos.HashtagView), Media.FollowHashtagInfo.Name);
+        }
+        private async void ViewInsightsButtonClick(object sender, RoutedEventArgs e)
+        {
+            await new MediaInsightDialog(Media).ShowAsync();
         }
     }
 }

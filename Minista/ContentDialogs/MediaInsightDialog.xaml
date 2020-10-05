@@ -5,8 +5,343 @@
     xmlns:local="using:Minista"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+                    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+                    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+                    xmlns:behaviors="using:Minista.Behaviors"
+    xmlns:uc="using:Minista.UserControls"
+                    mc:Ignorable="d"
+                    Background="{x:Null}"
+                    BorderBrush="Transparent"
+                    BorderThickness="0">
+    <ContentDialog.Resources>
+        <ResourceDictionary>
+            <!--<Style TargetType="TextBlock"
+                   x:Key="MaterialTextBlock">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource MaterialSymbolFont}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource DefaultForegroundColor}" />
+                <Setter Property="HorizontalAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalAlignment"
+                        Value="Center" />
+                <Setter Property="Margin"
+                        Value="5 5 5 0" />
+            </Style>
+            <Style TargetType="TextBlock"
+                   x:Key="VazirTextBlock">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource TinyFontSize}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource DefaultForegroundColor}" />
+                <Setter Property="HorizontalAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalAlignment"
+                        Value="Center" />
+                <Setter Property="Margin"
+                        Value="5 0 5 5" />
+            </Style>-->
+            <DataTemplate x:Key="MetricTemplate">
+                <Grid Margin="5 4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource VazirTextBlock}"
+                               FontSize="{StaticResource TinyFontSize}"
+                               Margin="5 0"
+                               Text="{Binding Name}"
+                               Foreground="DarkGray"
+                               HorizontalAlignment="Left"/>
+                    <TextBlock Style="{StaticResource VazirTextBlock}"
+                               FontSize="{StaticResource TinyFontSize}"
+                               Grid.Column="1"
+                               Text="{Binding Value}"
+                               Foreground="DarkGray" 
+                               Margin="5 0"/>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="MetricTemplate2">
+                <Grid Margin="5 4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource VazirTextBlock}"
+                               FontSize="{StaticResource TinyFontSize}"
+                               Margin="6 0 5 0"
+                               Text="{Binding Name}"
+                               Foreground="#FF666666"
+                               HorizontalAlignment="Left" />
+                    <TextBlock Style="{StaticResource VazirTextBlock}"
+                               FontSize="{StaticResource TinyFontSize}"
+                               Grid.Column="1"
+                               Text="{Binding Value}"
+                               Foreground="#FF666666"
+                               Margin="6 0 5 0" />
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentDialog.Resources>
+    <Border CornerRadius="5">
+        <Grid Background="#FB1B1B1B"
+              BorderBrush="{StaticResource DefaultBackgroundColor}"
+              MaxHeight="400"
+              MinHeight="340"
+              CornerRadius="5"
+              MaxWidth="350"
+              HorizontalAlignment="Center"
+              BorderThickness=".8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource VazirTextBlock}"
+                           FontSize="{StaticResource DefaultFontSize}"
+                           TextWrapping="NoWrap"
+                           Margin="10 3">
+                                <Run Text="{x:Bind SurfaceType}" /> Insights
+                </TextBlock>
+                <AppBarButton x:Name="ExitButton"
+                              Foreground="{StaticResource DefaultForegroundColor}"
+                              Content=""
+                              Margin="0"
+                              HorizontalAlignment="Right"
+                              FontFamily="{StaticResource MaterialSymbolFont}"
+                              FontSize="{StaticResource BigFontSize}"
+                              Click="ExitButtonClick">
+                    <interactivity:Interaction.Behaviors>
+                        <behaviors:PointersEvent />
+                    </interactivity:Interaction.Behaviors>
+                </AppBarButton>
+                <Rectangle Grid.Row="1"
+                           Height=".8"
+                           Fill="#FF303030"
+                           Margin="5" />
+            </Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          Grid.Row="1"
+                          VerticalScrollMode="Enabled"
+                          HorizontalScrollBarVisibility="Disabled"
+                          HorizontalScrollMode="Disabled">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Margin="0 8"
+                          Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                            <TextBlock Style="{StaticResource MaterialTextBlock}"
+                                       FontSize="{StaticResource MediumFontSize}"
+                                       Margin="5 5 5 0"
+                                       Text="" />
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource TinyLargeFontSize}"
+                                       Margin="5 0 5 5"
+                                       Text="{Binding LikeCount}" />
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Margin="8 0"
+                                    Grid.Column="1">
+                            <TextBlock Style="{StaticResource MaterialTextBlock}"
+                                       FontSize="{StaticResource MediumFontSize}"
+                                       Margin="5 5 5 0"
+                                       Text="" />
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource TinyLargeFontSize}"
+                                       Margin="5 0 5 5"
+                                       Text="{Binding CommentCount}" />
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Margin="8 0"
+                                    Grid.Column="2">
+                            <TextBlock Style="{StaticResource MaterialTextBlock}"
+                                       FontSize="{StaticResource MediumFontSize}"
+                                       Margin="5 5 5 0"
+                                       Text="" />
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource TinyLargeFontSize}"
+                                       Margin="5 0 5 5"
+                                       Text="{Binding ShareCount}" />
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Margin="8 0"
+                                    Grid.Column="3">
+                            <TextBlock Style="{StaticResource MaterialTextBlock}"
+                                       FontSize="{StaticResource MediumFontSize}"
+                                       Margin="5 5 5 0"
+                                       Text="" />
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource TinyLargeFontSize}"
+                                       Margin="5 0 5 5"
+                                       Text="{Binding SaveCount}" />
+                        </StackPanel>
+                        <Rectangle Grid.Row="1"
+                                   Grid.ColumnSpan="4"
+                                   Height=".8"
+                                   Fill="#FF303030"
+                                   Margin="5" />
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource MediumFontSize}"
+                                       Margin="5 5 5 0"
+                                       Text="{x:Bind OwnerProfileViewsCount, Mode=TwoWay}" />
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource TinyFontSize}"
+                                       Margin="5 0 5 5"
+                                       Text="Profile visits"
+                                       Foreground="DarkGray" />
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Grid.Column="1">
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource MediumFontSize}"
+                                       Margin="5 5 5 0"
+                                       Text="{x:Bind ReachCount, Mode=TwoWay}" />
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource TinyFontSize}"
+                                       Margin="5 0 5 5"
+                                       Text="Reach"
+                                       Foreground="DarkGray" />
+                        </StackPanel>
+                        <Rectangle Grid.Row="1"
+                                   Grid.ColumnSpan="2"
+                                   Height=".8"
+                                   Fill="#FF303030"
+                                   Margin="5" />
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Style="{StaticResource VazirTextBlock}"
+                                   FontSize="{StaticResource DefaultFontSize}"
+                                   Margin="5 2"
+                                   Text="Interactions"
+                                   HorizontalAlignment="Left" />
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Grid.Row="1">
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource MediumFontSize}"
+                                       Margin="5 5 5 0"
+                                       Text="{x:Bind ProfileActionsCount, Mode=TwoWay}" />
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource TinyFontSize}"
+                                       Margin="5 0 5 5"
+                                       Text="Actions taken from this post"
+                                       Foreground="DarkGray" />
+                        </StackPanel>
+                        <ItemsControl Grid.Row="2"
+                                      ItemsSource="{x:Bind Interactions}"
+                                      ItemTemplate="{StaticResource MetricTemplate}"/>
+                        <Rectangle Grid.Row="3"
+                                   Grid.ColumnSpan="2"
+                                   Height=".8"
+                                   Fill="#FF303030"
+                                   Margin="5" />
+                    </Grid>
+                    <Grid Grid.Row="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Style="{StaticResource VazirTextBlock}"
+                                   FontSize="{StaticResource DefaultFontSize}"
+                                   Margin="5 2"
+                                   Text="Discovery"
+                                   HorizontalAlignment="Left" />
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Grid.Row="1">
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource MediumFontSize}"
+                                       Margin="5 5 5 0"
+                                       Text="{x:Bind ReachCount, Mode=TwoWay}" />
+                            <TextBlock Style="{StaticResource VazirTextBlock}"
+                                       FontSize="{StaticResource TinyFontSize}"
+                                       Margin="5 0 5 5"
+                                       TextAlignment="Center"
+                                       Foreground="DarkGray">
+                                Accounts reached<LineBreak /><Run Text="{x:Bind FollowsCount}" /> weren't following <Run Text="{x:Bind UserName}" />
+                            </TextBlock>
+                        </StackPanel>
+                        <ItemsControl Grid.Row="2"
+                                      ItemsSource="{x:Bind Discoveries}"
+                                      ItemTemplate="{StaticResource MetricTemplate}" />
+                        <ItemsControl Grid.Row="3"
+                                      ItemsSource="{x:Bind Impressions}"
+                                      ItemTemplate="{StaticResource MetricTemplate2}" />
+                        <TextBlock Style="{StaticResource VazirTextBlock}"
+                                   FontSize="{StaticResource TinyTinyFontSize}"
+                                   Grid.Row="4"
+                                   Margin="6"
+                                   TextAlignment="Center"
+                                   Foreground="#FF666666"
+                                   TextWrapping="Wrap"
+                                   Text="This is where your was seen the most. It got the most impressions from above informations."/>
+                        <Rectangle Grid.Row="5"
+                                   Grid.ColumnSpan="2"
+                                   Height=".8"
+                                   Fill="#FF303030"
+                                   Margin="5" />
+                    </Grid>
 
-    <Grid>
-    </Grid>
+                   
+                </Grid>
+            </ScrollViewer>
+            <Grid x:Name="LoadingGrid"
+                  Background="#EF1B1B1B"
+                  Grid.RowSpan="10"
+                  Visibility="Collapsed">
+                <uc:LoadingUc x:Name="LoadingUc"
+                              VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch" />
+
+            </Grid>
+        </Grid>
+    </Border>
 </local:ContentPopup>

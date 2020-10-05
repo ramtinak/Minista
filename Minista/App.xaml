@@ -24,7 +24,32 @@
             
             <Thickness x:Key="PivotPortraitThemePadding">0</Thickness>
 
-
+            <Style TargetType="TextBlock"
+                   x:Key="MaterialTextBlock">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource MaterialSymbolFont}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource DefaultForegroundColor}" />
+                <Setter Property="HorizontalAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalAlignment"
+                        Value="Center" />
+                <Setter Property="Margin"
+                        Value="5 5 5 0" />
+            </Style>
+            <Style TargetType="TextBlock"
+                   x:Key="VazirTextBlock">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource TinyFontSize}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource DefaultForegroundColor}" />
+                <Setter Property="HorizontalAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalAlignment"
+                        Value="Center" />
+                <Setter Property="Margin"
+                        Value="5 0 5 5" />
+            </Style>
             <Style TargetType="MediaTransportControls">
                 <Setter Property="IsTabStop"
                         Value="False" />
