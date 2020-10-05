@@ -197,6 +197,9 @@
     <Compile Include="UserControls\Main\MediaTagUc.xaml.cs">
       <DependentUpon>MediaTagUc.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Story\StoryInsightUc.xaml.cs">
+      <DependentUpon>StoryInsightUc.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Story\StoryViews\MainStoryViewerUc.xaml.cs">
       <DependentUpon>MainStoryViewerUc.xaml</DependentUpon>
     </Compile>
@@ -912,6 +915,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Story\StoryCountdownUc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Story\StoryInsightUc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

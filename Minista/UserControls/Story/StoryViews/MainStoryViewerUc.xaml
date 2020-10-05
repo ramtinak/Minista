@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Minista.UserControls.Story.StoryViews"
+             xmlns:uc="using:Minista.UserControls.Story"
              xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
              xmlns:behaviors="using:Minista.Behaviors"
              xmlns:core="using:Microsoft.Xaml.Interactions.Core"
@@ -2129,6 +2130,8 @@
         <Grid Height="52">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button x:Name="BackButton"
@@ -2139,202 +2142,243 @@
                     <FontIcon Glyph="" />
                 </Button.Content>
             </Button>
-            <TextBlock x:Name="MainTextBlock"
-                
-                Margin="5"
-                       Grid.Column="1"
-                       Foreground="{StaticResource DefaultForegroundColor}"
-                       VerticalAlignment="Center">
+            <Button x:Name="MainTextBlock"
+                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                    Background="{x:Null}"
+                    Margin="5"
+                    Grid.Column="1"
+                    Click="MainTextBlockClick">
+                <Button.Content>
+                    <TextBlock 
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               VerticalAlignment="Center">
                 <Run FontFamily="{StaticResource MaterialSymbolFont}"
-                     FontSize="{StaticResource DefaultFontSize}"
-                     Text="" /> <Run FontFamily="{StaticResource VazirFont}"
-                                      FontSize="{StaticResource DefaultFontSize}"
-                                      Text="{Binding ViewerCount }" />
-            </TextBlock>
-            <TextBlock x:Name="SecondTextBlock"
-                       FontFamily="{StaticResource VazirFont}"
-                       FontSize="{StaticResource DefaultFontSize}"
-                       Foreground="{StaticResource DefaultForegroundColor}"
-                       Margin="5"
-                       Grid.Column="1"
-                       VerticalAlignment="Center" Visibility="Collapsed"/>
+                        FontSize="{StaticResource DefaultFontSize}"
+                        Text="" /> <Run FontFamily="{StaticResource VazirFont}"
+                                         FontSize="{StaticResource DefaultFontSize}"
+                                         Text="{Binding ViewerCount }" />
+                    </TextBlock>
+                </Button.Content>
+            </Button>
+
+            <Button x:Name="SecondTextBlock"
+                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                    Background="{x:Null}"
+                    Margin="5"
+                    Grid.Column="1"
+                    Visibility="Collapsed"
+                    Click="MainTextBlockClick">
+                <Button.Content>
+                    <TextBlock x:Name="SecondText2Block"
+                               FontFamily="{StaticResource VazirFont}"
+                               FontSize="{StaticResource DefaultFontSize}"
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               Margin="5"
+                               Grid.Column="1" />
+                </Button.Content>
+            </Button>
+            <Button x:Name="InsightsButton"
+                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                    Background="{x:Null}"
+                    Margin="5"
+                    Grid.Column="2"
+                    Visibility="Collapsed"
+                    Click="InsightsButtonClick">
+                <Button.Content>
+                    <TextBlock 
+                               FontFamily="{StaticResource MaterialSymbolFont}"
+                               FontSize="{StaticResource DefaultFontSize}"
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               Text=""
+                               Margin="5"
+                               Grid.Column="1" />
+                </Button.Content>
+            </Button>
+
         </Grid>
         <Grid Grid.Row="1"
               Height="1"
               Background="#FF2E2E2E" />
-        <Grid x:Name="MainGrid" Grid.Row="2">
-            <ListView x:Name="MainLV"
-                      Foreground="{StaticResource DefaultInnerForegroundColor}"
-                      SelectionMode="None"
-                      Margin="5"
-                      ItemsSource="{Binding Items, Mode=OneWay}"
-                      ItemTemplateSelector="{StaticResource StoryViewerTemplateSelector}"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch"
-                      IsItemClickEnabled="False">
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="VerticalContentAlignment"
-                                Value="Stretch" />
-                        <Setter Property="HorizontalContentAlignment"
-                                Value="Stretch" />
-                        <Setter Property="Margin"
-                                Value="1" />
-                        <Setter Property="Padding"
-                                Value="0" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
+        <Grid x:Name="Grid1"
+              Grid.Row="2">
+            <Grid x:Name="MainGrid">
+                <ListView x:Name="MainLV"
+                          Foreground="{StaticResource DefaultInnerForegroundColor}"
+                          SelectionMode="None"
+                          Margin="5"
+                          ItemsSource="{Binding Items, Mode=OneWay}"
+                          ItemTemplateSelector="{StaticResource StoryViewerTemplateSelector}"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          IsItemClickEnabled="False">
 
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="VerticalContentAlignment"
+                                    Value="Stretch" />
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Stretch" />
+                            <Setter Property="Margin"
+                                    Value="1" />
+                            <Setter Property="Padding"
+                                    Value="0" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+
+            </Grid>
+            <Grid x:Name="QuestionRespondersGrid"
+                  Visibility="Collapsed">
+
+                <localX:AdaptiveGridView x:Name="QuestionRespondersGV"
+                                         MinItemHeight="210"
+                                         MinItemWidth="215"
+                                         Margin="5"
+                                         ItemsSource="{Binding ResponderVM.Items, Mode=OneWay}"
+                                         ItemTemplate="{StaticResource QuestionsResponsesUserXTemplate}"
+                                         SelectionMode="None"
+                                         IsItemClickEnabled="True"
+                                         ItemContainerStyle="{StaticResource GridViewItemContainerStyle}">
+                    <GridView.ItemContainerTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition />
+                        </TransitionCollection>
+                    </GridView.ItemContainerTransitions>
+
+                    <localX:AdaptiveGridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid HorizontalAlignment="Center"
+                                           Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </localX:AdaptiveGridView.ItemsPanel>
+                </localX:AdaptiveGridView>
+            </Grid>
+
+            <Grid x:Name="PollVotersGrid"
+                  Visibility="Collapsed">
+                <Pivot x:Name="MainPivot"
+                       Grid.Row="1"
+                       Padding="0"
+                       Margin="0">
+                    <PivotItem Header="{Binding PollVotersVM.YesText}"
+                               Padding="0"
+                               Margin="0">
+                        <ListView x:Name="LVYes"
+                                  Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                  SelectionMode="None"
+                                  Margin="5"
+                                  ItemsSource="{Binding PollVotersVM.ItemsYes, Mode=OneWay}"
+                                  ItemTemplate="{StaticResource PollVotersUserTemplate}"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  IsItemClickEnabled="False">
+
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="VerticalContentAlignment"
+                                            Value="Stretch" />
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Stretch" />
+                                    <Setter Property="Margin"
+                                            Value="1" />
+                                    <Setter Property="Padding"
+                                            Value="0" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </PivotItem>
+                    <PivotItem Header="{Binding PollVotersVM.NoText}"
+                               Padding="0"
+                               Margin="0">
+                        <ListView x:Name="LVNo"
+                                  Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                  SelectionMode="None"
+                                  Margin="5"
+                                  ItemsSource="{Binding PollVotersVM.ItemsNo, Mode=OneWay}"
+                                  ItemTemplate="{StaticResource PollVotersUserTemplate}"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  IsItemClickEnabled="False">
+
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="VerticalContentAlignment"
+                                            Value="Stretch" />
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Stretch" />
+                                    <Setter Property="Margin"
+                                            Value="1" />
+                                    <Setter Property="Padding"
+                                            Value="0" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </PivotItem>
+                </Pivot>
+
+            </Grid>
+            <Grid x:Name="QuizAnswersGrid"
+                  Visibility="Collapsed">
+                <ListView x:Name="LVQuizAnswers"
+                          Foreground="{StaticResource DefaultInnerForegroundColor}"
+                          SelectionMode="None"
+                          Margin="5"
+                          ItemsSource="{Binding QuizAnswersVM.Items, Mode=OneWay}"
+                          ItemTemplate="{StaticResource QuizAnswerUserTemplate}"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          IsItemClickEnabled="False">
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="VerticalContentAlignment"
+                                    Value="Stretch" />
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Stretch" />
+                            <Setter Property="Margin"
+                                    Value="1" />
+                            <Setter Property="Padding"
+                                    Value="0" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+
+            </Grid>
+
+            <Grid x:Name="SliderVoteGrid"
+                  Visibility="Collapsed">
+                <ListView x:Name="LVSliderVote"
+                          Foreground="{StaticResource DefaultInnerForegroundColor}"
+                          SelectionMode="None"
+                          Margin="5"
+                          ItemsSource="{Binding SliderVotersVM.Items, Mode=OneWay}"
+                          ItemTemplate="{StaticResource SliderAnswersUserTemplate}"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          IsItemClickEnabled="False">
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="VerticalContentAlignment"
+                                    Value="Stretch" />
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Stretch" />
+                            <Setter Property="Margin"
+                                    Value="1" />
+                            <Setter Property="Padding"
+                                    Value="0" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+
+            </Grid>
         </Grid>
-        <Grid x:Name="QuestionRespondersGrid"
-              Grid.Row="2" 
-              Visibility="Collapsed">
 
-            <localX:AdaptiveGridView x:Name="QuestionRespondersGV"
-                                     MinItemHeight="210"
-                                    MinItemWidth="215"
-                                    Margin="5"
-                                    ItemsSource="{Binding ResponderVM.Items, Mode=OneWay}"
-                                     ItemTemplate="{StaticResource QuestionsResponsesUserXTemplate}"
-                                    SelectionMode="None"
-                                    IsItemClickEnabled="True"
-                                    ItemContainerStyle="{StaticResource GridViewItemContainerStyle}">
-                <GridView.ItemContainerTransitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition />
-                    </TransitionCollection>
-                </GridView.ItemContainerTransitions>
-
-                <localX:AdaptiveGridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid HorizontalAlignment="Center"
-                                       Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </localX:AdaptiveGridView.ItemsPanel>
-            </localX:AdaptiveGridView>
-        </Grid>
-
-        <Grid x:Name="PollVotersGrid"
-              Grid.Row="2"
-              Visibility="Collapsed">
-            <Pivot x:Name="MainPivot"
-                   Grid.Row="1"
-                   Padding="0"
-                   Margin="0">
-                <PivotItem Header="{Binding PollVotersVM.YesText}"
-                           Padding="0"
-                           Margin="0">
-                    <ListView x:Name="LVYes" Foreground="{StaticResource DefaultInnerForegroundColor}"
-                              SelectionMode="None"
-                              Margin="5"
-                              ItemsSource="{Binding PollVotersVM.ItemsYes, Mode=OneWay}"
-                              ItemTemplate="{StaticResource PollVotersUserTemplate}"
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"
-                              IsItemClickEnabled="False">
-
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="VerticalContentAlignment"
-                                        Value="Stretch" />
-                                <Setter Property="HorizontalContentAlignment"
-                                        Value="Stretch" />
-                                <Setter Property="Margin"
-                                        Value="1" />
-                                <Setter Property="Padding"
-                                        Value="0" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
-                </PivotItem>
-                <PivotItem Header="{Binding PollVotersVM.NoText}"
-                           Padding="0"
-                           Margin="0">
-                    <ListView x:Name="LVNo"
-                              Foreground="{StaticResource DefaultInnerForegroundColor}"
-                              SelectionMode="None"
-                              Margin="5"
-                              ItemsSource="{Binding PollVotersVM.ItemsNo, Mode=OneWay}"
-                              ItemTemplate="{StaticResource PollVotersUserTemplate}"
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"
-                              IsItemClickEnabled="False">
-
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="VerticalContentAlignment"
-                                        Value="Stretch" />
-                                <Setter Property="HorizontalContentAlignment"
-                                        Value="Stretch" />
-                                <Setter Property="Margin"
-                                        Value="1" />
-                                <Setter Property="Padding"
-                                        Value="0" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
-                </PivotItem>
-            </Pivot>
-
-        </Grid>
-        <Grid x:Name="QuizAnswersGrid"
-              Grid.Row="2"
-              Visibility="Collapsed">
-            <ListView x:Name="LVQuizAnswers"
-                      Foreground="{StaticResource DefaultInnerForegroundColor}"
-                      SelectionMode="None"
-                      Margin="5"
-                      ItemsSource="{Binding QuizAnswersVM.Items, Mode=OneWay}"
-                      ItemTemplate="{StaticResource QuizAnswerUserTemplate}"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch"
-                      IsItemClickEnabled="False">
-
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="VerticalContentAlignment"
-                                Value="Stretch" />
-                        <Setter Property="HorizontalContentAlignment"
-                                Value="Stretch" />
-                        <Setter Property="Margin"
-                                Value="1" />
-                        <Setter Property="Padding"
-                                Value="0" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-
-        </Grid>
-
-        <Grid x:Name="SliderVoteGrid"
-              Grid.Row="2"
-              Visibility="Collapsed">
-            <ListView x:Name="LVSliderVote"
-                      Foreground="{StaticResource DefaultInnerForegroundColor}"
-                      SelectionMode="None"
-                      Margin="5"
-                      ItemsSource="{Binding SliderVotersVM.Items, Mode=OneWay}"
-                      ItemTemplate="{StaticResource SliderAnswersUserTemplate}"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch"
-                      IsItemClickEnabled="False">
-
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="VerticalContentAlignment"
-                                Value="Stretch" />
-                        <Setter Property="HorizontalContentAlignment"
-                                Value="Stretch" />
-                        <Setter Property="Margin"
-                                Value="1" />
-                        <Setter Property="Padding"
-                                Value="0" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-
-        </Grid>
+        <uc:StoryInsightUc x:Name="StoryInsightUc"
+                           Grid.Row="2"
+                           VerticalAlignment="Stretch"
+                           HorizontalAlignment="Stretch" 
+                           Visibility="Collapsed"/>
     </Grid>
 </UserControl>

@@ -31,13 +31,12 @@ namespace Minista.ContentDialogs
         public InstaMedia Media { get; private set; }
         public string MediaId { get; private set; }
         private string _impressionsBottomText = null;
-        int _ownerProfileViewsCount = 0, _reachCount = 0, _profileActionsCount = 0, _impressionCount = 0, _nonFollowsCount = 0, _ownerAccountFollowsCount = 0;
+        int _ownerProfileViewsCount = 0, _reachCount = 0, _profileActionsCount = 0, _impressionCount = 0,  _ownerAccountFollowsCount = 0;
         public int OwnerProfileViewsCount { get => _ownerProfileViewsCount; set { _ownerProfileViewsCount = value; RaisePropertyChanged("OwnerProfileViewsCount"); } }
         public int ReachCount { get => _reachCount; set { _reachCount = value; RaisePropertyChanged("ReachCount"); } }
         public int ProfileActionsCount { get => _profileActionsCount; set { _profileActionsCount = value; RaisePropertyChanged("ProfileActionsCount"); } }
         public int ImpressionCount { get => _impressionCount; set { _impressionCount = value; RaisePropertyChanged("ImpressionCount"); } }
         public int OwnerAccountFollowsCount { get => _ownerAccountFollowsCount; set { _ownerAccountFollowsCount = value; RaisePropertyChanged("OwnerAccountFollowsCount"); } }
-        public string ImpressionsBottomText { get => _impressionsBottomText; set { _impressionsBottomText = value; RaisePropertyChanged("ImpressionsBottomText"); } }
         public int NonFollowsCount { get; set; }
 
 
@@ -71,7 +70,7 @@ namespace Minista.ContentDialogs
                         ProfileActionsCount = result.Value.Metrics.ProfileActionsCount;
                         ReachCount = result.Value.Metrics.ReachCount;
                         ImpressionCount = result.Value.Metrics.ImpressionCount;
-                        ImpressionsBottomText = null;
+                        txtImpressionsBottom.Text = string.Empty;
                         Interactions.Clear();
                         Discoveries.Clear(); 
                         Impressions.Clear();
@@ -134,7 +133,7 @@ namespace Minista.ContentDialogs
                                     list.Add("Other");
                                     Impressions.Add(new MetricInsightsItem("From Other", impression));
                                 }
-                                ImpressionsBottomText = string.Join(",", list);
+                                txtImpressionsBottom.Text = string.Join(",", list);
                             }
                             if (result.Value.Metrics.HashtagsImpressions?.Hashtags?.Nodes?.Count > 0)
                             {
@@ -203,18 +202,17 @@ namespace Minista.ContentDialogs
 
         private void ExitButtonClick(object sender, RoutedEventArgs e) => Hide();
 
-
-        public class MetricInsightsItem : BaseModel
-        {
-            public string Name { get; set; }
-            public int Value { get; set; }
-            public MetricInsightsItem(string name, int value)
-            {
-                Name = name;
-                Value = value;
-            }
-        }
         public event PropertyChangedEventHandler PropertyChanged;
         void RaisePropertyChanged(string memberName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+    }
+    public class MetricInsightsItem : BaseModel
+    {
+        public string Name { get; set; }
+        public int Value { get; set; }
+        public MetricInsightsItem(string name, int value)
+        {
+            Name = name;
+            Value = value;
+        }
     }
 }

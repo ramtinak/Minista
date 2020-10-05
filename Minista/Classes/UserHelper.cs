@@ -9,6 +9,7 @@ namespace Minista
 {
     static class UserHelper
     {
+        public static bool IsBusiness { get; private set; }
         public static InstaBanyanSuggestions BanyanSuggestions;
         public static async Task GetBanyanAsync()
         {
@@ -51,6 +52,7 @@ namespace Minista
                 var user = await Helper.InstaApi.UserProcessor.GetUserInfoByIdAsync(Helper.InstaApi.GetLoggedUser().LoggedInUser.Pk);
                 if (user.Succeeded)
                 {
+                    IsBusiness = user.Value.IsBusiness;
                     Helper.CurrentUser = user.Value;
                     Helper.InstaApi.UpdateUser(user.Value.ToUserShort());
                     SessionHelper.SaveCurrentSession();
@@ -67,11 +69,15 @@ namespace Minista
                 {
                     var canSave = SessionHelper.DontSaveSettings;
                     var user = await Helper.InstaApi.UserProcessor.GetUserInfoByIdAsync(Helper.InstaApi.GetLoggedUser().LoggedInUser.Pk);
-                    if (user.Succeeded && canSave)
+                    if (user.Succeeded)
                     {
+                        IsBusiness = user.Value.IsBusiness;
                         Helper.CurrentUser = user.Value;
-                        Helper.InstaApi.UpdateUser(user.Value.ToUserShort());
-                        SessionHelper.SaveCurrentSession();
+                        if (canSave)
+                        {
+                            Helper.InstaApi.UpdateUser(user.Value.ToUserShort());
+                            SessionHelper.SaveCurrentSession();
+                        }
                     }
                 });
             }

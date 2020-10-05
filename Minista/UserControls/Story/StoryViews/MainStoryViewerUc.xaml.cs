@@ -35,9 +35,16 @@ namespace Minista.UserControls.Story.StoryViews
         }
         public async void SetStoryItem(InstaStoryItem storyItem)
         {
+            ShowGrid(true);
             Visibility = Visibility.Visible;
-            await Task.Delay(420);
+            InsightsButton.Visibility = UserHelper.IsBusiness ? Visibility.Visible : Visibility.Collapsed;
+            await Task.Delay(420); 
+
             StoryVM.SetStoryItem(storyItem, MainLV?.FindScrollViewer());
+            if (UserHelper.IsBusiness)
+            {
+                StoryInsightUc.SetItem(storyItem);
+            }
         }
         private void GridLoaded(object sender, RoutedEventArgs e)
         {
@@ -57,8 +64,8 @@ namespace Minista.UserControls.Story.StoryViews
                         {
                             ShowResponsedGrid();
                             await Task.Delay(450);
-                            if (SecondTextBlock != null)
-                                SecondTextBlock.Text = obj.Title;
+                            if (SecondText2Block != null)
+                                SecondText2Block.Text = obj.Title;
                             StoryVM.ResponderVM.SetItem(StoryVM.StoryItem, obj.StoryQuestionInfo, QuestionRespondersGV.FindScrollViewer());
                         }
                         else if (obj.Type == StoryViewObjectType.PollResults)
@@ -73,8 +80,8 @@ namespace Minista.UserControls.Story.StoryViews
                                 MainPivot.SelectedIndex = 0;
                             }
                             await Task.Delay(450);
-                            if (SecondTextBlock != null)
-                                SecondTextBlock.Text = obj.Title;
+                            if (SecondText2Block != null)
+                                SecondText2Block.Text = obj.Title;
                             MainPivot.SelectedIndex = 0;
                             StoryVM.PollVotersVM.SetItem(StoryVM.StoryItem, obj.StoryPollSticker, LVYes?.FindScrollViewer(), LVNo?.FindScrollViewer());
                         }
@@ -82,16 +89,16 @@ namespace Minista.UserControls.Story.StoryViews
                         {
                             ShowQuizGrid();
                             await Task.Delay(450);
-                            if (SecondTextBlock != null)
-                                SecondTextBlock.Text = obj.Title;
+                            if (SecondText2Block != null)
+                                SecondText2Block.Text = obj.Title;
                             StoryVM.QuizAnswersVM.SetItem(StoryVM.StoryItem, obj.StoryQuiz, LVQuizAnswers?.FindScrollViewer());
                         }
                         else if (obj.Type == StoryViewObjectType.SliderResults)
                         {
                             ShowSliderVoteGrid();
                             await Task.Delay(450);
-                            if (SecondTextBlock != null)
-                                SecondTextBlock.Text = obj.Title;
+                            if (SecondText2Block != null)
+                                SecondText2Block.Text = obj.Title;
                             StoryVM.SliderVotersVM.SetItem(StoryVM.StoryItem, obj.SliderStickerItem, LVSliderVote?.FindScrollViewer());
                         }
                         //ShowSliderVoteGrid
@@ -170,5 +177,26 @@ namespace Minista.UserControls.Story.StoryViews
             SliderVoteGrid.Visibility = Visibility.Visible;
             QuizAnswersGrid.Visibility = PollVotersGrid.Visibility = QuestionRespondersGrid.Visibility = MainTextBlock.Visibility = MainGrid.Visibility = Visibility.Collapsed;
         }
+
+        void ShowGrid(bool viewer)
+        {
+            try
+            {
+                if (viewer)
+                {
+                    Grid1.Visibility = Visibility.Visible;
+                    StoryInsightUc.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    StoryInsightUc.Visibility = Visibility.Visible;
+                    Grid1.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch { }
+        }
+        private void MainTextBlockClick(object sender, RoutedEventArgs e) => ShowGrid(true);
+        private void InsightsButtonClick(object sender, RoutedEventArgs e) => ShowGrid(false);
+
     }
 }

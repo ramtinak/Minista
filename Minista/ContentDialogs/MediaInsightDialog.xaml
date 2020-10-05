@@ -334,7 +334,7 @@
                                    TextAlignment="Center"
                                    Foreground="#FF666666"
                                    TextWrapping="Wrap">
-                            This is where your was seen the most. It got the most impressions from <Run Text="{x:Bind ImpressionsBottomText}" />
+                            This is where your was seen the most. It got the most impressions from <Run x:Name="txtImpressionsBottom"/>
                         </TextBlock>
                         <Rectangle Grid.Row="5"
                                    Grid.ColumnSpan="2"
