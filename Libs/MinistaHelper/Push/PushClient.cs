@@ -135,19 +135,19 @@ namespace MinistaHelper.Push
 
             await UnregisterTasksAsync();
             BackgroundTaskBuilder backgroundTaskBuilder;
-            if (CanRunInBG())
-            {
-                if (_socketActivityTask == null)
-                {
-                    backgroundTaskBuilder = new BackgroundTaskBuilder
-                    {
-                        Name = BACKGROUND_ACTIVITY_ENTRY_NAME_POINT,
-                        TaskEntryPoint = BACKGROUND_ACTIVITY_ENTRY_POINT
-                    };
-                    backgroundTaskBuilder.SetTrigger(new SocketActivityTrigger());
-                    _socketActivityTask = backgroundTaskBuilder.Register();
-                }
-            }
+            //if (CanRunInBG())
+            //{
+            //    if (_socketActivityTask == null)
+            //    {
+            //        backgroundTaskBuilder = new BackgroundTaskBuilder
+            //        {
+            //            Name = BACKGROUND_ACTIVITY_ENTRY_NAME_POINT,
+            //            TaskEntryPoint = BACKGROUND_ACTIVITY_ENTRY_POINT
+            //        };
+            //        backgroundTaskBuilder.SetTrigger(new SocketActivityTrigger());
+            //        _socketActivityTask = backgroundTaskBuilder.Register();
+            //    }
+            //}
             backgroundTaskBuilder = new BackgroundTaskBuilder
             {
                 Name = "MinistaBH.NotifyQuickReplyTask",
@@ -165,6 +165,7 @@ namespace MinistaHelper.Push
         /// </summary>
         public async Task TransferPushSocket()
         {
+            return;
             if (!_instaApi.IsUserAuthenticated || _runningTokenSource.IsCancellationRequested) return;
             if (DontTransferSocket) return;
             Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Transferring sockets");
@@ -198,25 +199,25 @@ namespace MinistaHelper.Push
             if (!_instaApi.IsUserAuthenticated) return;
             try
             {
-                if (CanRunInBG())
-                {
-                    if (SocketActivityInformation.AllSockets.TryGetValue(SOCKET_ID, out var socketInformation))
-                    {
-                        var socket = socketInformation.StreamSocket;
-                        if (string.IsNullOrEmpty(ConnectionData.FbnsToken)) // if we don't have any push data, start fresh
-                            await StartFresh().ConfigureAwait(false);
-                        else
-                        {
-                            //socket.TransferOwnership(SOCKET_ID);
-                            await StartWithExistingSocket(socket).ConfigureAwait(false);
-                        }
-                    }
-                    else
-                    {
-                        await StartFresh().ConfigureAwait(false);
-                    }
-                }
-                else
+                //if (CanRunInBG())
+                //{
+                //    if (SocketActivityInformation.AllSockets.TryGetValue(SOCKET_ID, out var socketInformation))
+                //    {
+                //        var socket = socketInformation.StreamSocket;
+                //        if (string.IsNullOrEmpty(ConnectionData.FbnsToken)) // if we don't have any push data, start fresh
+                //            await StartFresh().ConfigureAwait(false);
+                //        else
+                //        {
+                //            //socket.TransferOwnership(SOCKET_ID);
+                //            await StartWithExistingSocket(socket).ConfigureAwait(false);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        await StartFresh().ConfigureAwait(false);
+                //    }
+                //}
+                //else
                 {
                     await StartFresh().ConfigureAwait(false);
                 }

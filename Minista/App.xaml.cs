@@ -311,7 +311,7 @@ namespace Minista
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private async void OnSuspending(object sender, SuspendingEventArgs e)
+        private /*async*/ void OnSuspending(object sender, SuspendingEventArgs e)
         {
             Helper.DeleteCachedFolder();
 
@@ -323,18 +323,19 @@ namespace Minista
             {
                 if(Helper.InstaApi?.PushClient != null)
                 {
-                    await Task.Delay(5500);
-                    await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-                    {
-                        try
-                        {
-                            await Task.Delay(5500);
-                            await Helper.InstaApi.PushClient.TransferPushSocket();
-                        }
-                        catch { }
+                    Helper.InstaApi.PushClient.Shutdown();
+                    //await Task.Delay(5500);
+                    //await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                    //{
+                    //    try
+                    //    {
+                    //        await Task.Delay(5500);
+                    //        await Helper.InstaApi.PushClient.TransferPushSocket();
+                    //    }
+                    //    catch { }
 
-                        });
-                   
+                    //    });
+
                 }
                 //if (MultiApiHelper.Pushs.Count > 0)
                 //    for (int i = 0; i < MultiApiHelper.Pushs.Count; i++)
