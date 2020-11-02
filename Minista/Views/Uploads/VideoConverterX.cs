@@ -88,19 +88,32 @@ namespace Minista.Views.Uploads
         {
             try
             {
-                var MediaProfile = MediaEncodingProfile.CreateMp4(uploadItem.VideoEncodingQuality);
+                var mediaProfile = MediaEncodingProfile.CreateMp4(uploadItem.VideoEncodingQuality);
                 var outputFile = await GenerateRandomOutputFile();
 
                 if (uploadItem != null && outputFile != null)
                 {
                     var inputFile = uploadItem.VideoToUpload;
-
+                    
+                    var fileProfile = await GetEncodingProfileFromFileAsync(inputFile);
+                    if (fileProfile != null)
+                    {
+                        mediaProfile.Video.Bitrate = fileProfile.Video.Bitrate;
+                        if (mediaProfile.Audio != null)
+                        {
+                            mediaProfile.Audio.Bitrate = fileProfile.Audio.Bitrate;
+                            mediaProfile.Audio.BitsPerSample = fileProfile.Audio.BitsPerSample;
+                            mediaProfile.Audio.ChannelCount = fileProfile.Audio.ChannelCount;
+                            mediaProfile.Audio.SampleRate = fileProfile.Audio.SampleRate;
+                        }
+                        "Media profile copied from original video".PrintDebug();
+                    }
                     //MediaProfile = await MediaEncodingProfile.CreateFromFileAsync(inputFile);
                     Transcoder.TrimStartTime = uploadItem.StartTime;
                     Transcoder.TrimStopTime = uploadItem.EndTime;
 
-                    MediaProfile.Video.Height = (uint)uploadItem.Size.Height;
-                    MediaProfile.Video.Width = (uint)uploadItem.Size.Width;
+                    mediaProfile.Video.Height = (uint)uploadItem.Size.Height;
+                    mediaProfile.Video.Width = (uint)uploadItem.Size.Width;
 
 
                     var transform = new VideoTransformEffectDefinition
@@ -118,7 +131,7 @@ namespace Minista.Views.Uploads
                         outputFile,
                         //.PrepareMediaStreamSourceTranscodeAsync(Mss,
                         //await outputFile.OpenAsync(FileAccessMode.ReadWrite),
-                        MediaProfile);
+                        mediaProfile);
 
                     if (preparedTranscodeResult.CanTranscode)
                     {
@@ -138,6 +151,15 @@ namespace Minista.Views.Uploads
 
         }
 
+        async Task<MediaEncodingProfile> GetEncodingProfileFromFileAsync(StorageFile file)
+        { 
+            try
+            {
+                return await MediaEncodingProfile.CreateFromFileAsync(file);
+            }
+            catch { }
+            return null;
+        }
         //async Task<StorageFile> ConvertVideo(StorageFile inputFile, Size? imageSize, Rect? rectSize)
         //{
         //    try
