@@ -171,12 +171,15 @@
                     </Grid>
                 </Grid>
             </Grid>
-            <canvas:CanvasControl x:Name="MainCanvas" 
+            <!--<canvas:CanvasControl x:Name="MainCanvas" 
                                   Width="200"
                                   Height="200"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Center"
-                                  Draw="MainCanvas_Draw"/>
+                                  Draw="MainCanvas_Draw"/>-->
+            <Image x:Name="ImageX" Tapped="ImageXTapped"/>
+            <Grid x:Name="UserTags" Visibility="Collapsed" Width="{Binding Width,ElementName=ImageX}"
+                  Height="{Binding Height, ElementName=ImageX}"/>
             <Grid x:Name="CropGrid"
                   Visibility="Collapsed">
                 <Grid.RowDefinitions>
@@ -300,7 +303,7 @@
                 Background="{x:Null}"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                Margin="10 25 0 0" Visibility="Collapsed">
+                Margin="10 25 0 0" Visibility="Visible">
             <Grid>
 
                 <Ellipse Width="30"

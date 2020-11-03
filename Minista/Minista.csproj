@@ -142,6 +142,9 @@
     <Compile Include="ContentDialogs\AddPasscodeDialog.xaml.cs">
       <DependentUpon>AddPasscodeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContentDialogs\AddUserTagDialog.xaml.cs">
+      <DependentUpon>AddUserTagDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContentDialogs\FileAssociationDialog.xaml.cs">
       <DependentUpon>FileAssociationDialog.xaml</DependentUpon>
     </Compile>
@@ -743,6 +746,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ContentDialogs\AddPasscodeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContentDialogs\AddUserTagDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

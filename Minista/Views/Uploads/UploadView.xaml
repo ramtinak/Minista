@@ -162,7 +162,20 @@
                      IsSpellCheckEnabled="False" />-->
         </Grid>
         <Grid Grid.Row="2" Visibility="Visible">
-            <ListView x:Name="LV"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="TagText" Foreground="White"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Center"
+                                         FontFamily="{StaticResource VazirFont}"
+                                         FontSize="{StaticResource BigBigFontSize}"
+                                         TextWrapping="NoWrap"
+                                         Margin="10"
+                                         Text="Tap photo to tag people" Visibility="Collapsed" />
+            <ListView x:Name="LV" Grid.Row="1"
                       ScrollViewer.HorizontalScrollMode="Enabled"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       ScrollViewer.IsHorizontalRailEnabled="True"

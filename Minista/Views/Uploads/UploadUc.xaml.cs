@@ -37,11 +37,14 @@ using Windows.Media.Effects;
 using Windows.Media.MediaProperties;
 using System.Collections.ObjectModel;
 using Minista.UserControls;
+using Minista.UserControls.Main;
+using Minista.ContentDialogs;
 
 namespace Minista.Views.Uploads
 {
     public sealed partial class UploadUc : UserControl
     {
+        //public ImageCropper ImageCropper;
         public bool Editing { get; set; } = true;
         public StorageFile FileToUpload, ThumbnailFile;
         private const double DefaultAspectRatio = 1.62d;
@@ -49,7 +52,16 @@ namespace Minista.Views.Uploads
         BitmapDecoder BitmapDecoder;
         Rect CurrentCroppedRectForVideo;
         public bool IsVideo = false;
-         
+        private bool _canTagPeople = false;
+        public bool CanTagPeople
+        {
+            get => _canTagPeople;
+            set
+            {
+                _canTagPeople = value;
+                UserTags.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
         public UploadUc()
         {
             this.InitializeComponent();
@@ -88,6 +100,7 @@ namespace Minista.Views.Uploads
                 //AudioMuted = ToggleMuteAudio.IsChecked ?? false,
                Rect = ImageCropper.CurrentCroppedRect
             };
+            upItem.UserTags = GetMediaTagUcs();
             upItem.ThisIsVideo(IsVideo);
             if (IsVideo)
             {
@@ -139,7 +152,7 @@ namespace Minista.Views.Uploads
                     height = decoder.PixelHeight;
                     var wRatio = AspectRatioHelper.GetAspectRatioForMedia(width, height);
                     var hRatio = AspectRatioHelper.GetAspectRatioForMedia(height, width);
-                    MainCanvas.Visibility = Visibility.Collapsed;
+                    ImageX.Visibility = Visibility.Collapsed;
 
                     AspectRatioSlider.Value = wRatio;
                     ImageCropper.AspectRatio = wRatio;
@@ -186,7 +199,7 @@ namespace Minista.Views.Uploads
 
                         CropGrid.Visibility = Visibility.Visible;
 
-                        MainCanvas.Visibility = Visibility.Collapsed;
+                        ImageX.Visibility = Visibility.Collapsed;
 
                         AspectRatioSlider.Value = wRatio;
                         ImageCropper.AspectRatio = wRatio;
@@ -196,7 +209,7 @@ namespace Minista.Views.Uploads
                     else
                     {
                         CropGrid.Visibility = Visibility.Visible;
-                        MainCanvas.Visibility = Visibility.Collapsed;
+                        ImageX.Visibility = Visibility.Collapsed;
                         AspectRatioSlider.Value = DefaultAspectRatio;
                         ImageCropper.AspectRatio = DefaultAspectRatio;
                         ImageCropper.CropShape = CropShape.Rectangular;
@@ -231,7 +244,7 @@ namespace Minista.Views.Uploads
                     height = decoder.PixelHeight;
                     var wRatio = AspectRatioHelper.GetAspectRatioForMedia(width, height);
                     var hRatio = AspectRatioHelper.GetAspectRatioForMedia(height, width);
-                    MainCanvas.Visibility = Visibility.Collapsed;
+                    ImageX.Visibility = Visibility.Collapsed;
 
                     AspectRatioSlider.Value = wRatio;
                     ImageCropper.AspectRatio = wRatio;
@@ -278,7 +291,7 @@ namespace Minista.Views.Uploads
 
                         CropGrid.Visibility = Visibility.Visible;
 
-                        MainCanvas.Visibility = Visibility.Collapsed;
+                        ImageX.Visibility = Visibility.Collapsed;
 
                         AspectRatioSlider.Value = wRatio;
                         ImageCropper.AspectRatio = wRatio;
@@ -288,7 +301,7 @@ namespace Minista.Views.Uploads
                     else
                     {
                         CropGrid.Visibility = Visibility.Visible;
-                        MainCanvas.Visibility = Visibility.Collapsed;
+                        ImageX.Visibility = Visibility.Collapsed;
                         AspectRatioSlider.Value = DefaultAspectRatio;
                         ImageCropper.AspectRatio = DefaultAspectRatio;
                         ImageCropper.CropShape = CropShape.Rectangular;
@@ -310,12 +323,12 @@ namespace Minista.Views.Uploads
                 {
                     ShowVideo();
                     MediaElementGrid.Visibility = Visibility.Visible;
-                    MainCanvas.Visibility = Visibility.Collapsed;
+                    ImageX.Visibility = Visibility.Collapsed;
                     CropGrid.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
-                    MainCanvas.Visibility = Visibility.Visible;
+                    ImageX.Visibility = Visibility.Visible;
                     MediaElementGrid.Visibility = Visibility.Collapsed;
                     CropGrid.Visibility = Visibility.Collapsed;
                     Show(file);
@@ -478,27 +491,117 @@ namespace Minista.Views.Uploads
 
         private /*async*/ void CancelButtonClick(object sender, RoutedEventArgs e)
         {
-        } 
+        }
+        private void ImageXTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (CanTagPeople)
+            {
+                var p = e.GetPosition(ImageX);
+                var x = (p.X / ImageX.ActualWidth);
+                var y = (p.Y / ImageX.ActualHeight);
+
+                var trans = new CompositeTransform()
+                {
+                    TranslateX = p.X,
+                    TranslateY = p.Y,
+                };
+                var mtc = new MediaTagUc()
+                {
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Opacity = 1,
+                    RenderTransform = trans,
+                    Name = "UserTags" + 8.GenerateRandomStringStatic(),
+                };
+                
+                mtc.SetUserTag(new InstaUserTagUpload
+                {
+                    X = x,
+                    Y = y
+                }, IsVideo);
+                mtc.Tapped += MtcTapped;
+                mtc.DoubleTapped += MtcDoubleTapped;
+                mtc.Visibility = Visibility.Visible;
+                UserTags.Children.Add(mtc);
+                mtc.RenderTransform = new CompositeTransform()
+                {
+                    TranslateX = p.X,
+                    TranslateY = p.Y,
+                };
+                MtcTapped(mtc, null);
+            }
+        }
+
+        public List<InstaUserTagUpload> GetMediaTagUcs()
+        {
+            var list = new List<InstaUserTagUpload>();
+            if (UserTags.Children.Count > 0)
+            {
+                foreach(var item in UserTags.Children)
+                {
+                    if (item is MediaTagUc mtc && mtc != null)
+                        list.Add(mtc.UserTagUpload);
+                }
+            }
+            return list;
+        }
+        private async void MtcTapped(object sender, TappedRoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is MediaTagUc mtc)
+                {
+                    await new AddUserTagDialog(mtc).ShowAsync();
+
+                    if (string.IsNullOrEmpty(mtc.UserTagUpload.Username))
+                        UserTags.Children.Remove(mtc);
+                }
+            }
+            catch { }
+        }
+
+        private void MtcDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is MediaTagUc mtc)
+                    UserTags.Children.Remove(mtc);
+            }
+            catch { }
+        }
 
         #region Canvas
 
+        private async Task<ImageSource> GetImageSourceAsync(IRandomAccessStream randomAccessStream)
+        {
+            try
+            {
+                var bitmap = new BitmapImage();
+                await bitmap.SetSourceAsync(randomAccessStream);
+                return bitmap;
+            }
+            catch { }
+            return null;
+        }
         private void CurrentSizeChanged(object sender, WindowSizeChangedEventArgs e)
         {
             SetCanvas();
-            MainCanvas.Invalidate();
+            //MainCanvas.Invalidate();
         }
-        private CanvasBitmap _image; 
+        //private CanvasBitmap _image;
         public async void Show(StorageFile image)
         {
             try
             {
                 Show();
-                //WaitLoading.IsActive = true;
-                CanvasDevice cd = CanvasDevice.GetSharedDevice();
-                var stream = await image.OpenAsync(FileAccessMode.Read);
-                _image = await CanvasBitmap.LoadAsync(cd, stream);
-                //WaitLoading.IsActive = false;
-                MainCanvas.Invalidate();
+                using(var stream = await image.OpenAsync(FileAccessMode.Read))
+                ImageX.Source = await GetImageSourceAsync(stream);
+                ////WaitLoading.IsActive = true;
+                //CanvasDevice cd = CanvasDevice.GetSharedDevice();
+                //var stream = await image.OpenAsync(FileAccessMode.Read);
+                //_image = await CanvasBitmap.LoadAsync(cd, stream);
+                ////WaitLoading.IsActive = false;
+                //MainCanvas.Invalidate();
             }
             catch
             {
@@ -508,121 +611,123 @@ namespace Minista.Views.Uploads
         {
             SetCanvas();
         }
-        /// <summary>
-        /// Canvas drawing
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void MainCanvas_Draw(Microsoft.Graphics.Canvas.UI.Xaml.CanvasControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasDrawEventArgs args)
-        {
-            var target = GetDrawings(true);
-            if (target != null)
-            {
-                args.DrawingSession.DrawImage(target);
-            }
-        }
+
+
+        ///// <summary>
+        ///// Canvas drawing
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="args"></param>
+        //private void MainCanvas_Draw(Microsoft.Graphics.Canvas.UI.Xaml.CanvasControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasDrawEventArgs args)
+        //{
+        //    var target = GetDrawings(true);
+        //    if (target != null)
+        //    {
+        //        args.DrawingSession.DrawImage(target);
+        //    }
+        //}
         private void SetCanvas()
         {
             try
             {
 
-                var w = MainWorkSapce.ActualWidth - 40;  
-                var h = MainWorkSapce.ActualHeight - 40; 
+                var w = MainWorkSapce.ActualWidth - 40;
+                var h = MainWorkSapce.ActualHeight - 40;
 
-                MainCanvas.Width = w;
-                MainCanvas.Height = h;
-                MainCanvas.Invalidate();
+                ImageX.Width = w;
+                ImageX.Height = h;
+                //MainCanvas.Invalidate();
             }
             catch { }
         }
-        private async void GenerateResultImage()
-        {
-            var img = GetDrawings(false);
-            if (img != null)
-            {
-                IRandomAccessStream stream = new InMemoryRandomAccessStream();
-                await img.SaveAsync(stream, CanvasBitmapFileFormat.Jpeg);
-                BitmapImage result = new BitmapImage();
-                stream.Seek(0);
-                await result.SetSourceAsync(stream);
-            }
-        }
-        private Rect GetImageDrawingRect()
-        {
-            Rect des;
+        //private async void GenerateResultImage()
+        //{
+        //    var img = GetDrawings(false);
+        //    if (img != null)
+        //    {
+        //        IRandomAccessStream stream = new InMemoryRandomAccessStream();
+        //        await img.SaveAsync(stream, CanvasBitmapFileFormat.Jpeg);
+        //        BitmapImage result = new BitmapImage();
+        //        stream.Seek(0);
+        //        await result.SetSourceAsync(stream);
+        //    }
+        //}
+        //private Rect GetImageDrawingRect()
+        //{
+        //    Rect des;
 
-            var image_w = _image.Size.Width;
-            var image_h = _image.Size.Height;
+        //    var image_w = _image.Size.Width;
+        //    var image_h = _image.Size.Height;
 
 
-            var w = MainCanvas.Width - 20;
-            var h = MainCanvas.Height - 20;
-            if (image_w / image_h > w / h)
-            {
-                var left = 10;
+        //    var w = MainCanvas.Width - 20;
+        //    var h = MainCanvas.Height - 20;
+        //    if (image_w / image_h > w / h)
+        //    {
+        //        var left = 10;
 
-                var width = w;
-                var height = (image_h / image_w) * width;
+        //        var width = w;
+        //        var height = (image_h / image_w) * width;
 
-                var top = (h - height) / 2 + 10;
+        //        var top = (h - height) / 2 + 10;
 
-                des = new Rect(left, top, width, height);
-            }
-            else
-            {
-                var top = 10;
-                var height = h;
-                var width = (image_w / image_h) * height;
-                var left = (w - width) / 2 + 10;
-                des = new Rect(left, top, width, height);
-            }
-            return des;
-        }
-        private CanvasRenderTarget GetDrawings(bool edit)
-        {
-            double w, h; 
-            if (edit)  
-            {
-                w = MainCanvas.ActualWidth;
-                h = MainCanvas.ActualHeight;
-            }
-            else  
-            {
-                Rect des = GetImageDrawingRect();
+        //        des = new Rect(left, top, width, height);
+        //    }
+        //    else
+        //    {
+        //        var top = 10;
+        //        var height = h;
+        //        var width = (image_w / image_h) * height;
+        //        var left = (w - width) / 2 + 10;
+        //        des = new Rect(left, top, width, height);
+        //    }
+        //    return des;
+        //}
+        //private CanvasRenderTarget GetDrawings(bool edit)
+        //{
+        //    double w, h;
+        //    if (edit)
+        //    {
+        //        w = MainCanvas.ActualWidth;
+        //        h = MainCanvas.ActualHeight;
+        //    }
+        //    else
+        //    {
+        //        Rect des = GetImageDrawingRect();
 
-                w = (_image.Size.Width / des.Width) * MainCanvas.Width;
-                h = (_image.Size.Height / des.Height) * MainCanvas.Height;
-            }
-            var scale = edit ? 1 : w / MainCanvas.Width; 
+        //        w = (_image.Size.Width / des.Width) * MainCanvas.Width;
+        //        h = (_image.Size.Height / des.Height) * MainCanvas.Height;
+        //    }
+        //    var scale = edit ? 1 : w / MainCanvas.Width;
 
-            CanvasDevice device = CanvasDevice.GetSharedDevice();
-            CanvasRenderTarget target = new CanvasRenderTarget(device, (float)w, (float)h, 96);
-            using (CanvasDrawingSession graphics = target.CreateDrawingSession())
-                DrawBackImage(graphics, scale);
+        //    CanvasDevice device = CanvasDevice.GetSharedDevice();
+        //    CanvasRenderTarget target = new CanvasRenderTarget(device, (float)w, (float)h, 96);
+        //    using (CanvasDrawingSession graphics = target.CreateDrawingSession())
+        //        DrawBackImage(graphics, scale);
 
-            return target;
-        }
-        private void DrawBackImage(CanvasDrawingSession graphics, double scale)
-        {
-            if (_image != null)
-            {
-                Rect des = GetImageDrawingRect();
-                des.X *= scale;
-                des.Y *= scale;
-                des.Width *= scale;
-                des.Height *= scale;
+        //    return target;
+        //}
+        //private void DrawBackImage(CanvasDrawingSession graphics, double scale)
+        //{
+        //    if (_image != null)
+        //    {
+        //        Rect des = GetImageDrawingRect();
+        //        des.X *= scale;
+        //        des.Y *= scale;
+        //        des.Width *= scale;
+        //        des.Height *= scale;
 
-                //ICanvasImage image = GetBrightnessEffect(_image);
-               var image = ApplyFilterTemplate(_image);
+        //        //ICanvasImage image = GetBrightnessEffect(_image);
+        //        var image = ApplyFilterTemplate(_image);
 
-                graphics.DrawImage(image, des, _image.Bounds);
-            }
-        }
+        //        graphics.DrawImage(image, des, _image.Bounds);
+        //    }
+        //}
 
-        private ICanvasImage ApplyFilterTemplate(ICanvasImage source)
-        {
-            return source;
-        }
+        //private ICanvasImage ApplyFilterTemplate(ICanvasImage source)
+        //{
+        //    return source;
+        //}
 
         #endregion
 

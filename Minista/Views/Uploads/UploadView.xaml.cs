@@ -317,7 +317,8 @@ namespace Minista.Views.Uploads
                 TagPeopleToggleButton.IsChecked = false;
             }
             catch { }
-            Helper.ShowNotify("This is only available in the developer version FOR NOW", 3500);
+            TagPeople();
+            //Helper.ShowNotify("This is only available in the developer version FOR NOW", 3500);
         }
 
         private void AddLocationToggleButtonClick(object sender, RoutedEventArgs e)
@@ -359,6 +360,24 @@ namespace Minista.Views.Uploads
             OptionsGrid.Visibility = Visibility.Visible;
             UploadButton.Visibility = Visibility.Visible;
             NextButton.Visibility = Visibility.Collapsed;
+        }
+        void TagPeople()
+        {
+            for (int i = 0; i < UploadUcListX.Count; i++)
+            {
+                try
+                {
+                    if (UploadUcListX[i].PlusVisibility == Visibility.Collapsed)
+                        UploadUcListX[i].UploadUc.CanTagPeople = true;
+                }
+                catch { }
+            }
+            NextButton.IsEnabled = true;
+
+            OptionsGrid.Visibility = Visibility.Collapsed;
+            UploadButton.Visibility = Visibility.Collapsed;
+            TagText.Visibility = NextButton.Visibility = Visibility.Visible;
+
         }
     }
 }
