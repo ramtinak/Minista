@@ -22,6 +22,7 @@ using Minista.Controls;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI.Core;
+using InstagramApiSharp.Classes;
 
 namespace Minista.Views.Main
 {
@@ -321,6 +322,95 @@ namespace Minista.Views.Main
             catch { }
         }
 
+        private async void LikeButtonClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is AppBarButton btn && btn != null)
+                {
+                    btn.DataContext.GetType().PrintDebug();
+                    if (btn.DataContext is RecentActivityFeed data && data != null && data.CommentId != null)
+                    {
+                        if (data.HasLikedComment)
+                        {
+                            var result = await Helper.InstaApi.CommentProcessor.UnlikeCommentAsync(data.CommentId.Value.ToString());
+                            if (result.Succeeded)
+                                data.HasLikedComment = false;
+                        }
+                        else
+                        {
+                            var result = await Helper.InstaApi.CommentProcessor.LikeCommentAsync(data.CommentId.Value.ToString());
+                            if (result.Succeeded)
+                                data.HasLikedComment = true;
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+
+        private void ReplyButtonClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is HyperlinkButton btn && btn != null)
+                {
+                    if (btn.DataContext is RecentActivityFeed data && data != null)
+                    {
+                        ActivitiesVM.CommentFeed = data;
+                        ShowComments();
+                        CommentText.PlaceholderText = $"Reply to @{data.ProfileName ?? string.Empty}'s comment";
+                        CommentText.Text = $"@{data.ProfileName ?? string.Empty} ";
+                        CommentText.Focus(FocusState.Keyboard);
+                    }
+                }
+            }
+            catch { }
+        }
+        private async void CommentButtonClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(CommentText.Text))
+                {
+                    CommentText.Focus(FocusState.Keyboard);
+                    return;
+                }
+                var feed = ActivitiesVM.CommentFeed;
+                if (feed == null)
+                {
+                    HideComments();
+                    return;
+                }
+
+                var result = await Helper.InstaApi.CommentProcessor.ReplyCommentMediaAsync(feed.Medias[0].Id, feed.CommentId.ToString(), CommentText.Text);
+                HideComments();
+                ActivitiesVM.CommentFeed = null;
+                if (result.Succeeded)
+                {
+                    Helper.ShowNotify("Comment sent successfully.");
+                    CommentText.Text = "";
+                }
+                else
+                {
+                    switch (result.Info.ResponseType)
+                    {
+                        case ResponseType.RequestsLimit:
+                        case ResponseType.SentryBlock:
+                            Helper.ShowNotify(result.Info.Message);
+                            break;
+                        case ResponseType.ActionBlocked:
+                            Helper.ShowNotify("Action blocked.\r\nPlease try again 5 or 10 minutes later");
+                            break;
+                    }
+                }
+            }
+            catch { }
+        }
+
+        public void CloseCommentButtonClick(object sender, RoutedEventArgs e) => HideComments();
+        public void ShowComments() => CommentsGrid.Visibility = Visibility.Visible;
+        public void HideComments() => CommentsGrid.Visibility = Visibility.Collapsed;
         #region LOADINGS You
         public void ShowTopLoadingYou() => TopLoadingYou.Start();
         public void HideTopLoadingYou() => TopLoadingYou.Stop();

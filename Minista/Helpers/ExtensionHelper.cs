@@ -251,7 +251,17 @@ namespace Minista
                 ActivityCategoryType = type,
                 RequestCount = feed.RequestCount,
                 StoryType = feed.StoryType,
-                SubText = feed.SubText
+                SubText = feed.SubText,
+                HasLikedComment = feed.HasLikedComment,
+                Actions = feed.Actions,
+                Clicked = feed.Clicked,
+                CommentNotifType = feed.CommentNotifType,
+                DisplayUfi = feed.DisplayUfi,
+                IconUrl = feed.IconUrl,
+                Images = feed.Images,
+                IsRestricted = feed.IsRestricted,
+                LatestReelMedia = feed.LatestReelMedia,
+                Tuuid = feed.Tuuid
             };
         }
         public static InstaHashtag ToHashtag(this InstaHashtagShort hashtagShort)

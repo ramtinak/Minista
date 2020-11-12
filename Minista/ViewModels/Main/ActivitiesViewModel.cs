@@ -31,6 +31,7 @@ namespace Minista.ViewModels.Main
         public bool HasMoreItems { get; set; } = true;
         //public bool HasMoreItems2 { get; set; } = true;
         public PaginationParameters Pagination { get; private set; }
+        public RecentActivityFeed CommentFeed { get; set; } = null;
         //public PaginationParameters Pagination2 { get; private set; }
 
         //ScrollViewer Scroll;
@@ -89,7 +90,8 @@ namespace Minista.ViewModels.Main
                 }
                 else
                     Views.Main.ActivitiesView.Current?.ShowBottomLoadingYou();
-
+                Views.Main.ActivitiesView.Current?.HideComments();
+                CommentFeed = null;
                 var result = await InstaApi.UserProcessor.GetRecentActivityFeedAsync(Pagination);
                  FirstRun = false;
                 Pagination.MaximumPagesToLoad = 1;
@@ -105,7 +107,7 @@ namespace Minista.ViewModels.Main
                         return;
                     }
                 }
-                MainPage.Current?.ShowActitivityNotify(result.Value.Counts);
+                MainPage.Current?.ShowActivityNotify(result.Value.Counts);
                 if (string.IsNullOrEmpty(result.Value.NextMaxId))
                     HasMoreItems = false;
 

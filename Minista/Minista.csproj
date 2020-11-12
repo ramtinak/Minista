@@ -173,6 +173,7 @@
     <Compile Include="Controls\LockControl.xaml.cs">
       <DependentUpon>LockControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ActivityLikeReplyVisibilityConverter.cs" />
     <Compile Include="Converters\DirectItemSendingMessageConverter.cs" />
     <Compile Include="Converters\DirectItemWidthConverter.cs" />
     <Compile Include="Converters\LoginSessionConverter.cs" />

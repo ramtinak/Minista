@@ -2,18 +2,17 @@
     x:Class="Minista.UserControls.LoadingUc"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Minista.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Minista.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:telerikPrimatives="using:Telerik.UI.Xaml.Controls.Primitives"
-             mc:Ignorable="d"
-             d:DesignHeight="65"
-             d:DesignWidth="400"
-             x:Name="THIS"
-             Opacity="0.2">
+    xmlns:telerikPrimatives="using:Telerik.UI.Xaml.Controls.Primitives"
+    x:Name="THIS"
+    d:DesignHeight="65"
+    d:DesignWidth="400"
+    Opacity="0.2"
+    mc:Ignorable="d">
     <UserControl.Resources>
-        <Storyboard x:Name="Show"
-                    Duration="00:00:00.350">
+        <Storyboard x:Name="Show" Duration="00:00:00.350">
             <!--<DoubleAnimation Storyboard.TargetName="transform"
                              Storyboard.TargetProperty="TranslateY"
                              From="0"
@@ -22,27 +21,30 @@
                     <CubicEase />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>-->
-            <DoubleAnimation Storyboard.TargetName="THIS"
-                             Storyboard.TargetProperty="Height"
-                             EnableDependentAnimation="True"
-                             From="0"
-                             To="65">
+            <DoubleAnimation
+                EnableDependentAnimation="True"
+                Storyboard.TargetName="THIS"
+                Storyboard.TargetProperty="Height"
+                From="0"
+                To="65">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
-            <DoubleAnimation Storyboard.TargetName="THIS"
-                             Storyboard.TargetProperty="Opacity"
-                             From="0"
-                             To="1">
+            <DoubleAnimation
+                Storyboard.TargetName="THIS"
+                Storyboard.TargetProperty="Opacity"
+                From="0"
+                To="1">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
-        <Storyboard x:Name="Hide"
-                    Duration="00:00:00.350"
-                    Completed="HideCompleted">
+        <Storyboard
+            x:Name="Hide"
+            Completed="HideCompleted"
+            Duration="00:00:00.350">
             <!--<DoubleAnimation Storyboard.TargetName="transform"
                              Storyboard.TargetProperty="TranslateY"
                              To="0">
@@ -50,17 +52,19 @@
                     <CubicEase />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>-->
-            <DoubleAnimation Storyboard.TargetName="THIS"
-                             EnableDependentAnimation="True"
-                             Storyboard.TargetProperty="Height"
-                             To="0">
+            <DoubleAnimation
+                EnableDependentAnimation="True"
+                Storyboard.TargetName="THIS"
+                Storyboard.TargetProperty="Height"
+                To="0">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
-            <DoubleAnimation Storyboard.TargetName="THIS"
-                             Storyboard.TargetProperty="Opacity"
-                             To="0">
+            <DoubleAnimation
+                Storyboard.TargetName="THIS"
+                Storyboard.TargetProperty="Opacity"
+                To="0">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase />
                 </DoubleAnimation.EasingFunction>
@@ -68,20 +72,21 @@
         </Storyboard>
     </UserControl.Resources>
     <Grid>
-        <Grid VerticalAlignment="Center"
-              HorizontalAlignment="Center">
-            <telerikPrimatives:RadBusyIndicator x:Name="Busy1"
-                                                AnimationStyle="AnimationStyle7"
-                                                Margin="5"
-                                                IsActive="False"
-                                                Foreground="#FF006AC1"
-                                                Content="" />
-            <telerikPrimatives:RadBusyIndicator x:Name="Busy2"
-                                                AnimationStyle="AnimationStyle4"
-                                                Margin="5"
-                                                Content=""
-                                                Foreground="#FF006AC1"
-                                                IsActive="False" />
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <telerikPrimatives:RadBusyIndicator
+                x:Name="Busy1"
+                Margin="5"
+                AnimationStyle="AnimationStyle7"
+                Content=""
+                Foreground="#FF006AC1"
+                IsActive="False" />
+            <telerikPrimatives:RadBusyIndicator
+                x:Name="Busy2"
+                Margin="5"
+                AnimationStyle="AnimationStyle4"
+                Content=""
+                Foreground="#FF006AC1"
+                IsActive="False" />
         </Grid>
     </Grid>
 </UserControl>

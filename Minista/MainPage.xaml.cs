@@ -936,7 +936,7 @@ namespace Minista
         }
         
 
-        public void ShowActitivityNotify(InstaActivityCount count)
+        public void ShowActivityNotify(InstaActivityCount count)
         {
             try
             {

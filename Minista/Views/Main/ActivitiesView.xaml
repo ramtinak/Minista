@@ -2,32 +2,25 @@
     x:Class="Minista.Views.Main.ActivitiesView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Minista.Views.Main"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:converters="using:Minista.Converters"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Minista.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:loading="using:Minista.UserControls"
+    xmlns:local="using:Minista.Views.Main"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:selector="using:Minista.Selectors"
-      xmlns:vm="using:Minista.ViewModels.Searches"
-      xmlns:loading="using:Minista.UserControls"
-      mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:vm="using:Minista.ViewModels.Searches"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
-            <Style x:Key="GridViewItemContainerStyle"
-                   TargetType="GridViewItem">
-                <Setter Property="HorizontalContentAlignment"
-                        Value="Stretch" />
-                <Setter Property="HorizontalAlignment"
-                        Value="Stretch" />
-                <Setter Property="VerticalContentAlignment"
-                        Value="Stretch" />
-                <Setter Property="VerticalAlignment"
-                        Value="Stretch" />
-                <Setter Property="Margin"
-                        Value="1" />
-                <Setter Property="Padding"
-                        Value="0" />
+            <Style x:Key="GridViewItemContainerStyle" TargetType="GridViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="1" />
+                <Setter Property="Padding" Value="0" />
             </Style>
 
             <converters:DateTimeConverter x:Key="DateTimeConverter" />
@@ -39,17 +32,21 @@
             <converters:ActivityItemVisibilityConverter x:Key="ActivityItemVisibilityConverter" />
             <converters:FollowingConverter x:Key="FollowingConverter" />
             <converters:FollowingVisibilityConverter x:Key="FollowingVisibilityConverter" />
-            
-            <selector:RecentActivityTemplateSelector x:Key="RecentActivityTemplateSelector"
-                                                     FriendRequestTemplate="{StaticResource FriendRequestTemplate}"
-                                                     MediaTaggedYouTemplate="{StaticResource MediaTaggedYouTemplate}"
-                                                     FollowYouTemplate="{StaticResource FollowYouTemplate}"
-                                                     LikedYouTemplate="{StaticResource LikedYouTemplate}"
-                                                     CommentTemplate="{StaticResource CommentTemplate}"
-                                                     SharedPostTemplate="{StaticResource SharedPostTemplate}"
-                                                     LikedTaggedTemplate="{StaticResource LikedTaggedTemplate}"
-                                                     NotSupportedTemplate="{StaticResource NotSupportedTemplate}"
-                                                     DefaultTemplate="{StaticResource DefaultTemplate}"/>
+            <converters:ActivityLikeReplyVisibilityConverter x:Key="ActivityLikeReplyVisibilityConverter" />
+            <converters:CommentBooleanConverter x:Key="CommentBooleanConverter" />
+            <converters:CommentColorConverter x:Key="CommentColorConverter" />
+
+            <selector:RecentActivityTemplateSelector
+                x:Key="RecentActivityTemplateSelector"
+                CommentTemplate="{StaticResource CommentTemplate}"
+                DefaultTemplate="{StaticResource DefaultTemplate}"
+                FollowYouTemplate="{StaticResource FollowYouTemplate}"
+                FriendRequestTemplate="{StaticResource FriendRequestTemplate}"
+                LikedTaggedTemplate="{StaticResource LikedTaggedTemplate}"
+                LikedYouTemplate="{StaticResource LikedYouTemplate}"
+                MediaTaggedYouTemplate="{StaticResource MediaTaggedYouTemplate}"
+                NotSupportedTemplate="{StaticResource NotSupportedTemplate}"
+                SharedPostTemplate="{StaticResource SharedPostTemplate}" />
 
             <DataTemplate x:Key="RecentMainTemplate">
                 <Grid>
@@ -57,32 +54,35 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Foreground="#FFA6A6A6"
-                               FontFamily="{StaticResource VazirFont}"
-                               FontSize="{StaticResource DefaultFontSize}"
-                               TextWrapping="Wrap"
-                               Margin="10 8 4 4"
-                               Text="{Binding ActivityCategoryName, Mode=TwoWay}"
-                               Visibility="{Binding ActivityCategoryName, Converter={StaticResource NullableToVisibilityConverter}}"/>
+                    <TextBlock
+                        Margin="10,8,4,4"
+                        FontFamily="{StaticResource VazirFont}"
+                        FontSize="{StaticResource DefaultFontSize}"
+                        Foreground="#FFA6A6A6"
+                        Text="{Binding ActivityCategoryName, Mode=TwoWay}"
+                        TextWrapping="Wrap"
+                        Visibility="{Binding ActivityCategoryName, Converter={StaticResource NullableToVisibilityConverter}}" />
 
-                    <ItemsControl Grid.Row="1"
-                                  Grid.Column="1"
-                                  Grid.ColumnSpan="3"
-                                  ItemsSource="{Binding Items, Mode=TwoWay}"
-                                  ItemTemplateSelector="{StaticResource RecentActivityTemplateSelector}" />
-                    <!--ItemTemplate="{StaticResource ChildTemplate}"-->
+                    <ItemsControl
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="3"
+                        ItemTemplateSelector="{StaticResource RecentActivityTemplateSelector}"
+                        ItemsSource="{Binding Items, Mode=TwoWay}" />
+                    <!--  ItemTemplate="{StaticResource ChildTemplate}"  -->
                 </Grid>
             </DataTemplate>
 
 
             <DataTemplate x:Key="NotSupportedTemplate">
                 <Grid>
-                    <TextBlock Foreground="White"
-                               FontFamily="{StaticResource VazirFont}"
-                               FontSize="{StaticResource DefaultFontSize}"
-                               Text="NOT SUPPORTED YET"
-                               VerticalAlignment="Center"
-                               Margin="3" />
+                    <TextBlock
+                        Margin="3"
+                        VerticalAlignment="Center"
+                        FontFamily="{StaticResource VazirFont}"
+                        FontSize="{StaticResource DefaultFontSize}"
+                        Foreground="White"
+                        Text="NOT SUPPORTED YET" />
                 </Grid>
             </DataTemplate>
 
@@ -92,65 +92,71 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Ellipse Height="65"
-                             Width="65"
-                             Margin="5"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             StrokeThickness="0">
+                    <Ellipse
+                        Width="65"
+                        Height="65"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        StrokeThickness="0">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1"
-                                                 StartPoint="0.5,0">
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                 <GradientStop Color="#D78F1EA0" />
-                                <GradientStop Color="#D795007A"
-                                              Offset="1" />
+                                <GradientStop Offset="1" Color="#D795007A" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding ProfileImage}" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <Grid VerticalAlignment="Top"
-                          HorizontalAlignment="Right"
-                          Margin="0 7 4 0">
-                        <Ellipse Width="30"
-                                 Height="30"
-                                 Fill="#FFA62D2D" />
-                        <TextBlock Foreground="White"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   Text="{Binding RequestCount}"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Margin="3" />
+                    <Grid
+                        Margin="0,7,4,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top">
+                        <Ellipse
+                            Width="30"
+                            Height="30"
+                            Fill="#FFA62D2D" />
+                        <TextBlock
+                            Margin="3"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            Text="{Binding RequestCount}" />
                     </Grid>
-                    <Grid Grid.Column="1"
-                          VerticalAlignment="Center"
-                          Margin="8 8 5 8">
+                    <Grid
+                        Grid.Column="1"
+                        Margin="8,8,5,8"
+                        VerticalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Foreground="White"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   Text="Follow requests"
-                                   VerticalAlignment="Center"
-                                   Margin="3" />
-                        <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource TinyFontSize}"
-                                   Grid.Row="1"
-                                   VerticalAlignment="Center"
-                                   Text="Approve or ignore requests"
-                                   Margin="3" />
+                        <TextBlock
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            Text="Follow requests" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource TinyFontSize}"
+                            Foreground="{StaticResource DefaultInnerForegroundColor}"
+                            Text="Approve or ignore requests" />
                     </Grid>
 
-                    <Grid Grid.Column="3"
-                          Tapped="FriendRequestTapped" 
-                          Background="AliceBlue"
-                          Opacity="0"/>
+                    <Grid
+                        Grid.Column="3"
+                        Background="AliceBlue"
+                        Opacity="0"
+                        Tapped="FriendRequestTapped" />
                 </Grid>
 
             </DataTemplate>
@@ -161,59 +167,62 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Ellipse Height="65"
-                             Width="65"
-                             Margin="5"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             StrokeThickness="0"
-                             Tapped="UserEllipseTapped">
+                    <Ellipse
+                        Width="65"
+                        Height="65"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        StrokeThickness="0"
+                        Tapped="UserEllipseTapped">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1"
-                                                 StartPoint="0.5,0">
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                 <GradientStop Color="#D78F1EA0" />
-                                <GradientStop Color="#D795007A"
-                                              Offset="1" />
+                                <GradientStop Offset="1" Color="#D795007A" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding ProfileImage}" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <Grid Grid.Column="1"
-                          VerticalAlignment="Center"
-                          Margin="8 8 5 8">
+                    <Grid
+                        Grid.Column="1"
+                        Margin="8,8,5,8"
+                        VerticalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Foreground="White"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   VerticalAlignment="Center"
-                                   TextWrapping="Wrap"
-                                   Margin="3"
-                                   DataContext="{Binding}"
-                                   DataContextChanged="TextBlockDataContextChanged" />
+                        <TextBlock
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            DataContext="{Binding}"
+                            DataContextChanged="TextBlockDataContextChanged"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            TextWrapping="Wrap" />
                     </Grid>
 
-                    <Grid Grid.Column="2"
-                          Margin="5"
-                          CornerRadius="5">
-                        <controls:ImageEx HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Height="65"
-                                          Width="65"
-                                          Tapped="MediaImageExTapped"
-                                          Stretch="UniformToFill">
+                    <Grid
+                        Grid.Column="2"
+                        Margin="5"
+                        CornerRadius="5">
+                        <controls:ImageEx
+                            Width="65"
+                            Height="65"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Stretch="UniformToFill"
+                            Tapped="MediaImageExTapped">
                             <!--<controls:ImageEx.Background>
                                 <ImageBrush Stretch="Fill">
                                     <ImageBrush.ImageSource>
                                         <BitmapImage UriSource="{Binding Medias[0].Image}" />
                                     </ImageBrush.ImageSource>
                                 </ImageBrush>
-                            </controls:ImageEx.Background>-->   
+                            </controls:ImageEx.Background>-->
                             <controls:ImageEx.Source>
                                 <BitmapImage UriSource="{Binding Medias[0].Image}" />
                             </controls:ImageEx.Source>
@@ -230,41 +239,42 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Ellipse Height="65"
-                             Width="65"
-                             Margin="5"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             StrokeThickness="0"
-                             Tapped="UserEllipseTapped">
+                    <Ellipse
+                        Width="65"
+                        Height="65"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        StrokeThickness="0"
+                        Tapped="UserEllipseTapped">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1"
-                                                 StartPoint="0.5,0">
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                 <GradientStop Color="#D78F1EA0" />
-                                <GradientStop Color="#D795007A"
-                                              Offset="1" />
+                                <GradientStop Offset="1" Color="#D795007A" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding ProfileImage}" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <Grid Grid.Column="1"
-                          VerticalAlignment="Center"
-                          Margin="8 8 5 8">
+                    <Grid
+                        Grid.Column="1"
+                        Margin="8,8,5,8"
+                        VerticalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Foreground="White"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   VerticalAlignment="Center"
-                                   TextWrapping="Wrap"
-                                   Margin="3"
-                                   DataContext="{Binding}"
-                                   DataContextChanged="TextBlockDataContextChanged" />
+                        <TextBlock
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            DataContext="{Binding}"
+                            DataContextChanged="TextBlockDataContextChanged"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            TextWrapping="Wrap" />
                     </Grid>
                 </Grid>
 
@@ -277,52 +287,55 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Ellipse Height="65"
-                             Width="65"
-                             Margin="5"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             StrokeThickness="0"
-                             Tapped="UserEllipseTapped">
+                    <Ellipse
+                        Width="65"
+                        Height="65"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        StrokeThickness="0"
+                        Tapped="UserEllipseTapped">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1"
-                                                 StartPoint="0.5,0">
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                 <GradientStop Color="#D78F1EA0" />
-                                <GradientStop Color="#D795007A"
-                                              Offset="1" />
+                                <GradientStop Offset="1" Color="#D795007A" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding ProfileImage}" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <Grid Grid.Column="1"
-                          VerticalAlignment="Center"
-                          Margin="8 8 5 8">
+                    <Grid
+                        Grid.Column="1"
+                        Margin="8,8,5,8"
+                        VerticalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Foreground="White"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   VerticalAlignment="Center"
-                                   TextWrapping="Wrap"
-                                   Margin="3"
-                                   DataContext="{Binding}"
-                                   DataContextChanged="TextBlockDataContextChanged" />
+                        <TextBlock
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            DataContext="{Binding}"
+                            DataContextChanged="TextBlockDataContextChanged"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            TextWrapping="Wrap" />
                     </Grid>
 
-                    <Grid Grid.Column="2"
-                          Margin="5"
-                          CornerRadius="5">
-                        <controls:ImageEx HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Stretch="UniformToFill"
-                                          Height="65"
-                                          Width="65"
-                                          Tapped="MediaImageExTapped">
+                    <Grid
+                        Grid.Column="2"
+                        Margin="5"
+                        CornerRadius="5">
+                        <controls:ImageEx
+                            Width="65"
+                            Height="65"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Stretch="UniformToFill"
+                            Tapped="MediaImageExTapped">
                             <!--<controls:ImageEx.Background>
                                 <ImageBrush Stretch="Fill">
                                     <ImageBrush.ImageSource>
@@ -335,7 +348,7 @@
                             </controls:ImageEx.Source>
                         </controls:ImageEx>
                     </Grid>
-                    
+
                 </Grid>
 
             </DataTemplate>
@@ -346,52 +359,55 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Ellipse Height="65"
-                             Width="65"
-                             Margin="5"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             StrokeThickness="0"
-                             Tapped="UserEllipseTapped">
+                    <Ellipse
+                        Width="65"
+                        Height="65"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        StrokeThickness="0"
+                        Tapped="UserEllipseTapped">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1"
-                                                 StartPoint="0.5,0">
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                 <GradientStop Color="#D78F1EA0" />
-                                <GradientStop Color="#D795007A"
-                                              Offset="1" />
+                                <GradientStop Offset="1" Color="#D795007A" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding ProfileImage}" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <Grid Grid.Column="1"
-                          VerticalAlignment="Center"
-                          Margin="8 8 5 8">
+                    <Grid
+                        Grid.Column="1"
+                        Margin="8,8,5,8"
+                        VerticalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Foreground="White"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   VerticalAlignment="Center"
-                                   TextWrapping="Wrap"
-                                   Margin="3"
-                                   DataContext="{Binding}"
-                                   DataContextChanged="TextBlockDataContextChanged" />
+                        <TextBlock
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            DataContext="{Binding}"
+                            DataContextChanged="TextBlockDataContextChanged"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            TextWrapping="Wrap" />
                     </Grid>
 
-                    <Grid Grid.Column="2"
-                          Margin="5"
-                          CornerRadius="5">
-                        <controls:ImageEx HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Stretch="UniformToFill"
-                                          Height="65"
-                                          Width="65"
-                                          Tapped="MediaImageExTapped">
+                    <Grid
+                        Grid.Column="2"
+                        Margin="5"
+                        CornerRadius="5">
+                        <controls:ImageEx
+                            Width="65"
+                            Height="65"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Stretch="UniformToFill"
+                            Tapped="MediaImageExTapped">
                             <!--<controls:ImageEx.Background>
                                 <ImageBrush Stretch="Fill">
                                     <ImageBrush.ImageSource>
@@ -415,41 +431,42 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Ellipse Height="65"
-                             Width="65"
-                             Margin="5"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             StrokeThickness="0"
-                             Tapped="UserEllipseTapped">
+                    <Ellipse
+                        Width="65"
+                        Height="65"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        StrokeThickness="0"
+                        Tapped="UserEllipseTapped">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1"
-                                                 StartPoint="0.5,0">
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                 <GradientStop Color="#D78F1EA0" />
-                                <GradientStop Color="#D795007A"
-                                              Offset="1" />
+                                <GradientStop Offset="1" Color="#D795007A" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding ProfileImage}" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <Grid Grid.Column="1"
-                          VerticalAlignment="Center"
-                          Margin="8 8 5 8">
+                    <Grid
+                        Grid.Column="1"
+                        Margin="8,8,5,8"
+                        VerticalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Foreground="White"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   VerticalAlignment="Center"
-                                   TextWrapping="Wrap"
-                                   Margin="3"
-                                   DataContext="{Binding}"
-                                   DataContextChanged="TextBlockDataContextChanged" />
+                        <TextBlock
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            DataContext="{Binding}"
+                            DataContextChanged="TextBlockDataContextChanged"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            TextWrapping="Wrap" />
                     </Grid>
                 </Grid>
 
@@ -463,75 +480,73 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Ellipse Height="65"
-                             Width="65"
-                             Margin="5"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             StrokeThickness="0"
-                             Tapped="UserEllipseTapped">
+                    <Ellipse
+                        Width="65"
+                        Height="65"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        StrokeThickness="0"
+                        Tapped="UserEllipseTapped">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1"
-                                                 StartPoint="0.5,0">
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                 <GradientStop Color="#D78F1EA0" />
-                                <GradientStop Color="#D795007A"
-                                              Offset="1" />
+                                <GradientStop Offset="1" Color="#D795007A" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.Fill>
                             <ImageBrush ImageSource="{Binding ProfileImage}" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <Grid VerticalAlignment="Bottom"
-                          HorizontalAlignment="Right"
-                          Margin="0 7 4 0">
-                        <Ellipse Width="30"
-                                 Height="30">
+                    <Grid
+                        Margin="0,7,4,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom">
+                        <Ellipse Width="30" Height="30">
                             <Ellipse.Stroke>
-                                <LinearGradientBrush EndPoint="0.5,1"
-                                                     StartPoint="0.5,0">
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                     <GradientStop Color="#FFD03728" />
-                                    <GradientStop Color="#FFCE6319"
-                                                  Offset="1" />
+                                    <GradientStop Offset="1" Color="#FFCE6319" />
                                 </LinearGradientBrush>
                             </Ellipse.Stroke>
                             <Ellipse.Fill>
-                                <LinearGradientBrush EndPoint="0.5,1"
-                                                     StartPoint="0.5,0">
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                     <GradientStop Color="#FFCD7812" />
-                                    <GradientStop Color="#FFD12C2C"
-                                                  Offset="1" />
+                                    <GradientStop Offset="1" Color="#FFD12C2C" />
                                 </LinearGradientBrush>
                             </Ellipse.Fill>
                         </Ellipse>
-                        <TextBlock Text="#"
-                                   FontFamily="{StaticResource SegoeUIFont}"
-                                   FontSize="21"
-                                   FontWeight="SemiBold"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   TextAlignment="Center" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource SegoeUIFont}"
+                            FontSize="21"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Text="#"
+                            TextAlignment="Center" />
                     </Grid>
 
-                    <Grid Grid.Column="1"
-                          VerticalAlignment="Center"
-                          Margin="8 8 5 8">
+                    <Grid
+                        Grid.Column="1"
+                        Margin="8,8,5,8"
+                        VerticalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Foreground="White"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   VerticalAlignment="Center"
-                                   TextWrapping="Wrap"
-                                   DataContext="{Binding}"
-                                   DataContextChanged="TextBlockDataContextChanged"
-                                   Margin="3">
+                        <TextBlock
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            DataContext="{Binding}"
+                            DataContextChanged="TextBlockDataContextChanged"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            TextWrapping="Wrap">
                             <!--<Run Text="{Binding RichText}" />
                             <LineBreak />
                             <Run Foreground="{StaticResource DefaultInnerForegroundColor}"
@@ -541,19 +556,20 @@
                     </Grid>
 
 
-                    <GridView Grid.Row="1"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="8 2 4 2"
-                              SelectionMode="None"
-                              IsItemClickEnabled="True"
-                              ItemClick="LikedTaggedGridViewItemClick"
-                              ItemsSource="{Binding Medias}"
-                              ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
-                              ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                              ScrollViewer.VerticalScrollMode="Disabled"
-                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                              ScrollViewer.HorizontalScrollMode="Disabled">
+                    <GridView
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="8,2,4,2"
+                        IsItemClickEnabled="True"
+                        ItemClick="LikedTaggedGridViewItemClick"
+                        ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
+                        ItemsSource="{Binding Medias}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.HorizontalScrollMode="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollMode="Disabled"
+                        SelectionMode="None">
                         <GridView.ItemContainerTransitions>
                             <TransitionCollection>
                                 <EntranceThemeTransition />
@@ -561,11 +577,12 @@
                         </GridView.ItemContainerTransitions>
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <controls:ImageEx HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  Stretch="UniformToFill"
-                                                  Height="65"
-                                                  Width="65">
+                                <controls:ImageEx
+                                    Width="65"
+                                    Height="65"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stretch="UniformToFill">
                                     <!--<controls:ImageEx.Background>
                                         <ImageBrush Stretch="Fill">
                                             <ImageBrush.ImageSource>
@@ -580,14 +597,15 @@
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
-                    <Button Content="{Binding HashtagFollow.FollowStatus,Mode=TwoWay,Converter={StaticResource FollowHashtagConverter}}"
-                            Grid.Column="2"
-                            Foreground="White"
-                            MinWidth="100"
-                            Click="FollowUnfollowHashtagButtonClick"
-                            FontSize="{StaticResource DefaultFontSize}"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center" />
+                    <Button
+                        Grid.Column="2"
+                        MinWidth="100"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Click="FollowUnfollowHashtagButtonClick"
+                        Content="{Binding HashtagFollow.FollowStatus, Mode=TwoWay, Converter={StaticResource FollowHashtagConverter}}"
+                        FontSize="{StaticResource DefaultFontSize}"
+                        Foreground="White" />
                 </Grid>
 
             </DataTemplate>
@@ -602,19 +620,18 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Ellipse Height="65"
-                             Width="65"
-                             Margin="5"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Center"
-                             StrokeThickness="0"
-                             Tapped="UserEllipseTapped">
+                    <Ellipse
+                        Width="65"
+                        Height="65"
+                        Margin="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        StrokeThickness="0"
+                        Tapped="UserEllipseTapped">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1"
-                                                 StartPoint="0.5,0">
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                 <GradientStop Color="#D78F1EA0" />
-                                <GradientStop Color="#D795007A"
-                                              Offset="1" />
+                                <GradientStop Offset="1" Color="#D795007A" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.Fill>
@@ -622,45 +639,75 @@
                         </Ellipse.Fill>
                     </Ellipse>
 
-                    <Grid Grid.Column="1"
-                          VerticalAlignment="Center"
-                          Margin="8 8 5 8">
+                    <Grid
+                        Grid.Column="1"
+                        Margin="8,8,5,8"
+                        VerticalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Foreground="White"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   VerticalAlignment="Center"
-                                   TextWrapping="Wrap"
-                                   DataContext="{Binding}"
-                                   DataContextChanged="TextBlockDataContextChanged"
-                                   Margin="3">
+                        <TextBlock
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            DataContext="{Binding}"
+                            DataContextChanged="TextBlockDataContextChanged"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            TextWrapping="Wrap">
                             <!--<Run Text="{Binding RichText}" />
                             <LineBreak />
                             <Run Foreground="{StaticResource DefaultInnerForegroundColor}"
                                  Text="{Binding TimeStamp, Converter={StaticResource DateTimeConverter}}" />-->
 
                         </TextBlock>
+                        <Grid Grid.Row="1" Visibility="{Binding Converter={StaticResource ActivityLikeReplyVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <AppBarButton
+                                VerticalAlignment="Center"
+                                Click="LikeButtonClick"
+                                Foreground="{Binding HasLikedComment, Converter={StaticResource CommentColorConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="{Binding HasLikedComment, Converter={StaticResource CommentBooleanConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <HyperlinkButton
+                                Grid.Column="1"
+                                Padding="0" Margin="15 0"
+                                VerticalAlignment="Center"
+                                Click="ReplyButtonClick"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="13"
+                                FontWeight="Normal">
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                    Text="Reply" />
+                            </HyperlinkButton>
+                        </Grid>
                     </Grid>
 
 
-                    <GridView Grid.Row="1"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="8 2 4 2"
-                              SelectionMode="None"
-                              IsItemClickEnabled="True"
-                              ItemClick="LikedTaggedGridViewItemClick"
-                              ItemsSource="{Binding Medias}"
-                              ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
-                              ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                              ScrollViewer.VerticalScrollMode="Disabled"
-                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                              ScrollViewer.HorizontalScrollMode="Disabled"
-                              Visibility="{Binding Converter={StaticResource  ActivityItemVisibilityConverter}}">
+                    <GridView
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="8,2,4,2"
+                        IsItemClickEnabled="True"
+                        ItemClick="LikedTaggedGridViewItemClick"
+                        ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
+                        ItemsSource="{Binding Medias}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.HorizontalScrollMode="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollMode="Disabled"
+                        SelectionMode="None"
+                        Visibility="{Binding Converter={StaticResource ActivityItemVisibilityConverter}}">
                         <GridView.ItemContainerTransitions>
                             <TransitionCollection>
                                 <EntranceThemeTransition />
@@ -668,11 +715,12 @@
                         </GridView.ItemContainerTransitions>
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <controls:ImageEx HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  Stretch="UniformToFill"
-                                                  Height="65"
-                                                  Width="65">
+                                <controls:ImageEx
+                                    Width="65"
+                                    Height="65"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stretch="UniformToFill">
                                     <controls:ImageEx.Background>
                                         <ImageBrush Stretch="Fill">
                                             <ImageBrush.ImageSource>
@@ -684,17 +732,19 @@
                             </DataTemplate>
                         </GridView.ItemTemplate>
                     </GridView>
-                    <Grid Grid.Column="2"
-                          Margin="5"
-                          CornerRadius="5"
-                          Visibility="{Binding Medias, Converter={StaticResource ActivityItemVisibilityConverter}}">
-                        <controls:ImageEx HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Height="65"
-                                          Width="65"
-                                          Stretch="UniformToFill"
-                                          Tapped="MediaImageExTapped"
-                                          Visibility="{Binding Medias[0].Image,Converter={StaticResource NullableToVisibilityConverter}}">
+                    <Grid
+                        Grid.Column="2"
+                        Margin="5"
+                        CornerRadius="5"
+                        Visibility="{Binding Medias, Converter={StaticResource ActivityItemVisibilityConverter}}">
+                        <controls:ImageEx
+                            Width="65"
+                            Height="65"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Stretch="UniformToFill"
+                            Tapped="MediaImageExTapped"
+                            Visibility="{Binding Medias[0].Image, Converter={StaticResource NullableToVisibilityConverter}}">
                             <controls:ImageEx.Source>
                                 <BitmapImage UriSource="{Binding Medias[0].Image}" />
                             </controls:ImageEx.Source>
@@ -705,9 +755,10 @@
             </DataTemplate>
 
             <DataTemplate x:Key="UserTemplate">
-                <Grid Height="82"
-                      VerticalAlignment="Top"
-                      Margin="10 0 10 0">
+                <Grid
+                    Height="82"
+                    Margin="10,0,10,0"
+                    VerticalAlignment="Top">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
@@ -721,59 +772,63 @@
                             <ColumnDefinition Width="70" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Ellipse Grid.Column="0"
-                                 Height="60"
-                                 Width="60"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="60"
+                            Height="60"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            StrokeThickness="0">
                             <Ellipse.Stroke>
-                                <LinearGradientBrush EndPoint="0.5,1"
-                                                     StartPoint="0.5,0">
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                     <GradientStop Color="#D78F1EA0" />
-                                    <GradientStop Color="#D795007A"
-                                                  Offset="1" />
+                                    <GradientStop Offset="1" Color="#D795007A" />
                                 </LinearGradientBrush>
                             </Ellipse.Stroke>
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding ProfilePicture}" />
                             </Ellipse.Fill>
                         </Ellipse>
-                        <Grid Grid.Column="1"
-                              VerticalAlignment="Center"
-                              Margin="0 8 0 8">
+                        <Grid
+                            Grid.Column="1"
+                            Margin="0,8,0,8"
+                            VerticalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Foreground="White"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource DefaultFontSize}"
-                                       Text="{Binding UserName}"
-                                       Margin="3" />
-                            <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       Grid.Row="1"
-                                       Text="{Binding Converter={StaticResource UserConverter}}"
-                                       Margin="3">
-                            </TextBlock>
+                            <TextBlock
+                                Margin="3"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource DefaultFontSize}"
+                                Foreground="White"
+                                Text="{Binding UserName}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="3"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                Text="{Binding Converter={StaticResource UserConverter}}" />
                         </Grid>
-                        <Grid Background="AntiqueWhite"
-                              Opacity="0"
-                              Grid.ColumnSpan="3"
-                              Tapped="UserTapped" />
+                        <Grid
+                            Grid.ColumnSpan="3"
+                            Background="AntiqueWhite"
+                            Opacity="0"
+                            Tapped="UserTapped" />
                     </Grid>
-                    <Button Content="Unfollow"
-                            Grid.Column="1"
-                            Margin="5"
-                            HorizontalAlignment="Stretch"
-                            Click="FollowUnFollowMainButtonClick" />
-                    <Grid Grid.Row="1"
-                          Grid.ColumnSpan="5"
-                          Height="1"
-                          Background="{StaticResource DefaultItemBackgroundColor}" />
+                    <Button
+                        Grid.Column="1"
+                        Margin="5"
+                        HorizontalAlignment="Stretch"
+                        Click="FollowUnFollowMainButtonClick"
+                        Content="Unfollow" />
+                    <Grid
+                        Grid.Row="1"
+                        Grid.ColumnSpan="5"
+                        Height="1"
+                        Background="{StaticResource DefaultItemBackgroundColor}" />
 
                 </Grid>
             </DataTemplate>
@@ -785,63 +840,116 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Activities"
-                   FontFamily="{StaticResource VazirFont}"
-                   FontSize="{StaticResource BigFontSize}"
-                   Margin="20 25 0 5"
-                   Foreground="White"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   TextWrapping="NoWrap"
-                   TextAlignment="Center" />
-        <Rectangle Grid.Row="1"
-                   Height=".8"
-                   Fill="#FF303030"
-                   Margin="5" />
+        <TextBlock
+            Margin="20,25,0,5"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            FontFamily="{StaticResource VazirFont}"
+            FontSize="{StaticResource BigFontSize}"
+            Foreground="White"
+            Text="Activities"
+            TextAlignment="Center"
+            TextWrapping="NoWrap" />
+        <Rectangle
+            Grid.Row="1"
+            Height=".8"
+            Margin="5"
+            Fill="#FF303030" />
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <loading:LoadingUc x:Name="TopLoadingYou"
-                               Visibility="Collapsed"
-                               VerticalAlignment="Top" />
-            <controls:PullToRefreshListView x:Name="ItemsLV"
-                                            Grid.Row="1"
-                                            Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                            SelectionMode="None"
-                                            Margin="5"
-                                            ItemsSource="{Binding RecentItems, Mode=OneWay}"
-                                            ItemTemplate="{StaticResource RecentMainTemplate}"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch"
-                                            IsItemClickEnabled="False"
-                                            PullThreshold="140"
-                                            IsPullToRefreshWithMouseEnabled="True"
-                                            RefreshRequested="ItemsLVRefreshRequested">
+            <loading:LoadingUc
+                x:Name="TopLoadingYou"
+                VerticalAlignment="Top"
+                Visibility="Collapsed" />
+            <controls:PullToRefreshListView
+                x:Name="ItemsLV"
+                Grid.Row="1"
+                Margin="5"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Foreground="{StaticResource DefaultInnerForegroundColor}"
+                IsItemClickEnabled="False"
+                IsPullToRefreshWithMouseEnabled="True"
+                ItemTemplate="{StaticResource RecentMainTemplate}"
+                ItemsSource="{Binding RecentItems, Mode=OneWay}"
+                PullThreshold="140"
+                RefreshRequested="ItemsLVRefreshRequested"
+                SelectionMode="None">
 
                 <controls:PullToRefreshListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="VerticalContentAlignment"
-                                Value="Stretch" />
-                        <Setter Property="HorizontalContentAlignment"
-                                Value="Stretch" />
-                        <Setter Property="Margin"
-                                Value="1 12 0 5" />
-                        <Setter Property="Padding"
-                                Value="1" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Margin" Value="1,12,0,5" />
+                        <Setter Property="Padding" Value="1" />
                     </Style>
                 </controls:PullToRefreshListView.ItemContainerStyle>
             </controls:PullToRefreshListView>
-            <loading:LoadingUc x:Name="BottomLoadingYou"
-                               Visibility="Collapsed"
-                               VerticalAlignment="Bottom"
-                               Grid.Row="2" />
+            <loading:LoadingUc
+                x:Name="BottomLoadingYou"
+                Grid.Row="2"
+                VerticalAlignment="Bottom"
+                Visibility="Collapsed" />
         </Grid>
 
+        <Grid
+            x:Name="CommentsGrid"
+            Grid.Row="3"
+            Visibility="Collapsed">
+            <Grid
+                Grid.Row="1"
+                MaxWidth="750"
+                Background="#FF1D1D1D">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    x:Name="CommentText"
+                    MaxHeight="100"
+                    VerticalAlignment="Stretch"
+                    AcceptsReturn="True"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource DefaultFontSize}"
+                    Foreground="White"
+                    IsSpellCheckEnabled="False"
+                    PlaceholderText="Reply to @folani's comment"
+                    TextAlignment="DetectFromContent"
+                    TextWrapping="Wrap" />
+
+                <AppBarButton
+                    x:Name="CommentButton"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Background="#FF1D1D1D"
+                    Click="CommentButtonClick">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarSeparator Grid.Column="2" />
+                <AppBarButton
+                    x:Name="CloseCommentButton"
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Background="#FF1D1D1D"
+                    Click="CloseCommentButtonClick">
+                    <AppBarButton.Icon>
+                        <FontIcon FontSize="16" Glyph="" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </Grid>
+
+        </Grid>
 
     </Grid>
 </Page>
