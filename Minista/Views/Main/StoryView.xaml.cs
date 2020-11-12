@@ -99,12 +99,18 @@ namespace Minista.Views.Main
             PointerPressed += GridPointerPressed;
             PointerMoved += GridPointerMoved;
             PointerReleased += GridPointerReleased;
-            GestureHelper = new GestureHelper(this, GestureMode.LeftRight);
+            GestureHelper = new GestureHelper(this, GestureMode.All);
             GestureHelper.LeftSwipe += GestureHelperLeftSwipe;
             GestureHelper.RightSwipe += GestureHelperRightSwipe;
+            GestureHelper.UpSwipe += GestureHelperUpSwipe;
+            GestureHelper.DownSwipe += GestureHelperDownSwipe;
             Loaded += StoryViewLoaded;
             SetUpPageAnimation();
         }
+
+        private void GestureHelperDownSwipe(object sender, EventArgs e) => NavigationService.GoBack();
+
+        private void GestureHelperUpSwipe(object sender, EventArgs e) => SeeMoreButtonClick(null, null);
 
         private void GestureHelperRightSwipe(object sender, EventArgs e)
         {
@@ -1810,10 +1816,22 @@ namespace Minista.Views.Main
                     Items[StoryIndex].StoryItem != null &&
                     Items[StoryIndex].StoryItem.StoryCTA?.Count > 0)
                 {
-                    if (Items[StoryIndex].StoryItem.StoryCTA.FirstOrDefault().WebUri.Contains("instagram.com/"))
-                        UriHelper.HandleUri(Items[StoryIndex].StoryItem.StoryCTA.FirstOrDefault().WebUri);
+                    var url = Items[StoryIndex].StoryItem.StoryCTA.FirstOrDefault().WebUri;
+
+                    if (url.Contains("l.instagram.com/"))
+                    {
+                        var u = url.Substring(url.IndexOf("?u=") + "?u=".Length);
+                        u = u.Substring(0, u.IndexOf("&"));
+                        if (u.Contains("instagram.com/"))
+                            UriHelper.HandleUri(System.Net.WebUtility.HtmlDecode(System.Net.WebUtility.UrlDecode(u)));
+                        else
+                            url.OpenUrl();
+                    }
                     else
-                        Items[StoryIndex].StoryItem.StoryCTA.FirstOrDefault().WebUri.OpenUrl();
+                        url.OpenUrl();
+
+
+                    
                 }
             }
             catch { }
