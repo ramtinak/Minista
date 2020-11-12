@@ -312,7 +312,9 @@ namespace Minista
                 OutgoingRequest = friendship.OutgoingRequest,
                 Blocking = friendship.Blocking,
                 FollowedBy = friendship.FollowedBy,
-                Muting = friendship.Muting
+                Muting = friendship.Muting ,
+                IsBlockingReel = friendship.IsBlockingReel,
+                IsMutingReel = friendship.IsMutingReel
             };
         }
         public static InstaStoryFriendshipStatus ToStoryFriendshipStatus(this InstaFriendshipShortStatus friendship)

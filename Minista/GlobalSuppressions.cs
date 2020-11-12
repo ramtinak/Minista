@@ -6,7 +6,8 @@
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0051:Private member")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0051:Private member")
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0019")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "CS0612")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "CS0618")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "XAML0618")]

@@ -10,7 +10,7 @@ namespace Minista.Helpers
     public static class AspectRatioHelper
     {
         public static double GetAspectRatioForMedia(double Width, double Height)
-        {
+        { 
             return Width / Height;
         }
 

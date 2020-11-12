@@ -1362,8 +1362,8 @@ namespace Minista.Views.Main
                             HorizontalAlignment = HorizontalAlignment.Left,
                             DataContext = item.MediaId.ToString(),
                             RenderTransform = trans,
-                            Width = item.Width * bounds.Width,
-                            Height = item.Height * bounds.Height,
+                            Width = item.Width * size.Width,
+                            Height = item.Height * size.Height,
                             Name = "StoryFeedMedia"+ rndName
                         };
 
@@ -1390,8 +1390,8 @@ namespace Minista.Views.Main
                             HorizontalAlignment = HorizontalAlignment.Left,
                             DataContext = item.User.UserName.ToLower(),
                             RenderTransform = trans,
-                            Width = item.Width * bounds.Width,
-                            Height = item.Height * bounds.Height,
+                            Width = item.Width * size.Width,
+                            Height = item.Height * size.Height,
                             Name = "UserMention" + rndName,
                             Tag = item.User.FullName
                         };
@@ -1418,8 +1418,8 @@ namespace Minista.Views.Main
                             HorizontalAlignment = HorizontalAlignment.Left,
                             DataContext = item.Hashtag.Name.ToLower(),
                             RenderTransform = trans,
-                            Width = item.Width * bounds.Width,
-                            Height = item.Height * bounds.Height,
+                            Width = item.Width * size.Width,
+                            Height = item.Height * size.Height,
                             Name = "Hashtag" + rndName
                         };
                         rect.Tapped += ShowPanel;
@@ -1449,8 +1449,8 @@ namespace Minista.Views.Main
                             HorizontalAlignment = HorizontalAlignment.Left,
                             DataContext = item.Location.Name.ToLower(),
                             RenderTransform = trans,
-                            Width = item.Width * bounds.Width,
-                            Height = item.Height * bounds.Height,
+                            Width = item.Width * size.Width,
+                            Height = item.Height * size.Height,
                             Name = "Location" + rndName
                         };
                         rect.Tapped += ShowPanel;
