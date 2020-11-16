@@ -156,13 +156,11 @@ namespace Minista.ContentDialogs
                                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
                                 {
                                     var url = await Helper.InstaApi.MediaProcessor.GetShareLinkFromMediaIdAsync(Media.InstaIdentifier);
-                                    if(url.Succeeded)
+                                    if (url.Succeeded)
                                     {
                                         url.Value.ToString().CopyText();
                                         MainPage.Current.ShowInAppNotify("Url copied ;)", 1500);
-
                                     }
-                                    //Media.Url.CopyText();
                                 });
                             }
                             catch { }
@@ -199,17 +197,6 @@ namespace Minista.ContentDialogs
                         case CommandType.Unfollow:
                             Hide();
                             await new UnfollowUserDialog(Media.User).ShowAsync();
-                            //try
-                            //{
-                            //    Helper.MuteRequested(Media.User.Pk);
-                            //    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-                            //    {
-                            //        var unfollow = await Helper.InstaApi.UserProcessor.UnFollowUserAsync(Media.User.Pk);
-                            //        if (unfollow.Succeeded)
-                            //            MainPage.Current.ShowInAppNotify($"{Media.User.UserName} unfollowed...", 1000);
-                            //    });
-                            //}
-                            //catch { }
                             break;
                         case CommandType.Follow:
                             Hide();

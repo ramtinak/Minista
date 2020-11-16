@@ -21,8 +21,6 @@ namespace Minista.UserControls.Main
 {
     public sealed partial class ActivityNotifyUc : UserControl
     {
-        // top Margin="11,-4.752,0,0"
-        // bottom Margin="11,-16,0,0"
         public ActivityNotifyUc()
         {
             this.InitializeComponent();

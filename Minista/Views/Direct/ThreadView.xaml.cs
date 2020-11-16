@@ -45,16 +45,12 @@ namespace Minista.Views.Direct
     public sealed partial class ThreadView : Page
     {
         public static ThreadView Current;
-        //public ThreadViewModel ThreadVM { get; set; } = new ThreadViewModel();
-        //InstaDirectInboxItem CurrentDirectInboxItem;
-        //AppBarButton VoicePlayPauseButton;
         readonly Random Rnd = new Random();
 
         private InstaDirectInboxThread Thread;
         private InstaUserShortFriendship UserShortFriendship;
         private bool CanLoadFirstPopUp = false;
         NavigationMode NavigationMode;
-        //private bool DontPlayMusic = false;
         private Compositor _compositor;
 
         StorageFile ShareFile = null;
@@ -64,7 +60,6 @@ namespace Minista.Views.Direct
             this.InitializeComponent(); 
 
             Current = this;
-            //DataContext = ThreadVM;
             Loaded += ThreadViewLoaded;
             _ellipseVisual = ElementCompositionPreview.GetElementVisual(Ellipse);
             _elapsedVisual = ElementCompositionPreview.GetElementVisual(ElapsedPanel);
@@ -93,40 +88,10 @@ namespace Minista.Views.Direct
 
                 var ctrl = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control);
                 var shift = Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift);
-                //var alt = Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated;
-                //("[VirtualKey]\tKey Pressed: " + args.VirtualKey + "\t\t" + (int)args.VirtualKey).PrintDebug();
-
-                //if (isCtrlDown && args.VirtualKey == VirtualKey.V || isShiftDown && args.VirtualKey == VirtualKey.Insert)
-                //{
-                //    DataPackageView dataPackageView = Clipboard.GetContent();
-                //    if (dataPackageView.Contains(StandardDataFormats.StorageItems))
-                //    {
-                //        var items = await dataPackageView.GetStorageItemsAsync();
-                //        if (items.Count > 0)
-                //            if (items[0] is StorageFile file)
-                //                if (file.Path.IsSupportedImage()) // IsSupportedVideo ?
-                //                    UploadFile(file);
-                //        return;
-                //    }
-                //    else if (dataPackageView.Contains(StandardDataFormats.Bitmap))
-                //    {
-                //        var bitmap = await dataPackageView.GetBitmapAsync();
-                //        var decoder = await BitmapDecoder.CreateAsync(await bitmap.OpenReadAsync());
-                //        var file = await Helper.GenerateRandomOutputFile();
-                //        var encoder = await BitmapEncoder.CreateForTranscodingAsync(await file.OpenAsync(FileAccessMode.ReadWrite), decoder);
-                //        await encoder.FlushAsync();
-                //        UploadFile(file);
-                //        return;
-                //    }
-                //}
                 if (DeviceUtil.IsDesktop)
                 {
                     if (isShiftDown && args.VirtualKey == VirtualKey.Enter)
-                    {
-                        //TextMessage.Text += Environment.NewLine;
                         args.Handled = true;
-
-                    }
                     else if (args.VirtualKey == VirtualKey.Enter)
                     {
                         args.Handled = true;
@@ -143,22 +108,10 @@ namespace Minista.Views.Direct
                 try
                 {
                     ME.Source = null;
-                    //DontPlayMusic = true;
                     ME.Pause();
-                    //if(VoicePlayPauseButton !=null)
-                    //VoicePlayPauseButton.Content = Helper.PlayMaterialIcon;
                 }
                 catch(Exception ex) { ex.PrintException("PauseVideo()"); }
-                //CurrentDirectInboxItem = null;
-                ////Thread = null;
-                //VoicePlayPauseButton = null;
                 await Task.Delay(350);
-                //try
-                //{
-                //ME.Stop();
-                //}
-                //catch { }
-                //await Task.Delay(350);
             }
             catch { }
         }
@@ -195,7 +148,6 @@ namespace Minista.Views.Direct
                     ThreadVM.SetLV(ItemsLV);
                 CanLoadFirstPopUp = true;
                 await Task.Delay(350);
-                //DontPlayMusic = false;
 
                 if(ShareFile != null)
                 UploadFile(ShareFile);
@@ -234,7 +186,6 @@ namespace Minista.Views.Direct
             if (e.Parameter != null && e.Parameter is InstaDirectInboxThread thread)
             {
                 Thread = thread;
-                //ThreadVM.SetThread(thread);
                 ShareFile = null;
             }
             else if (e.Parameter != null && e.Parameter is InstaUserShortFriendship userShortFriendship)
@@ -300,30 +251,6 @@ namespace Minista.Views.Direct
                 RecordDirectVoiceUc.Visibility = Visibility.Collapsed;
             else
                 RecordDirectVoiceUc.Visibility = Visibility.Visible;
-            //var filePicker = new FileOpenPicker
-            //{
-            //    ViewMode = PickerViewMode.Thumbnail,
-            //    CommitButtonText = "Open"
-            //};
-
-                //filePicker.FileTypeFilter.Add(".ogg");
-                //filePicker.FileTypeFilter.Add(".mp3");
-                ////filePicker.FileTypeFilter.Add(".jpeg");
-                ////filePicker.FileTypeFilter.Add(".png");
-                //filePicker.FileTypeFilter.Add(".mp4");
-                ////filePicker.FileTypeFilter.Add(".mov");
-
-                //var file = await filePicker.PickSingleFileAsync();
-
-                //if (file == null)
-                //    return;
-                //var bytes = await ((await file.OpenReadAsync()).AsStream()).ToByteArray();
-                //var audio = new InstaAudioUpload
-                //{
-                //    VoiceBytes = bytes,
-                //    Duration = TimeSpan.FromSeconds(16)
-                //};
-                //var result = await Helper.InstaApi.MessagingProcessor.SendDirectVoiceAsync(audio, ThreadVM.CurrentThread.ThreadId);
         }
 
 
@@ -332,9 +259,6 @@ namespace Minista.Views.Direct
             try
             {
                 CameraCaptureUI dialog = new CameraCaptureUI();
-                //Size aspectRatio = new Size(16, 9);
-                //dialog.PhotoSettings.CroppedAspectRatio = aspectRatio;
-
                 StorageFile file = await dialog.CaptureFileAsync(CameraCaptureUIMode.PhotoOrVideo);
                 if (file != null)
                     UploadFile(file);
@@ -373,18 +297,6 @@ namespace Minista.Views.Direct
                 using (var photo = new PhotoHelper())
                 {
                     var fileToUpload = await photo.SaveToImageX(file/*, false*/);
-                    "Converted".PrintDebug();
-                    //var stream = await fileToUpload.OpenStreamForReadAsync();
-                    //var imgBytes = await stream.ToByteArray();
-
-                    //var img = new InstaImage
-                    //{
-                    //    Uri = file.Path,
-                    //    ImageBytes = imgBytes
-                    //};
-
-                    //var cacheFolder = await SessionHelper.LocalFolder.GetFolderAsync("Cache");
-                    //var copied = await fileToUpload.CopyAsync(cacheFolder, 15.GenerateRandomStringStatic());
 
                     var mediaShare = new InstaInboxMedia()
                     {
@@ -411,9 +323,6 @@ namespace Minista.Views.Direct
                         pks.Add(ThreadVM.CurrentThread.Users[i].Pk);
                     Uploader.UploadSinglePhoto(fileToUpload, ThreadVM.CurrentThread.ThreadId,
                         pks.EncodeRecipients(), mediaShare, ThreadVM.CurrentThread, item);
-                    //var result = await Helper.InstaApi.MessagingProcessor.SendDirectPhotoAsync(img, ThreadVM.CurrentThread.ThreadId);
-                    //if (result.Succeeded)
-                    //    Helper.ShowNotify("Photo sent successfully.", 2000);
 
                 }
             }
@@ -667,13 +576,6 @@ namespace Minista.Views.Direct
                     // direct response
                     // {"action": "item_ack", "status_code": "200", "payload": {"client_context": "da5efe77-194a-405e-85a0-80f5551cdfcc", "item_id": "28772851342289354032285805617086464", "timestamp": "1559779396695629", "thread_id": "340282366841710300949128112965048690517"}, "status": "ok"}
 
-
-                    //var hashtag = await Helper.InstaApi.MessagingProcessor.SendDirectLinkAsync("check this: ", "http://winphone.ir/call-of-duty-modern-warfare-trailer-at-over-20-million-views-in-3-days-infinite-warfare-composer-returns/", ThreadVM.CurrentThread.ThreadId);
-                    ////var aaaaa = await Helper.InstaApi.MessagingProcessor.SendDirectLikeAsync(ThreadVM.CurrentThread.ThreadId);
-                    //if (hashtag.Succeeded)
-                    //{
-                    //    Helper.ShowNotify("Hashtag Sent");
-                    //}
                 });
             }
             catch { }
@@ -705,35 +607,6 @@ namespace Minista.Views.Direct
                             }
                             catch { }
                         }
-                        //if (VoicePlayPauseButton == null)
-                        //    VoicePlayPauseButton = button;
-                        //else if (VoicePlayPauseButton.Tag.ToString() != button.Tag.ToString())
-                        //{
-                        //    VoicePlayPauseButton.Content = Helper.PlayMaterialIcon;
-                        //    VoicePlayPauseButton = button;
-                        //}
-
-                        //if (button.Content.ToString() == Helper.PlayMaterialIcon)// play
-                        //{
-                        //    if (CurrentDirectInboxItem == null)
-                        //    {
-                        //        CurrentDirectInboxItem = directInboxItem;
-                        //        ME.Source = new Uri(directInboxItem.VoiceMedia.Media.Audio.AudioSource);
-                        //    }
-                        //    else if (CurrentDirectInboxItem.ItemId != directInboxItem.ItemId)
-                        //    {
-                        //        CurrentDirectInboxItem = directInboxItem;
-                        //        ME.Source = new Uri(directInboxItem.VoiceMedia.Media.Audio.AudioSource);
-                        //    }
-                        //    else ME.Play();
-
-                        //    button.Content = Helper.PauseMaterialIcon;
-                        //}
-                        //else
-                        //{
-                        //    ME.Pause();
-                        //    button.Content = Helper.PlayMaterialIcon;
-                        //}
                     }
                 }
             }
@@ -757,8 +630,6 @@ namespace Minista.Views.Direct
         }
         private void VoiceMediaGridDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
-            //VoiceMediaGridDataContextChanged
-
             try
             {
                 if (sender is Grid WaveGrid && args.NewValue is InstaDirectInboxItem directInboxItem && directInboxItem != null &&
@@ -815,10 +686,7 @@ namespace Minista.Views.Direct
         {
             try
             {
-                //if (!DontPlayMusic)
                     ME.Play();
-                //else
-                //    DontPlayMusic = false;
             }
             catch { }
         }
@@ -863,7 +731,6 @@ namespace Minista.Views.Direct
                 {
                     using (var pg = new PassageHelperX())
                     {
-                        //str = str?.Truncate(50);
                         var passages = pg.GetInlines(str, HyperLinkHelper.HyperLinkClick);
                         textBlock.Inlines.Clear();
                         textBlock.FlowDirection = passages.Item2 ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
@@ -1492,7 +1359,6 @@ namespace Minista.Views.Direct
             ellipseAnimation.InsertKeyFrame(1, new Vector3(1));
             ellipseAnimation.Duration = TimeSpan.FromMilliseconds(200);
 
-            //_slideVisual.StartAnimation("Offset.X", slideAnimation);
             _elapsedVisual.StartAnimation("Offset.X", elapsedAnimation);
             _ellipseVisual.StartAnimation("Scale", ellipseAnimation);
 
@@ -1501,7 +1367,6 @@ namespace Minista.Views.Direct
                 _elapsedTimer.Start();
 
                 AttachExpression();
-                //DetachTextAreaExpression();
             };
             batch.End();
 
@@ -1534,7 +1399,6 @@ namespace Minista.Views.Direct
                 _elapsedTimer.Stop();
 
                 DetachExpression();
-                //DetachTextAreaExpression();
 
                 ButtonCancelRecording.Visibility = Visibility.Collapsed;
                 ElapsedLabel.Text = "0:00,0";

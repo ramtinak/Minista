@@ -30,13 +30,11 @@ namespace Minista.Views.Infos
 
         Visual _baseGridVisual;
         ScrollViewer ScrollView, ScrollView2, ScrollView3, ScrollViewFollowersSearch;
-        //public FollowViewModel FollowVM { get; set; } = new FollowViewModel();
         public static FollowView Current;
         public FollowView()
         {
             this.InitializeComponent();
             Current = this;
-            //DataContext = FollowVM;
             Loaded += FollowViewLoaded;
             _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
         }
@@ -91,20 +89,10 @@ namespace Minista.Views.Infos
             {
                 if (FollowVM.User.Pk == User.Pk) 
                 return;
-                //try
-                //{
-                //    this.ResetPageCache();
-                //    //NavigationCacheMode = NavigationCacheMode.Disabled;
-                //    NavigationCacheMode = NavigationCacheMode.Enabled;
-                //    First = false;
-                //}
-                //catch { }
             }
             else if(NavigationMode == NavigationMode.New)
             {
                 GetType().RemovePageFromBackStack();
-                //this.ResetPageCache();
-                //NavigationCacheMode = NavigationCacheMode.Disabled;
                 NavigationCacheMode = NavigationCacheMode.Enabled;
                 CanLoadFirstPopUp = false;
             }
@@ -118,34 +106,6 @@ namespace Minista.Views.Infos
                 {
                     FollowingsSearchText.Text = "";
                     FollowersSearchText.Text = "";
-                    //if (User.Pk == Helper.CurrentUser.Pk)
-                    //{
-                    //    if (MainPivot.Items.Count > 2)
-                    //    {
-                    //        try
-                    //        {
-                    //            MainPivot.Items.RemoveAt(MainPivot.Items.Count - 1);
-                    //        }
-                    //        catch { }
-                    //    }
-                    //    try
-                    //    {
-                    //        var pItem = GetPivotItem();
-                    //        MainPivot.Items.Add(pItem);
-                    //    }
-                    //    catch { }
-                    //}
-                    //else
-                    //{
-                    //    if (MainPivot.Items.Count > 2)
-                    //    {
-                    //        try
-                    //        {
-                    //            MainPivot.Items.RemoveAt(MainPivot.Items.Count - 1);
-                    //        }
-                    //        catch { }
-                    //    }
-                    //}
                     try
                     {
                         MainPivot.SelectedIndex = SelectIndex;
@@ -168,7 +128,6 @@ namespace Minista.Views.Infos
                         }
                     }
                     catch { }
-                    //if (User.Pk == Helper.CurrentUser.Pk)
                         FollowVM.MutualFriendsGenerator.RunLoadMore(true);
                     CanLoadFirstPopUp = true;
                 }

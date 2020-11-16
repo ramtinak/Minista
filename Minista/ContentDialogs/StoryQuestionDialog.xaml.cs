@@ -46,10 +46,7 @@ namespace Minista.ContentDialogs
             catch { }
         }
 
-        private void CancelButtonClick(object sender, RoutedEventArgs e)
-        {
-            Hide();
-        }
+        private void CancelButtonClick(object sender, RoutedEventArgs e) => Hide();
 
         private async void SendButtonClick(object sender, RoutedEventArgs e)
         {

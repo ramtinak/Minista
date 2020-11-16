@@ -27,10 +27,7 @@ namespace Minista.ContentDialogs
             Image.UriSource = new Uri(hashtagInfo.ProfilePicture);
             UnfollowHashtagText.Text = $"Unfollow #{hashtagInfo.Name}?";
         }
-        private void CancelButtonClick(object sender, RoutedEventArgs e)
-        {
-            Hide();
-        }
+        private void CancelButtonClick(object sender, RoutedEventArgs e) => Hide();
 
         private async void UnfollowButtonClick(object sender, RoutedEventArgs e)
         {

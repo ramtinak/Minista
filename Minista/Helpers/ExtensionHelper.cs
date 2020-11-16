@@ -577,6 +577,7 @@ namespace Minista
         }
         public static InstaUserInfo ToUserInfo(this InstaUserShort userShort)
         {
+            if(userShort == null) return null;
             return new InstaUserInfo
             {
                 IsPrivate = userShort.IsPrivate,

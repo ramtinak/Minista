@@ -65,15 +65,15 @@ namespace Minista
             var content = string.Empty;
             if (instaMedia.ViewCount > 0)
                 content = $"{instaMedia.ViewCount.Divide()}";
-            if (instaMedia.LikesCount > 0)
-            {
-                var likes = $"{instaMedia.LikesCount.Divide()}";
-                //if (!string.IsNullOrEmpty(content))
-                  
-                    //content = likes;
-                    //else
-                    //    content += $" | {likes}";
-            }
+            //if (instaMedia.LikesCount > 0)
+            //{
+            //    var likes = $"{instaMedia.LikesCount.Divide()}";
+            //    if (!string.IsNullOrEmpty(content))
+
+            //        content = likes;
+            //    else
+            //        content += $" | {likes}";
+            //}
 
             if (!string.IsNullOrEmpty(instaMedia.CommentsCount))
             {
@@ -101,8 +101,6 @@ namespace Minista
         }
         protected override void OnApplyTemplate()
         {
-            //Timer.Interval = TimeSpan.FromSeconds(60);
-            //Timer.Tick += Timer_Tick;
             ControlPanel_ControlPanelVisibilityStates_Border = GetTemplateChild("ControlPanel_ControlPanelVisibilityStates_Border") as Border;
             TapGrid = GetTemplateChild("TapGrid") as Grid;
             RootGrid = GetTemplateChild("RootGrid") as Grid;
@@ -117,9 +115,6 @@ namespace Minista
             TitleText = GetTemplateChild("TitleText") as TextBlock;
             ProfileEllipse = GetTemplateChild("ProfileEllipse") as Ellipse;
 
-            //Run ViewCountRun, CommentsCountRun;
-            //AppBarButton LikeButton, CommentButton, ShareButton;
-            //Button UpNextButton;
             ViewCountRun = GetTemplateChild("ViewCountRun") as Run;
             CommentsCountRun = GetTemplateChild("CommentsCountRun") as Run;
             LikeButton = GetTemplateChild("LikeButton") as AppBarButton;
@@ -241,8 +236,6 @@ namespace Minista
                 if (!CanHideControls) return;
                 if (!CanShowControls) return;
                 if ((int)ControlPanel_ControlPanelVisibilityStates_Border.Opacity != 1)
-                //    PanelFadeoutStory.Begin();
-                //else
                     PanelFadeinStory.Begin();
             }
             catch { }

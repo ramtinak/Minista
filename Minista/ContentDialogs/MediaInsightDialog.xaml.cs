@@ -30,7 +30,6 @@ namespace Minista.ContentDialogs
         public ObservableCollection<MetricInsightsItem> Hashtags { get; set; } = new ObservableCollection<MetricInsightsItem>();
         public InstaMedia Media { get; private set; }
         public string MediaId { get; private set; }
-        private string _impressionsBottomText = null;
         int _ownerProfileViewsCount = 0, _reachCount = 0, _profileActionsCount = 0, _impressionCount = 0,  _ownerAccountFollowsCount = 0;
         public int OwnerProfileViewsCount { get => _ownerProfileViewsCount; set { _ownerProfileViewsCount = value; RaisePropertyChanged("OwnerProfileViewsCount"); } }
         public int ReachCount { get => _reachCount; set { _reachCount = value; RaisePropertyChanged("ReachCount"); } }

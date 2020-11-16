@@ -24,7 +24,7 @@ namespace Minista.UserControls
     {
         private readonly DispatcherTimer Timer = new DispatcherTimer();
         private InstaDirectInboxItem CurrentDirectInboxItem;
-        private ToggleButton/*AppBarButton*/ VoicePlayPauseButton;
+        private ToggleButton VoicePlayPauseButton;
         private ProgressVoice ProgressVoice;
         private bool IsUcLoaded = false;
         public VoicePlayerUc()
@@ -194,12 +194,6 @@ namespace Minista.UserControls
 
         private void FasterModeButtonClick(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    FasterModeButton.IsChecked = false;
-            //}
-            //catch { }
-
             try
             {
                 if ((int)(MainPage.Current.ME.PlaybackRate) == 1)

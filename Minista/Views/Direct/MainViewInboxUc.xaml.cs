@@ -36,8 +36,6 @@ namespace Minista.Views.Direct
             Current = this;
             DataContext = InboxVM;
             Loaded += InboxViewLoaded;
-            //Timer.Interval = TimeSpan.FromSeconds(30);
-            //Timer.Tick += TimerTick;
             InboxVM.Updated += InboxVM_Updated;
         }
 
@@ -57,7 +55,6 @@ namespace Minista.Views.Direct
             RefreshControl.RefreshRequested += RefreshControlRefreshRequested;
             if (RefreshControl.Visualizer != null)
                 RefreshControl.Visualizer.RefreshStateChanged += RefreshControlRefreshStateChanged;
-            //InboxVM?.SetLV(ItemsLV);
         }
         private void RefreshControlRefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)
         {
@@ -86,11 +83,6 @@ namespace Minista.Views.Direct
                 scroll.ViewChanging += ScrollViewViewChanging;
             InboxVM?.SetLV(scroll);
         }
-        private void ItemsLVRefreshRequested(object sender, EventArgs e)
-        {
-            //InboxVM?.Refresh();
-        }
-
         private void ItemsLVItemClick(object sender, ItemClickEventArgs e)
         {
             try
@@ -159,19 +151,16 @@ namespace Minista.Views.Direct
                 if ((scrollViewer.VerticalOffset - _lastVerticalOffset) > 5 && !_isHideTitleGrid)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 else if (scrollViewer.VerticalOffset < _lastVerticalOffset && _isHideTitleGrid)
                 {
                     _isHideTitleGrid = false;
-                    //ToggleGoUpButtonAnimation(true);
                     ToggleRefreshButtonAnimation(true);
                 }
                 if (scrollViewer.VerticalOffset == 0)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 _lastVerticalOffset = scrollViewer.VerticalOffset;

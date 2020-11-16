@@ -33,7 +33,6 @@ namespace Minista.Views.Infos
         readonly ImplicitAnimationCollection _elementImplicitAnimation;
         private readonly Visual _refreshButtonVisual;
         private readonly Visual _goUpButtonVisual;
-        //private ScrollViewer Scroll;
         Visual _baseGridVisual;
         Grid BaseGrid;
 
@@ -43,7 +42,6 @@ namespace Minista.Views.Infos
         public HashtagView()
         {
             InitializeComponent();
-            //DataContext = HashtagVM;
             Current = this;
             _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
 
@@ -51,7 +49,6 @@ namespace Minista.Views.Infos
 
             _refreshButtonVisual = RefreshButton.GetVisual();
             _goUpButtonVisual = GoUpButton.GetVisual();
-            //_elementImplicitAnimation["Offset"] = CreateOffsetAnimation();
             _elementImplicitAnimation["Opacity"] = CreateOpacityAnimation();
             Loaded += HashtagViewLoaded;
         }

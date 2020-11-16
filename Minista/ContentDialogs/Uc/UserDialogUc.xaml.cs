@@ -17,7 +17,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace Minista.ContentDialogs.Uc
 {
@@ -33,7 +32,6 @@ namespace Minista.ContentDialogs.Uc
             {
                 SetValue(ThreadProperty, value);
                 SetThread(value);
-                //OnPropertyChanged("Thread");
             }
         }
         public static readonly DependencyProperty ThreadProperty =

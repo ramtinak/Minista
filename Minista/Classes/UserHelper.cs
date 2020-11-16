@@ -15,15 +15,12 @@ namespace Minista
         {
             try
             {
-                //await MainPage.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-                //{
-                    var banyan = await Helper.InstaApi.GetBanyanSuggestionsAsync();
-                    if (banyan.Succeeded)
-                    {
-                        if (banyan.Value?.Threads?.Count > 0 || banyan.Value?.Users?.Count > 0)
-                            BanyanSuggestions = banyan.Value;
-                    }
-                //});
+                var banyan = await Helper.InstaApi.GetBanyanSuggestionsAsync();
+                if (banyan.Succeeded)
+                {
+                    if (banyan.Value?.Threads?.Count > 0 || banyan.Value?.Users?.Count > 0)
+                        BanyanSuggestions = banyan.Value;
+                }
             }
             catch { }
         }

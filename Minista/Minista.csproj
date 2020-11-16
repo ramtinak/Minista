@@ -131,12 +131,12 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\AdaptiveGridView.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppCop.cs" />
     <Compile Include="Classes\FrameHelper.cs" />
-    <Compile Include="A DeletedFiles\RuntimeSupportedSDKs.cs" />
     <Compile Include="Classes\Helper.cs" />
     <Compile Include="Classes\StorageUpload.cs" />
     <Compile Include="ContentDialogs\AddPasscodeDialog.xaml.cs">
@@ -303,7 +303,6 @@
     <Compile Include="Behaviors\PointersEvent.cs" />
     <Compile Include="Classes\AppUploadHelper.cs" />
     <Compile Include="Classes\Generator.cs" />
-    <Compile Include="A DeletedFiles\IncrementalLoadingBase.cs" />
     <Compile Include="Classes\MinistaSettings.cs" />
     <Compile Include="Classes\UserHelper.cs" />
     <Compile Include="ContentDialogs\AddOrChooseUserDialog.xaml.cs">
@@ -357,7 +356,6 @@
     <Compile Include="ContentDialogs\UsersDialog.xaml.cs">
       <DependentUpon>UsersDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="A DeletedFiles\AdaptiveGridView.cs" />
     <Compile Include="Controls\CachedBitmap.cs" />
     <Compile Include="Controls\CachedImage.xaml.cs">
       <DependentUpon>CachedImage.xaml</DependentUpon>
@@ -380,12 +378,7 @@
     <Compile Include="Controls\LayoutTransformControl\LayoutTransformControl.Properties.cs" />
     <Compile Include="Controls\LayoutTransformControl\PropertyChangeEventSource.cs" />
     <Compile Include="Controls\ProgressVoice.cs" />
-    <Compile Include="A DeletedFiles\X\UGCropper.cs" />
     <Compile Include="Controls\PhotoCropper\Helpers\WriteableBitmapExtensions.cs" />
-    <Compile Include="A DeletedFiles\PullToRefreshPanel.xaml.cs">
-      <DependentUpon>PullToRefreshPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="A DeletedFiles\RefreshProgressEventArgs.cs" />
     <Compile Include="Controls\RunNew.cs" />
     <Compile Include="Controls\StoryQuestionControl.cs" />
     <Compile Include="Controls\XamlExtension.cs" />
@@ -855,10 +848,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LockControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="A DeletedFiles\PullToRefreshPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

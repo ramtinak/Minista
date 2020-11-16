@@ -35,10 +35,7 @@ namespace Minista.ContentDialogs
             Loaded += InboxThreadsDialogLoaded;
         }
 
-        private void InboxThreadsDialogLoaded(object sender, RoutedEventArgs e)
-        {
-            SetThumbnail();
-        }
+        private void InboxThreadsDialogLoaded(object sender, RoutedEventArgs e) => SetThumbnail();
 
         private void CancelButtonClick(object sender, RoutedEventArgs e) => Hide();
         private void ItemsLVLoaded(object sender, RoutedEventArgs e)

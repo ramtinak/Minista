@@ -32,7 +32,6 @@ namespace Minista.Views.Infos
 
         readonly Compositor _compositor;
         readonly ImplicitAnimationCollection _elementImplicitAnimation;
-        //Visual _headerGridVisual;
         private bool CanLoadFirstPopUp = false;
         NavigationMode NavigationMode;
         public ArchiveView()
@@ -147,19 +146,16 @@ namespace Minista.Views.Infos
                 if ((scrollViewer.VerticalOffset - _lastVerticalOffset) > 5 && !_isHideTitleGrid)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 else if (scrollViewer.VerticalOffset < _lastVerticalOffset && _isHideTitleGrid)
                 {
                     _isHideTitleGrid = false;
-                    //ToggleGoUpButtonAnimation(true);
                     ToggleRefreshButtonAnimation(true);
                 }
                 if (scrollViewer.VerticalOffset == 0)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 _lastVerticalOffset = scrollViewer.VerticalOffset;
@@ -224,7 +220,6 @@ namespace Minista.Views.Infos
                 }
                 else
                 {
-                    //Add implicit animation to each visual 
                     elementVisual.ImplicitAnimations = _elementImplicitAnimation;
                 }
             }
@@ -236,7 +231,6 @@ namespace Minista.Views.Infos
             fadeAnimation.InsertKeyFrame(1.0f, 0.0f);
             fadeAnimation.Duration = TimeSpan.FromSeconds(.35);
             fadeAnimation.Target = "Opacity";
-            //Add Animations to Animation group. 
             CompositionAnimationGroup animationGroup = _compositor.CreateAnimationGroup();
             animationGroup.Add(fadeAnimation);
 
@@ -244,13 +238,9 @@ namespace Minista.Views.Infos
         }
         private CompositionAnimationGroup CreateOffsetAnimation()
         {
-
-            //Define Offset Animation for the ANimation group
             Vector3KeyFrameAnimation offsetAnimation = _compositor.CreateVector3KeyFrameAnimation();
             offsetAnimation.InsertExpressionKeyFrame(1.0f, "this.FinalValue");
             offsetAnimation.Duration = TimeSpan.FromSeconds(.25);
-
-            //Define Animation Target for this animation to animate using definition. 
             offsetAnimation.Target = "Offset";
 
 
@@ -259,22 +249,8 @@ namespace Minista.Views.Infos
             fadeAnimation.Duration = TimeSpan.FromSeconds(.25);
             fadeAnimation.Target = "Opacity";
 
-
-
-
-            ////Define Rotation Animation for Animation Group. 
-            //ScalarKeyFrameAnimation rotationAnimation = _compositor.CreateScalarKeyFrameAnimation();
-            //rotationAnimation.InsertKeyFrame(.5f, 0.160f);
-            //rotationAnimation.InsertKeyFrame(1f, 0f);
-            //rotationAnimation.Duration = TimeSpan.FromSeconds(.4);
-
-            ////Define Animation Target for this animation to animate using definition. 
-            //rotationAnimation.Target = "RotationAngle";
-
-            //Add Animations to Animation group. 
             CompositionAnimationGroup animationGroup = _compositor.CreateAnimationGroup();
             animationGroup.Add(offsetAnimation);
-            //animationGroup.Add(rotationAnimation);
             animationGroup.Add(fadeAnimation);
 
             return animationGroup;

@@ -134,19 +134,16 @@ namespace Minista.Views.Infos
                 if ((scrollViewer.VerticalOffset - _lastVerticalOffset) > 5 && !_isHideTitleGrid)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 else if (scrollViewer.VerticalOffset < _lastVerticalOffset && _isHideTitleGrid)
                 {
                     _isHideTitleGrid = false;
-                    //ToggleGoUpButtonAnimation(true);
                     ToggleRefreshButtonAnimation(true);
                 }
                 if (scrollViewer.VerticalOffset == 0)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 _lastVerticalOffset = scrollViewer.VerticalOffset;

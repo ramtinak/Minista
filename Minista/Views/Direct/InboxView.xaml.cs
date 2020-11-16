@@ -21,9 +21,6 @@ using InstagramApiSharp.API.RealTime;
 
 namespace Minista.Views.Direct
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class InboxView : Page
     {
         private readonly DispatcherTimer Timer = new DispatcherTimer();
@@ -87,7 +84,6 @@ namespace Minista.Views.Direct
             RefreshControl.RefreshRequested += RefreshControlRefreshRequested;
             if (RefreshControl.Visualizer != null)
                 RefreshControl.Visualizer.RefreshStateChanged += RefreshControlRefreshStateChanged;
-            //InboxVM?.SetLV(ItemsLV);
         }
         private void RefreshControlRefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)
         {
@@ -116,11 +112,6 @@ namespace Minista.Views.Direct
                 scroll.ViewChanging += ScrollViewViewChanging;
             InboxVM?.SetLV(scroll);
         }
-        private void ItemsLVRefreshRequested(object sender, EventArgs e)
-        {
-            //InboxVM?.Refresh();
-        }
-
         private void ItemsLVItemClick(object sender, ItemClickEventArgs e)
         {
             try
@@ -172,9 +163,6 @@ namespace Minista.Views.Direct
         }
         void DoSearch() => InboxVM.Search(SearchText.Text);
 
-
-
-
         private double _lastVerticalOffset;
         private bool _isHideTitleGrid;
 
@@ -189,19 +177,16 @@ namespace Minista.Views.Direct
                 if ((scrollViewer.VerticalOffset - _lastVerticalOffset) > 5 && !_isHideTitleGrid)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 else if (scrollViewer.VerticalOffset < _lastVerticalOffset && _isHideTitleGrid)
                 {
                     _isHideTitleGrid = false;
-                    //ToggleGoUpButtonAnimation(true);
                     ToggleRefreshButtonAnimation(true);
                 }
                 if (scrollViewer.VerticalOffset == 0)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 _lastVerticalOffset = scrollViewer.VerticalOffset;

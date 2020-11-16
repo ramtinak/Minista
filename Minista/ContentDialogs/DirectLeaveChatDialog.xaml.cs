@@ -40,7 +40,7 @@ namespace Minista.ContentDialogs
                         var result = await Helper.InstaApi.MessagingProcessor.LeaveGroupThreadAsync(Thread.ThreadId);
                         if (result.Succeeded)
                         {
-                            ClearThread();
+                            //ClearThread();
                             Hide();
                         }
                         else
@@ -67,23 +67,23 @@ namespace Minista.ContentDialogs
             }
             catch { }
         }
-        void ClearThread()
-        {
-            try
-            {
-                return;
-                //if (Helpers.NavigationService.Frame.Content is Views.Direct.InboxView inbox)
-                //    for (int i = 0; i < inbox.InboxVM.Items.Count; i++)
-                //    {
-                //        var item = inbox.InboxVM.Items[i];
-                //        if (item != null && item.Thread.ThreadId == Thread.ThreadId)
-                //        {
-                //            inbox.InboxVM.Items.RemoveAt(i);
-                //            break;
-                //        }
-                //    }
-            }
-            catch { }
-        }
+        //void ClearThread()
+        //{
+        //    try
+        //    {
+        //        return;
+        //        if (Helpers.NavigationService.Frame.Content is Views.Direct.InboxView inbox)
+        //            for (int i = 0; i < inbox.InboxVM.Items.Count; i++)
+        //            {
+        //                var item = inbox.InboxVM.Items[i];
+        //                if (item != null && item.Thread.ThreadId == Thread.ThreadId)
+        //                {
+        //                    inbox.InboxVM.Items.RemoveAt(i);
+        //                    break;
+        //                }
+        //            }
+        //    }
+        //    catch { }
+        //}
     }
 }

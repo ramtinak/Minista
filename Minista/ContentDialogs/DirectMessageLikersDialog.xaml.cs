@@ -35,14 +35,7 @@ namespace Minista.ContentDialogs
             catch { }
         }
 
-        private void DoneToggleButtonClick(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Hide();
-            }
-            catch { }
-        }
+        private void DoneToggleButtonClick(object sender, RoutedEventArgs e) => Hide();
 
         private void LVMenuItemClick(object sender, ItemClickEventArgs e)
         {

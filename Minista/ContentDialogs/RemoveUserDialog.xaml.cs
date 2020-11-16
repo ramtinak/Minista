@@ -16,8 +16,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-
-
 namespace Minista.ContentDialogs
 {
     public sealed partial class RemoveUserDialog : ContentPopup
@@ -32,10 +30,7 @@ namespace Minista.ContentDialogs
             Image.UriSource = new Uri(userShort.ProfilePicture);
             RemoveUserText.Text = $"We won't tell @{userShort.UserName} they were removed from your followers.";
         }
-        private void CancelButtonClick(object sender, RoutedEventArgs e)
-        {
-            Hide();
-        }
+        private void CancelButtonClick(object sender, RoutedEventArgs e) => Hide();
 
         private async void RemoveButtonClick(object sender, RoutedEventArgs e)
         {

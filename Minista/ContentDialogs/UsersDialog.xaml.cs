@@ -33,8 +33,6 @@ namespace Minista.ContentDialogs
         #region Properties       
         readonly Compositor _compositor;
         readonly ImplicitAnimationCollection _elementImplicitAnimation;
-        //Visibility _buttonVisibility = Visibility.Collapsed;
-        //public Visibility ButtonVisibility { get { return _buttonVisibility; } set { _buttonVisibility = value; OnPropertyChangedX("ButtonVisibility"); } }
         readonly UsersDialogCommand UsersDialogCommand;
         public InstaStoryItem StoryItem;
         public InstaReelFeed ReelFeed;
@@ -104,10 +102,7 @@ namespace Minista.ContentDialogs
             this.InitializeComponent();
             _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
 
-            // Create ImplicitAnimations Collection. 
             _elementImplicitAnimation = _compositor.CreateImplicitAnimationCollection();
-
-            //Define trigger and animation that should play when the trigger is triggered. 
             _elementImplicitAnimation["Offset"] = CreateOffsetAnimation();
             DataContext = this;
 
@@ -124,7 +119,7 @@ namespace Minista.ContentDialogs
                     await Task.Delay(2000);
                 }
                 foreach (var item in UserHelper.BanyanSuggestions.Items)
-                    Items.Add(GetUserDialogUc(item)/*.CopyUserShort()*/);
+                    Items.Add(GetUserDialogUc(item));
             }
             catch { }
             HideIndicator();
@@ -156,10 +151,6 @@ namespace Minista.ContentDialogs
         {
             try
             {
-                //var userIds = new List<long>();
-                //foreach (var user in ItemsSenders)
-                //    userIds.Add(user.Pk);
-
                 Random rnd = new Random();
 
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
@@ -176,12 +167,6 @@ namespace Minista.ContentDialogs
                                 await SendDirectFelixShare(item);
                                 await Task.Delay(rnd.Next(750, 1500));
                             }
-                            //var userIdsStr = new List<string>();
-                            //foreach (var user in ItemsSenders)
-                            //    userIdsStr.Add(user.Pk.ToString());
-                            //var shareToUsers = await Helper.InstaApi.MessagingProcessor.SendDirectFelixShareAsync(Media.InstaIdentifier,  MessageText.Text, null, userIdsStr.ToArray());
-
-                            //if (shareToUsers.Succeeded)
                             Helper.ShowNotify($"Forwarded to {ItemsSenders.Count} people{(ItemsSenders.Count == 1 ? "" : "s")}");
                         }
                         else
@@ -191,11 +176,7 @@ namespace Minista.ContentDialogs
                                 await ShareMediaToUser(item, type);
                                 await Task.Delay(rnd.Next(750, 1500));
                             }
-                            //var shareToUsers = await Helper.InstaApi.MessagingProcessor.ShareMediaToUserAsync(Media.InstaIdentifier, type,
-                            //    MessageText.Text, userIds.ToArray());
-
-                            //if (shareToUsers.Succeeded)
-                                Helper.ShowNotify($"Forwarded to {ItemsSenders.Count} people{(ItemsSenders.Count == 1 ? "" : "s")}");
+                            Helper.ShowNotify($"Forwarded to {ItemsSenders.Count} people{(ItemsSenders.Count == 1 ? "" : "s")}");
                         }
                     }
                     else if (UsersDialogCommand == UsersDialogCommand.Story)
@@ -203,11 +184,6 @@ namespace Minista.ContentDialogs
                         var type = InstaSharingType.Photo;
                         if (StoryItem.MediaType == InstaMediaType.Video)
                             type = InstaSharingType.Video;
-
-                        //var shareToUsers = await Helper.InstaApi.StoryProcessor.ShareStoryAsync(ReelFeed.Id, StoryItem.Id, null, userIds.ToArray(),
-                        //    MessageText.Text, type);
-
-                        //if (shareToUsers.Succeeded)
                         foreach (var item in ItemsSenders)
                         {
                             await ShareStory(item, type);
@@ -222,12 +198,6 @@ namespace Minista.ContentDialogs
                             await SendDirectProfileToRecipients(item);
                             await Task.Delay(rnd.Next(750, 1500));
                         }
-                        //var shareProfile = await Helper.InstaApi.MessagingProcessor
-                        //.SendDirectProfileToRecipientsAsync(UserProfile.Pk, string.Join(",", userIds));
-                        //if (!string.IsNullOrEmpty(MessageText.Text))
-                        //    await Helper.InstaApi.MessagingProcessor.SendDirectTextAsync(string.Join(",", userIds), null, MessageText.Text);
-
-                        //if (shareProfile.Succeeded)
                         Helper.ShowNotify($"Profile shared to {ItemsSenders.Count} people{(ItemsSenders.Count == 1 ? "" : "s")}");
                     }
                 });
@@ -345,8 +315,7 @@ namespace Minista.ContentDialogs
                             try
                             {
                                 var exists = ItemsSenders.FirstOrDefault(x => x.ThreadId == uc.Thread.ThreadId);
-                                if (exists!=null)
-                                    //if (ItemsSenders.Count> 0)
+                                if (exists != null)
                                 ItemsSenders.Remove(exists);
                             }
                             catch { }
@@ -381,9 +350,9 @@ namespace Minista.ContentDialogs
             try
             {
                 if (ItemsSenders.Count > 0)
-                    SendButton.IsEnabled = true;  //ButtonVisibility = Visibility.Visible;
+                    SendButton.IsEnabled = true;  
                 else
-                    SendButton.IsEnabled = false; // ButtonVisibility = Visibility.Collapsed;
+                    SendButton.IsEnabled = false; 
             }
             catch { }
         }
@@ -394,11 +363,8 @@ namespace Minista.ContentDialogs
             {
                 if (sender is Ellipse ellipse && ellipse.DataContext is InstaDirectInboxThread thread)
                 {
-                    // delete
-                    //ItemsSenders.Remove(uc);
                     var exists = ItemsSenders.FirstOrDefault(x => x.ThreadId == thread.ThreadId);
                     if (exists != null)
-                        //if (ItemsSenders.Count> 0)
                         ItemsSenders.Remove(exists);
                     var item = Items.FirstOrDefault(u => u.Thread.ThreadId == thread.ThreadId);
                     if (item != null && item.Thread.Selected.HasValue && item.Thread.Selected.Value)
@@ -425,8 +391,6 @@ namespace Minista.ContentDialogs
             {
                 if (sender is Grid grid && grid.DataContext is InstaDirectInboxThread thread)
                     thread.CloseButton = true;
-                //if (sender is Grid grid && grid.DataContext is InstaUserShort userShort)
-                //    userShort.CloseButton = true;
             }
             catch { }
         }
@@ -437,8 +401,6 @@ namespace Minista.ContentDialogs
             {
                 if (sender is Grid grid && grid.DataContext is InstaDirectInboxThread thread)
                     thread.CloseButton = false;
-                //if (sender is Grid grid && grid.DataContext is InstaUserShort userShort)
-                //    userShort.CloseButton = false;
             }
             catch { }
         }
@@ -498,20 +460,6 @@ namespace Minista.ContentDialogs
                                 list.Add(GetUserDialogUc(searches.Value.Items[i]));
                             ItemsSearch.AddRange(list);
                         }
-
-                        //if (searches.Value.Threads?.Count > 0)
-                        //{
-                        //    foreach (var thread in searches.Value.Threads)
-                        //    {
-                        //        try
-                        //        {
-                        //            //list.Add(thread.Users.FirstOrDefault());
-                        //        }
-                        //        catch { }
-                        //    }
-                        //}
-                        //if (searches.Value.Users?.Count > 0)
-                        //    list.AddRange(searches.Value.Users);
                     }
                 });
             }
@@ -557,21 +505,16 @@ namespace Minista.ContentDialogs
             }
             else
             {
-                //Add implicit animation to each visual 
                 elementVisual.ImplicitAnimations = _elementImplicitAnimation;
             }
         }
         private CompositionAnimationGroup CreateOffsetAnimation()
         {
 
-            //Define Offset Animation for the ANimation group
             Vector3KeyFrameAnimation offsetAnimation = _compositor.CreateVector3KeyFrameAnimation();
             offsetAnimation.InsertExpressionKeyFrame(1.0f, "this.FinalValue");
             offsetAnimation.Duration = TimeSpan.FromSeconds(.4);
-
-            //Define Animation Target for this animation to animate using definition. 
             offsetAnimation.Target = "Offset";
-
 
             ScalarKeyFrameAnimation fadeAnimation = _compositor.CreateScalarKeyFrameAnimation();
             fadeAnimation.InsertKeyFrame(1f, 0.8f);
@@ -580,17 +523,12 @@ namespace Minista.ContentDialogs
 
 
 
-
-            //Define Rotation Animation for Animation Group. 
             ScalarKeyFrameAnimation rotationAnimation = _compositor.CreateScalarKeyFrameAnimation();
             rotationAnimation.InsertKeyFrame(.5f, 0.160f);
             rotationAnimation.InsertKeyFrame(1f, 0f);
             rotationAnimation.Duration = TimeSpan.FromSeconds(.4);
-
-            //Define Animation Target for this animation to animate using definition. 
             rotationAnimation.Target = "RotationAngle";
 
-            //Add Animations to Animation group. 
             CompositionAnimationGroup animationGroup = _compositor.CreateAnimationGroup();
             animationGroup.Add(offsetAnimation);
             animationGroup.Add(rotationAnimation);

@@ -49,8 +49,6 @@ namespace Minista.ContentDialogs
             LVUsers.ItemsSource = Users;
         }
 
-       
-
         private void AddUserButtonClick(object sender, RoutedEventArgs e)
         {
             Helpers.NavigationService.Navigate(typeof(Views.Sign.SignInView));
@@ -161,14 +159,6 @@ namespace Minista.ContentDialogs
             {
                 Hide();
                 await new LogoutDialog().ShowAsync();
-                //var dialog = new MessageDialog($"Are you sure you want to logout from '{Helper.InstaApi.GetLoggedUser().LoggedInUser.UserName}' account ?");
-                //dialog.Commands.Add(new UICommand("No"));
-                //dialog.Commands.Add(new UICommand("Yes"));
-                //dialog.CancelCommandIndex = 0;
-                //dialog.DefaultCommandIndex = 0;
-                //var label = await dialog.ShowAsync();
-                //if (label.Label == "Yes")
-                //    await new LogoutDialog().ShowAsync();
             }
             catch { }
         }

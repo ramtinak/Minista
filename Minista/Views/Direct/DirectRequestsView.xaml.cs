@@ -15,12 +15,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-
 namespace Minista.Views.Direct
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class DirectRequestsView : Page
     {
         public static DirectRequestsView Current;
@@ -39,8 +35,6 @@ namespace Minista.Views.Direct
             KeyDown += OnKeyDownHandler;
             if (e.NavigationMode == NavigationMode.New)
                 GetType().RemovePageFromBackStack();
-            //if (e.NavigationMode == NavigationMode.New)
-            //DirectRequestsVM.RunLoadMore(true);
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {

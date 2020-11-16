@@ -10,7 +10,6 @@ using Windows.Storage;
 
 namespace Minista.Classes
 {
-
     public class StorageUploadItem 
     {
         public void ThisIsVideo(bool isVideo) => IsVideo = isVideo;
@@ -41,16 +40,6 @@ namespace Minista.Classes
 
         internal bool IsImage => ImageToUpload != null && VideoToUpload == null;
         internal bool IsVideo { get; private set; } = false;
-        //internal bool IsVideo => VideoToUpload != null;
-
         internal bool IsBoth => ImageToUpload != null && VideoToUpload != null;
     }
-    //// video pixel info
-    //public uint VideoPixelWidth { get; set; }
-    //public uint VideoPixelHeight { get; set; }
-
-
-    //// image pixel info
-    //public uint ImagePixelWidth { get; set; }
-    //public uint ImagePixelHeight { get; set; }
 }

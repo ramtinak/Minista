@@ -88,9 +88,6 @@ namespace Minista.UserControls.Main
             try
             {
                 SetImage();
-                //var img = item.ImageList.FirstOrDefault().Uri.GetBitmap();
-                //BackgroundImage.Source = img;
-                //Image.Source = img;
                 var anim = BackgroundImage.Blur(17)/*.Rotate(30)*/;
                 anim.SetDurationForAll(0);
                 anim.SetDelay(0);
@@ -111,44 +108,6 @@ namespace Minista.UserControls.Main
             catch { }
         }
 
-        //void SetStuff()
-        //{
-        //    try
-        //    {
-        //        StorySuffItems.Children.Clear();
-        //        var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
-        //        var scaleFactor = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
-        //        //var actwidth = MediaElement.ActualWidth == 0 ? Image.ActualWidth : MediaElement.ActualWidth;
-        //        //var actheight = MediaElement.ActualHeight == 0 ? Image.ActualHeight : MediaElement.ActualHeight;
-        //        var actwidth =  Image.ActualWidth;
-        //        var actheight = Image.ActualHeight;
-        //        //var size = Helpers.AspectRatioHelper. CalculateSizeInBox(StoryItem.OriginalWidth, StoryItem.OriginalHeight, actheight, actwidth);
-        //        var size = new Size(actwidth, actheight);
-        //        StorySuffItems.Width = size.Width;
-        //        StorySuffItems.Height = size.Height;
-
-        //        if (StoryItem.StoryFeedMedia.Any())
-        //        {
-        //            foreach (var item in StoryItem.StoryFeedMedia)
-        //            {
-        //                var trans = new CompositeTransform() { CenterX = (size.Width * item.Width / 2), CenterY = (size.Height * item.Height / 2), Rotation = item.Rotation * 360 };
-        //                var marg = new Thickness(((item.X * size.Width) - ((item.Width / 2) * size.Width)),
-        //                    ((item.Y * size.Height) - ((item.Height / 2) * size.Height)), 0, 0);
-        //                var rect = new Grid()
-        //                {
-        //                    Background = "#A500F9EE".GetColorBrush(),
-        //                    DataContext = item.MediaId.ToString(),
-        //                    RenderTransform = trans,
-        //                    Width = item.Width * bounds.Width,
-        //                    Height = item.Height * bounds.Height
-        //                };
-        //                rect.Tapped += OpenMedia;
-        //                StorySuffItems.Children.Add(rect);
-        //            }
-        //        }
-        //    }
-        //    catch { }
-        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged2(string memberName)

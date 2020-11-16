@@ -32,7 +32,6 @@ namespace Minista.ContentDialogs
             {
                 try
                 {
-                    //"await Helper.InstaApi.LogoutAsync()".PrintDebug();
                     await Helper.InstaApi.LogoutAsync();
                 }
                 catch { }
@@ -50,8 +49,6 @@ namespace Minista.ContentDialogs
                 SettingsHelper.SaveSettings();
                 if (Helper.InstaApiList.Count == 0)
                 {
-                    //"if (Helper.InstaApiList.Count == 0)".PrintDebug();
-
                     Helpers.NavigationService.Navigate(typeof(Views.Sign.SignInView));
                     if (Helpers.NavigationService.Frame.BackStack.Any())
                         Helpers.NavigationService.Frame.BackStack.Clear();
@@ -60,7 +57,6 @@ namespace Minista.ContentDialogs
                 }
                 else
                 {
-                    //"if (Helper.InstaApiList.Count !!!!!!!!!!!= 0)".PrintDebug();
                     Helper.InstaApi = Helper.InstaApiList[0];
                     Helper.InstaApiSelectedUsername = Helper.InstaApiList[0].GetLoggedUser().UserName.ToLower();
                     SettingsHelper.SaveSettings();
@@ -77,9 +73,6 @@ namespace Minista.ContentDialogs
             Hide();
         }
 
-        private void CancelButtonClick(object sender, RoutedEventArgs e)
-        {
-            Hide();
-        }
+        private void CancelButtonClick(object sender, RoutedEventArgs e) => Hide();
     }
 }

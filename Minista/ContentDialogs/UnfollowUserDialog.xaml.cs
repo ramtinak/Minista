@@ -31,10 +31,7 @@ namespace Minista.ContentDialogs
             Image.UriSource = new Uri(userShort.ProfilePicture);
             UnfollowUserText.Text = $"Unfollow @{userShort.UserName}?";
         }
-        private void CancelButtonClick(object sender, RoutedEventArgs e)
-        {
-            Hide();
-        }
+        private void CancelButtonClick(object sender, RoutedEventArgs e) => Hide();
 
         private async void UnfollowButtonClick(object sender, RoutedEventArgs e)
         {

@@ -30,7 +30,6 @@ namespace Minista.UserControls.Direct
             {
                 SetValue(ThreadProperty, value);
                 DataContext = value;
-                //Sets(value);
                 OnPropertyChanged("Thread");
             }
         }
@@ -118,8 +117,6 @@ namespace Minista.UserControls.Direct
                                 ix = Thread.Items.Count - (index + 1);
                             txtFooter.Text = $"{ix} new messages{date}";
                         }
-                        //if (thread.LastActivity != thread.LastSeenAt.LastOrDefault().SeenTime)
-
                     }
                     catch { }
 
@@ -239,7 +236,7 @@ namespace Minista.UserControls.Direct
                                 txtFooter.Text = "Shared you a profile".Truncate(45) + date;
                         }
                     }
-                    else if (type == InstaDirectThreadItemType.RavenMedia/* && last.RavenMedia != null*/)
+                    else if (type == InstaDirectThreadItemType.RavenMedia)
                     {
                         if (pk == userId)
                             txtFooter.Text = "You shared a disappearing media".Truncate(45) + date;
@@ -313,29 +310,21 @@ namespace Minista.UserControls.Direct
                 UserPresenceStatusGrid.Visibility = OnlineStatusEllipse.Visibility = Visibility.Collapsed;
             else
             {
-                //if (userPresence.IsActive)
-                //{
-                //    OnlineStatusEllipse.Visibility = Visibility.Visible;
-                //    UserPresenceStatusGrid.Visibility = Visibility.Collapsed;
-                //}
-                //else
+                var span = DateTime.UtcNow - userPresence.LastActivity;
+                if (span.Hours == 0 && span.Minutes < 4)
                 {
-                    var span = DateTime.UtcNow - userPresence.LastActivity;
-                    if (span.Hours == 0 && span.Minutes < 4)
-                    {
-                        OnlineStatusEllipse.Visibility = Visibility.Visible;
-                        UserPresenceStatusGrid.Visibility = Visibility.Collapsed;
-                    }
-                    else if (span.Hours == 0 && span.Minutes > 3)
-                    {
-                        UserPresenceStatusText.Text = $"{span.Minutes}m";
-
-                        OnlineStatusEllipse.Visibility = Visibility.Collapsed;
-                        UserPresenceStatusGrid.Visibility = Visibility.Visible;
-                    }
-                    else
-                        UserPresenceStatusGrid.Visibility = OnlineStatusEllipse.Visibility = Visibility.Collapsed;
+                    OnlineStatusEllipse.Visibility = Visibility.Visible;
+                    UserPresenceStatusGrid.Visibility = Visibility.Collapsed;
                 }
+                else if (span.Hours == 0 && span.Minutes > 3)
+                {
+                    UserPresenceStatusText.Text = $"{span.Minutes}m";
+
+                    OnlineStatusEllipse.Visibility = Visibility.Collapsed;
+                    UserPresenceStatusGrid.Visibility = Visibility.Visible;
+                }
+                else
+                    UserPresenceStatusGrid.Visibility = OnlineStatusEllipse.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -355,7 +344,6 @@ namespace Minista.UserControls.Direct
                 }
                 else
                 {
-                    //UsersGrid.Margin = new Thickness(-35, -15, 0, 0);
                     Random rnd = new Random();
                     if (users.Count > 3)
                     {

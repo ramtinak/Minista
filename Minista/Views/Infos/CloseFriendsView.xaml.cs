@@ -21,9 +21,6 @@ using System.Numerics;
 
 namespace Minista.Views.Infos
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class CloseFriendsView : Page
     {
         public static CloseFriendsView Current;
@@ -95,12 +92,6 @@ namespace Minista.Views.Infos
                 var sv2 = SuggestionItemsLV.FindScrollViewer();
                 CloseFriendsVM.SetLV2(sv2);
                 CloseFriendsVM.RunLoadMore2(true);
-                //try
-                //{
-                //    sv2.ViewChanging -= ScrollViewViewChanging;
-                //}
-                //catch { }
-                //sv2.ViewChanging += ScrollViewViewChanging;
 
             }
         }
@@ -152,19 +143,16 @@ namespace Minista.Views.Infos
                 if ((scrollViewer.VerticalOffset - _lastVerticalOffset) > 5 && !_isHideTitleGrid)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 else if (scrollViewer.VerticalOffset < _lastVerticalOffset && _isHideTitleGrid)
                 {
                     _isHideTitleGrid = false;
-                    //ToggleGoUpButtonAnimation(true);
                     ToggleRefreshButtonAnimation(true);
                 }
                 if (scrollViewer.VerticalOffset == 0)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 _lastVerticalOffset = scrollViewer.VerticalOffset;

@@ -100,29 +100,6 @@ namespace Minista.UserControls.Story.StoryViews
                         SeeMoreText = "",
                         Type = StoryViewObjectType.Viewers,
                     };
-                    //try
-                    //{
-                    //    Views.Infos.HashtagView.Current?.ShowTopLoading();
-                    //}
-                    //catch { }
-                    //try
-                    //{
-                    //    Views.Posts.ScrollableHashtagPostView.Current?.ShowTopLoading();
-                    //}
-                    //catch { }
-                }
-                else
-                {
-                    //try
-                    //{
-                    //    Views.Infos.HashtagView.Current?.ShowBottomLoading();
-                    //}
-                    //catch { }
-                    //try
-                    //{
-                    //    Views.Posts.ScrollableHashtagPostView.Current?.ShowBottomLoading();
-                    //}
-                    //catch { }
                 }
                 var result = await InstaApi.StoryProcessor.GetStoryMediaViewersAsync(StoryItem.Pk.ToString(), Pagination);
 
@@ -306,32 +283,7 @@ namespace Minista.UserControls.Story.StoryViews
         }
         void Hide(bool refresh)
         {
-            if (refresh)
-            {
-                //try
-                //{
-                //    Views.Infos.HashtagView.Current?.HideTopLoading();
-                //}
-                //catch { }
-                //try
-                //{
-                //    Views.Posts.ScrollableHashtagPostView.Current?.HideTopLoading();
-                //}
-                //catch { }
-            }
-            else
-            {
-                //try
-                //{
-                //    Views.Infos.HashtagView.Current?.HideBottomLoading();
-                //}
-                //catch { }
-                //try
-                //{
-                //    Views.Posts.ScrollableHashtagPostView.Current?.HideBottomLoading();
-                //}
-                //catch { }
-            }
+          
         }
         public void ScrollViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
         {
@@ -374,8 +326,6 @@ namespace Minista.UserControls.Story.StoryViews
         public ObservableCollection<InstaStoryQuizAnswer> StoryQuizsParticipants { get; set; } = new ObservableCollection<InstaStoryQuizAnswer>();
         public InstaStoryQuizStickerItem StoryQuiz { get; set; }
         public ObservableCollection<InstaStoryTalliesItem> StoryQuizTallies { get; set; } = new ObservableCollection<InstaStoryTalliesItem>();
-
-        //public ObservableCollection<InstaStoryChatRequestInfoItem> StoryChatRequestInfos { get; set; } = new ObservableCollection<InstaStoryChatRequestInfoItem>();
 
         public string YesVote { get; set; }
         public string NoVote { get; set; }

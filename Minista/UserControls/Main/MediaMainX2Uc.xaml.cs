@@ -55,27 +55,6 @@ namespace Minista.UserControls.Main
                 typeof(bool),
                 typeof(MediaMainX2Uc),
                 new PropertyMetadata(false));
-
-        //public InstaMedia Media
-        //{
-        //    get
-        //    {
-        //        return (InstaMedia)GetValue(MediaProperty);
-        //    }
-        //    set
-        //    {
-        //        SetValue(MediaProperty, value);
-        //        //this.DataContext = value;
-        //        //OnPropertyChanged("Media");
-        //        //SetDataContext(value);
-        //    }
-        //}
-        //public static readonly DependencyProperty MediaProperty =
-        //    DependencyProperty.Register("Media",
-        //        typeof(InstaMedia),
-        //        typeof(MediaMainUc),
-        //        new PropertyMetadata(null));
-
         public bool MiniMode
         {
             get
@@ -101,30 +80,6 @@ namespace Minista.UserControls.Main
             _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
             _countGridVisual = CountGrid.GetVisual();
             DataContextChanged += MediaMainUc_DataContextChanged;
-            SizeChanged += MediaMainUc_SizeChanged;
-        }
-
-        private void MediaMainUc_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            //try
-            //{
-            //    //FlipView.Width = ActualWidth;
-            //    if (FlipView.Items.Count > 0)
-            //    {
-            //        for (int i = 0; i < FlipView.Items.Count; i++)
-            //        {
-            //            try
-            //            {
-            //                if (FlipView.Items[i] is ImageEx imageEx)
-            //                    imageEx.Width = ActualWidth;
-            //                else if (FlipView.Items[i] is MediaElement mediaElement)
-            //                    mediaElement.Width = ActualWidth;
-            //            }
-            //            catch { }
-            //        }
-            //    }
-            //}
-            //catch { }
         }
 
         public void SetMiniMode(bool miniMode)
@@ -147,16 +102,6 @@ namespace Minista.UserControls.Main
         }
         void SetDataContext(InstaMedia media)
         {
-            //if (args.NewValue is InstaPost post && post != null && post.Media != null)
-            //{
-            //    if (post.Media.Location != null)
-            //        LocationText.Visibility = Visibility.Visible;
-            //    else LocationText.Visibility = Visibility.Collapsed;
-            //    SetCaption(post.Media);
-            //    SetLike(post.Media.HasLiked);
-            //    SetCarousel(post.Media);
-            //}
-            //else
             if (media != null)
             {
                 Media = media;
@@ -249,7 +194,6 @@ namespace Minista.UserControls.Main
                             };
                             mtc.SetUserTag(item);
                             mtc.Tapped += ShowPanel;
-                            //mtc.Visibility = Visibility.Collapsed;
                             ImageUserTags.Children.Add(mtc);
 
                             cX = CalculateXPosition(item.Position.X, ImageUserTags.ActualWidth, mtc.ActualWidth);
@@ -494,8 +438,6 @@ namespace Minista.UserControls.Main
         {
             try
             {
-                //var grid = sender as Grid;
-                //if (grid == null) return;
                 var mtu = sender as MediaTagUc;
                 if (mtu != null && mtu?.UserTag != null)
                 {
@@ -774,14 +716,10 @@ namespace Minista.UserControls.Main
 
             LikeButton.Foreground = hasLiked ? Helper.GetColorBrush("#FFE03939") : (SolidColorBrush)Application.Current.Resources["DefaultForegroundColor"];
         }
-        //bool IsCaptionSet = false;
         async void SetCaption(InstaMedia media)
         {
             try
             {
-                //if (IsCaptionSet)
-                //    return;
-                //IsCaptionSet = true;
                 if (media == null)
                 {
                     txtCaption.Blocks.Clear();
@@ -800,21 +738,6 @@ namespace Minista.UserControls.Main
 
                 await MainPage.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    //txtCaptionX.Inlines
-                    //using (var pg = new PassageHelper())
-                    //{
-                    //    var passages = pg.GetParagraph(media.Caption.Text, CaptionHyperLinkClick);
-                    //    txtCaption.Blocks.Clear();
-                    //    txtCaption.Blocks.Add(passages);
-                    //}
-                    //using (var pg = new PassageHelperX())
-                    //{
-                    //    var passages = pg.GetInlines(media.Caption.Text, CaptionHyperLinkClick);
-                    //    txtCaptionX.Inlines.Clear();
-                    //    txtCaptionX.FlowDirection = passages.Item2 ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
-                    //    passages.Item1.ForEach(item =>
-                    //    txtCaptionX.Inlines.Add(item));
-                    //}
                     var text = media.Caption.Text;
                     var lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
 
@@ -844,13 +767,6 @@ namespace Minista.UserControls.Main
                         txtCaption.Blocks.Add(p);
                     }
                 });
-                //using (var pg = new WordsHelper())
-                //{
-                //    var passages = pg.GetParagraph(Media.Caption.Text, CaptionHyperLinkClick);
-                //    txtCaption.Blocks.Clear();
-                //    passages.ForEach(p=>
-                //        txtCaption.Blocks.Add(p));
-                //}
             }
             catch { }
         }
@@ -917,8 +833,6 @@ namespace Minista.UserControls.Main
         }
         private async void LikeButtonPrevCommentClick(object sender, RoutedEventArgs e)
         {
-            // like | main comment
-
             if (sender is AppBarButton btn && btn != null)
             {
                 btn.DataContext.GetType().PrintDebug();
@@ -930,19 +844,13 @@ namespace Minista.UserControls.Main
                         {
                             var result = await Helper.InstaApi.CommentProcessor.UnlikeCommentAsync(data.Pk.ToString());
                             if (result.Succeeded)
-                            {
                                 data.HasLikedComment = false;
-                                //btn.DataContext = data;
-                            }
                         }
                         else
                         {
                             var result = await Helper.InstaApi.CommentProcessor.LikeCommentAsync(data.Pk.ToString());
                             if (result.Succeeded)
-                            {
                                 data.HasLikedComment = true;
-                                //btn.DataContext = data;
-                            }
                         }
                     }
                     catch { }
@@ -955,19 +863,13 @@ namespace Minista.UserControls.Main
                         {
                             var result = await Helper.InstaApi.CommentProcessor.UnlikeCommentAsync(data2.Pk.ToString());
                             if (result.Succeeded)
-                            {
                                 data2.HasLikedComment = false;
-                                //btn.DataContext = data2;
-                            }
                         }
                         else
                         {
                             var result = await Helper.InstaApi.CommentProcessor.LikeCommentAsync(data2.Pk.ToString());
                             if (result.Succeeded)
-                            {
                                 data2.HasLikedComment = true;
-                                //btn.DataContext = data2;
-                            }
                         }
                     }
                     catch { }
@@ -1034,11 +936,8 @@ namespace Minista.UserControls.Main
             {
                 if (Media.MediaType == InstaMediaType.Image) return;
                 if (Media.MediaType == InstaMediaType.Video)
-                {
-                    //if (MEPlayer.CurrentState == MediaElementState.Buffering || MEPlayer.CurrentState == MediaElementState.Playing)
                     MEPlayer.Pause();
-                }
-                else /*if (Media.MediaType == InstaMediaType.Carousel)*/
+                else 
                 {
                     foreach (var item in FlipView.ItemsPanelRoot.Children)
                     {
@@ -1057,7 +956,6 @@ namespace Minista.UserControls.Main
                         }
                         catch { }
                     }
-                    //if (MEPlayer.CurrentState == MediaElementState.Buffering || MEPlayer.CurrentState == MediaElementState.Playing)
                     var fp = FlipView.ItemsPanelRoot.Children[FlipView.SelectedIndex] as FlipViewItem;
                     if (fp != null)
                     {
@@ -1280,23 +1178,7 @@ namespace Minista.UserControls.Main
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
-                    if (Media.HasLiked)
-                    {
-                        //Helper.SetAnimation(await AssetHelper.GetAsync(LottieTypes.Dislike));
-                        //Media.HasLiked = false;
-                        //Media.LikesCount--;
-                        //SetLike(false);
-                        //var unlike = await Helper.InstaApi.MediaProcessor.UnLikeMediaAsync(Media.InstaIdentifier);
-                        //if (!unlike.Succeeded)
-                        //{
-                        //    if (like.Info.ResponseType == InstagramApiSharp.Classes.ResponseType.Spam)
-                        //        Helper.ShowNotify(ErrorMessages.FeedbackRequiredMessage, 2000);
-                        //    Media.LikesCount++;
-                        //    Media.HasLiked = true;
-                        //    SetLike(true);
-                        //}
-                    }
-                    else
+                    if (!Media.HasLiked)
                     {
                         Helper.SetAnimation(await AssetHelper.GetAsync(LottieTypes.Heart));
                         Media.HasLiked = true;
@@ -1349,7 +1231,6 @@ namespace Minista.UserControls.Main
                                 Helper.ShowNotify("Something wen't wrong:\r\nError message: " + result.Info.Message);
                         }
                     }
-                    //btn.DataContext = user;
                 });
             }
             catch { }
@@ -1361,32 +1242,28 @@ namespace Minista.UserControls.Main
             if (Media == null)
                 return;
             if (Media.PreviewComments?[0] != null)
-            {
-                //try
-                //{
-                //    if (NavigationService.Frame.Content is Views.Main.MainView view && view != null)
-                //        view.MediaMainUc = this;
-                //}
-                //catch { }
-                //try
-                //{
-                //    var connectedAnimationService = ConnectedAnimationService.GetForCurrentView();
-                //    connectedAnimationService.DefaultDuration = TimeSpan.FromMilliseconds(850);
-
-                //    ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("UserImage", UserImage);
-                //}
-                //catch { }
                 Helper.OpenProfile(Media.PreviewComments[0].User);
-            }
+            //try
+            //{
+            //    if (NavigationService.Frame.Content is Views.Main.MainView view && view != null)
+            //        view.MediaMainUc = this;
+            //}
+            //catch { }
+            //try
+            //{
+            //    var connectedAnimationService = ConnectedAnimationService.GetForCurrentView();
+            //    connectedAnimationService.DefaultDuration = TimeSpan.FromMilliseconds(850);
+
+            //    ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("UserImage", UserImage);
+            //}
+            //catch { }
         }
         private void UserButtonPreviewComment2Click(object sender, RoutedEventArgs e)
         {
             if (Media == null)
                 return;
             if (Media.PreviewComments?[1] != null)
-            {
                 Helper.OpenProfile(Media.PreviewComments[1].User);
-            }
         }
 
         private void UserImageEllipseTapped(object sender, TappedRoutedEventArgs e)

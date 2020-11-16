@@ -1,22 +1,23 @@
-﻿<Page x:Class="Minista.UserControls.Main.MediaMainUc"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:local="using:Minista.UserControls.Main"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:behaviors="using:Minista.Behaviors"
-      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-      xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-      xmlns:behaviorsX="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
-      xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-      xmlns:vm="using:Minista.ViewModels.Main"
-      xmlns:selector="using:Minista.Selectors"
-      xmlns:converters="using:Minista.Converters"
-      mc:Ignorable="d"
-      d:DesignHeight="850"
-      d:DesignWidth="400"
-      x:Name="PAGE">
+﻿<Page
+    x:Class="Minista.UserControls.Main.MediaMainUc"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:behaviors="using:Minista.Behaviors"
+    xmlns:behaviorsX="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Minista.Converters"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:Minista.UserControls.Main"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:selector="using:Minista.Selectors"
+    xmlns:vm="using:Minista.ViewModels.Main"
+    x:Name="PAGE"
+    d:DesignHeight="850"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
             <converters:MediaImageVisibilityConverter x:Key="ImageVisibilityConverter" />
@@ -43,10 +44,11 @@
             <converters:DateTimeFullConverter x:Key="DateTimeFullConverter" />
 
             <converters:UserTagCarouselItemVisibilityConverter x:Key="UserTagCarouselItemVisibilityConverter" />
-            
-            <selector:MediaCarouselTemplateSelector x:Key="CarouselTemplateSelector"
-                                                    ImageTemplate="{StaticResource ImageTemplate}"
-                                                    VideoTemplate="{StaticResource VideoTemplate}" />
+
+            <selector:MediaCarouselTemplateSelector
+                x:Key="CarouselTemplateSelector"
+                ImageTemplate="{StaticResource ImageTemplate}"
+                VideoTemplate="{StaticResource VideoTemplate}" />
             <DataTemplate x:Key="ImageTemplate">
                 <Grid>
                     <controls:ImageEx x:Name="ImageExTemplate" Stretch="Uniform">
@@ -54,40 +56,44 @@
                             <BitmapImage UriSource="{Binding Images[0].Uri, Mode=OneWay}" />
                         </controls:ImageEx.Source>
                     </controls:ImageEx>
-                    <Grid  Width="{Binding Width,ElementName=ImageExTemplate, UpdateSourceTrigger=Default}"
-                           Height="{Binding Height,ElementName=ImageExTemplate, UpdateSourceTrigger=Default}"
-                           Background="Cyan"
-                           Opacity="0"
-                           DoubleTapped="OnItemDoubleTapped"
-                           Tapped="VideoUserTagsTapped"
-                           SizeChanged="ImageUserTagsSizeChanged"/>
-                    <Grid x:Name="ImageVideoUserTagsTemplate"
-                          Width="{Binding Width,ElementName=ImageExTemplate, UpdateSourceTrigger=Default}"
-                          Height="{Binding Height,ElementName=ImageExTemplate, UpdateSourceTrigger=Default}">
+                    <Grid
+                        Width="{Binding Width, ElementName=ImageExTemplate, UpdateSourceTrigger=Default}"
+                        Height="{Binding Height, ElementName=ImageExTemplate, UpdateSourceTrigger=Default}"
+                        Background="Cyan"
+                        DoubleTapped="OnItemDoubleTapped"
+                        Opacity="0"
+                        SizeChanged="ImageUserTagsSizeChanged"
+                        Tapped="VideoUserTagsTapped" />
+                    <Grid
+                        x:Name="ImageVideoUserTagsTemplate"
+                        Width="{Binding Width, ElementName=ImageExTemplate, UpdateSourceTrigger=Default}"
+                        Height="{Binding Height, ElementName=ImageExTemplate, UpdateSourceTrigger=Default}" />
 
-                    </Grid>
-
-                    <Grid Width="{Binding Width,ElementName=ImageExTemplate, UpdateSourceTrigger=Default}"
-                          Height="{Binding Height,ElementName=ImageExTemplate, UpdateSourceTrigger=Default}"
-                          Visibility="{Binding Converter={StaticResource UserTagCarouselItemVisibilityConverter}}">
-                        <Button x:Name="UserTagButton"
-                                Background="{x:Null}"
-                                Grid.RowSpan="2"
-                                VerticalAlignment="Bottom"
-                                HorizontalAlignment="Left"
-                                Margin="12 0 0 40"
-                                Click="UserTagButtonClick">
+                    <Grid
+                        Width="{Binding Width, ElementName=ImageExTemplate, UpdateSourceTrigger=Default}"
+                        Height="{Binding Height, ElementName=ImageExTemplate, UpdateSourceTrigger=Default}"
+                        Visibility="{Binding Converter={StaticResource UserTagCarouselItemVisibilityConverter}}">
+                        <Button
+                            x:Name="UserTagButton"
+                            Grid.RowSpan="2"
+                            Margin="12,0,0,40"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Background="{x:Null}"
+                            Click="UserTagButtonClick">
                             <Grid>
 
-                                <Ellipse Width="30"
-                                         Height="30"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Fill="#FF333333" />
-                                <FontIcon FontFamily="{StaticResource MaterialSymbolFont}"
-                                          FontSize="{StaticResource HeaderFontSize}"
-                                          Foreground="{StaticResource DefaultForegroundColor}"
-                                          Glyph="" />
+                                <Ellipse
+                                    Width="30"
+                                    Height="30"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Fill="#FF333333" />
+                                <FontIcon
+                                    FontFamily="{StaticResource MaterialSymbolFont}"
+                                    FontSize="{StaticResource HeaderFontSize}"
+                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                    Glyph="" />
                             </Grid>
                         </Button>
                     </Grid>
@@ -96,44 +102,51 @@
             <DataTemplate x:Key="VideoTemplate">
                 <Grid>
 
-                    <MediaElement x:Name="MediaElementTemplate" AutoPlay="False"
-                                  AreTransportControlsEnabled="True"
-                                  Source="{Binding Videos[0].Uri, Mode=OneWay}"
-                                  PosterSource="{Binding Images[0].Uri,Mode=OneWay}"
-                                  VerticalAlignment="Top"
-                                  CurrentStateChanged="MediaElementCurrentStateChanged"
-                                  MediaEnded="MediaElementMediaEnded"
-                                  Tapped="MediaElementTapped"
-                                  DoubleTapped="OnItemDoubleTapped">
+                    <MediaElement
+                        x:Name="MediaElementTemplate"
+                        VerticalAlignment="Top"
+                        AreTransportControlsEnabled="True"
+                        AutoPlay="False"
+                        CurrentStateChanged="MediaElementCurrentStateChanged"
+                        DoubleTapped="OnItemDoubleTapped"
+                        MediaEnded="MediaElementMediaEnded"
+                        PosterSource="{Binding Images[0].Uri, Mode=OneWay}"
+                        Source="{Binding Videos[0].Uri, Mode=OneWay}"
+                        Tapped="MediaElementTapped">
                         <MediaElement.TransportControls>
-                            <MediaTransportControls IsCompact="True"
-                                                    IsPlaybackRateEnabled="True"
-                                                    IsPlaybackRateButtonVisible="True"
-                                                    IsZoomButtonVisible="True"
-                                                    IsFullWindowButtonVisible="True" />
+                            <MediaTransportControls
+                                IsCompact="True"
+                                IsFullWindowButtonVisible="True"
+                                IsPlaybackRateButtonVisible="True"
+                                IsPlaybackRateEnabled="True"
+                                IsZoomButtonVisible="True" />
                         </MediaElement.TransportControls>
                     </MediaElement>
-                    <Grid Width="{Binding Width,ElementName=MediaElementTemplate, UpdateSourceTrigger=Default}"
-                          Height="{Binding Height,ElementName=MediaElementTemplate, UpdateSourceTrigger=Default}"
-                          Visibility="{Binding Converter={StaticResource UserTagCarouselItemVisibilityConverter}}">
-                        <Button x:Name="UserTagButton"
-                                Background="{x:Null}"
-                                Grid.RowSpan="2"
-                                VerticalAlignment="Bottom"
-                                HorizontalAlignment="Left"
-                                Margin="12 0 0 40"
-                                Click="UserTagButtonClick">
+                    <Grid
+                        Width="{Binding Width, ElementName=MediaElementTemplate, UpdateSourceTrigger=Default}"
+                        Height="{Binding Height, ElementName=MediaElementTemplate, UpdateSourceTrigger=Default}"
+                        Visibility="{Binding Converter={StaticResource UserTagCarouselItemVisibilityConverter}}">
+                        <Button
+                            x:Name="UserTagButton"
+                            Grid.RowSpan="2"
+                            Margin="12,0,0,40"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Background="{x:Null}"
+                            Click="UserTagButtonClick">
                             <Grid>
 
-                                <Ellipse Width="30"
-                                         Height="30"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Fill="#FF333333" />
-                                <FontIcon FontFamily="{StaticResource MaterialSymbolFont}"
-                                          FontSize="{StaticResource HeaderFontSize}"
-                                          Foreground="{StaticResource DefaultForegroundColor}"
-                                          Glyph="" />
+                                <Ellipse
+                                    Width="30"
+                                    Height="30"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Fill="#FF333333" />
+                                <FontIcon
+                                    FontFamily="{StaticResource MaterialSymbolFont}"
+                                    FontSize="{StaticResource HeaderFontSize}"
+                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                    Glyph="" />
                             </Grid>
                         </Button>
                     </Grid>
@@ -143,11 +156,12 @@
 
         </ResourceDictionary>
     </Page.Resources>
-    <Grid MinHeight="440"
-          MinWidth="310"
-          CornerRadius="8"
-          MaxWidth="750"
-          Background="{StaticResource DefaultItemBackgroundColor}">
+    <Grid
+        MinWidth="310"
+        MinHeight="440"
+        MaxWidth="750"
+        Background="{StaticResource DefaultItemBackgroundColor}"
+        CornerRadius="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -162,13 +176,14 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid HorizontalAlignment="Stretch">
-                <Ellipse x:Name="UserImage"
-                         x:FieldModifier="public"
-                         Height="50"
-                         Width="50"
-                         Margin="10"
-                         Stroke="#FF3C2866"
-                         StrokeThickness="2">
+                <Ellipse
+                    x:Name="UserImage"
+                    Width="50"
+                    Height="50"
+                    Margin="10"
+                    x:FieldModifier="public"
+                    Stroke="#FF3C2866"
+                    StrokeThickness="2">
                     <Ellipse.Fill>
                         <ImageBrush>
                             <ImageBrush.ImageSource>
@@ -177,176 +192,187 @@
                         </ImageBrush>
                     </Ellipse.Fill>
                 </Ellipse>
-                <Grid Visibility="{Binding Converter={StaticResource PostHashtagIconVisibiltyConverter}}"
-                      VerticalAlignment="Bottom"
-                      HorizontalAlignment="Right"
-                      Margin="2 -2">
-                    <Ellipse Height="20"
-                             Width="20"
-                             Margin="5 5"
-                             StrokeThickness=".8">
+                <Grid
+                    Margin="2,-2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Visibility="{Binding Converter={StaticResource PostHashtagIconVisibiltyConverter}}">
+                    <Ellipse
+                        Width="20"
+                        Height="20"
+                        Margin="5,5"
+                        StrokeThickness=".8">
                         <Ellipse.Stroke>
-                            <LinearGradientBrush EndPoint="0.5,1"
-                                                 StartPoint="0.5,0">
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                 <GradientStop Color="#FFD03728" />
-                                <GradientStop Color="#FFCE6319"
-                                              Offset="1" />
+                                <GradientStop Offset="1" Color="#FFCE6319" />
                             </LinearGradientBrush>
                         </Ellipse.Stroke>
                         <Ellipse.Fill>
-                            <LinearGradientBrush EndPoint="0.5,1"
-                                                 StartPoint="0.5,0">
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                 <GradientStop Color="#FFCD7812" />
-                                <GradientStop Color="#FFD12C2C"
-                                              Offset="1" />
+                                <GradientStop Offset="1" Color="#FFD12C2C" />
                             </LinearGradientBrush>
                         </Ellipse.Fill>
                     </Ellipse>
-                    <TextBlock Text="#"
-                               FontFamily="{StaticResource SegoeUIFont}"
-                               FontSize="21"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource DefaultForegroundColor}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               TextAlignment="Center" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="{StaticResource SegoeUIFont}"
+                        FontSize="21"
+                        FontWeight="SemiBold"
+                        Foreground="{StaticResource DefaultForegroundColor}"
+                        Text="#"
+                        TextAlignment="Center" />
 
                 </Grid>
-                <Ellipse Height="50"
-                         Width="50"
-                         Margin="5 5"
-                         Fill="#FF3C2866"
-                         Opacity="0"
-                         Tapped="UserImageEllipseTapped" />
+                <Ellipse
+                    Width="50"
+                    Height="50"
+                    Margin="5,5"
+                    Fill="#FF3C2866"
+                    Opacity="0"
+                    Tapped="UserImageEllipseTapped" />
             </Grid>
 
-            <Button Background="{x:Null}"
-                    Grid.Column="1"
-                    Click="UserButtonClick">
+            <Button
+                Grid.Column="1"
+                Background="{x:Null}"
+                Click="UserButtonClick">
                 <Button.Content>
                     <Grid HorizontalAlignment="Stretch">
-                        <Ellipse Height="50"
-                                 Width="50"
-                                 Margin="5"
-                                 Opacity="0"
-                                 StrokeThickness="2" />
+                        <Ellipse
+                            Width="50"
+                            Height="50"
+                            Margin="5"
+                            Opacity="0"
+                            StrokeThickness="2" />
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding Converter={StaticResource PostNameConverter}, Mode=OneWay}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource DefaultFontSize}"
-                                       Margin="5"
-                                       Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                       HorizontalAlignment="Left"
-                                       VerticalAlignment="Center"
-                                       TextAlignment="Center" />
-                            <TextBlock x:Name="LocationText"
-                                       Text="{Binding Converter={StaticResource PostLocationConverter}, Mode=OneWay}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyTinyFontSize}"
-                                       Margin="5 -20 0 0"
-                                       Grid.Row="1"
-                                       Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                       HorizontalAlignment="Left"
-                                       VerticalAlignment="Center"
-                                       TextAlignment="Center" />
+                            <TextBlock
+                                Margin="5"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource DefaultFontSize}"
+                                Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                Text="{Binding Converter={StaticResource PostNameConverter}, Mode=OneWay}"
+                                TextAlignment="Center" />
+                            <TextBlock
+                                x:Name="LocationText"
+                                Grid.Row="1"
+                                Margin="5,-20,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyTinyFontSize}"
+                                Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                Text="{Binding Converter={StaticResource PostLocationConverter}, Mode=OneWay}"
+                                TextAlignment="Center" />
                         </Grid>
-                        <Grid Background="Black"
-                              Opacity="0"
-                              Grid.ColumnSpan="4" />
+                        <Grid
+                            Grid.ColumnSpan="4"
+                            Background="Black"
+                            Opacity="0" />
                     </Grid>
                 </Button.Content>
                 <interactivity:Interaction.Behaviors>
                     <behaviors:PointersEvent />
                 </interactivity:Interaction.Behaviors>
             </Button>
-            <Button x:Name="FollowUnfollowButton"
-                    Visibility="Collapsed"
-                    Click="FollowUnfollowButtonClick"
-                    Background="{x:Null}"
-                    Content="{Binding User.FriendshipStatus.Following, Converter={StaticResource FollowingConverter}}"
-                    Grid.Column="2"
-                    Margin="5 0 15 0"
-                    Foreground="{StaticResource DefaultForegroundColor}"
-                    FontSize="{StaticResource TinyFontSize}"
-                    FontFamily="{StaticResource VazirFont}">
+            <Button
+                x:Name="FollowUnfollowButton"
+                Grid.Column="2"
+                Margin="5,0,15,0"
+                Background="{x:Null}"
+                Click="FollowUnfollowButtonClick"
+                Content="{Binding User.FriendshipStatus.Following, Converter={StaticResource FollowingConverter}}"
+                FontFamily="{StaticResource VazirFont}"
+                FontSize="{StaticResource TinyFontSize}"
+                Foreground="{StaticResource DefaultForegroundColor}"
+                Visibility="Collapsed">
                 <interactivity:Interaction.Behaviors>
                     <behaviors:PointersEvent />
                 </interactivity:Interaction.Behaviors>
             </Button>
-            <Button x:Name="MenuButton"
-                    Click="MenuButtonClick"
-                    Background="{x:Null}"
-                    Style="{StaticResource ButtonWithoutPadding}"
-                    Width="52"
-                    Height="52"
-                    Content=""
-                    Grid.Column="3"
-                    VerticalAlignment="Center"
-                    Foreground="{StaticResource DefaultForegroundColor}"
-                    FontSize="{StaticResource BigFontSize}"
-                    FontFamily="{StaticResource MaterialSymbolFont}">
+            <Button
+                x:Name="MenuButton"
+                Grid.Column="3"
+                Width="52"
+                Height="52"
+                VerticalAlignment="Center"
+                Background="{x:Null}"
+                Click="MenuButtonClick"
+                Content=""
+                FontFamily="{StaticResource MaterialSymbolFont}"
+                FontSize="{StaticResource BigFontSize}"
+                Foreground="{StaticResource DefaultForegroundColor}"
+                Style="{StaticResource ButtonWithoutPadding}">
                 <interactivity:Interaction.Behaviors>
                     <behaviors:PointersEvent />
                 </interactivity:Interaction.Behaviors>
             </Button>
         </Grid>
-        <controls:DropShadowPanel BlurRadius="14.0"
-                                  ShadowOpacity="0.70"
-                                  Grid.Row="1"
-                                  OffsetY="5.0"
-                                  Color="Black">
-            <Rectangle Height="4"
-                       Fill="#FF323232" />
+        <controls:DropShadowPanel
+            Grid.Row="1"
+            BlurRadius="14.0"
+            OffsetY="5.0"
+            ShadowOpacity="0.70"
+            Color="Black">
+            <Rectangle Height="4" Fill="#FF323232" />
         </controls:DropShadowPanel>
-        <Grid  Grid.Row="2"
-               MinHeight="110"
-               Visibility="{Binding MediaType, Mode=OneWay, Converter={StaticResource ImageVisibilityConverter}}">
-            <controls:ImageEx x:Name="MainImageEx"
-                              Stretch="Uniform"
-                              MinHeight="110">
+        <Grid
+            Grid.Row="2"
+            MinHeight="110"
+            Visibility="{Binding MediaType, Mode=OneWay, Converter={StaticResource ImageVisibilityConverter}}">
+            <controls:ImageEx
+                x:Name="MainImageEx"
+                MinHeight="110"
+                Stretch="Uniform">
                 <controls:ImageEx.Source>
                     <BitmapImage UriSource="{Binding Images[0].Uri, Mode=OneWay}" />
                 </controls:ImageEx.Source>
             </controls:ImageEx>
-            <Grid  Width="{Binding Width,ElementName=MainImageEx, UpdateSourceTrigger=Default}"
-                   Height="{Binding Height,ElementName=MainImageEx, UpdateSourceTrigger=Default}"
-                   Background="Cyan"
-                   Opacity="0"
-                   DoubleTapped="OnItemDoubleTapped"
-                   Tapped="ImageUserTagsTapped" />
-            <Grid x:Name="ImageUserTags"
-                  SizeChanged="ImageUserTagsSizeChanged"
-                  Width="{Binding Width,ElementName=MainImageEx, UpdateSourceTrigger=Default}"
-                  Height="{Binding Height,ElementName=MainImageEx, UpdateSourceTrigger=Default}">
-
-            </Grid>
-            <Grid Width="{Binding Width,ElementName=MainImageEx, UpdateSourceTrigger=Default}"
-                  Height="{Binding Height,ElementName=MainImageEx, UpdateSourceTrigger=Default}">
-                <Button x:Name="ImageUserTagButton"
-                        Background="{x:Null}"
-                        Grid.RowSpan="2"
-                        VerticalAlignment="Bottom"
-                        HorizontalAlignment="Left"
-                        Margin="8 0 0 50"
-                        Click="UserTagButtonClick"
-                        Visibility="Collapsed">
+            <Grid
+                Width="{Binding Width, ElementName=MainImageEx, UpdateSourceTrigger=Default}"
+                Height="{Binding Height, ElementName=MainImageEx, UpdateSourceTrigger=Default}"
+                Background="Cyan"
+                DoubleTapped="OnItemDoubleTapped"
+                Opacity="0"
+                Tapped="ImageUserTagsTapped" />
+            <Grid
+                x:Name="ImageUserTags"
+                Width="{Binding Width, ElementName=MainImageEx, UpdateSourceTrigger=Default}"
+                Height="{Binding Height, ElementName=MainImageEx, UpdateSourceTrigger=Default}"
+                SizeChanged="ImageUserTagsSizeChanged" />
+            <Grid Width="{Binding Width, ElementName=MainImageEx, UpdateSourceTrigger=Default}" Height="{Binding Height, ElementName=MainImageEx, UpdateSourceTrigger=Default}">
+                <Button
+                    x:Name="ImageUserTagButton"
+                    Grid.RowSpan="2"
+                    Margin="8,0,0,50"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Background="{x:Null}"
+                    Click="UserTagButtonClick"
+                    Visibility="Collapsed">
                     <Grid>
 
-                        <Ellipse Width="30"
-                                 Height="30"
-                                 HorizontalAlignment="Center"
-                                 VerticalAlignment="Center"
-                                 Fill="#FF333333" 
-                                 Opacity="0.8"/>
-                        <FontIcon FontFamily="{StaticResource MaterialSymbolFont}"
-                                  FontSize="{StaticResource HeaderFontSize}"
-                                  Foreground="{StaticResource DefaultForegroundColor}"
-                                  Glyph=""
-                                  Opacity="0.8" />
+                        <Ellipse
+                            Width="30"
+                            Height="30"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Fill="#FF333333"
+                            Opacity="0.8" />
+                        <FontIcon
+                            FontFamily="{StaticResource MaterialSymbolFont}"
+                            FontSize="{StaticResource HeaderFontSize}"
+                            Foreground="{StaticResource DefaultForegroundColor}"
+                            Glyph=""
+                            Opacity="0.8" />
                     </Grid>
                 </Button>
             </Grid>
@@ -362,114 +388,126 @@
                 </controls:ImageEx.Source>
             </controls:ImageEx>-->
 
-        <Grid  Grid.Row="2"
-               MinHeight="110"
-               Visibility="{Binding MediaType, Mode=OneWay, Converter={StaticResource VideoVisibilityConverter}}">
-            <MediaElement x:Name="MEPlayer"
-                      MinHeight="110"
-                      AutoPlay="False"
-                      AreTransportControlsEnabled="True"
-                      Source="{Binding Videos[0].Uri, Mode=OneWay}"
-                      PosterSource="{Binding Images[0].Uri, Mode=OneWay}"
-                      CurrentStateChanged="MediaElementCurrentStateChanged"
-                      Tapped="MediaElementTapped"
-                      DoubleTapped="OnItemDoubleTapped">
-            <MediaElement.TransportControls>
-                <MediaTransportControls IsEnabled="True"
-                                        IsCompact="True"
-                                        IsPlaybackRateEnabled="True"
-                                        IsPlaybackRateButtonVisible="True"
-                                        IsZoomButtonVisible="True"
-                                        IsFullWindowButtonVisible="True" />
-            </MediaElement.TransportControls>
+        <Grid
+            Grid.Row="2"
+            MinHeight="110"
+            Visibility="{Binding MediaType, Mode=OneWay, Converter={StaticResource VideoVisibilityConverter}}">
+            <MediaElement
+                x:Name="MEPlayer"
+                MinHeight="110"
+                AreTransportControlsEnabled="True"
+                AutoPlay="False"
+                CurrentStateChanged="MediaElementCurrentStateChanged"
+                DoubleTapped="OnItemDoubleTapped"
+                PosterSource="{Binding Images[0].Uri, Mode=OneWay}"
+                Source="{Binding Videos[0].Uri, Mode=OneWay}"
+                Tapped="MediaElementTapped">
+                <MediaElement.TransportControls>
+                    <MediaTransportControls
+                        IsCompact="True"
+                        IsEnabled="True"
+                        IsFullWindowButtonVisible="True"
+                        IsPlaybackRateButtonVisible="True"
+                        IsPlaybackRateEnabled="True"
+                        IsZoomButtonVisible="True" />
+                </MediaElement.TransportControls>
             </MediaElement>
-            <Button x:Name="VideoUserTagButton"
-                    Background="{x:Null}"
-                    Grid.RowSpan="2"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Left"
-                    Margin="10 0 0 50"
-                    Click="UserTagButtonClick"
-                    Visibility="Collapsed">
+            <Button
+                x:Name="VideoUserTagButton"
+                Grid.RowSpan="2"
+                Margin="10,0,0,50"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Background="{x:Null}"
+                Click="UserTagButtonClick"
+                Visibility="Collapsed">
                 <Grid>
 
-                    <Ellipse Width="30"
-                             Height="30"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"
-                             Fill="#FF333333" />
-                    <FontIcon FontFamily="{StaticResource MaterialSymbolFont}"
-                              FontSize="{StaticResource HeaderFontSize}"
-                              Foreground="{StaticResource DefaultForegroundColor}"
-                              Glyph="" />
+                    <Ellipse
+                        Width="30"
+                        Height="30"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Fill="#FF333333" />
+                    <FontIcon
+                        FontFamily="{StaticResource MaterialSymbolFont}"
+                        FontSize="{StaticResource HeaderFontSize}"
+                        Foreground="{StaticResource DefaultForegroundColor}"
+                        Glyph="" />
                 </Grid>
             </Button>
         </Grid>
-        <Grid Grid.Row="2"
-            Visibility="{Binding MediaType, Mode=OneWay, Converter={StaticResource CarouselVisibilityConverter}}">
-            <FlipView x:Name="FlipView"
-                      Background="{x:Null}"
-                      MaxHeight="480"
-                      SelectionChanged="FlipViewSelectionChanged"
-                      ItemsSource="{Binding Carousel, Mode=OneWay}"
-                      ItemTemplateSelector="{StaticResource CarouselTemplateSelector}" />
-            <Grid x:Name="CountGrid"
-                  Margin="35 25"
-                  CornerRadius="10"
-                  Background="#C5000000"
-                  Height="25"
-                  VerticalAlignment="Top"
-                  HorizontalAlignment="Right"
-                  MinWidth="50">
-                <TextBlock x:Name="CountText"
-                           FontFamily="{StaticResource VazirFont}"
-                           FontSize="{StaticResource DefaultFontSize}"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Foreground="{StaticResource DefaultForegroundColor}"
-                           Text="9/9" />
+        <Grid Grid.Row="2" Visibility="{Binding MediaType, Mode=OneWay, Converter={StaticResource CarouselVisibilityConverter}}">
+            <FlipView
+                x:Name="FlipView"
+                MaxHeight="480"
+                Background="{x:Null}"
+                ItemTemplateSelector="{StaticResource CarouselTemplateSelector}"
+                ItemsSource="{Binding Carousel, Mode=OneWay}"
+                SelectionChanged="FlipViewSelectionChanged" />
+            <Grid
+                x:Name="CountGrid"
+                Height="25"
+                MinWidth="50"
+                Margin="35,25"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="#C5000000"
+                CornerRadius="10">
+                <TextBlock
+                    x:Name="CountText"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource DefaultFontSize}"
+                    Foreground="{StaticResource DefaultForegroundColor}"
+                    Text="9/9" />
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="2"
-              VerticalAlignment="Top"
-              HorizontalAlignment="Left"
-              Margin="20 30"
-              Visibility="{Binding Mode=OneWay, Converter={StaticResource IGTVIconToVisibilityConverter}}">
+        <Grid
+            Grid.Row="2"
+            Margin="20,30"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Visibility="{Binding Mode=OneWay, Converter={StaticResource IGTVIconToVisibilityConverter}}">
 
-            <Ellipse Width="32"
-                     Height="32"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center"
-                     Fill="#D8171717" />
-            <FontIcon FontSize="{StaticResource BigFontSize}"
-                      FontFamily="{StaticResource MaterialSymbolFont}"
-                      Foreground="{StaticResource DefaultForegroundColor}"
-                      Glyph="" />
+            <Ellipse
+                Width="32"
+                Height="32"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Fill="#D8171717" />
+            <FontIcon
+                FontFamily="{StaticResource MaterialSymbolFont}"
+                FontSize="{StaticResource BigFontSize}"
+                Foreground="{StaticResource DefaultForegroundColor}"
+                Glyph="" />
         </Grid>
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid x:Name="ViewInsightsGrid"
-                  Visibility="Collapsed">
+            <Grid x:Name="ViewInsightsGrid" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Button x:Name="ViewInsightsButton"
-                        Style="{StaticResource ButtonWithoutPadding}"
-                        Margin="6 5"
-                        Background="Transparent"
-                        Foreground="#FF0078D7"
-                        HorizontalAlignment="Left"
-                        Content="View insights"
-                        Click="ViewInsightsButtonClick"/>
-                <Rectangle Grid.Row="1"
-                           Height=".8"
-                           Fill="#FF303030"
-                           Margin="5 2" />
+                <Button
+                    x:Name="ViewInsightsButton"
+                    Margin="6,5"
+                    HorizontalAlignment="Left"
+                    Background="Transparent"
+                    Click="ViewInsightsButtonClick"
+                    Content="View insights"
+                    Foreground="#FF0078D7"
+                    Style="{StaticResource ButtonWithoutPadding}" />
+                <Rectangle
+                    Grid.Row="1"
+                    Height=".8"
+                    Margin="5,2"
+                    Fill="#FF303030" />
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -490,48 +528,52 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <AppBarButton x:Name="LikeButton"
-                                  Content=""
-                                  Click="LikeButtonClick"
-                                  Foreground="{StaticResource DefaultForegroundColor}"
-                                  Background="{x:Null}"
-                                  FontSize="{StaticResource BigFontSize}"
-                                  FontFamily="{StaticResource SymbolFont}">
+                    <AppBarButton
+                        x:Name="LikeButton"
+                        Background="{x:Null}"
+                        Click="LikeButtonClick"
+                        Content=""
+                        FontFamily="{StaticResource SymbolFont}"
+                        FontSize="{StaticResource BigFontSize}"
+                        Foreground="{StaticResource DefaultForegroundColor}">
                         <interactivity:Interaction.Behaviors>
                             <behaviors:PointersEvent />
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
-                    <AppBarButton x:Name="CommentButton"
-                                  Content=""
-                                  Grid.Column="1"
-                                  Margin="2 0"
-                                  Background="{x:Null}"
-                                  Foreground="{StaticResource DefaultForegroundColor}"
-                                  FontSize="{StaticResource BigFontSize}"
-                                  FontFamily="{StaticResource MaterialSymbolFont}"
-                                  Click="CommentsClick"
-                                  Visibility="{Binding IsCommentsDisabled,Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
+                    <AppBarButton
+                        x:Name="CommentButton"
+                        Grid.Column="1"
+                        Margin="2,0"
+                        Background="{x:Null}"
+                        Click="CommentsClick"
+                        Content=""
+                        FontFamily="{StaticResource MaterialSymbolFont}"
+                        FontSize="{StaticResource BigFontSize}"
+                        Foreground="{StaticResource DefaultForegroundColor}"
+                        Visibility="{Binding IsCommentsDisabled, Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
                         <interactivity:Interaction.Behaviors>
                             <behaviors:PointersEvent />
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
-                    <AppBarButton x:Name="ShareButton"
-                                  Content=""
-                                  Click="ShareButtonClick"
-                                  Foreground="{StaticResource DefaultForegroundColor}"
-                                  Grid.Column="2"
-                                  Margin="2 0"
-                                  Background="{x:Null}"
-                                  FontSize="{StaticResource BigFontSize}"
-                                  FontFamily="{StaticResource SymbolFont}">
+                    <AppBarButton
+                        x:Name="ShareButton"
+                        Grid.Column="2"
+                        Margin="2,0"
+                        Background="{x:Null}"
+                        Click="ShareButtonClick"
+                        Content=""
+                        FontFamily="{StaticResource SymbolFont}"
+                        FontSize="{StaticResource BigFontSize}"
+                        Foreground="{StaticResource DefaultForegroundColor}">
                         <interactivity:Interaction.Behaviors>
                             <behaviors:PointersEvent />
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
-                    <Grid x:Name="CarouselDotsGrid"
-                          Grid.Column="3"
-                          Margin="0 0 25 0"
-                          HorizontalAlignment="Center">
+                    <Grid
+                        x:Name="CarouselDotsGrid"
+                        Grid.Column="3"
+                        Margin="0,0,25,0"
+                        HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
@@ -554,15 +596,16 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                     </Grid>
-                    <AppBarButton x:Name="CollectionButton"
-                                  Foreground="{StaticResource DefaultForegroundColor}"
-                                  Content="{Binding HasViewerSaved, Mode=TwoWay,Converter={StaticResource SaveToCollectionIconConverter}}"
-                                  Click="CollectionButtonClick"
-                                  Grid.Column="4"
-                                  Margin="2 0"
-                                  Background="{x:Null}"
-                                  FontSize="{StaticResource BigFontSize}"
-                                  FontFamily="{StaticResource MaterialSymbolFont}">
+                    <AppBarButton
+                        x:Name="CollectionButton"
+                        Grid.Column="4"
+                        Margin="2,0"
+                        Background="{x:Null}"
+                        Click="CollectionButtonClick"
+                        Content="{Binding HasViewerSaved, Mode=TwoWay, Converter={StaticResource SaveToCollectionIconConverter}}"
+                        FontFamily="{StaticResource MaterialSymbolFont}"
+                        FontSize="{StaticResource BigFontSize}"
+                        Foreground="{StaticResource DefaultForegroundColor}">
                         <interactivity:Interaction.Behaviors>
                             <behaviors:PointersEvent />
                         </interactivity:Interaction.Behaviors>
@@ -570,97 +613,104 @@
 
                 </Grid>
 
-                <HyperlinkButton Grid.Row="1"
-                                 Margin="10 0"
-                                 Click="LikersClick"
-                                 Visibility="{Binding LikesCount,Converter={StaticResource DoubleToVisibilityConverter}}">
-                    <TextBlock FontFamily="{StaticResource VazirFont}"
-                               FontSize="{StaticResource TinyFontSize}"
-                               Foreground="{StaticResource DefaultForegroundColor}">
-                    <Run Text="{Binding LikesCount, Mode=TwoWay}" />
-                    <Run Text="likes" />
+                <HyperlinkButton
+                    Grid.Row="1"
+                    Margin="10,0"
+                    Click="LikersClick"
+                    Visibility="{Binding LikesCount, Converter={StaticResource DoubleToVisibilityConverter}}">
+                    <TextBlock
+                        FontFamily="{StaticResource VazirFont}"
+                        FontSize="{StaticResource TinyFontSize}"
+                        Foreground="{StaticResource DefaultForegroundColor}">
+                        <Run Text="{Binding LikesCount, Mode=TwoWay}" />
+                        <Run Text="likes" />
                     </TextBlock>
                 </HyperlinkButton>
-                <TextBlock Text="{Binding TakenAt, Converter={StaticResource DateTimeFullConverter}}"
-                           Grid.Row="2"
-                           HorizontalAlignment="Stretch"
-                           FontFamily="{StaticResource VazirFont}"
-                           Margin="10 5"
-                           FontSize="{StaticResource TinyTinyFontSize}"
-                           Foreground="{StaticResource DefaultForegroundColor}" />
+                <TextBlock
+                    Grid.Row="2"
+                    Margin="10,5"
+                    HorizontalAlignment="Stretch"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource TinyTinyFontSize}"
+                    Foreground="{StaticResource DefaultForegroundColor}"
+                    Text="{Binding TakenAt, Converter={StaticResource DateTimeFullConverter}}" />
                 <!--<RichTextBlock x:Name="txtCaption"
                            MaxHeight="220"
                            Grid.Row="2"
-                           
+
                            TextAlignment="DetectFromContent"
                            FontFamily="{StaticResource VazirFont}"
                            IsTextSelectionEnabled="False"
                            TextWrapping="Wrap"
                            HorizontalAlignment="Stretch"
                            Margin="10,0"
-                           FontSize="{StaticResource DefaultFontSize}"       
-            
+                           FontSize="{StaticResource DefaultFontSize}"
+
             TextDecorations="None"
                            TextLineBounds="Full"
                            TextReadingOrder="DetectFromContent" />-->
-                <!--MaxHeight="220"-->
+                <!--  MaxHeight="220"  -->
                 <Grid Grid.Row="3">
-                    <RichTextBlock x:Name="txtCaption"
-                                   HorizontalAlignment="Stretch"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   Foreground="{StaticResource DefaultForegroundColor}"
-                                   IsTextSelectionEnabled="False"
-                                   TextWrapping="Wrap"
-                                   Margin="5"
-                                   FontSize="{StaticResource DefaultFontSize}" />
-                    <Button x:Name="ShowMoreButton"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Bottom"
-                            HorizontalContentAlignment="Stretch"
-                            VerticalContentAlignment="Stretch"
-                            Background="Transparent"
+                    <RichTextBlock
+                        x:Name="txtCaption"
+                        Margin="5"
+                        HorizontalAlignment="Stretch"
+                        FontFamily="{StaticResource VazirFont}"
+                        FontSize="{StaticResource DefaultFontSize}"
+                        Foreground="{StaticResource DefaultForegroundColor}"
+                        IsTextSelectionEnabled="False"
+                        TextWrapping="Wrap" />
+                    <Button
+                        x:Name="ShowMoreButton"
+                        Margin="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Bottom"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        Background="Transparent"
+                        Click="ShowMoreButtonClick"
+                        Style="{StaticResource ButtonWithoutPadding}"
+                        Visibility="Collapsed">
+                        <Grid
+                            Height="30"
                             Margin="0"
-                            Visibility="Collapsed"
-                            Style="{StaticResource ButtonWithoutPadding}"
-                            Click="ShowMoreButtonClick">
-                        <Grid HorizontalAlignment="Stretch"
-                              Height="30"
-                              Margin="0"
-                              Padding="0">
-                            <Grid Background="#9A1A1A1A"
-                                  CornerRadius="8">
+                            Padding="0"
+                            HorizontalAlignment="Stretch">
+                            <Grid Background="#9A1A1A1A" CornerRadius="8">
                                 <interactivity:Interaction.Behaviors>
-                                    <behaviorsX:Blur x:Name="FadeBehavior"
-                                                     Value="6"
-                                                     Duration="1"
-                                                     Delay="0"
-                                                     EasingType="Linear"
-                                                     AutomaticallyStart="True" />
+                                    <behaviorsX:Blur
+                                        x:Name="FadeBehavior"
+                                        AutomaticallyStart="True"
+                                        Delay="0"
+                                        EasingType="Linear"
+                                        Value="6"
+                                        Duration="1" />
                                 </interactivity:Interaction.Behaviors>
                             </Grid>
 
-                            <controls:DropShadowPanel BlurRadius="6.0"
-                                                      ShadowOpacity="0.95"
-                                                      OffsetX="3.5"
-                                                      OffsetY="5.5"
-                                                      OffsetZ="0.5"
-                                                      Grid.Row="1"
-                                                      Color="Black"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"
-                                                      Foreground="White">
-                                <TextBlock Text="More..."
-                                           FontSize="{StaticResource TinyFontSize}"
-                                           FontFamily="{StaticResource VazirFont}"
-                                           Foreground="{StaticResource DefaultForegroundColor}" />
+                            <controls:DropShadowPanel
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                BlurRadius="6.0"
+                                Foreground="White"
+                                OffsetX="3.5"
+                                OffsetY="5.5"
+                                OffsetZ="0.5"
+                                ShadowOpacity="0.95"
+                                Color="Black">
+                                <TextBlock
+                                    FontFamily="{StaticResource VazirFont}"
+                                    FontSize="{StaticResource TinyFontSize}"
+                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                    Text="More..." />
                             </controls:DropShadowPanel>
-                            <Grid Background="Cyan"
-                                  Opacity="0" />
+                            <Grid Background="Cyan" Opacity="0" />
                         </Grid>
                     </Button>
                 </Grid>
                 <!--<RichTextBlock x:Name="txtCaption"
-                               
+
                                Grid.Row="3"
                                HorizontalAlignment="Stretch"
                                FontFamily="{StaticResource VazirFont}"
@@ -670,31 +720,31 @@
                                FontSize="{StaticResource DefaultFontSize}" />-->
 
 
-                <!--LinkClicked="CaptionLink_Clicked"-->
+                <!--  LinkClicked="CaptionLink_Clicked"  -->
                 <!--<Grid >
-           
+
             </Grid>-->
                 <!--<controls:MarkdownTextBlock Grid.Row="2"  LinkForeground="#ff5897fc" FontFamily="{StaticResource VazirFont}" Text="{Binding Caption.Text, Converter={StaticResource TextToMarkdownConverter}, Mode=OneWay}" IsTextSelectionEnabled="False" TextWrapping="Wrap" Margin="10,0" FontSize="{StaticResource DefaultFontSize}"/>-->
-                <HyperlinkButton Grid.Row="4"
-                                 Margin="10 0"
-                                 Click="CommentsClick"
-                                 Visibility="{Binding IsCommentsDisabled,Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
+                <HyperlinkButton
+                    Grid.Row="4"
+                    Margin="10,0"
+                    Click="CommentsClick"
+                    Visibility="{Binding IsCommentsDisabled, Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
                     <interactivity:Interaction.Behaviors>
                         <behaviors:PointersEvent />
                     </interactivity:Interaction.Behaviors>
-                    <TextBlock FontFamily="{StaticResource VazirFont}"
-                               FontSize="{StaticResource TinyFontSize}"
-                               Foreground="{StaticResource DefaultForegroundColor}">
-                    <Run Text="See all (" />
-                    <Run Text="{Binding CommentsCount, Mode=TwoWay}" />
-                    <Run Text=") comments" />
+                    <TextBlock
+                        FontFamily="{StaticResource VazirFont}"
+                        FontSize="{StaticResource TinyFontSize}"
+                        Foreground="{StaticResource DefaultForegroundColor}">
+                        <Run Text="See all (" />
+                        <Run Text="{Binding CommentsCount, Mode=TwoWay}" />
+                        <Run Text=") comments" />
                     </TextBlock>
                 </HyperlinkButton>
 
-                <Grid Grid.Row="6"
-                      Visibility="{Binding PreviewComments, Converter={StaticResource ChildCommentsVisibilityConverter}}">
-                    <Grid x:Name="PreviewCommentsGrid"
-                          Margin="10 4">
+                <Grid Grid.Row="6" Visibility="{Binding PreviewComments, Converter={StaticResource ChildCommentsVisibilityConverter}}">
+                    <Grid x:Name="PreviewCommentsGrid" Margin="10,4">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -706,43 +756,46 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <HyperlinkButton Padding="0"
-                                             VerticalAlignment="Top"
-                                             FontWeight="Normal"
-                                             FontFamily="{StaticResource VazirFont}"
-                                             FontSize="{StaticResource TinyFontSize}"
-                                             Click="UserButtonPreviewComment1Click">
+                            <HyperlinkButton
+                                Padding="0"
+                                VerticalAlignment="Top"
+                                Click="UserButtonPreviewComment1Click"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                FontWeight="Normal">
                                 <interactivity:Interaction.Behaviors>
                                     <behaviors:PointersEvent />
                                 </interactivity:Interaction.Behaviors>
-                                <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                           FontFamily="{StaticResource VazirFont}"
-                                           FontSize="{StaticResource TinyFontSize}"
-                                           Text="{Binding User.UserName}"
-                                           VerticalAlignment="Center" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource VazirFont}"
+                                    FontSize="{StaticResource TinyFontSize}"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                    Text="{Binding User.UserName}" />
                             </HyperlinkButton>
-                            <Grid Grid.Column="1"
-                                  Margin="4 3 3 3">
+                            <Grid Grid.Column="1" Margin="4,3,3,3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="{StaticResource DefaultForegroundColor}"
-                                           FontFamily="{StaticResource VazirFont}"
-                                           FontSize="{StaticResource TinyFontSize}"
-                                           TextWrapping="Wrap"
-                                           TextAlignment="DetectFromContent"
-                                           DataContextChanged="TextBlockDataContextChanged"
-                                           Tag="{Binding}" />
+                                <TextBlock
+                                    DataContextChanged="TextBlockDataContextChanged"
+                                    FontFamily="{StaticResource VazirFont}"
+                                    FontSize="{StaticResource TinyFontSize}"
+                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                    Tag="{Binding}"
+                                    TextAlignment="DetectFromContent"
+                                    TextWrapping="Wrap" />
 
 
 
-                                <AppBarButton VerticalAlignment="Top"
-                                              Click="LikeButtonPrevCommentClick"
-                                              Grid.Column="1"
-                                              Width="42"
-                                              Height="42"
-                                              Foreground="{Binding HasLikedComment, Converter={StaticResource CommentColorConverter}}">
+                                <AppBarButton
+                                    Grid.Column="1"
+                                    Width="42"
+                                    Height="42"
+                                    VerticalAlignment="Top"
+                                    Click="LikeButtonPrevCommentClick"
+                                    Foreground="{Binding HasLikedComment, Converter={StaticResource CommentColorConverter}}">
                                     <interactivity:Interaction.Behaviors>
                                         <behaviors:PointersEvent />
                                     </interactivity:Interaction.Behaviors>
@@ -752,18 +805,20 @@
                                 </AppBarButton>
                             </Grid>
                         </Grid>
-                        <Grid Grid.Row="1"
-                              Margin="30 0 0 0"
-                              DataContext="{Binding PreviewComments[1]}"
-                              Visibility="{Binding PreviewComments[1],Converter={StaticResource NullableToVisibilityConverter}}">
+                        <Grid
+                            Grid.Row="1"
+                            Margin="30,0,0,0"
+                            DataContext="{Binding PreviewComments[1]}"
+                            Visibility="{Binding PreviewComments[1], Converter={StaticResource NullableToVisibilityConverter}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Width="4"
-                                       HorizontalAlignment="Stretch"
-                                       Margin="4"
-                                       Fill="#FF2E2E2E" />
+                            <Rectangle
+                                Width="4"
+                                Margin="4"
+                                HorizontalAlignment="Stretch"
+                                Fill="#FF2E2E2E" />
                             <Grid Grid.Column="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -772,44 +827,47 @@
                                 </Grid.ColumnDefinitions>
 
 
-                                <HyperlinkButton Padding="0"
-                                                 VerticalAlignment="Top"
-                                                 FontWeight="Normal"
-                                                 FontFamily="{StaticResource VazirFont}"
-                                                 FontSize="{StaticResource TinyFontSize}"
-                                                 Click="UserButtonPreviewComment2Click">
+                                <HyperlinkButton
+                                    Padding="0"
+                                    VerticalAlignment="Top"
+                                    Click="UserButtonPreviewComment2Click"
+                                    FontFamily="{StaticResource VazirFont}"
+                                    FontSize="{StaticResource TinyFontSize}"
+                                    FontWeight="Normal">
                                     <interactivity:Interaction.Behaviors>
                                         <behaviors:PointersEvent />
                                     </interactivity:Interaction.Behaviors>
-                                    <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource DefaultFontSize}"
-                                               Text="{Binding User.UserName}"
-                                               VerticalAlignment="Center" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource DefaultFontSize}"
+                                        Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                        Text="{Binding User.UserName}" />
                                 </HyperlinkButton>
 
-                                <Grid Grid.Column="1"
-                                      Margin="4 3 4 3">
+                                <Grid Grid.Column="1" Margin="4,3,4,3">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Foreground="{StaticResource DefaultForegroundColor}"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource TinyFontSize}"
-                                               TextWrapping="Wrap"
-                                               TextAlignment="DetectFromContent"
-                                               DataContextChanged="TextBlockDataContextChanged"
-                                               Tag="{Binding}" />
+                                    <TextBlock
+                                        DataContextChanged="TextBlockDataContextChanged"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource TinyFontSize}"
+                                        Foreground="{StaticResource DefaultForegroundColor}"
+                                        Tag="{Binding}"
+                                        TextAlignment="DetectFromContent"
+                                        TextWrapping="Wrap" />
 
 
 
-                                    <AppBarButton VerticalAlignment="Center"
-                                                  Click="LikeButtonPrevCommentClick"
-                                                  Width="42"
-                                                  Height="42"
-                                                  Grid.Column="1"
-                                                  Foreground="{Binding HasLikedComment, Converter={StaticResource CommentColorConverter}}">
+                                    <AppBarButton
+                                        Grid.Column="1"
+                                        Width="42"
+                                        Height="42"
+                                        VerticalAlignment="Center"
+                                        Click="LikeButtonPrevCommentClick"
+                                        Foreground="{Binding HasLikedComment, Converter={StaticResource CommentColorConverter}}">
                                         <interactivity:Interaction.Behaviors>
                                             <behaviors:PointersEvent />
                                         </interactivity:Interaction.Behaviors>
@@ -825,8 +883,7 @@
 
 
 
-                <Grid Grid.Row="7"
-                      Visibility="{Binding IsCommentsDisabled,Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
+                <Grid Grid.Row="7" Visibility="{Binding IsCommentsDisabled, Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
                     <Grid x:Name="CommentGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -835,28 +892,30 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="CommentText"
-                                 Foreground="{StaticResource DefaultForegroundColor}"
-                                 FontFamily="{StaticResource VazirFont}"
-                                 AcceptsReturn="True"
-                                 PlaceholderText="Type a comment to send"
-                                 IsSpellCheckEnabled="False"
-                                 FontSize="{StaticResource DefaultFontSize}"
-                                 Grid.Row="2"
-                                 TextWrapping="Wrap"
-                                 Style="{StaticResource TextBoxCenter}"
-                                 TextAlignment="DetectFromContent"
-                                 VerticalAlignment="Top"
-                                 MaxHeight="100" />
-                        <Button x:Name="Comment4Button"
-                                Background="#FF1F1F1F"
-                                Content=""
-                                Grid.Column="2"
-                                Margin="2 0"
-                                Foreground="{StaticResource DefaultForegroundColor}"
-                                FontSize="{StaticResource BigFontSize}"
-                                FontFamily="{StaticResource SymbolFont}"
-                                Click="Comment4ButtonClick">
+                        <TextBox
+                            x:Name="CommentText"
+                            Grid.Row="2"
+                            MaxHeight="100"
+                            VerticalAlignment="Top"
+                            AcceptsReturn="True"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="{StaticResource DefaultForegroundColor}"
+                            IsSpellCheckEnabled="False"
+                            PlaceholderText="Type a comment to send"
+                            Style="{StaticResource TextBoxCenter}"
+                            TextAlignment="DetectFromContent"
+                            TextWrapping="Wrap" />
+                        <Button
+                            x:Name="Comment4Button"
+                            Grid.Column="2"
+                            Margin="2,0"
+                            Background="#FF1F1F1F"
+                            Click="Comment4ButtonClick"
+                            Content=""
+                            FontFamily="{StaticResource SymbolFont}"
+                            FontSize="{StaticResource BigFontSize}"
+                            Foreground="{StaticResource DefaultForegroundColor}">
                             <interactivity:Interaction.Behaviors>
                                 <behaviors:PointersEvent />
                             </interactivity:Interaction.Behaviors>
@@ -865,44 +924,47 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.RowSpan="5"
-              Background="{StaticResource DefaultItemBackgroundColor}"
-              Visibility="Collapsed">
-            <!--Visibility="{Binding DontShowHashtagLikeThis, Mode=TwoWay, Converter={StaticResource BooleanToVisibiltyConverter}}">-->
+        <Grid
+            Grid.RowSpan="5"
+            Background="{StaticResource DefaultItemBackgroundColor}"
+            Visibility="Collapsed">
+            <!--  Visibility="{Binding DontShowHashtagLikeThis, Mode=TwoWay, Converter={StaticResource BooleanToVisibiltyConverter}}">  -->
             <!--<Grid Grid.RowSpan="5" Background="{StaticResource DefaultItemBackgroundColor}" Visibility="Collapsed">-->
-            <Grid VerticalAlignment="Center"
-                  HorizontalAlignment="Center">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid>
-                    <Ellipse Height="20"
-                             Width="20"
-                             Margin="5 5"
-                             StrokeThickness=".8"
-                             Fill="#FF6BC04B" />
-                    <TextBlock Text=""
-                               FontFamily="{StaticResource MaterialSymbolFont}"
-                               FontSize="20"
-                               FontWeight="SemiBold"
-                               Foreground="{StaticResource DefaultForegroundColor}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               TextAlignment="Center" />
+                    <Ellipse
+                        Width="20"
+                        Height="20"
+                        Margin="5,5"
+                        Fill="#FF6BC04B"
+                        StrokeThickness=".8" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="{StaticResource MaterialSymbolFont}"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Foreground="{StaticResource DefaultForegroundColor}"
+                        Text=""
+                        TextAlignment="Center" />
                 </Grid>
-                <TextBlock FontFamily="{StaticResource VazirFont}"
-                           Grid.Row="1"
-                           FontSize="{StaticResource TinyFontSize}"
-                           Foreground="{StaticResource DefaultForegroundColor}"
-                           Margin="5"
-                           TextWrapping="Wrap"
-                           TextAlignment="Center"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center">
-                        <Run Text="Thanks for feedback!" />
-                        <LineBreak />
-                        <Run Text="We'll show fewer posts like this for this hashtag." />
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource TinyFontSize}"
+                    Foreground="{StaticResource DefaultForegroundColor}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap">
+                    <Run Text="Thanks for feedback!" />
+                    <LineBreak />
+                    <Run Text="We'll show fewer posts like this for this hashtag." />
                 </TextBlock>
 
             </Grid>

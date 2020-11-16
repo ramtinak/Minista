@@ -31,13 +31,8 @@ namespace Minista.ContentDialogs
         public EditProfileUc()
         {
             this.InitializeComponent();
-            Loaded += EditProfileUcLoaded;
             Uploader.OnCompleted += Uploader_OnCompleted;
             Uploader.OnError += Uploader_OnError;
-        }
-        private void EditProfileUcLoaded(object sender, RoutedEventArgs e)
-        {
-
         }
 
         public void Show()
@@ -228,25 +223,14 @@ namespace Minista.ContentDialogs
                 Helper.CreateCachedFolder();
                 Helper.CreateCachedFolder();
                 Helper.CreateCachedFolder();
-                //var wb = new WriteableBitmap(1, 1);
                 ShowEditor();
-                //await wb.LoadAsync(imgFile);
-                //ImageCropper.SourceImage = wb;
                 ImageCropper.AspectRatio = 1d;
                 ImageCropper.CropShape = CropShape.Circular;
                 await ImageCropper.LoadImageFromFile(imgFile);
             }
         }
 
-        private void ExitImageButtonClick(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
-            //    ImageCropper.SourceImage = null;
-            //}
-            //catch { }
-            HideEditor();
-        }
+        private void ExitImageButtonClick(object sender, RoutedEventArgs e) => HideEditor();
 
         private async void OkImageButtonClick(object sender, RoutedEventArgs e)
         {
@@ -259,11 +243,8 @@ namespace Minista.ContentDialogs
                 Helper.CreateCachedFolder();
                 var cacheFolder = await SessionHelper.LocalFolder.GetFolderAsync("Cache");
                 var file = await cacheFolder.CreateFileAsync(15.GenerateRandomStringStatic() + ".jpg");
-                //await ImageCropper.CroppedImage.SaveAsync(file);
                 using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite, StorageOpenOptions.None))
-                {
                     await ImageCropper.SaveAsync(fileStream, BitmapFileFormat.Jpeg);
-                }
                 var fileToUpload = await new PhotoHelper().SaveToImage(file);
                 Uploader.UploadSinglePhoto(fileToUpload);
             }

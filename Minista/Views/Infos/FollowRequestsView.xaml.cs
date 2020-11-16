@@ -21,12 +21,8 @@ using System.Numerics;
 
 namespace Minista.Views.Infos
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class FollowRequestsView : Page
     {
-        //public FollowRequestsViewModel FollowRequestsVM { get; set; } = new FollowRequestsViewModel();
         private bool IsLoadedBefore = false;
         public static FollowRequestsView Current;
         private readonly Visual _refreshButtonVisual;
@@ -39,8 +35,6 @@ namespace Minista.Views.Infos
             _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
             _refreshButtonVisual = RefreshButton.GetVisual();
 
-            //DataContext = FollowRequestsVM;
-            //NavigationCacheMode = NavigationCacheMode.Enabled;
             Loaded += FollowRequestsViewLoaded;
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -297,19 +291,16 @@ namespace Minista.Views.Infos
                 if ((scrollViewer.VerticalOffset - _lastVerticalOffset) > 5 && !_isHideTitleGrid)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 else if (scrollViewer.VerticalOffset < _lastVerticalOffset && _isHideTitleGrid)
                 {
                     _isHideTitleGrid = false;
-                    //ToggleGoUpButtonAnimation(true);
                     ToggleRefreshButtonAnimation(true);
                 }
                 if (scrollViewer.VerticalOffset == 0)
                 {
                     _isHideTitleGrid = true;
-                    //ToggleGoUpButtonAnimation(false);
                     ToggleRefreshButtonAnimation(false);
                 }
                 _lastVerticalOffset = scrollViewer.VerticalOffset;

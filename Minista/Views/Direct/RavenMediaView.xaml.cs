@@ -90,6 +90,7 @@ namespace Minista.Views.Direct
                 var scrollViewer = sender as ScrollViewer;
                 var doubleTapPoint = e.GetPosition(scrollViewer);
 
+#pragma warning disable CS0618 // Type or member is obsolete
                 if (scrollViewer.ZoomFactor != 1)
                 {
                     scrollViewer.ZoomToFactor(1);
@@ -105,6 +106,7 @@ namespace Minista.Views.Direct
                         scrollViewer.ScrollToVerticalOffset(doubleTapPoint.Y);
                     });
                 }
+#pragma warning restore CS0618 // Type or member is obsolete
             }
             catch { }
         }
@@ -119,19 +121,14 @@ namespace Minista.Views.Direct
 
             if (ScrollingHost.ZoomFactor != 1)
             {
-                //ScrollingHost.ZoomToFactor(1);
                 ScrollingHost.ChangeView(null, null, 1, true);
             }
             else if (ScrollingHost.ZoomFactor == 1)
             {
-                //ScrollingHost.ZoomToFactor(4);
-
                 var dispatcher = Window.Current.CoreWindow.Dispatcher;
                 await dispatcher.RunAsync(CoreDispatcherPriority.High, () =>
                 {
                     ScrollingHost.ChangeView(position.X, position.Y, 4, true);
-                    //ScrollingHost.ScrollToHorizontalOffset(position.X);
-                    //ScrollingHost.ScrollToVerticalOffset(position.Y);
                 });
             }
         }

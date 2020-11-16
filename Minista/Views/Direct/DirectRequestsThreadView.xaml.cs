@@ -52,7 +52,6 @@ namespace Minista.Views.Direct
                 try
                 {
                     ME.Source = null;
-                    //DontPlayMusic = true;
                     ME.Pause();
                     if (VoicePlayPauseButton != null)
                         VoicePlayPauseButton.Content = Helper.PlayMaterialIcon;
@@ -107,7 +106,6 @@ namespace Minista.Views.Direct
                     }
                     catch { }
                     CanLoadFirstPopUp = true;
-                    //UserInfoText
                     try
                     {
                         await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
@@ -388,7 +386,6 @@ namespace Minista.Views.Direct
                 {
                     using (var pg = new PassageHelperX())
                     {
-                        //str = str?.Truncate(50);
                         var passages = pg.GetInlines(str, HyperLinkHelper.HyperLinkClick);
                         textBlock.Inlines.Clear();
                         textBlock.FlowDirection = passages.Item2 ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
