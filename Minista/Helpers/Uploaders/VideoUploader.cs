@@ -73,11 +73,6 @@ namespace Minista.Helpers
         StorageFile NotifyFile;
         StorageFile Thumbnail;
         double Duration;
-
-
-
-        public MediaStreamSource Mss;
-        FFmpegInteropMSS FFmpegMSS;
         public async void UploadVideo(StorageFile File, StorageFile thumbnail, string caption, BitmapDecoder decoder, Rect rectSize)
         {
             try
@@ -85,9 +80,9 @@ namespace Minista.Helpers
                 var videoInfo = await File.GetVideoInfoAsync();
                 bool isMatch = false;
                 if (videoInfo != null)
-                    isMatch = videoInfo.PixelHeight == decoder.PixelHeight && videoInfo.PixelWidth == decoder.PixelWidth;
+                    isMatch = videoInfo.Height == decoder.PixelHeight && videoInfo.Width == decoder.PixelWidth;
     
-                var files =await new VideoConverter().ConvertFiles(new List<StorageFile> { File },false, new Size(decoder.PixelWidth, decoder.PixelHeight), rectSize);
+                var files =await new VideoConverter().ConvertFiles(new List<StorageFile> { File }, false, new Size(decoder.PixelWidth, decoder.PixelHeight), rectSize);
                 if (files.Count > 0)
                     UploadSingleVideo(files[0], thumbnail, caption);
 
@@ -106,15 +101,10 @@ namespace Minista.Helpers
                 Caption = Caption.Replace("\r", "\n");
             try
             {
-                FFmpegMSS = await FFmpegInteropMSS
-                    .CreateFromStreamAsync(await File.OpenReadAsync(), FFmpegConfig);
-
-                Mss = FFmpegMSS.GetMediaStreamSource();
-                Duration = Mss.Duration.TotalSeconds;
+                var frameHelper = await FrameHelper.GetVideoInfoAsync(File);
+                Duration = frameHelper.Duration.TotalSeconds;
 
                 await Task.Delay(250);
-                FFmpegMSS = null;
-                Mss = null;
             }
             catch { }
             UploadId = GenerateUploadId();

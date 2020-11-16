@@ -18,28 +18,22 @@ namespace Minista.Views.MediaConverter
     public class VideoConverter
     {
         const string OutputExtension = ".mp4";
-        Windows.UI.Core.CoreDispatcher _dispatcher = Window.Current.Dispatcher;
-        CancellationTokenSource Cts;
-        MediaEncodingProfile MediaProfile;
-        MediaTranscoder Transcoder = new MediaTranscoder();
+        readonly CancellationTokenSource Cts;
+        readonly MediaTranscoder Transcoder = new MediaTranscoder();
         TimeSpan StartTime = new TimeSpan(0);
-        TimeSpan StopTime = new TimeSpan(0, 0, 59); // MAX TIME, albate age niaz shod!
+        TimeSpan StopTime = new TimeSpan(0, 0, 59);
         MediaStreamSource Mss;
         FFmpegInteropMSS FFmpegMSS;
-        List<StorageFile> QueueList = new List<StorageFile>();
-        List<StorageFile> ConvertedList = new List<StorageFile>();
+        readonly List<StorageFile> QueueList = new List<StorageFile>();
+        readonly List<StorageFile> ConvertedList = new List<StorageFile>();
 
         public bool IsConverting { get; private set; } = false;
-        //MediaStreamSource MssTest;
-        //FFmpegInteropMSS FFmpegMSSTest;
+        bool IsStoryVideo = false;
 
         public VideoConverter()
         {
             Transcoder = new MediaTranscoder();
             Cts = new CancellationTokenSource();
-            //Mss = null;
-            //FFmpegMSS = null;
-            MediaProfile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Auto);
         }
         public async Task<List<StorageFile>> ConvertFiles(List<StorageFile> files, bool story, Size? size, Rect? rectSize)
         {
@@ -57,19 +51,12 @@ namespace Minista.Views.MediaConverter
                     if (item.IsVideo())
                         try
                         {
-                            var test =  await item.GetDurationAsync();
-                            //if (item.NeedsConvert() || test.CompareTo(StopTime) > 0)
-                                QueueList.Add(item);
-                            //else
-                            //    ConvertedList.Add(item);
-
-                            //QueueList.Add(item);
+                            QueueList.Add(item);
                         }
                         catch { }
                 }
                 if (QueueList.Any())
                 {
-                    //Visibility = Visibility.Visible;
                     int ix = 1;
                     const string text = "Some of your file(s) needs to be converted first. Please wait...\r\n";
                     foreach (var item in QueueList)
@@ -78,7 +65,7 @@ namespace Minista.Views.MediaConverter
                         {
                             if (item.IsVideo())
                             {
-                                Text(text + $"{ix} of {QueueList.Count}");
+                                Output(text + $"{ix} of {QueueList.Count}");
                                 IsConverting = true;
                                 var vid = await ConvertVideo(item, size, rectSize);
                                 ("vid null: " + vid == null).PrintDebug();
@@ -97,13 +84,13 @@ namespace Minista.Views.MediaConverter
                 }
                 catch { }
             }
-            catch (Exception /*ex*/){
+            catch (Exception ex)
+            {
+                ex.PrintException("ConvertFiles");
             }
             IsConverting = false;
-            //Visibility = Visibility.Collapsed;
             return ConvertedList;
         }
-
         async Task<StorageFile> ConvertVideo(StorageFile inputFile, Size? imageSize, Rect? rectSize)
         {
             try
@@ -112,47 +99,72 @@ namespace Minista.Views.MediaConverter
 
                 if (inputFile != null && outputFile != null)
                 {
-                    MediaProfile = await MediaEncodingProfile.CreateFromFileAsync(inputFile);
-                    FFmpegMSS = await FFmpegInteropMSS
-                        .CreateFromStreamAsync(await inputFile.OpenReadAsync(), Helper.FFmpegConfig);
+                    var mediaProfile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Auto);
+                    int height = 0, width = 0;
+                    double duration = 0;
+                    if (DeviceUtil.IsMobile)
+                    {
+                        var videoInfo = await inputFile.GetVideoInfoAsync();
+                        height = (int)videoInfo.Height;
+                        width = (int)videoInfo.Width;
+                        duration = videoInfo.Duration.TotalSeconds;
+                    }
+                    else
+                    {
+                        FFmpegMSS = await FFmpegInteropMSS
+                            .CreateFromStreamAsync(await inputFile.OpenReadAsync(), Helper.FFmpegConfig);
+                        Mss = FFmpegMSS.GetMediaStreamSource();
+                        height = FFmpegMSS.VideoStream.PixelHeight;
+                        width = FFmpegMSS.VideoStream.PixelWidth;
+                        duration = Mss.Duration.TotalSeconds;
+                    }
 
-                    Mss = FFmpegMSS.GetMediaStreamSource();
+                    var fileProfile = await Uploads.VideoConverterX.GetEncodingProfileFromFileAsync(inputFile);
+                    if (fileProfile != null)
+                    {
+                        mediaProfile.Video.Bitrate = fileProfile.Video.Bitrate;
+                        if (mediaProfile.Audio != null)
+                        {
+                            mediaProfile.Audio.Bitrate = fileProfile.Audio.Bitrate;
+                            mediaProfile.Audio.BitsPerSample = fileProfile.Audio.BitsPerSample;
+                            mediaProfile.Audio.ChannelCount = fileProfile.Audio.ChannelCount;
+                            mediaProfile.Audio.SampleRate = fileProfile.Audio.SampleRate;
+                        }
+                        "Media profile copied from original video".PrintDebug();
+                    }
                     if (!IsStoryVideo)
                     {
-                        if (Mss.Duration.TotalSeconds > 59)
+                        if (duration > 59)
                         {
                             Transcoder.TrimStartTime = StartTime;
                             Transcoder.TrimStopTime = StopTime;
                         }
 
 
-                        var max = Math.Max(FFmpegMSS.VideoStream.PixelHeight, FFmpegMSS.VideoStream.PixelWidth);
+                        var max = Math.Max(height, width);
                         if (max > 1920)
                             max = 1920;
                         if (imageSize == null)
                         {
-                            MediaProfile.Video.Height = (uint)max;
-                            MediaProfile.Video.Width = (uint)max;
+                            mediaProfile.Video.Height = (uint)max;
+                            mediaProfile.Video.Width = (uint)max;
                         }
                         else
                         {
-                            MediaProfile.Video.Height = (uint)imageSize.Value.Height;
-                            MediaProfile.Video.Width = (uint)imageSize.Value.Width;
+                            mediaProfile.Video.Height = (uint)imageSize.Value.Height;
+                            mediaProfile.Video.Width = (uint)imageSize.Value.Width;
                         }
                     }
                     else
                     {
-                        if (Mss.Duration.TotalSeconds > 14.9)
+                        if (duration > 14.9)
                         {
                             Transcoder.TrimStartTime = StartTime;
                             Transcoder.TrimStopTime = StopTime;
                         }
-                        //var max = Math.Max(FFmpegMSS.VideoStream.PixelHeight, FFmpegMSS.VideoStream.PixelWidth);
-                        var size = Helpers.AspectRatioHelper.GetAspectRatioX(FFmpegMSS.VideoStream.PixelWidth, FFmpegMSS.VideoStream.PixelHeight);
-                        //if (max > 1920)
-                        //    max = 1920;
-                        MediaProfile.Video.Height = (uint)size.Height;
-                        MediaProfile.Video.Width = (uint)size.Width;
+                        var size = Helpers.AspectRatioHelper.GetAspectRatioX(width, height);
+                        mediaProfile.Video.Height = (uint)size.Height;
+                        mediaProfile.Video.Width = (uint)size.Width;
                     }
 
                     var transform = new VideoTransformEffectDefinition
@@ -165,9 +177,12 @@ namespace Minista.Views.MediaConverter
                     
                     Transcoder.AddVideoEffect(transform.ActivatableClassId, true, transform.Properties);
 
-                    var preparedTranscodeResult = await Transcoder
-                        .PrepareMediaStreamSourceTranscodeAsync(Mss,
-                        await outputFile.OpenAsync(FileAccessMode.ReadWrite), MediaProfile);
+                    PrepareTranscodeResult preparedTranscodeResult;
+                    if (DeviceUtil.IsMobile)
+                        preparedTranscodeResult = await Transcoder.PrepareFileTranscodeAsync(inputFile, outputFile, mediaProfile);
+                    else
+                        preparedTranscodeResult = await Transcoder.PrepareMediaStreamSourceTranscodeAsync(Mss,
+                            await outputFile.OpenAsync(FileAccessMode.ReadWrite), mediaProfile);
 
                     Transcoder.VideoProcessingAlgorithm = MediaVideoProcessingAlgorithm.Default;
                     if (preparedTranscodeResult.CanTranscode)
@@ -186,7 +201,6 @@ namespace Minista.Views.MediaConverter
             return null;
 
         }
-        bool IsStoryVideo = false;
         async Task<StorageFile> GenerateRandomOutputFile()
         {
             var folder = await KnownFolders.PicturesLibrary.GetFolderAsync(Helper.AppName);
@@ -195,29 +209,8 @@ namespace Minista.Views.MediaConverter
             return outfile;
         }
 
-        void ConvertProgress(double percent)
-        {
-            Output("Converting... " + (int)percent + "%");
-        }
-        void ConvertComplete(StorageFile file)
-        {
-            Output("Convert completed.");
-        }
-        async void Output(string content)
-        {
-            await _dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                content.PrintDebug();
-                //ResultText.Text = content;
-            });
-        }
-        async void Text(string content)
-        {
-            await _dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                content.PrintDebug();
-                //ContentText.Text = content;
-            });
-        }
+        void ConvertProgress(double percent) => Output("Converting... " + (int)percent + "%");
+        void ConvertComplete(StorageFile file) => Output("Convert completed.");
+        void Output(string content) => content.PrintDebug();
     }
 }

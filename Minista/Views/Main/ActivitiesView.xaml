@@ -678,7 +678,8 @@
                             </AppBarButton>
                             <HyperlinkButton
                                 Grid.Column="1"
-                                Padding="0" Margin="15 0"
+                                Margin="15,0"
+                                Padding="0"
                                 VerticalAlignment="Center"
                                 Click="ReplyButtonClick"
                                 FontFamily="{StaticResource VazirFont}"

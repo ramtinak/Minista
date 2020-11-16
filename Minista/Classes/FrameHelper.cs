@@ -5,62 +5,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
 
 namespace Minista
 {
     static class FrameHelper
     {
-        static FFmpegInteropMSS FFmpegMSS;
-        
         public static async Task<TimeSpan> GetDurationAsync(this StorageFile file)
         {
             try
             {
-                FFmpegMSS = await FFmpegInteropMSS
-                                  .CreateFromStreamAsync(await file.OpenReadAsync(), Helper.FFmpegConfig);
-
-                var MssTest = FFmpegMSS.GetMediaStreamSource();
-                return FFmpegMSS.Duration;
+                var basic = await file.GetBasicPropertiesAsync();
+                var video = await file.Properties.GetVideoPropertiesAsync();
+                return video.Duration;
             }
             catch { }
-            finally
-            {
-                try
-                {
-                    FFmpegMSS.Dispose();
-                    FFmpegMSS = null;
-                }
-                catch { }
-            }
             return TimeSpan.Zero;
         }
-        public static async Task<VideoStreamInfo> GetVideoInfoAsync(this StorageFile file)
+        public static async Task<VideoProperties> GetVideoInfoAsync(this StorageFile file)
         {
             try
             {
-                FFmpegMSS = await FFmpegInteropMSS
-                                  .CreateFromStreamAsync(await file.OpenReadAsync(), Helper.FFmpegConfig);
-
-                var MssTest = FFmpegMSS.GetMediaStreamSource();
-                return FFmpegMSS.VideoStream;
+                var basic = await file.GetBasicPropertiesAsync();
+                return await file.Properties.GetVideoPropertiesAsync();
             }
             catch { }
-            finally
-            {
-                try
-                {
-                    FFmpegMSS.Dispose();
-                    FFmpegMSS = null;
-                }
-                catch { }
-            }
             return null;
         }
-    }
-    public class Resolution
-    {
-        public double Width { get; set; } = 0;
-        public double Height { get; set; } = 0;
-        internal static Resolution Empty => new Resolution();
     }
 }

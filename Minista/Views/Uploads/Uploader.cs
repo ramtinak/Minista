@@ -26,18 +26,13 @@ using InstagramApiSharp;
 using Windows.Storage.Streams;
 using InstagramApiSharp.API;
 
-#pragma warning disable IDE0044 // Add readonly modifier
 namespace Minista.Views.Uploads
 {
-    public delegate void UploadCompletedHandler(Uploader sender);
+    public delegate void UploadHandler(Uploader sender);
     public class StorageUpload
     {
         public List<Uploader> Uploads { get; set; } = new List<Uploader>();
         public List<Uploader> CompletedUploads { get; set; } = new List<Uploader>();
-
-        public StorageUpload()
-        {
-        }
 
         public void SetUploadItem(List<StorageUploadItem> uploadItems, string caption)
         {
@@ -79,14 +74,9 @@ namespace Minista.Views.Uploads
             CompletedUploads.Add(sender);
 
             if (Uploads.Count > 0)
-            {
                 if (Uploads.Count == CompletedUploads.Count)
-                {
                     //configure album
-
                     ConfigureAlbum();
-                }
-            }
         }
 
         private async void ConfigureAlbum()
@@ -105,10 +95,6 @@ namespace Minista.Views.Uploads
                 var retryContext = Uploader.GetRetryContext();
                 var _user = InstaApi.GetLoggedUser();
                 var _deviceInfo = InstaApi.GetCurrentDevice();
-                //{"date_time_digitalized", DateTime.UtcNow.ToString("yyyy:MM:dd+hh:mm:ss")},
-                //{"date_time_original", DateTime.UtcNow.ToString("yyyy:MM:dd+hh:mm:ss")},
-                //{"is_suggested_venue", "false"},
-
                 var _httpRequestProcessor = InstaApi.HttpRequestProcessor;
                 var data = new JObject
                 {
@@ -176,7 +162,9 @@ namespace Minista.Views.Uploads
     }
     public class Uploader
     {
-        public event UploadCompletedHandler OnUploadCompleted;
+        public event UploadHandler OnUploadCompleted;
+        public event UploadHandler OnFailed;
+        public event UploadHandler OnSuccess;
         public string Name { get; private set; }
         internal static readonly Random Rnd = new Random();
         CancellationTokenSource cts;
@@ -202,8 +190,6 @@ namespace Minista.Views.Uploads
                 NotifyFile = await UploadItem.ImageToUpload.CopyAsync(cacheFolder);
             }
             catch { }
-            //763975004617a2a82570956fc58340b8-0-752599
-            // 17538305748504876_0_567406570
             var hashCode = Path.GetFileName($"C:\\{13.GenerateRandomStringStatic()}.jpg").GetHashCode();
             var storyHashId = GenerateStoryHashId();
             var storyHash = InstagramApiSharp.Helpers.CryptoHelper.CalculateHash(InstaApi.GetApiVersionInfo().SignatureKey, storyHashId).Substring(0 , "763975004617a2a82570956fc58340b8".Length);
@@ -256,41 +242,21 @@ namespace Minista.Views.Uploads
                 uploadParamsObj.Add("is_sidecar", "1");
             var uploadParams = JsonConvert.SerializeObject(uploadParamsObj);
             var fileBytes = "";
-            //if (UploadItem.IsVideo)
+            try
             {
-                try
+                StorageFile file = UploadItem.IsVideo ? UploadItem.VideoToUpload : UploadItem.ImageToUpload;
+                using (var openedFile = await file.OpenAsync(FileAccessMode.Read))
                 {
-                    StorageFile file = UploadItem.IsVideo ? UploadItem.VideoToUpload : UploadItem.ImageToUpload;
-                    using (var openedFile = await file.OpenAsync(FileAccessMode.Read))
-                    {
-                        fileBytes = openedFile.AsStream().Length.ToString();
-                        await Task.Delay(250);
-                    }
+                    fileBytes = openedFile.AsStream().Length.ToString();
+                    await Task.Delay(250);
                 }
-                catch { }
             }
+            catch { }
             BGU.SetRequestHeader("X-Entity-Type", UploadItem.IsVideo ? "video/mp4" : "image/jpeg");
             if (UploadItem.IsStory)
             {
-                //GET /rupload_igvideo/763975004617a2a82570956fc58340b8-0-752599 HTTP/1.1 
-                //X-Instagram-Rupload-Params: {"upload_media_height":"1196","extract_cover_frame":"1","xsharing_user_ids":"[\"11292195227\",\"1647718432\",\"8651542203\"]","upload_media_width":"720","upload_media_duration_ms":"5433","upload_id":"173258081688145","for_album":"1","retry_context":"{\"num_reupload\":0,\"num_step_auto_retry\":0,\"num_step_manual_retry\":0}","media_type":"2"} 
-                //Segment-Start-Offset: 0 
-                //X_FB_VIDEO_WATERFALL_ID: 173258081688145 
-                //Segment-Type: 3 
-                //X-IG-Connection-Type: WIFI 
-                //X-IG-Capabilities: 3brTvwM= 
-                //X-IG-App-ID: 567067343352427 
-                //User-Agent: Instagram 130.0.0.31.121 Android (26/8.0.0; 480dpi; 1080x1794; HUAWEI/HONOR; PRA-LA1; HWPRA-H; hi6250; en_US; 200396014) 
-                //Accept-Language: en-US 
-                //Cookie: urlgen={\"178.131.93.78\": 50810}:1jSIQm:SiXtqscCrX4FarygVtZ9rUSk1FE; ig_direct_region_hint=ATN; ds_user=rmt4006; igfl=rmt4006; ds_user_id=5318277344; mid=XkwRBQABAAEFAQ-YHBcUNU_oAnq-; shbts=1587579994.6701467; sessionid=5318277344%3AYpsEMoOF3jdznX%3A26; csrftoken=H5ZBkafSXpZB06QEZC7hVX3IdDYKscjQ; shbid=8693; rur=FRC; is_starred_enabled=yes 
-                //X-MID: XkwRBQABAAEFAQ-YHBcUNU_oAnq- 
-                //Accept-Encoding: gzip, deflate 
-                //Host: i.instagram.com 
-                //X-FB-HTTP-Engine: Liger 
-                //Connection: keep-alive
                 BGU.SetRequestHeader("Segment-Start-Offset", "0");
                 BGU.SetRequestHeader("Segment-Type", "3");
-
             }
             BGU.SetRequestHeader("Offset", "0");
             BGU.SetRequestHeader("X-Instagram-Rupload-Params", uploadParams);
@@ -314,16 +280,9 @@ namespace Minista.Views.Uploads
 
                 Progress<UploadOperation> progressCallback = new Progress<UploadOperation>(UploadProgress);
                 if (start)
-                {
-
-                    // Start the upload and attach a progress handler.
                     await upload.StartAsync().AsTask(cts.Token, progressCallback);
-                }
                 else
-                {
-                    // The upload was already running when the application started, re-attach the progress handler.
                     await upload.AttachAsync().AsTask(cts.Token, progressCallback);
-                }
 
                 ResponseInformation response = upload.GetResponseInformation();
 
@@ -331,11 +290,13 @@ namespace Minista.Views.Uploads
             }
             catch (TaskCanceledException)
             {
+                OnFailed?.Invoke(this);
                 MainPage.Current?.HideMediaUploadingUc();
                 LogStatus("Canceled: " + upload.Guid);
             }
             catch (Exception ex)
             {
+                OnFailed?.Invoke(this);
                 ex.PrintException("HandleUploadAsync");
                 MainPage.Current?.HideMediaUploadingUc();
             }
@@ -528,7 +489,7 @@ namespace Minista.Views.Uploads
                 catch { }
                 SendNotify(102);
                 //RemoveThis();
-
+                OnSuccess?.Invoke(this);
                 MainPage.Current?.HideMediaUploadingUc();
                 return Result.Success(true);
             }
@@ -537,11 +498,13 @@ namespace Minista.Views.Uploads
                 SendNotify(102);
                 //RemoveThis();
 
+                OnFailed?.Invoke(this);
                 MainPage.Current?.HideMediaUploadingUc();
                 return Result.Fail(httpException, false, ResponseType.NetworkProblem);
             }
             catch (Exception exception)
             {
+                OnFailed?.Invoke(this);
                 SendNotify(102);
                 //RemoveThis();
                 MainPage.Current?.HideMediaUploadingUc();
@@ -766,5 +729,3 @@ namespace Minista.Views.Uploads
         #endregion
     }
 }
-
-#pragma warning restore IDE0044 // Add readonly modifier

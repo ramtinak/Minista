@@ -23,21 +23,13 @@ namespace Minista.Views.Uploads
         public event ConvertionTextChanged OnText;
         public event ConvertionTextChanged OnOutput; 
         const string OutputExtension = ".mp4";
-        //readonly CancellationTokenSource Cts;
-        //MediaEncodingProfile MediaProfile;
         readonly MediaTranscoder Transcoder = new MediaTranscoder();
-        //MediaStreamSource Mss;
-        //FFmpegInteropMSS FFmpegMSS;
         readonly List<StorageUploadItem> ConvertedList = new List<StorageUploadItem>();
 
         public bool IsConverting { get; private set; } = false;
         public VideoConverterX()
         {
             Transcoder = new MediaTranscoder();
-            //Cts = new CancellationTokenSource();
-            //Mss = null;
-            //FFmpegMSS = null;
-            
         }
         public async Task<List<StorageUploadItem>> ConvertFilesAsync(List<StorageUploadItem> uploadItems, bool story = false)
         {
@@ -48,7 +40,6 @@ namespace Minista.Views.Uploads
                 {
                     int ix = 1;
                     const string text = "Some of your file(s) needs to be converted first. Don't close or leave Minista while converting video....";
-                    //Text(text);
                     foreach (var item in uploadItems)
                     {
                         try
@@ -69,22 +60,15 @@ namespace Minista.Views.Uploads
                         ix++;
                     }
                 }
-                //try
-                //{
-                //    Mss = null;
-                //    FFmpegMSS = null;
-                //}
-                //catch { }
             }
             catch (Exception ex)
             {
                 ex.PrintException("ConvertFiles");
             }
             IsConverting = false;
-            //Visibility = Visibility.Collapsed;
             return ConvertedList;
         }
-       async Task<StorageUploadItem> ConvertVideoAsync(StorageUploadItem uploadItem)
+        async Task<StorageUploadItem> ConvertVideoAsync(StorageUploadItem uploadItem)
         {
             try
             {
@@ -129,8 +113,6 @@ namespace Minista.Views.Uploads
                     var preparedTranscodeResult = await Transcoder
                         .PrepareFileTranscodeAsync(inputFile,
                         outputFile,
-                        //.PrepareMediaStreamSourceTranscodeAsync(Mss,
-                        //await outputFile.OpenAsync(FileAccessMode.ReadWrite),
                         mediaProfile);
 
                     if (preparedTranscodeResult.CanTranscode)
@@ -151,7 +133,7 @@ namespace Minista.Views.Uploads
 
         }
 
-        async Task<MediaEncodingProfile> GetEncodingProfileFromFileAsync(StorageFile file)
+        internal static async Task<MediaEncodingProfile> GetEncodingProfileFromFileAsync(StorageFile file)
         { 
             try
             {
@@ -160,89 +142,6 @@ namespace Minista.Views.Uploads
             catch { }
             return null;
         }
-        //async Task<StorageFile> ConvertVideo(StorageFile inputFile, Size? imageSize, Rect? rectSize)
-        //{
-        //    try
-        //    {
-        //        var outputFile = await GenerateRandomOutputFile();
-
-        //        if (inputFile != null && outputFile != null)
-        //        {
-        //            MediaProfile = await MediaEncodingProfile.CreateFromFileAsync(inputFile);
-        //            FFmpegMSS = await FFmpegInteropMSS
-        //                .CreateFromStreamAsync(await inputFile.OpenReadAsync(), Helper.FFmpegConfig);
-
-        //            Mss = FFmpegMSS.GetMediaStreamSource();
-        //            if (!IsStoryVideo)
-        //            {
-        //                if (Mss.Duration.TotalSeconds > 59)
-        //                {
-        //                    Transcoder.TrimStartTime = StartTime;
-        //                    Transcoder.TrimStopTime = StopTime;
-        //                }
-
-
-        //                var max = Math.Max(FFmpegMSS.VideoStream.PixelHeight, FFmpegMSS.VideoStream.PixelWidth);
-        //                if (max > 1920)
-        //                    max = 1920;
-        //                if (imageSize == null)
-        //                {
-        //                    MediaProfile.Video.Height = (uint)max;
-        //                    MediaProfile.Video.Width = (uint)max;
-        //                }
-        //                else
-        //                {
-        //                    MediaProfile.Video.Height = (uint)imageSize.Value.Height;
-        //                    MediaProfile.Video.Width = (uint)imageSize.Value.Width;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                if (Mss.Duration.TotalSeconds > 14.9)
-        //                {
-        //                    Transcoder.TrimStartTime = StartTime;
-        //                    Transcoder.TrimStopTime = StopTime;
-        //                }
-        //                //var max = Math.Max(FFmpegMSS.VideoStream.PixelHeight, FFmpegMSS.VideoStream.PixelWidth);
-        //                var size = Helpers.AspectRatioHelper.GetAspectRatioX(FFmpegMSS.VideoStream.PixelWidth, FFmpegMSS.VideoStream.PixelHeight);
-        //                //if (max > 1920)
-        //                //    max = 1920;
-        //                MediaProfile.Video.Height = (uint)size.Height;
-        //                MediaProfile.Video.Width = (uint)size.Width;
-        //            }
-
-        //            var transform = new VideoTransformEffectDefinition
-        //            {
-        //                Rotation = MediaRotation.None,
-        //                OutputSize = imageSize.Value,
-        //                Mirror = MediaMirroringOptions.None,
-        //                CropRectangle = rectSize == null ? Rect.Empty : rectSize.Value
-        //            };
-
-        //            Transcoder.AddVideoEffect(transform.ActivatableClassId, true, transform.Properties);
-
-        //            var preparedTranscodeResult = await Transcoder
-        //                .PrepareMediaStreamSourceTranscodeAsync(Mss,
-        //                await outputFile.OpenAsync(FileAccessMode.ReadWrite), MediaProfile);
-
-        //            Transcoder.VideoProcessingAlgorithm = MediaVideoProcessingAlgorithm.Default;
-        //            if (preparedTranscodeResult.CanTranscode)
-        //            {
-        //                var progress = new Progress<double>(ConvertProgress);
-        //                await preparedTranscodeResult.TranscodeAsync().AsTask(Cts.Token, progress);
-        //                ConvertComplete(outputFile);
-        //                return outputFile;
-        //            }
-        //            else
-        //                preparedTranscodeResult.FailureReason.ToString().ShowMsg();
-
-        //        }
-        //    }
-        //    catch (Exception ex) { ex.PrintException().ShowMsg("ConvertVideo"); }
-        //    return null;
-
-        //}
-        //bool IsStoryVideo = false;
         async Task<StorageFile> GenerateRandomOutputFile()
         {
             try
@@ -262,30 +161,14 @@ namespace Minista.Views.Uploads
             return outfile;
         }
 
-        void ConvertProgress(double percent)
+        void ConvertProgress(double percent) => Output("Converting... " + (int)percent + "%");
+        void ConvertComplete(StorageFile file) => Output("Convert completed.");
+        void Output(string content)
         {
-            Output("Converting... " + (int)percent + "%");
-        }
-        void ConvertComplete(StorageFile file)
-        {
-            Output("Convert completed.");
-        }
-        async void Output(string content)
-        {
-            await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                content.PrintDebug();
-                //ResultText.Text = content;
-            });
-
+            content.PrintDebug();
             OnOutput?.Invoke(content);
         }
-         void Text(string content)
-        {
-            OnText?.Invoke(content);
-
-        }
+        void Text(string content) => OnText?.Invoke(content);
     }
     public delegate void ConvertionTextChanged(string text);
-
 }
