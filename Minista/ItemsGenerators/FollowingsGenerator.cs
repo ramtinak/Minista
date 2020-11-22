@@ -42,8 +42,8 @@ namespace Minista.ItemsGenerators
         ScrollViewer Scroll2;
         bool IsLoading2 = true;
 
-        private InstaFollowingOrderType orderType_;
-        public InstaFollowingOrderType OrderType { get { return orderType_; } set { orderType_ = value; RunLoadMore(true); } }
+        private InstaFollowOrderType orderType_;
+        public InstaFollowOrderType OrderType { get { return orderType_; } set { orderType_ = value; RunLoadMore(true); } }
 
         int selectedIndex_ = 0;
         public int SelectedIndex
@@ -59,13 +59,13 @@ namespace Minista.ItemsGenerators
                 switch(value)
                 {
                     case 0:
-                        OrderType = InstaFollowingOrderType.Default;
+                        OrderType = InstaFollowOrderType.Default;
                         break;
                     case 1:
-                        OrderType = InstaFollowingOrderType.DateFollowedEarliest;
+                        OrderType = InstaFollowOrderType.DateFollowedEarliest;
                         break;
                     case 2:
-                        OrderType = InstaFollowingOrderType.DateFollowedLatest;
+                        OrderType = InstaFollowOrderType.DateFollowedLatest;
                         break;
                 }
             }

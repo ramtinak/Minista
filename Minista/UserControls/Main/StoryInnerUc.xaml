@@ -2,42 +2,46 @@
     x:Class="Minista.UserControls.Main.StoryInnerUc"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Minista.UserControls.Main"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-             xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
-             xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-             VerticalAlignment="Center"
-             HorizontalAlignment="Center"
-             mc:Ignorable="d"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:Minista.UserControls.Main"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center"
     d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignWidth="400"
+    mc:Ignorable="d">
     <Border CornerRadius="8">
         <Grid>
             <Grid Background="#26131313">
                 <interactivity:Interaction.Behaviors>
-                    <behaviors:Blur x:Name="BlurBehavior"
-                                    Value="25"
-                                    Duration="0"
-                                    Delay="0"
-                                    AutomaticallyStart="True" />
+                    <behaviors:Blur
+                        x:Name="BlurBehavior"
+                        AutomaticallyStart="True"
+                        Delay="0"
+                        Value="25"
+                        Duration="0" />
                 </interactivity:Interaction.Behaviors>
             </Grid>
-            <TextBlock x:Name="av"
-                       Foreground="{StaticResource DefaultForegroundColor}"
-                       Margin="8"
-                       FontFamily="{StaticResource VazirFont}"
-                       FontSize="{StaticResource DefaultFontSize}"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center">
-            <Run x:Name="TxtText" /><Run FontFamily="{StaticResource MaterialSymbolFont}"
-                                         FontSize="18"
-                                         Text="  " />
+            <TextBlock
+                x:Name="av"
+                Margin="8"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource VazirFont}"
+                FontSize="{StaticResource DefaultFontSize}"
+                Foreground="{StaticResource DefaultForegroundColor}">
+                <Run x:Name="TxtText" /><Run
+                    FontFamily="{StaticResource MaterialSymbolFont}"
+                    FontSize="18"
+                    Text="  " />
             </TextBlock>
-            <Grid Background="Aqua"
-                  Opacity="0"
-                  Tapped="GridTapped" />
+            <Grid
+                Background="Aqua"
+                Opacity="0"
+                Tapped="GridTapped" />
         </Grid>
     </Border>
 </UserControl>

@@ -407,7 +407,8 @@ namespace Minista.Views.Main
                                 index = LVStories.Items.IndexOf(storyWithLiveSupportModel);
                             Helpers.NavigationService.Navigate(typeof(StoryView), new object[] { list, index });
                         }
-
+                        else if (storyWithLiveSupportModel.Type == StoryType.Broadcast)
+                            Helpers.NavigationService.Navigate(typeof(Broadcast.LiveBroadcastView), storyWithLiveSupportModel.Broadcast);
                     }
                     // old code
                     //if (e.ClickedItem is InstaReelFeed reelFeed && reelFeed != null)

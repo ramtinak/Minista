@@ -2,37 +2,30 @@
     x:Class="Minista.Views.Direct.DirectRequestsThreadView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Minista.Views.Direct"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Minista.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:gif="using:XamlAnimatedGif"
+    xmlns:loading="using:Minista.UserControls"
+    xmlns:local="using:Minista.Views.Direct"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d"
-      xmlns:converters="using:Minista.Converters"
-      xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-      xmlns:vm="using:Minista.ViewModels.Direct"
-      xmlns:selector="using:Minista.Selectors"
-      xmlns:gif="using:XamlAnimatedGif"
-      xmlns:loading="using:Minista.UserControls"
+    xmlns:selector="using:Minista.Selectors"
+    xmlns:vm="using:Minista.ViewModels.Direct"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     NavigationCacheMode="Enabled"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
     <Page.DataContext>
         <vm:DirectRequestsThreadViewModel x:Name="DirectRequestsThreadVM" />
     </Page.DataContext>
     <Page.Resources>
         <ResourceDictionary>
-            <Style x:Key="GridViewItemContainerStyle"
-                   TargetType="GridViewItem">
-                <Setter Property="HorizontalContentAlignment"
-                        Value="Stretch" />
-                <Setter Property="HorizontalAlignment"
-                        Value="Stretch" />
-                <Setter Property="VerticalContentAlignment"
-                        Value="Stretch" />
-                <Setter Property="VerticalAlignment"
-                        Value="Stretch" />
-                <Setter Property="Margin"
-                        Value="1" />
-                <Setter Property="Padding"
-                        Value="0" />
+            <Style x:Key="GridViewItemContainerStyle" TargetType="GridViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="1" />
+                <Setter Property="Padding" Value="0" />
             </Style>
 
             <converters:DirectItemHorizontalConverter x:Name="DirectItemHorizontalConverter" />
@@ -50,151 +43,163 @@
             <converters:DirectItemUserProfilePictureConverter x:Name="DirectItemUserProfilePictureConverter" />
             <converters:ThreadItemBackgroundColorConverter x:Name="ThreadItemBackgroundColorConverter" />
 
-            <selector:ThreadItemTemplateSelector x:Key="ThreadItemTemplateSelector"
-                                                 NotSupportedTemplate="{StaticResource NotSupportedTemplate}"
-                                                 TextTemplate="{StaticResource TextTemplate}"
-                                                 MediaShareTemplate="{StaticResource MediaShareTemplate}"
-                                                 MediaTemplate="{StaticResource MediaTemplate}"
-                                                 PlaceholderTemplate="{StaticResource PlaceholderTemplate}"
-                                                 NoTemplate="{StaticResource NoTemplate}"
-                                                 StoryShareTemplate="{StaticResource StoryShareTemplate}"
-                                                 ProfileTemplate="{StaticResource ProfileTemplate}"
-                                                 FelixShareTemplate="{StaticResource FelixShareTemplate}"
-                                                 RavenMediaTemplate="{StaticResource RavenMediaTemplate}"
-                                                 LocationMediaTemplate="{StaticResource LocationMediaTemplate}"
-                                                 ReelShareMediaTemplate="{StaticResource ReelShareMediaTemplate}"
-                                                 HashtagMediaTemplate="{StaticResource HashtagMediaTemplate}"
-                                                 VoiceMediaTemplate="{StaticResource VoiceMediaTemplate}"
-                                                 LikeTemplate="{StaticResource LikeTemplate}"
-                                                 LinkMediaTemplate="{StaticResource LinkMediaTemplate}"
-                                                 LiveViewerInviteTemplate="{StaticResource LiveViewerInviteTemplate}"
-                                                 VideoCallEventTemplate="{StaticResource VideoCallEventTemplate}"
-                                                 AnimatedMediaTemplate="{StaticResource AnimatedMediaTemplate}"
-                                                 ActionLogTemplate="{StaticResource ActionLogTemplate}"
-                                                 EmptyStoryShareTemplate="{StaticResource EmptyStoryShareTemplate}"
-                                                 EmptyReelShareMediaTemplate="{StaticResource EmptyReelShareMediaTemplate}" />
+            <selector:ThreadItemTemplateSelector
+                x:Key="ThreadItemTemplateSelector"
+                ActionLogTemplate="{StaticResource ActionLogTemplate}"
+                AnimatedMediaTemplate="{StaticResource AnimatedMediaTemplate}"
+                EmptyReelShareMediaTemplate="{StaticResource EmptyReelShareMediaTemplate}"
+                EmptyStoryShareTemplate="{StaticResource EmptyStoryShareTemplate}"
+                FelixShareTemplate="{StaticResource FelixShareTemplate}"
+                HashtagMediaTemplate="{StaticResource HashtagMediaTemplate}"
+                LikeTemplate="{StaticResource LikeTemplate}"
+                LinkMediaTemplate="{StaticResource LinkMediaTemplate}"
+                LiveViewerInviteTemplate="{StaticResource LiveViewerInviteTemplate}"
+                LocationMediaTemplate="{StaticResource LocationMediaTemplate}"
+                MediaShareTemplate="{StaticResource MediaShareTemplate}"
+                MediaTemplate="{StaticResource MediaTemplate}"
+                NoTemplate="{StaticResource NoTemplate}"
+                NotSupportedTemplate="{StaticResource NotSupportedTemplate}"
+                PlaceholderTemplate="{StaticResource PlaceholderTemplate}"
+                ProfileTemplate="{StaticResource ProfileTemplate}"
+                RavenMediaTemplate="{StaticResource RavenMediaTemplate}"
+                ReelShareMediaTemplate="{StaticResource ReelShareMediaTemplate}"
+                StoryShareTemplate="{StaticResource StoryShareTemplate}"
+                TextTemplate="{StaticResource TextTemplate}"
+                VideoCallEventTemplate="{StaticResource VideoCallEventTemplate}"
+                VoiceMediaTemplate="{StaticResource VoiceMediaTemplate}" />
 
             <DataTemplate x:Key="LikeTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Text"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Text" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid MinHeight="50"
-                              MaxWidth="360"
-                              BorderThickness="1"
-                              CornerRadius="25"
-                              Margin="5">
+                        <Grid
+                            MinHeight="50"
+                            MaxWidth="360"
+                            Margin="5"
+                            BorderThickness="1"
+                            CornerRadius="25">
 
-                            <TextBlock Foreground="#FFCDCDCD"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="35"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="15 2"
-                                       Text="{Binding Text}" />
+                            <TextBlock
+                                Margin="15,2"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="35"
+                                Foreground="#FFCDCDCD"
+                                Text="{Binding Text}"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
                         </Grid>
                     </Grid>
                 </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="StoryShareTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Text"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Text" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              MinHeight="50"
-                              BorderThickness="1"
-                              MaxWidth="340"
-                              MinWidth="240"
-                              Height="360"
-                              CornerRadius="25"
-                              Margin="5">
+                        <Grid
+                            Height="360"
+                            MinWidth="240"
+                            MinHeight="50"
+                            MaxWidth="340"
+                            Margin="5"
+                            BorderBrush="#FF252525"
+                            BorderThickness="1"
+                            CornerRadius="25">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="15 2"
-                                       DataContext="{Binding Converter={StaticResource StoryShareTitleConverter}}"
-                                       DataContextChanged="TextBlockDataContextChanged" />
-                            <controls:ImageEx HorizontalAlignment="Stretch"
-                                              Grid.Row="1"
-                                              VerticalAlignment="Stretch">
+                            <TextBlock
+                                Margin="15,2"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding Converter={StaticResource StoryShareTitleConverter}}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                Foreground="White"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
+                            <controls:ImageEx
+                                Grid.Row="1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch">
                                 <controls:ImageEx.Background>
                                     <ImageBrush Stretch="Fill">
                                         <ImageBrush.ImageSource>
@@ -203,29 +208,33 @@
                                     </ImageBrush>
                                 </controls:ImageEx.Background>
                             </controls:ImageEx>
-                            <Grid Grid.RowSpan="2"
-                                  Background="Cyan"
-                                  Opacity="0"
-                                  Tapped="StoryShareGridTapped"
-                                  DataContext="{Binding}" />
+                            <Grid
+                                Grid.RowSpan="2"
+                                Background="Cyan"
+                                DataContext="{Binding}"
+                                Opacity="0"
+                                Tapped="StoryShareGridTapped" />
                         </Grid>
 
                     </Grid>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="EmptyStoryShareTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Text"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Text" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid.ColumnDefinitions>
@@ -233,55 +242,58 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              MinHeight="50"
-                              BorderThickness="1"
-                              MaxWidth="360"
-                              CornerRadius="25"
-                              Margin="5">
+                        <Grid
+                            MinHeight="50"
+                            MaxWidth="360"
+                            Margin="5"
+                            BorderBrush="#FF252525"
+                            BorderThickness="1"
+                            CornerRadius="25">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource DefaultFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="15 2"
-                                       DataContext="{Binding StoryShare.Title}"
-                                       DataContextChanged="TextBlockDataContextChanged" />
-                            <TextBlock Foreground="#FFCDCDCD"
-                                       Grid.Row="1"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="15 2"
-                                       DataContext="{Binding StoryShare.Message}"
-                                       Text="{Binding}"
-                                       DataContextChanged="TextBlockDataContextChanged" />
+                            <TextBlock
+                                Margin="15,2"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding StoryShare.Title}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource DefaultFontSize}"
+                                Foreground="White"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="15,2"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding StoryShare.Message}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                Foreground="#FFCDCDCD"
+                                Text="{Binding}"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
                         </Grid>
 
                     </Grid>
@@ -289,494 +301,533 @@
             </DataTemplate>
 
             <DataTemplate x:Key="NoTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Text"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Text" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              MinHeight="50"
-                              MaxWidth="360"
-                              BorderThickness="1"
-                              CornerRadius="25"
-                              Margin="5">
+                        <Grid
+                            MinHeight="50"
+                            MaxWidth="360"
+                            Margin="5"
+                            BorderBrush="#FF252525"
+                            BorderThickness="1"
+                            CornerRadius="25">
 
-                            <TextBlock Foreground="#FFCDCDCD"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="15 2"
-                                       DataContext="{Binding Text}"
-                                       DataContextChanged="TextBlockDataContextChanged" />
+                            <TextBlock
+                                Margin="15,2"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding Text}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                Foreground="#FFCDCDCD"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
                         </Grid>
                     </Grid>
                 </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="NotSupportedTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Text"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Text" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              Background="#FF1D1C1C"
-                              MinHeight="50"
-                              BorderThickness="1"
-                              MaxWidth="360"
-                              CornerRadius="25"
-                              Margin="5">
-                            <TextBlock Foreground="White"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource DefaultFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="15 2"
-                                       Text="This type of message is not supported yet" />
+                        <Grid
+                            MinHeight="50"
+                            MaxWidth="360"
+                            Margin="5"
+                            Background="#FF1D1C1C"
+                            BorderBrush="#FF252525"
+                            BorderThickness="1"
+                            CornerRadius="25">
+                            <TextBlock
+                                Margin="15,2"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource DefaultFontSize}"
+                                Foreground="White"
+                                Text="This type of message is not supported yet"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
                         </Grid>
                     </Grid>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="PlaceholderTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True">
+                <Grid IsHoldingEnabled="True" IsRightTapEnabled="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              MinHeight="50"
-                              BorderThickness="1"
-                              MaxWidth="360"
-                              CornerRadius="25"
-                              Margin="5">
+                        <Grid
+                            MinHeight="50"
+                            MaxWidth="360"
+                            Margin="5"
+                            BorderBrush="#FF252525"
+                            BorderThickness="1"
+                            CornerRadius="25">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource DefaultFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="15 2"
-                                       DataContext="{Binding Placeholder.Title}"
-                                       DataContextChanged="TextBlockDataContextChanged" />
-                            <TextBlock Foreground="#FFCDCDCD"
-                                       Grid.Row="1"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="15 2"
-                                       DataContext="{Binding Placeholder.Message}"
-                                       DataContextChanged="TextBlockDataContextChanged" />
+                            <TextBlock
+                                Margin="15,2"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding Placeholder.Title}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource DefaultFontSize}"
+                                Foreground="White"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="15,2"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding Placeholder.Message}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                Foreground="#FFCDCDCD"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
                         </Grid>
                     </Grid>
                 </Grid>
 
             </DataTemplate>
             <DataTemplate x:Key="TextTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Text"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Text" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
-                              MinHeight="50"
-                              BorderThickness="1"
-                              CornerRadius="25"
-                              MaxWidth="320"
-                              Margin="5">
-                            <TextBlock Foreground="White"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource DefaultFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="15 2"
-                                       DataContext="{Binding Text}"
-                                       DataContextChanged="TextBlockDataContextChanged" />
+                        <Grid
+                            MinHeight="50"
+                            MaxWidth="320"
+                            Margin="5"
+                            Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
+                            BorderBrush="#FF252525"
+                            BorderThickness="1"
+                            CornerRadius="25">
+                            <TextBlock
+                                Margin="15,2"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding Text}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource DefaultFontSize}"
+                                Foreground="White"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
                         </Grid>
 
                     </Grid>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="MediaShareTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Caption"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Caption" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          BorderBrush="#FF252525"
-                          Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
-                          MaxWidth="285"
-                          BorderThickness="1"
-                          CornerRadius="15"
-                          Margin="5">
+                    <Grid
+                        Grid.Column="1"
+                        MaxWidth="285"
+                        Margin="5"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
+                        BorderBrush="#FF252525"
+                        BorderThickness="1"
+                        CornerRadius="15">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Grid Height="60"
-                              Margin="5 0 5 0">
+                        <Grid Height="60" Margin="5,0,5,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="3" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Ellipse Grid.Column="0"
-                                     Height="45"
-                                     Width="45"
-                                     VerticalAlignment="Center"
-                                     HorizontalAlignment="Center"
-                                     StrokeThickness="0">
+                            <Ellipse
+                                Grid.Column="0"
+                                Width="45"
+                                Height="45"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                StrokeThickness="0">
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="{Binding MediaShare.User.ProfilePicture}" />
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       Grid.Column="2"
-                                       Text="{Binding MediaShare.User.UserName}"
-                                       VerticalAlignment="Center"
-                                       Margin="0 8 0 8" />
+                            <TextBlock
+                                Grid.Column="2"
+                                Margin="0,8,0,8"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                Text="{Binding MediaShare.User.UserName}" />
 
 
                         </Grid>
-                        <controls:ImageEx Grid.Row="1"
-                                          Stretch="Uniform"
-                                          MinHeight="90"
-                                          Tapped="MediaShareImageExTapped">
+                        <controls:ImageEx
+                            Grid.Row="1"
+                            MinHeight="90"
+                            Stretch="Uniform"
+                            Tapped="MediaShareImageExTapped">
                             <controls:ImageEx.Source>
                                 <BitmapImage UriSource="{Binding MediaShare, Converter={StaticResource DirectMediaShareConverter}}" />
                             </controls:ImageEx.Source>
                         </controls:ImageEx>
-                        <Grid MaxHeight="65"
-                              Grid.Row="2">
-                            <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       Grid.Column="2"
-                                       DataContext="{Binding MediaShare.Caption.Text}"
-                                       DataContextChanged="TextBlockDataContextChanged"
-                                       Margin="5 2" />
+                        <Grid Grid.Row="2" MaxHeight="65">
+                            <TextBlock
+                                Grid.Column="2"
+                                Margin="5,2"
+                                DataContext="{Binding MediaShare.Caption.Text}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                Foreground="{StaticResource DefaultInnerForegroundColor}" />
                         </Grid>
                     </Grid>
                 </Grid>
 
             </DataTemplate>
             <DataTemplate x:Key="MediaTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <!--Height="400"
-                          Width="290"-->
-                    <Grid Grid.Column="1"
-                          MaxWidth="290"
-                          BorderBrush="#FF252525"
-                          Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
-                          BorderThickness="1"
-                          CornerRadius="15"
-                          Margin="5">
-                        <controls:ImageEx Stretch="Uniform"
-                                          MinHeight="90">
+                    <!--
+                        Height="400"
+                        Width="290"
+                    -->
+                    <Grid
+                        Grid.Column="1"
+                        MaxWidth="290"
+                        Margin="5"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
+                        BorderBrush="#FF252525"
+                        BorderThickness="1"
+                        CornerRadius="15">
+                        <controls:ImageEx MinHeight="90" Stretch="Uniform">
                             <controls:ImageEx.Source>
                                 <BitmapImage UriSource="{Binding Media.Images[0].Uri}" />
                             </controls:ImageEx.Source>
                         </controls:ImageEx>
-                        <ProgressBar RenderTransformOrigin="0.5,0.5"
-                                     Maximum="100"
-                                     Value="{Binding Media.Percentage}"
-                                     Visibility="{Binding Media.Percentage, Converter={StaticResource DoubleToVisibilityConverter}}"
-                                     VerticalAlignment="Stretch"
-                                     HorizontalAlignment="Stretch"
-                                     Foreground="#B6292828"
-                                     Background="#4DFFFFFF">
+                        <ProgressBar
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="#4DFFFFFF"
+                            Foreground="#B6292828"
+                            Maximum="100"
+                            RenderTransformOrigin="0.5,0.5"
+                            Visibility="{Binding Media.Percentage, Converter={StaticResource DoubleToVisibilityConverter}}"
+                            Value="{Binding Media.Percentage}">
                             <ProgressBar.RenderTransform>
                                 <CompositeTransform Rotation="-90" />
                             </ProgressBar.RenderTransform>
                         </ProgressBar>
-                        <ProgressRing Height="85"
-                                      Width="85"
-                                      IsActive="True"
-                                      VerticalAlignment="Center"
-                                      HorizontalAlignment="Center"
-                                      Visibility="{Binding Media.Percentage, Converter={StaticResource DoubleToVisibilityConverter}}"
-                                      Foreground="#D8575757" />
-                        <Grid Background="DodgerBlue"
-                              Opacity="0"
-                              Tapped="MediaImageExTapped" />
+                        <ProgressRing
+                            Width="85"
+                            Height="85"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="#D8575757"
+                            IsActive="True"
+                            Visibility="{Binding Media.Percentage, Converter={StaticResource DoubleToVisibilityConverter}}" />
+                        <Grid
+                            Background="DodgerBlue"
+                            Opacity="0"
+                            Tapped="MediaImageExTapped" />
                     </Grid>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="ProfileTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Profile"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Profile" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          BorderBrush="#FF252525"
-                          Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
-                          Width="205.5"
-                          MaxHeight="182"
-                          BorderThickness="1"
-                          CornerRadius="15"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
-                          Margin="5">
+                    <Grid
+                        Grid.Column="1"
+                        Width="205.5"
+                        MaxHeight="182"
+                        Margin="5"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
+                        BorderBrush="#FF252525"
+                        BorderThickness="1"
+                        CornerRadius="15">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Grid Height="60"
-                              Margin="5 0 5 0">
+                        <Grid Height="60" Margin="5,0,5,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="3" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Ellipse Grid.Column="0"
-                                     Height="45"
-                                     Width="45"
-                                     VerticalAlignment="Center"
-                                     HorizontalAlignment="Center"
-                                     StrokeThickness="0">
+                            <Ellipse
+                                Grid.Column="0"
+                                Width="45"
+                                Height="45"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                StrokeThickness="0">
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="{Binding ProfileMedia.ProfilePicture}" />
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       Grid.Column="2"
-                                       Text="{Binding ProfileMedia.UserName}"
-                                       VerticalAlignment="Center"
-                                       Margin="0 8 0 8" />
+                            <TextBlock
+                                Grid.Column="2"
+                                Margin="0,8,0,8"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                Text="{Binding ProfileMedia.UserName}" />
 
 
                         </Grid>
-                        <GridView Grid.Row="1"
-                                  SelectionMode="None"
-                                  IsItemClickEnabled="False"
-                                  ItemsSource="{Binding PreviewMedias}"
-                                  ItemTemplate="{StaticResource ProfileGridViewTemplate}"
-                                  ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
-                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                  ScrollViewer.VerticalScrollMode="Disabled"
-                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                  ScrollViewer.HorizontalScrollMode="Disabled">
+                        <GridView
+                            Grid.Row="1"
+                            IsItemClickEnabled="False"
+                            ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
+                            ItemTemplate="{StaticResource ProfileGridViewTemplate}"
+                            ItemsSource="{Binding PreviewMedias}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.HorizontalScrollMode="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollMode="Disabled"
+                            SelectionMode="None">
                             <GridView.ItemContainerTransitions>
                                 <TransitionCollection>
                                     <EntranceThemeTransition />
@@ -784,128 +835,140 @@
                             </GridView.ItemContainerTransitions>
 
                         </GridView>
-                        <Grid Background="AliceBlue"
-                              Opacity="0"
-                              Grid.RowSpan="3"
-                              Tapped="ProfileGridTapped" />
+                        <Grid
+                            Grid.RowSpan="3"
+                            Background="AliceBlue"
+                            Opacity="0"
+                            Tapped="ProfileGridTapped" />
                     </Grid>
                 </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="FelixShareTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Caption"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Caption" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              BorderThickness="1"
-                              MaxWidth="300"
-                              CornerRadius="25"
-                              Margin="5">
-                            <controls:ImageEx Grid.Row="1"
-                                              Stretch="Uniform"
-                                              MinHeight="90">
+                        <Grid
+                            MaxWidth="300"
+                            Margin="5"
+                            BorderBrush="#FF252525"
+                            BorderThickness="1"
+                            CornerRadius="25">
+                            <controls:ImageEx
+                                Grid.Row="1"
+                                MinHeight="90"
+                                Stretch="Uniform">
                                 <controls:ImageEx.Source>
                                     <BitmapImage UriSource="{Binding FelixShareMedia.Images[0].Uri}" />
                                 </controls:ImageEx.Source>
                             </controls:ImageEx>
                             <Grid VerticalAlignment="Bottom">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"
-                                                   MaxHeight="75" />
+                                    <RowDefinition Height="Auto" MaxHeight="75" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <controls:DropShadowPanel BlurRadius="15.0"
-                                                          ShadowOpacity="0.70"
-                                                          OffsetX="5.0"
-                                                          OffsetY="5.0"
-                                                          Color="Black"
-                                                          Margin="15 2">
-                                    <TextBlock Foreground="White"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource TinyFontSize}"
-                                               TextWrapping="Wrap"
-                                               TextAlignment="DetectFromContent"
-                                               VerticalAlignment="Center"
-                                               Text="{Binding FelixShareMedia.Title}" />
+                                <controls:DropShadowPanel
+                                    Margin="15,2"
+                                    BlurRadius="15.0"
+                                    OffsetX="5.0"
+                                    OffsetY="5.0"
+                                    ShadowOpacity="0.70"
+                                    Color="Black">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource TinyFontSize}"
+                                        Foreground="White"
+                                        Text="{Binding FelixShareMedia.Title}"
+                                        TextAlignment="DetectFromContent"
+                                        TextWrapping="Wrap" />
 
                                 </controls:DropShadowPanel>
 
 
-                                <Grid Height="60"
-                                      Grid.Row="1"
-                                      Margin="5 0 5 0">
+                                <Grid
+                                    Grid.Row="1"
+                                    Height="60"
+                                    Margin="5,0,5,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="50" />
                                         <ColumnDefinition Width="3" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Ellipse Grid.Column="0"
-                                             Height="45"
-                                             Width="45"
-                                             VerticalAlignment="Center"
-                                             HorizontalAlignment="Center"
-                                             StrokeThickness="0">
+                                    <Ellipse
+                                        Grid.Column="0"
+                                        Width="45"
+                                        Height="45"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        StrokeThickness="0">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="{Binding FelixShareMedia.User.ProfilePicture}" />
                                         </Ellipse.Fill>
                                     </Ellipse>
-                                    <controls:DropShadowPanel BlurRadius="15.0"
-                                                              ShadowOpacity="0.70"
-                                                              OffsetX="5.0"
-                                                              OffsetY="5.0"
-                                                              Color="Black"
-                                                              Grid.Column="2">
-                                        <TextBlock Foreground="White"
-                                                   FontFamily="{StaticResource VazirFont}"
-                                                   FontSize="{StaticResource TinyFontSize}"
-                                                   Text="{Binding FelixShareMedia.User.UserName}"
-                                                   VerticalAlignment="Center"
-                                                   Margin="0 8 0 8" />
+                                    <controls:DropShadowPanel
+                                        Grid.Column="2"
+                                        BlurRadius="15.0"
+                                        OffsetX="5.0"
+                                        OffsetY="5.0"
+                                        ShadowOpacity="0.70"
+                                        Color="Black">
+                                        <TextBlock
+                                            Margin="0,8,0,8"
+                                            VerticalAlignment="Center"
+                                            FontFamily="{StaticResource VazirFont}"
+                                            FontSize="{StaticResource TinyFontSize}"
+                                            Foreground="White"
+                                            Text="{Binding FelixShareMedia.User.UserName}" />
                                     </controls:DropShadowPanel>
 
                                 </Grid>
 
                             </Grid>
 
-                            <Grid Background="AliceBlue"
-                                  Opacity="0"
-                                  Grid.RowSpan="4"
-                                  Tapped="FelixShareGridTapped" />
+                            <Grid
+                                Grid.RowSpan="4"
+                                Background="AliceBlue"
+                                Opacity="0"
+                                Tapped="FelixShareGridTapped" />
                         </Grid>
 
                     </Grid>
@@ -913,63 +976,69 @@
             </DataTemplate>
 
             <DataTemplate x:Key="RavenMediaTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
-                              MinHeight="45"
-                              BorderThickness="1.5"
-                              CornerRadius="25"
-                              MaxWidth="360"
-                              Margin="5">
-                            <TextBlock Foreground="White"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource DefaultFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="12 2">
-                            <Run FontFamily="{StaticResource MaterialSymbolFont}"
-                                 Text=""
-                                 FontSize="{StaticResource BigFontSize}" />
-                            <Run Text="{Binding VisualMedia.Media.MediaType, Converter={StaticResource MediaTypeConverter}}" />
+                        <Grid
+                            MinHeight="45"
+                            MaxWidth="360"
+                            Margin="5"
+                            Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
+                            BorderBrush="#FF252525"
+                            BorderThickness="1.5"
+                            CornerRadius="25">
+                            <TextBlock
+                                Margin="12,2"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource DefaultFontSize}"
+                                Foreground="White"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap">
+                                <Run
+                                    FontFamily="{StaticResource MaterialSymbolFont}"
+                                    FontSize="{StaticResource BigFontSize}"
+                                    Text="" />
+                                <Run Text="{Binding VisualMedia.Media.MediaType, Converter={StaticResource MediaTypeConverter}}" />
                             </TextBlock>
-                            <Grid Background="LemonChiffon"
-                                  Opacity="0"
-                                  Tapped="VisualMediaTapped" />
+                            <Grid
+                                Background="LemonChiffon"
+                                Opacity="0"
+                                Tapped="VisualMediaTapped" />
                         </Grid>
 
                     </Grid>
@@ -977,74 +1046,80 @@
             </DataTemplate>
 
             <DataTemplate x:Key="LocationMediaTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Location"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Location" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          BorderBrush="#FF252525"
-                          Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
-                          Width="205.5"
-                          MaxHeight="168"
-                          BorderThickness="1"
-                          CornerRadius="15"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
-                          Margin="5">
+                    <Grid
+                        Grid.Column="1"
+                        Width="205.5"
+                        MaxHeight="168"
+                        Margin="5"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
+                        BorderBrush="#FF252525"
+                        BorderThickness="1"
+                        CornerRadius="15">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Grid Height="45"
-                              Margin="5 0 5 0">
-                            <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource DefaultFontSize}"
-                                       DataContext="{Binding LocationMedia.Name}"
-                                       DataContextChanged="TextBlockDataContextChanged"
-                                       VerticalAlignment="Center"
-                                       Margin="0 8 0 8" />
+                        <Grid Height="45" Margin="5,0,5,0">
+                            <TextBlock
+                                Margin="0,8,0,8"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding LocationMedia.Name}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource DefaultFontSize}"
+                                Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
 
                         </Grid>
-                        <GridView Grid.Row="1"
-                                  SelectionMode="None"
-                                  IsItemClickEnabled="False"
-                                  ItemsSource="{Binding PreviewMedias}"
-                                  ItemTemplate="{StaticResource ProfileGridViewTemplate}"
-                                  ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
-                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                  ScrollViewer.VerticalScrollMode="Disabled"
-                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                  ScrollViewer.HorizontalScrollMode="Disabled">
+                        <GridView
+                            Grid.Row="1"
+                            IsItemClickEnabled="False"
+                            ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
+                            ItemTemplate="{StaticResource ProfileGridViewTemplate}"
+                            ItemsSource="{Binding PreviewMedias}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.HorizontalScrollMode="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollMode="Disabled"
+                            SelectionMode="None">
                             <GridView.ItemContainerTransitions>
                                 <TransitionCollection>
                                     <EntranceThemeTransition />
@@ -1052,49 +1127,53 @@
                             </GridView.ItemContainerTransitions>
 
                         </GridView>
-                        <Grid Background="AliceBlue"
-                              Opacity="0"
-                              Grid.RowSpan="3"
-                              Tapped="ProfileGridTapped" />
+                        <Grid
+                            Grid.RowSpan="3"
+                            Background="AliceBlue"
+                            Opacity="0"
+                            Tapped="ProfileGridTapped" />
                     </Grid>
                 </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="ReelShareMediaTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Text"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Text" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -1105,53 +1184,58 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="5 2"
-                                       DataContext="{Binding Converter={StaticResource ReelShareConverter}}"
-                                       DataContextChanged="TextBlockDataContextChanged" />
-                            <Grid BorderBrush="#FF252525"
-                                  MinHeight="50"
-                                  Grid.Row="1"
-                                  BorderThickness="1"
-                                  MinWidth="240"
-                                  MaxWidth="320"
-                                  MaxHeight="360"
-                                  CornerRadius="25"
-                                  Margin="5">
+                            <TextBlock
+                                Margin="5,2"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding Converter={StaticResource ReelShareConverter}}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                Foreground="White"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
+                            <Grid
+                                Grid.Row="1"
+                                MinWidth="240"
+                                MinHeight="50"
+                                MaxWidth="320"
+                                MaxHeight="360"
+                                Margin="5"
+                                BorderBrush="#FF252525"
+                                BorderThickness="1"
+                                CornerRadius="25">
 
-                                <controls:ImageEx Grid.Row="1"
-                                                  Stretch="Uniform"
-                                                  MinHeight="300"
-                                                  Tapped="ReelShareImageExTapped">
+                                <controls:ImageEx
+                                    Grid.Row="1"
+                                    MinHeight="300"
+                                    Stretch="Uniform"
+                                    Tapped="ReelShareImageExTapped">
                                     <controls:ImageEx.Source>
                                         <BitmapImage UriSource="{Binding ReelShareMedia.Media.Images[0].Uri}" />
                                     </controls:ImageEx.Source>
                                 </controls:ImageEx>
                             </Grid>
-                            <Grid BorderBrush="#FF252525"
-                                  Background="#FF1D1C1C"
-                                  MinHeight="50"
-                                  Grid.Row="2"
-                                  BorderThickness="1"
-                                  CornerRadius="25"
-                                  MaxWidth="320"
-                                  Margin="5"
-                                  HorizontalAlignment="Left"
-                                  Visibility="{Binding ReelShareMedia.Text,Converter={StaticResource NullableToVisibilityConverter}}">
-                                <TextBlock Foreground="White"
-                                           FontFamily="{StaticResource VazirFont}"
-                                           FontSize="{StaticResource DefaultFontSize}"
-                                           TextWrapping="Wrap"
-                                           TextAlignment="DetectFromContent"
-                                           VerticalAlignment="Center"
-                                           Margin="15 2"
-                                           DataContext="{Binding ReelShareMedia.Text}"
-                                           DataContextChanged="TextBlockDataContextChanged" />
+                            <Grid
+                                Grid.Row="2"
+                                MinHeight="50"
+                                MaxWidth="320"
+                                Margin="5"
+                                HorizontalAlignment="Left"
+                                Background="#FF1D1C1C"
+                                BorderBrush="#FF252525"
+                                BorderThickness="1"
+                                CornerRadius="25"
+                                Visibility="{Binding ReelShareMedia.Text, Converter={StaticResource NullableToVisibilityConverter}}">
+                                <TextBlock
+                                    Margin="15,2"
+                                    VerticalAlignment="Center"
+                                    DataContext="{Binding ReelShareMedia.Text}"
+                                    DataContextChanged="TextBlockDataContextChanged"
+                                    FontFamily="{StaticResource VazirFont}"
+                                    FontSize="{StaticResource DefaultFontSize}"
+                                    Foreground="White"
+                                    TextAlignment="DetectFromContent"
+                                    TextWrapping="Wrap" />
                             </Grid>
 
                         </Grid>
@@ -1159,37 +1243,39 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="EmptyReelShareMediaTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -1199,32 +1285,35 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="5 2"
-                                       DataContext="{Binding Converter={StaticResource ReelShareConverter}}"
-                                       DataContextChanged="TextBlockDataContextChanged" />
-                            <Grid BorderBrush="#FF252525"
-                                  Background="#FF1D1C1C"
-                                  Grid.Row="1"
-                                  MinHeight="45"
-                                  BorderThickness="1"
-                                  CornerRadius="25"
-                                  MaxWidth="360"
-                                  Margin="5"
-                                  Visibility="{Binding Converter={StaticResource NullableToVisibilityConverter}}">
-                                <TextBlock Foreground="White"
-                                           FontFamily="{StaticResource VazirFont}"
-                                           FontSize="{StaticResource DefaultFontSize}"
-                                           TextWrapping="Wrap"
-                                           TextAlignment="DetectFromContent"
-                                           VerticalAlignment="Center"
-                                           Margin="15 2"
-                                           Text="{Binding ReelShareMedia.Text}" />
+                            <TextBlock
+                                Margin="5,2"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding Converter={StaticResource ReelShareConverter}}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                Foreground="White"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
+                            <Grid
+                                Grid.Row="1"
+                                MinHeight="45"
+                                MaxWidth="360"
+                                Margin="5"
+                                Background="#FF1D1C1C"
+                                BorderBrush="#FF252525"
+                                BorderThickness="1"
+                                CornerRadius="25"
+                                Visibility="{Binding Converter={StaticResource NullableToVisibilityConverter}}">
+                                <TextBlock
+                                    Margin="15,2"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource VazirFont}"
+                                    FontSize="{StaticResource DefaultFontSize}"
+                                    Foreground="White"
+                                    Text="{Binding ReelShareMedia.Text}"
+                                    TextAlignment="DetectFromContent"
+                                    TextWrapping="Wrap" />
                             </Grid>
                         </Grid>
                     </Grid>
@@ -1233,71 +1322,77 @@
 
 
             <DataTemplate x:Key="HashtagMediaTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Hashtag"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Hashtag" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          BorderBrush="#FF252525"
-                          Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
-                          Width="205.5"
-                          MaxHeight="168"
-                          BorderThickness="1"
-                          CornerRadius="15"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
-                          Margin="5">
+                    <Grid
+                        Grid.Column="1"
+                        Width="205.5"
+                        MaxHeight="168"
+                        Margin="5"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
+                        BorderBrush="#FF252525"
+                        BorderThickness="1"
+                        CornerRadius="15">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Grid Height="45"
-                              Margin="5 0 5 0">
-                            <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource DefaultFontSize}"
-                                       VerticalAlignment="Center"
-                                       Margin="0 8 0 8"
-                                       Text="{Binding HashtagMedia.Name, Converter={StaticResource AddHashtagToStringConverter}}" />
+                        <Grid Height="45" Margin="5,0,5,0">
+                            <TextBlock
+                                Margin="0,8,0,8"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource DefaultFontSize}"
+                                Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                Text="{Binding HashtagMedia.Name, Converter={StaticResource AddHashtagToStringConverter}}" />
                         </Grid>
-                        <GridView Grid.Row="1"
-                                  SelectionMode="None"
-                                  IsItemClickEnabled="False"
-                                  ItemsSource="{Binding PreviewMedias}"
-                                  ItemTemplate="{StaticResource ProfileGridViewTemplate}"
-                                  ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
-                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                  ScrollViewer.VerticalScrollMode="Disabled"
-                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                  ScrollViewer.HorizontalScrollMode="Disabled">
+                        <GridView
+                            Grid.Row="1"
+                            IsItemClickEnabled="False"
+                            ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
+                            ItemTemplate="{StaticResource ProfileGridViewTemplate}"
+                            ItemsSource="{Binding PreviewMedias}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.HorizontalScrollMode="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollMode="Disabled"
+                            SelectionMode="None">
                             <GridView.ItemContainerTransitions>
                                 <TransitionCollection>
                                     <EntranceThemeTransition />
@@ -1305,82 +1400,88 @@
                             </GridView.ItemContainerTransitions>
 
                         </GridView>
-                        <Grid Background="AliceBlue"
-                              Opacity="0"
-                              Grid.RowSpan="3"
-                              Tapped="ProfileGridTapped" />
+                        <Grid
+                            Grid.RowSpan="3"
+                            Background="AliceBlue"
+                            Opacity="0"
+                            Tapped="ProfileGridTapped" />
                     </Grid>
                 </Grid>
             </DataTemplate>
 
 
             <DataTemplate x:Key="VoiceMediaTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          BorderBrush="#FF252525"
-                          Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
-                          MinWidth="80"
-                          MaxHeight="75"
-                          BorderThickness="1"
-                          CornerRadius="15"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
-                          Margin="5">
+                    <Grid
+                        Grid.Column="1"
+                        MinWidth="80"
+                        MaxHeight="75"
+                        Margin="5"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
+                        BorderBrush="#FF252525"
+                        BorderThickness="1"
+                        CornerRadius="15">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Grid Height="60"
-                              Margin="5 0 5 0"
-                              DataContext="{Binding}">
+                        <Grid
+                            Height="60"
+                            Margin="5,0,5,0"
+                            DataContext="{Binding}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <AppBarButton x:Name="PlayPauseButton"
-                                          Foreground="{StaticResource DefaultForegroundColor}"
-                                          Content=""
-                                          Tag="{Binding ItemId}"
-                                          VerticalAlignment="Center"
-                                          FontFamily="{StaticResource MaterialSymbolFont}"
-                                          FontSize="{StaticResource BigBigFontSize}"
-                                          Click="PlayPauseButtonClick" />
-                            <Grid Grid.Column="1"
-                                  DataContext="{Binding}"
-                                  Height="60"
-                                  MaxWidth="160"
-                                  MinWidth="70"
-                                  DataContextChanged="VoiceMediaGridDataContextChanged">
-
-                            </Grid>
+                            <AppBarButton
+                                x:Name="PlayPauseButton"
+                                VerticalAlignment="Center"
+                                Click="PlayPauseButtonClick"
+                                Content=""
+                                FontFamily="{StaticResource MaterialSymbolFont}"
+                                FontSize="{StaticResource BigBigFontSize}"
+                                Foreground="{StaticResource DefaultForegroundColor}"
+                                Tag="{Binding ItemId}" />
+                            <Grid
+                                Grid.Column="1"
+                                Height="60"
+                                MinWidth="70"
+                                MaxWidth="160"
+                                DataContext="{Binding}"
+                                DataContextChanged="VoiceMediaGridDataContextChanged" />
 
                         </Grid>
 
@@ -1389,65 +1490,70 @@
             </DataTemplate>
 
             <DataTemplate x:Key="LinkMediaTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
-                            <MenuFlyoutItem Text="Copy Url"
-                                            DataContext="{Binding}"
-                                            Click="CopyTextFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
+                            <MenuFlyoutItem
+                                Click="CopyTextFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Copy Url" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
-                              MinHeight="50"
-                              BorderThickness="1"
-                              CornerRadius="25"
-                              MaxWidth="360"
-                              MinWidth="210"
-                              Margin="5">
+                        <Grid
+                            MinWidth="210"
+                            MinHeight="50"
+                            MaxWidth="360"
+                            Margin="5"
+                            Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
+                            BorderBrush="#FF252525"
+                            BorderThickness="1"
+                            CornerRadius="25">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource DefaultFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="15 2"
-                                       DataContext="{Binding LinkMedia.Text}"
-                                       DataContextChanged="TextBlockDataContextChanged" />
+                            <TextBlock
+                                Margin="15,2"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding LinkMedia.Text}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource DefaultFontSize}"
+                                Foreground="White"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
                             <Grid Grid.Row="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -1456,13 +1562,13 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Rectangle Height="1"
-                                           Fill="#FF252525" />
-                                <controls:ImageEx HorizontalAlignment="Stretch"
-                                                  VerticalAlignment="Stretch"
-                                                  Height="155"
-                                                  Grid.Row="1"
-                                                  Visibility="{Binding LinkMedia.LinkContext.LinkImageUrl, Converter={StaticResource NullableToVisibilityConverter}}">
+                                <Rectangle Height="1" Fill="#FF252525" />
+                                <controls:ImageEx
+                                    Grid.Row="1"
+                                    Height="155"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Visibility="{Binding LinkMedia.LinkContext.LinkImageUrl, Converter={StaticResource NullableToVisibilityConverter}}">
                                     <controls:ImageEx.Background>
                                         <ImageBrush Stretch="Fill">
                                             <ImageBrush.ImageSource>
@@ -1471,44 +1577,48 @@
                                         </ImageBrush>
                                     </controls:ImageEx.Background>
                                 </controls:ImageEx>
-                                <TextBlock Foreground="White"
-                                           FontFamily="{StaticResource VazirFont}"
-                                           FontSize="{StaticResource DefaultFontSize}"
-                                           TextWrapping="Wrap"
-                                           TextAlignment="DetectFromContent"
-                                           VerticalAlignment="Center"
-                                           Margin="18 2"
-                                           Grid.Row="2"
-                                           DataContext="{Binding LinkMedia.LinkContext.LinkTitle}"
-                                           DataContextChanged="TextBlockDataContextChanged"
-                                           Visibility="{Binding Converter={StaticResource NullableToVisibilityConverter}}" />
-                                <TextBlock Foreground="#FFA6A6A6"
-                                           FontFamily="{StaticResource VazirFont}"
-                                           FontSize="{StaticResource TinyFontSize}"
-                                           TextWrapping="Wrap"
-                                           TextAlignment="DetectFromContent"
-                                           VerticalAlignment="Center"
-                                           Margin="18 2"
-                                           Grid.Row="3"
-                                           DataContext="{Binding LinkMedia.LinkContext.LinkSummary}"
-                                           DataContextChanged="TextBlockDataContextChanged"
-                                           Visibility="{Binding Converter={StaticResource NullableToVisibilityConverter}}" />
-                                <TextBlock Foreground="#FFA6A6A6"
-                                           FontFamily="{StaticResource VazirFont}"
-                                           FontSize="{StaticResource TinyFontSize}"
-                                           TextWrapping="Wrap"
-                                           TextAlignment="DetectFromContent"
-                                           VerticalAlignment="Center"
-                                           Margin="18 2"
-                                           Grid.Row="4"
-                                           DataContext="{Binding LinkMedia.LinkContext.LinkUrl}"
-                                           DataContextChanged="TextBlockDataContextChanged"
-                                           Visibility="{Binding Converter={StaticResource NullableToVisibilityConverter}}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="18,2"
+                                    VerticalAlignment="Center"
+                                    DataContext="{Binding LinkMedia.LinkContext.LinkTitle}"
+                                    DataContextChanged="TextBlockDataContextChanged"
+                                    FontFamily="{StaticResource VazirFont}"
+                                    FontSize="{StaticResource DefaultFontSize}"
+                                    Foreground="White"
+                                    TextAlignment="DetectFromContent"
+                                    TextWrapping="Wrap"
+                                    Visibility="{Binding Converter={StaticResource NullableToVisibilityConverter}}" />
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Margin="18,2"
+                                    VerticalAlignment="Center"
+                                    DataContext="{Binding LinkMedia.LinkContext.LinkSummary}"
+                                    DataContextChanged="TextBlockDataContextChanged"
+                                    FontFamily="{StaticResource VazirFont}"
+                                    FontSize="{StaticResource TinyFontSize}"
+                                    Foreground="#FFA6A6A6"
+                                    TextAlignment="DetectFromContent"
+                                    TextWrapping="Wrap"
+                                    Visibility="{Binding Converter={StaticResource NullableToVisibilityConverter}}" />
+                                <TextBlock
+                                    Grid.Row="4"
+                                    Margin="18,2"
+                                    VerticalAlignment="Center"
+                                    DataContext="{Binding LinkMedia.LinkContext.LinkUrl}"
+                                    DataContextChanged="TextBlockDataContextChanged"
+                                    FontFamily="{StaticResource VazirFont}"
+                                    FontSize="{StaticResource TinyFontSize}"
+                                    Foreground="#FFA6A6A6"
+                                    TextAlignment="DetectFromContent"
+                                    TextWrapping="Wrap"
+                                    Visibility="{Binding Converter={StaticResource NullableToVisibilityConverter}}" />
                             </Grid>
-                            <Grid Background="AliceBlue"
-                                  Opacity="0"
-                                  Grid.RowSpan="2"
-                                  Tapped="LinkMediaGridTapped" />
+                            <Grid
+                                Grid.RowSpan="2"
+                                Background="AliceBlue"
+                                Opacity="0"
+                                Tapped="LinkMediaGridTapped" />
                         </Grid>
 
                     </Grid>
@@ -1517,28 +1627,27 @@
 
 
             <DataTemplate x:Key="LiveViewerInviteTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True">
+                <Grid IsHoldingEnabled="True" IsRightTapEnabled="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -1548,10 +1657,11 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Fill="#FF252525"
-                                       Width="2"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch" />
+                            <Rectangle
+                                Width="2"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Fill="#FF252525" />
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -1562,44 +1672,46 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <TextBlock Foreground="White"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource TinyFontSize}"
-                                               TextWrapping="Wrap"
-                                               TextAlignment="DetectFromContent"
-                                               VerticalAlignment="Center"
-                                               Margin="5 2"
-                                               DataContext="{Binding LiveViewerInvite.Title}"
-                                               DataContextChanged="TextBlockDataContextChanged" />
-                                    <TextBlock Foreground="White"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource TinyFontSize}"
-                                               TextWrapping="Wrap"
-                                               TextAlignment="DetectFromContent"
-                                               VerticalAlignment="Center"
-                                               Margin="5 2"
-                                               Grid.Row="1"
-                                               DataContext="{Binding LiveViewerInvite.Message}"
-                                               DataContextChanged="TextBlockDataContextChanged" />
+                                    <TextBlock
+                                        Margin="5,2"
+                                        VerticalAlignment="Center"
+                                        DataContext="{Binding LiveViewerInvite.Title}"
+                                        DataContextChanged="TextBlockDataContextChanged"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource TinyFontSize}"
+                                        Foreground="White"
+                                        TextAlignment="DetectFromContent"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Margin="5,2"
+                                        VerticalAlignment="Center"
+                                        DataContext="{Binding LiveViewerInvite.Message}"
+                                        DataContextChanged="TextBlockDataContextChanged"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource TinyFontSize}"
+                                        Foreground="White"
+                                        TextAlignment="DetectFromContent"
+                                        TextWrapping="Wrap" />
                                 </Grid>
 
-                                <Grid BorderBrush="#FF252525"
-                                      MinHeight="50"
-                                      Grid.Row="1"
-                                      BorderThickness="1"
-                                      MaxWidth="340"
-                                      MinWidth="240"
-                                      Height="360"
-                                      CornerRadius="25"
-                                      Margin="5"
-                                      Visibility="{Binding LiveViewerInvite.Broadcast, Converter={StaticResource NullableToVisibilityConverter}}">
+                                <Grid
+                                    Grid.Row="1"
+                                    Height="360"
+                                    MinWidth="240"
+                                    MinHeight="50"
+                                    MaxWidth="340"
+                                    Margin="5"
+                                    BorderBrush="#FF252525"
+                                    BorderThickness="1"
+                                    CornerRadius="25"
+                                    Visibility="{Binding LiveViewerInvite.Broadcast, Converter={StaticResource NullableToVisibilityConverter}}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Grid>
-                                        <controls:ImageEx HorizontalAlignment="Stretch"
-                                                          VerticalAlignment="Stretch">
+                                        <controls:ImageEx HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                             <controls:ImageEx.Background>
                                                 <ImageBrush Stretch="Fill">
                                                     <ImageBrush.ImageSource>
@@ -1608,9 +1720,10 @@
                                                 </ImageBrush>
                                             </controls:ImageEx.Background>
                                         </controls:ImageEx>
-                                        <Grid Height="60"
-                                              Margin="5 0 5 0"
-                                              VerticalAlignment="Top">
+                                        <Grid
+                                            Height="60"
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Top">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition />
                                                 <RowDefinition Height="Auto" />
@@ -1621,53 +1734,54 @@
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <Ellipse Grid.Column="0"
-                                                     Height="45"
-                                                     Width="45"
-                                                     VerticalAlignment="Center"
-                                                     HorizontalAlignment="Center"
-                                                     StrokeThickness="0">
+                                            <Ellipse
+                                                Grid.Column="0"
+                                                Width="45"
+                                                Height="45"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                StrokeThickness="0">
                                                 <Ellipse.Fill>
                                                     <ImageBrush ImageSource="{Binding LiveViewerInvite.Broadcast.BroadcastOwner.ProfilePicture}" />
                                                 </Ellipse.Fill>
                                             </Ellipse>
-                                            <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                                       FontFamily="{StaticResource VazirFont}"
-                                                       FontSize="{StaticResource TinyFontSize}"
-                                                       Grid.Column="2"
-                                                       Text="{Binding LiveViewerInvite.Broadcast.BroadcastOwner.UserName}"
-                                                       VerticalAlignment="Center"
-                                                       Margin="0 8 0 8" />
+                                            <TextBlock
+                                                Grid.Column="2"
+                                                Margin="0,8,0,8"
+                                                VerticalAlignment="Center"
+                                                FontFamily="{StaticResource VazirFont}"
+                                                FontSize="{StaticResource TinyFontSize}"
+                                                Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                                Text="{Binding LiveViewerInvite.Broadcast.BroadcastOwner.UserName}" />
 
-                                            <Grid Grid.Column="3"
-                                                  CornerRadius="5"
-                                                  VerticalAlignment="Center">
+                                            <Grid
+                                                Grid.Column="3"
+                                                VerticalAlignment="Center"
+                                                CornerRadius="5">
                                                 <Grid.Background>
-                                                    <LinearGradientBrush EndPoint="0.5,1"
-                                                                         StartPoint="0.5,0">
+                                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                                         <GradientStop Color="#FFC80082" />
-                                                        <GradientStop Color="#FFDF0041"
-                                                                      Offset="1" />
+                                                        <GradientStop Offset="1" Color="#FFDF0041" />
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
-                                                <TextBlock Foreground="White"
-                                                           FontFamily="{StaticResource VazirFont}"
-                                                           FontSize="{StaticResource TinyFontSize}"
-                                                           Grid.Column="2"
-                                                           Text="LIVE"
-                                                           VerticalAlignment="Center"
-                                                           Margin="4 2" />
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    Margin="4,2"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource TinyFontSize}"
+                                                    Foreground="White"
+                                                    Text="LIVE" />
                                             </Grid>
-                                            <Grid Grid.Column="3"
-                                                  CornerRadius="5"
-                                                  Grid.Row="1"
-                                                  VerticalAlignment="Center">
+                                            <Grid
+                                                Grid.Row="1"
+                                                Grid.Column="3"
+                                                VerticalAlignment="Center"
+                                                CornerRadius="5">
                                                 <Grid.Background>
-                                                    <LinearGradientBrush EndPoint="0.5,1"
-                                                                         StartPoint="0.5,0">
+                                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                                         <GradientStop Color="#FFC80082" />
-                                                        <GradientStop Color="#FFDF0041"
-                                                                      Offset="1" />
+                                                        <GradientStop Offset="1" Color="#FFDF0041" />
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
                                                 <!--<TextBlock Foreground="White"
@@ -1685,16 +1799,17 @@
                                         </Grid>
 
                                     </Grid>
-                                    <TextBlock Foreground="White"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource DefaultFontSize}"
-                                               TextWrapping="Wrap"
-                                               TextAlignment="DetectFromContent"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               Margin="6"
-                                               Grid.Row="1"
-                                               Text="Watch Live Video" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Margin="6"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource DefaultFontSize}"
+                                        Foreground="White"
+                                        Text="Watch Live Video"
+                                        TextAlignment="DetectFromContent"
+                                        TextWrapping="Wrap" />
                                 </Grid>
 
                             </Grid>
@@ -1710,69 +1825,74 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Grid MinHeight="50"
-                          MaxWidth="360"
-                          Margin="5">
+                    <Grid
+                        MinHeight="50"
+                        MaxWidth="360"
+                        Margin="5">
 
-                        <TextBlock Foreground="#FFCDCDCD"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource TinyFontSize}"
-                                   TextWrapping="Wrap"
-                                   TextAlignment="DetectFromContent"
-                                   VerticalAlignment="Center"
-                                   Margin="15 2"
-                                   DataContext="{Binding VideoCallEvent.Description}"
-                                   DataContextChanged="TextBlockDataContextChanged" />
+                        <TextBlock
+                            Margin="15,2"
+                            VerticalAlignment="Center"
+                            DataContext="{Binding VideoCallEvent.Description}"
+                            DataContextChanged="TextBlockDataContextChanged"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource TinyFontSize}"
+                            Foreground="#FFCDCDCD"
+                            TextAlignment="DetectFromContent"
+                            TextWrapping="Wrap" />
                     </Grid>
                 </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="AnimatedMediaTemplate">
-                <Grid IsRightTapEnabled="True"
-                      IsHoldingEnabled="True"
-                      RightTapped="MenuGridRightTapped"
-                      Holding="MenuGridHolding">
+                <Grid
+                    Holding="MenuGridHolding"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True"
+                    RightTapped="MenuGridRightTapped">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem Text="Unsend Message"
-                                            DataContext="{Binding}"
-                                            Click="UnsendMessageFlyoutClick" />
+                            <MenuFlyoutItem
+                                Click="UnsendMessageFlyoutClick"
+                                DataContext="{Binding}"
+                                Text="Unsend Message" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
-                              MinHeight="185"
-                              BorderThickness="1"
-                              CornerRadius="25"
-                              MaxWidth="390"
-                              MinWidth="100"
-                              Margin="5"
-                              Height="{Binding AnimatedMedia.Media.Height}"
-                              Width="{Binding AnimatedMedia.Media.Width}">
+                        <Grid
+                            Width="{Binding AnimatedMedia.Media.Width}"
+                            Height="{Binding AnimatedMedia.Media.Height}"
+                            MinWidth="100"
+                            MinHeight="185"
+                            MaxWidth="390"
+                            Margin="5"
+                            Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
+                            BorderBrush="#FF252525"
+                            BorderThickness="1"
+                            CornerRadius="25">
                             <!--<controls:ImageEx HorizontalAlignment="Stretch"
                                           VerticalAlignment="Stretch">
                             <controls:ImageEx.Background>
@@ -1792,13 +1912,14 @@
                                    gif:AnimationBehavior.AutoStart="True"
                                    gif:AnimationBehavior.RepeatBehavior="Forever"
                                    gif:AnimationBehavior.SourceUri="{Binding AnimatedMedia.Media.Url, Converter={StaticResource StringToUriConverter}}" />-->
-                            <MediaElement AutoPlay="False"
-                                          Stretch="Uniform"
-                                          HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"
-                                          AreTransportControlsEnabled="False"
-                                          Source="{Binding AnimatedMedia.Media.Mp4Url, Converter={StaticResource StringToUriConverter}}"
-                                          Tapped="MediaElementTapped" />
+                            <MediaElement
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                AreTransportControlsEnabled="False"
+                                AutoPlay="False"
+                                Source="{Binding AnimatedMedia.Media.Mp4Url, Converter={StaticResource StringToUriConverter}}"
+                                Stretch="Uniform"
+                                Tapped="MediaElementTapped" />
                         </Grid>
 
                     </Grid>
@@ -1812,50 +1933,53 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse Grid.Column="0"
-                                 Height="42"
-                                 Width="42"
-                                 VerticalAlignment="Bottom"
-                                 HorizontalAlignment="Center"
-                                 StrokeThickness="0"
-                                 Margin="10 5"
-                                 Tapped="UserProfileEllipseTapped">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1"
-                          HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              MinHeight="50"
-                              MaxWidth="360"
-                              BorderThickness="1"
-                              CornerRadius="25"
-                              Margin="5">
+                        <Grid
+                            MinHeight="50"
+                            MaxWidth="360"
+                            Margin="5"
+                            BorderBrush="#FF252525"
+                            BorderThickness="1"
+                            CornerRadius="25">
 
-                            <TextBlock Foreground="#FFCDCDCD"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontSize="{StaticResource TinyFontSize}"
-                                       TextWrapping="Wrap"
-                                       TextAlignment="DetectFromContent"
-                                       VerticalAlignment="Center"
-                                       Margin="15 2"
-                                       DataContext="{Binding ActionLog.Description}"
-                                       DataContextChanged="TextBlockDataContextChanged" />
+                            <TextBlock
+                                Margin="15,2"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding ActionLog.Description}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource TinyFontSize}"
+                                Foreground="#FFCDCDCD"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
                         </Grid>
                     </Grid>
                 </Grid>
             </DataTemplate>
 
             <DataTemplate x:Name="ProfileGridViewTemplate">
-                <controls:ImageEx Stretch="UniformToFill"
-                                  Height="65"
-                                  Width="65">
+                <controls:ImageEx
+                    Width="65"
+                    Height="65"
+                    Stretch="UniformToFill">
                     <controls:ImageEx.Source>
                         <BitmapImage UriSource="{Binding Images[0].Uri}" />
                     </controls:ImageEx.Source>
@@ -1871,33 +1995,31 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <MediaElement x:Name="ME"
-                      Opacity="0"
-                      AutoPlay="False"
-                      MediaOpened="MEMediaOpened"
-                      MediaEnded="MEMediaEnded"
-                      MediaFailed="MEMediaFailed" />
+        <MediaElement
+            x:Name="ME"
+            AutoPlay="False"
+            MediaEnded="MEMediaEnded"
+            MediaFailed="MEMediaFailed"
+            MediaOpened="MEMediaOpened"
+            Opacity="0" />
 
-        <ListView x:Name="ItemsLV"
-                  Foreground="{StaticResource DefaultInnerForegroundColor}"
-                  SelectionMode="None"
-                  Grid.Row="1"
-                  Margin="5"
-                  ItemTemplateSelector="{StaticResource ThreadItemTemplateSelector}"
-                  ItemsSource="{Binding Items, Mode=OneWay}"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"
-                  IsItemClickEnabled="False">
+        <ListView
+            x:Name="ItemsLV"
+            Grid.Row="1"
+            Margin="5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Foreground="{StaticResource DefaultInnerForegroundColor}"
+            IsItemClickEnabled="False"
+            ItemTemplateSelector="{StaticResource ThreadItemTemplateSelector}"
+            ItemsSource="{Binding Items, Mode=OneWay}"
+            SelectionMode="None">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="VerticalContentAlignment"
-                            Value="Stretch" />
-                    <Setter Property="HorizontalContentAlignment"
-                            Value="Stretch" />
-                    <Setter Property="Margin"
-                            Value="2" />
-                    <Setter Property="Padding"
-                            Value="0" />
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="2" />
+                    <Setter Property="Padding" Value="0" />
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
@@ -1907,12 +2029,13 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Rectangle Fill="#FF363636"
-                       Height="1.5"
-                       Grid.ColumnSpan="3"
-                       Margin="15 2.5"
-                       HorizontalAlignment="Stretch"
-                       VerticalAlignment="Stretch" />
+            <Rectangle
+                Grid.ColumnSpan="3"
+                Height="1.5"
+                Margin="15,2.5"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Fill="#FF363636" />
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -1925,48 +2048,52 @@
                         <RowDefinition Height="Auto" />
 
                     </Grid.RowDefinitions>
-                    <Ellipse x:Name="UserImage"
-                             Height="48"
-                             Width="48"
-                             VerticalAlignment="Bottom"
-                             HorizontalAlignment="Center"
-                             StrokeThickness="0"
-                             Margin="4" 
-                             Tapped="UserImageTapped"/>
-                    <TextBlock x:Name="UsernameText"
-                               Grid.Row="1"
-                               Text=""
-                               Foreground="#FFA6A6A6"
-                               FontFamily="{StaticResource VazirFont}"
-                               FontSize="{StaticResource DefaultFontSize}"
-                               TextWrapping="Wrap"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               TextAlignment="Center"
-                               Margin="8" />
-                    <TextBlock x:Name="UserInfoText"
-                               Grid.Row="2"
-                               Text=""
-                               Foreground="#FFA6A6A6"
-                               FontFamily="{StaticResource VazirFont}"
-                               FontSize="{StaticResource TinyTinyFontSize}"
-                               TextWrapping="Wrap"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               TextAlignment="Center"
-                               Margin="8" />
+                    <Ellipse
+                        x:Name="UserImage"
+                        Width="48"
+                        Height="48"
+                        Margin="4"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        StrokeThickness="0"
+                        Tapped="UserImageTapped" />
+                    <TextBlock
+                        x:Name="UsernameText"
+                        Grid.Row="1"
+                        Margin="8"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="{StaticResource VazirFont}"
+                        FontSize="{StaticResource DefaultFontSize}"
+                        Foreground="#FFA6A6A6"
+                        Text=""
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        x:Name="UserInfoText"
+                        Grid.Row="2"
+                        Margin="8"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="{StaticResource VazirFont}"
+                        FontSize="{StaticResource TinyTinyFontSize}"
+                        Foreground="#FFA6A6A6"
+                        Text=""
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
                 </Grid>
-                <TextBlock Foreground="#FFA6A6A6"
-                           Grid.Row="1"
-                           FontFamily="{StaticResource VazirFont}"
-                           FontSize="{StaticResource TinyFontSize}"
-                           TextWrapping="Wrap"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           TextAlignment="Center"
-                           Margin="14">
-                    Do you want to let <Run x:Name="RunUser"></Run> send you messages from now on? They'll only know you've seen their requests if you choose Accept.
-                </TextBlock>
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="14"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource TinyFontSize}"
+                    Foreground="#FFA6A6A6"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap">
+                    Do you want to let<Run x:Name="RunUser" />
+                    send you messages from now on? They'll only know you've seen their requests if you choose Accept.</TextBlock>
             </Grid>
         </Grid>
         <Grid Grid.Row="3">
@@ -1974,11 +2101,12 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Rectangle Fill="#FF363636"
-                       Height="1.5"
-                       Margin="15 2.5"
-                       HorizontalAlignment="Stretch"
-                       VerticalAlignment="Stretch" />
+            <Rectangle
+                Height="1.5"
+                Margin="15,2.5"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Fill="#FF363636" />
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -1987,55 +2115,60 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ToggleButton x:Name="BlockSingleToggleButton"
-                              Style="{StaticResource HeaderToggleButtonRemovedIconStyle}"
-                              Background="Transparent"
-                              Content="Block"
-                              Height="42"
-                              HorizontalContentAlignment="Center"
-                              Grid.Column="0"
-                              FontSize="{StaticResource DefaultFontSize}"
-                              FontFamily="{StaticResource VazirFont}"
-                              Margin="5 0"
-                              Click="BlockSingleToggleButtonClick"
-                              Foreground="#FFFF2727"  />
+                <ToggleButton
+                    x:Name="BlockSingleToggleButton"
+                    Grid.Column="0"
+                    Height="42"
+                    Margin="5,0"
+                    HorizontalContentAlignment="Center"
+                    Background="Transparent"
+                    Click="BlockSingleToggleButtonClick"
+                    Content="Block"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource DefaultFontSize}"
+                    Foreground="#FFFF2727"
+                    Style="{StaticResource HeaderToggleButtonRemovedIconStyle}" />
 
-                <Rectangle Fill="#FF363636"
-                           Width="1.5"
-                           Grid.Column="1"
-                           Margin="3 8"
-                           HorizontalAlignment="Stretch"
-                           VerticalAlignment="Stretch" />
-                <ToggleButton x:Name="DeleteSingleToggleButton"
-                              Style="{StaticResource HeaderToggleButtonRemovedIconStyle}"
-                              Background="Transparent"
-                              Content="Delete"
-                              Height="42"
-                              HorizontalContentAlignment="Center"
-                              Grid.Column="2"
-                              FontSize="{StaticResource DefaultFontSize}"
-                              FontFamily="{StaticResource VazirFont}"
-                              Margin="5 0"
-                              Click="DeleteSingleToggleButtonClick"
-                              Foreground="#FFFF6C6C" />
-                <Rectangle Fill="#FF363636"
-                           Width="1.5"
-                           Grid.Column="3"
-                           Margin="3 8"
-                           HorizontalAlignment="Stretch"
-                           VerticalAlignment="Stretch" />
-                <ToggleButton x:Name="AcceptSingleToggleButton"
-                              Style="{StaticResource HeaderToggleButtonRemovedIconStyle}"
-                              Background="Transparent"
-                              Content="Accept"
-                              Height="42"
-                              HorizontalContentAlignment="Center"
-                              Grid.Column="4"
-                              FontSize="{StaticResource DefaultFontSize}"
-                              FontFamily="{StaticResource VazirFont}"
-                              Margin="5 0"
-                              Click="AcceptSingleToggleButtonClick"
-                              Foreground="#FF34C08B" />
+                <Rectangle
+                    Grid.Column="1"
+                    Width="1.5"
+                    Margin="3,8"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Fill="#FF363636" />
+                <ToggleButton
+                    x:Name="DeleteSingleToggleButton"
+                    Grid.Column="2"
+                    Height="42"
+                    Margin="5,0"
+                    HorizontalContentAlignment="Center"
+                    Background="Transparent"
+                    Click="DeleteSingleToggleButtonClick"
+                    Content="Delete"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource DefaultFontSize}"
+                    Foreground="#FFFF6C6C"
+                    Style="{StaticResource HeaderToggleButtonRemovedIconStyle}" />
+                <Rectangle
+                    Grid.Column="3"
+                    Width="1.5"
+                    Margin="3,8"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Fill="#FF363636" />
+                <ToggleButton
+                    x:Name="AcceptSingleToggleButton"
+                    Grid.Column="4"
+                    Height="42"
+                    Margin="5,0"
+                    HorizontalContentAlignment="Center"
+                    Background="Transparent"
+                    Click="AcceptSingleToggleButtonClick"
+                    Content="Accept"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource DefaultFontSize}"
+                    Foreground="#FF34C08B"
+                    Style="{StaticResource HeaderToggleButtonRemovedIconStyle}" />
             </Grid>
         </Grid>
     </Grid>
