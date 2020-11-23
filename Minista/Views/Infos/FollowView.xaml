@@ -10,6 +10,7 @@
       xmlns:selector="using:Minista.Selectors"
       xmlns:vm="using:Minista.ViewModels.Searches"
       xmlns:viewModel="using:Minista.ViewModels.Infos"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
       xmlns:loading="using:Minista.UserControls"
       mc:Ignorable="d"
       NavigationCacheMode="Enabled"
@@ -782,7 +783,9 @@
                     <loading:LoadingUc x:Name="TopLoadingMutual"
                                        Visibility="Collapsed"
                                        VerticalAlignment="Top" />
-                    <controls:PullToRefreshListView x:Name="MutualFriendsItemsLV"
+                    <winui:RefreshContainer x:Name="RefreshControl"
+                                                    Grid.Row="1">
+                        <ListView x:Name="MutualFriendsItemsLV"
                                                     Grid.Row="1"
                                                     Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                     SelectionMode="None"
@@ -792,24 +795,22 @@
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch"
                                                     IsItemClickEnabled="False"
-                                                    PullThreshold="140"
-                                                    IsPullToRefreshWithMouseEnabled="True"
-                                                    Loaded="MutualFriendsItemsLVLoaded"
-                                                    RefreshRequested="MutualFriendsItemsLVRefreshRequested">
+                                                    Loaded="MutualFriendsItemsLVLoaded">
 
-                        <controls:PullToRefreshListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="VerticalContentAlignment"
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="VerticalContentAlignment"
                                         Value="Stretch" />
-                                <Setter Property="HorizontalContentAlignment"
+                                    <Setter Property="HorizontalContentAlignment"
                                         Value="Stretch" />
-                                <Setter Property="Margin"
+                                    <Setter Property="Margin"
                                         Value="1 12 0 5" />
-                                <Setter Property="Padding"
+                                    <Setter Property="Padding"
                                         Value="1" />
-                            </Style>
-                        </controls:PullToRefreshListView.ItemContainerStyle>
-                    </controls:PullToRefreshListView>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </winui:RefreshContainer>
 
                     <loading:LoadingUc x:Name="BottomLoadingMutual"
                                        Visibility="Collapsed"
@@ -869,7 +870,10 @@
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
-                        <controls:PullToRefreshListView x:Name="FollowersItemsLV"
+
+                        <winui:RefreshContainer x:Name="RefreshControl2"
+                                                    Grid.Row="2">
+                            <ListView x:Name="FollowersItemsLV"
                                                         Grid.Row="2"
                                                         Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                         SelectionMode="None"
@@ -879,24 +883,22 @@
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Stretch"
                                                         IsItemClickEnabled="true"
-                                                        PullThreshold="140"
-                                                        IsPullToRefreshWithMouseEnabled="True"
-                                                        Loaded="FollowersItemsLVLoaded"
-                                                        RefreshRequested="FollowersItemsLVRefreshRequested">
+                                                        Loaded="FollowersItemsLVLoaded">
 
-                            <controls:PullToRefreshListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="VerticalContentAlignment"
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="VerticalContentAlignment"
                                             Value="Stretch" />
-                                    <Setter Property="HorizontalContentAlignment"
+                                        <Setter Property="HorizontalContentAlignment"
                                             Value="Stretch" />
-                                    <Setter Property="Margin"
+                                        <Setter Property="Margin"
                                             Value="1 12 0 5" />
-                                    <Setter Property="Padding"
+                                        <Setter Property="Padding"
                                             Value="1" />
-                                </Style>
-                            </controls:PullToRefreshListView.ItemContainerStyle>
-                        </controls:PullToRefreshListView>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+                        </winui:RefreshContainer>
 
                         <ListView x:Name="FollowersSearchItemsLV"
                                   Grid.Row="2"
@@ -984,7 +986,9 @@
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
-                        <controls:PullToRefreshListView x:Name="FollowingItemsLV"
+                        <winui:RefreshContainer x:Name="RefreshControl3"
+                                                    Grid.Row="2">
+                            <ListView x:Name="FollowingItemsLV"
                                                         Grid.Row="2"
                                                         Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                         SelectionMode="None"
@@ -994,24 +998,22 @@
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Stretch"
                                                         IsItemClickEnabled="true"
-                                                        PullThreshold="140"
-                                                        IsPullToRefreshWithMouseEnabled="True"
-                                                        RefreshRequested="FollowingItemsLVRefreshRequested"
                                                         Loaded="FollowingItemsLVLoaded">
 
-                            <controls:PullToRefreshListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="VerticalContentAlignment"
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="VerticalContentAlignment"
                                             Value="Stretch" />
-                                    <Setter Property="HorizontalContentAlignment"
+                                        <Setter Property="HorizontalContentAlignment"
                                             Value="Stretch" />
-                                    <Setter Property="Margin"
+                                        <Setter Property="Margin"
                                             Value="1 3 0 5" />
-                                    <Setter Property="Padding"
+                                        <Setter Property="Padding"
                                             Value="1" />
-                                </Style>
-                            </controls:PullToRefreshListView.ItemContainerStyle>
-                        </controls:PullToRefreshListView>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+                        </winui:RefreshContainer>
                         <ListView x:Name="FollowingSearchItemsLV"
                                   Grid.Row="2"
                                   Foreground="{StaticResource DefaultInnerForegroundColor}"

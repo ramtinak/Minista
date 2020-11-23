@@ -107,11 +107,11 @@ namespace Minista.ItemsGenerators
                         Views.Infos.ProfileDetailsView.Current?.ShowTopLoading();
                     }
                     catch { }
-                    try
-                    {
-                        Views.Posts.ScrollableUserPostView.Current?.ShowTopLoading();
-                    }
-                    catch { }
+                    //try
+                    //{
+                    //    Views.Posts.ScrollableUserPostView.Current?.ShowTopLoading();
+                    //}
+                    //catch { }
                 }
                 else
                 {
@@ -125,11 +125,11 @@ namespace Minista.ItemsGenerators
                         Views.Infos.ProfileDetailsView.Current?.ShowBottomLoading();
                     }
                     catch { }
-                    try
-                    {
-                        Views.Posts.ScrollableUserPostView.Current?.ShowBottomLoading();
-                    }
-                    catch { }
+                    //try
+                    //{
+                    //    Views.Posts.ScrollableUserPostView.Current?.ShowBottomLoading();
+                    //}
+                    //catch { }
                 }
                 var result = await InstaApi.UserProcessor.GetUserTagsAsync(UserId, Pagination);
                 PageCount++;
@@ -184,11 +184,11 @@ namespace Minista.ItemsGenerators
                     Views.Infos.ProfileDetailsView.Current?.HideTopLoading();
                 }
                 catch { }
-                try
-                {
-                    Views.Posts.ScrollableUserPostView.Current?.HideTopLoading();
-                }
-                catch { }
+                //try
+                //{
+                //    Views.Posts.ScrollableUserPostView.Current?.HideTopLoading();
+                //}
+                //catch { }
             }
             else
             {
@@ -202,11 +202,11 @@ namespace Minista.ItemsGenerators
                     Views.Infos.ProfileDetailsView.Current?.HideBottomLoading();
                 }
                 catch { }
-                try
-                {
-                    Views.Posts.ScrollableUserPostView.Current?.HideBottomLoading();
-                }
-                catch { }
+                //try
+                //{
+                //    Views.Posts.ScrollableUserPostView.Current?.HideBottomLoading();
+                //}
+                //catch { }
             }
         }
         public void Scroll_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)

@@ -225,7 +225,7 @@ namespace Minista.ContentDialogs
                 Helper.CreateCachedFolder();
                 ShowEditor();
                 ImageCropper.AspectRatio = 1d;
-                ImageCropper.CropShape = CropShape.Circular;
+                ImageCropper.CropShape = UI.Controls.CropShape.Circular;
                 await ImageCropper.LoadImageFromFile(imgFile);
             }
         }
@@ -244,7 +244,7 @@ namespace Minista.ContentDialogs
                 var cacheFolder = await SessionHelper.LocalFolder.GetFolderAsync("Cache");
                 var file = await cacheFolder.CreateFileAsync(15.GenerateRandomStringStatic() + ".jpg");
                 using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite, StorageOpenOptions.None))
-                    await ImageCropper.SaveAsync(fileStream, BitmapFileFormat.Jpeg);
+                    await ImageCropper.SaveAsync(fileStream, UI.Controls.BitmapFileFormat.Jpeg);
                 var fileToUpload = await new PhotoHelper().SaveToImage(file);
                 Uploader.UploadSinglePhoto(fileToUpload);
             }

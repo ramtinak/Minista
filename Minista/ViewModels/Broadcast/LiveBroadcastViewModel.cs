@@ -30,19 +30,24 @@ namespace Minista.ViewModels.Broadcast
         public LiveBroadcastViewModel()
         {
             InitializedCommand = new RelayCommand<InitializedEventArgs>(Initialize);
-
         }
         ~LiveBroadcastViewModel() => Dispose();
-
 
         public async void Play()
         {
             try
             {
-                //await Helper.InstaApi.LiveProcessor.joi
-                var media = new Media(LibVLC, Broadcast.DashPlaybackUrl, FromType.FromLocation);
-                media.AddOption(":sout = #transcode{vcodec=x264,vb=800,scale=0.25,acodec=none}:display :no-sout-rtp-sap :no-sout-standard-sap :ttl=1 :sout-keep :rtsp-mcast");
-                MediaPlayer.Play(media);
+                await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    DateTime.Now.PrintDebug();
+                    Media media = new Media(LibVLC, Broadcast.DashPlaybackUrl, FromType.FromLocation);
+                    media.AddOption(":sout = #transcode{vcodec=x264,vb=800,scale=0.25,acodec=none}:display :no-sout-rtp-sap :no-sout-standard-sap :ttl=1 :sout-keep :rtsp-mcast");
+                    //media.AddOption(":video-filter=rotate{angle=180}");
+                    MediaPlayer.Play(media);
+                    MediaPlayer.Fullscreen = true;
+                    "Media Added to MediaPlayer".PrintDebug();
+                    DateTime.Now.PrintDebug();
+                });
             }
             catch (Exception ex) { ex.PrintException("LiveBroadcastView.Play"); }
         }
@@ -63,17 +68,30 @@ namespace Minista.ViewModels.Broadcast
 
         private void MediaPlayer_Paused(object sender, EventArgs e) => IsPlaying = false;
         private void MediaPlayer_Playing(object sender, EventArgs e) => IsPlaying = true;
-
-        public void Dispose()
+        public void Stop()
         {
-            var mediaPlayer = MediaPlayer;
-            MediaPlayer = null;
-            mediaPlayer?.Dispose();
-            LibVLC?.Dispose();
-            LibVLC = null;
+            try
+            {
+                MediaPlayer.Stop();
+            }
+            catch { }
         }
-
-
+        public async void Dispose()
+        {
+            try
+            {
+                await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    MediaPlayer mediaPlayer = MediaPlayer;
+                   
+                    MediaPlayer = null;
+                    mediaPlayer?.Dispose();
+                    LibVLC?.Dispose();
+                    LibVLC = null;
+                });
+            }
+            catch { }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         private void Set<T>(string propertyName, ref T field, T value)
         {

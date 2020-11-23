@@ -44,14 +44,18 @@
                 x:Name="VlcVideoView"
                 Grid.RowSpan="3"
                 FlowDirection="LeftToRight"
-                MediaPlayer="{Binding MediaPlayer}">
+                MediaPlayer="{Binding MediaPlayer}" RenderTransformOrigin="0.5,0.5">
             <interactivity:Interaction.Behaviors>
                 <interactions:EventTriggerBehavior EventName="Initialized">
                     <interactions:InvokeCommandAction Command="{Binding InitializedCommand}" />
                 </interactions:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </vlc:VideoView>
-        <Grid >
+        <Button x:Name="RotateButton" Content="Rotate"
+                Grid.RowSpan="3"
+                VerticalAlignment="Bottom"
+                Click="RotateButton_Click"/>
+        <Grid  Margin="48 0 0 0">
             <Grid HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

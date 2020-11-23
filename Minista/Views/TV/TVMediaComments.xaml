@@ -9,6 +9,7 @@
              xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
              xmlns:vm="using:Minista.ViewModels"
              xmlns:loading="using:Minista.UserControls"
+             xmlns:winui="using:Microsoft.UI.Xaml.Controls"
              mc:Ignorable="d"
              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <UserControl.DataContext>
@@ -399,7 +400,8 @@
                     <loading:LoadingUc x:Name="TopLoading"
                                        Visibility="Collapsed"
                                        VerticalAlignment="Top" />
-                    <controls:PullToRefreshListView x:Name="ItemsLV"
+                    <winui:RefreshContainer x:Name="RefreshControl" Grid.Row="1">
+                        <ListView x:Name="ItemsLV"
                                                     Grid.Row="1"
                                                     Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                     SelectionMode="None"
@@ -409,28 +411,48 @@
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch"
                                                     IsItemClickEnabled="False"
-                                                    PullThreshold="140"
-                                                    IsPullToRefreshWithMouseEnabled="True"
-                                                    RefreshRequested="ItemsLVRefreshRequested"
                                                     Loaded="ItemsLV_Loaded">
-                        <controls:PullToRefreshListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="VerticalContentAlignment"
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="VerticalContentAlignment"
                                         Value="Stretch" />
-                                <Setter Property="HorizontalContentAlignment"
+                                    <Setter Property="HorizontalContentAlignment"
                                         Value="Stretch" />
-                                <Setter Property="Margin"
+                                    <Setter Property="Margin"
                                         Value="2 0 2 5" />
-                                <Setter Property="Padding"
+                                    <Setter Property="Padding"
                                         Value="0" />
-                            </Style>
-                        </controls:PullToRefreshListView.ItemContainerStyle>
-                    </controls:PullToRefreshListView>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </winui:RefreshContainer>
                     <loading:LoadingUc x:Name="BottomLoading"
                                        Visibility="Collapsed"
                                        VerticalAlignment="Bottom"
                                        Grid.Row="2" />
                 </Grid>
+                <Button x:Name="RefreshButton"
+                    Background="{x:Null}"
+                    Grid.RowSpan="2"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    Margin="12 0 0 50"
+                    Click="RefreshButtonClick">
+                    <Grid>
+
+                        <Ellipse Width="45"
+                             Height="45"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Fill="#FF333333" />
+                        <FontIcon FontFamily="{StaticResource SymbolFont}"
+                              FontSize="16.5"
+                              Foreground="White"
+                              Glyph="" />
+                        <Grid Background="Cyan"
+                          Opacity="0" />
+                    </Grid>
+                </Button>
                 <Button x:Name="GoUpButton"
                         Background="{x:Null}"
                         Grid.RowSpan="2"

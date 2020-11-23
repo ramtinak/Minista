@@ -161,7 +161,7 @@ namespace Minista
             //}
         }
 
-        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             //var ex = e.Exception;
             //var stac = Environment.StackTrace;

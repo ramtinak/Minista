@@ -378,10 +378,10 @@ namespace Minista
                         Views.Infos.RecentFollowersView.Current.ResetPageCache();
                     }
 
-                    if (Views.Posts.ScrollableUserPostView.Current != null)
-                    {
-                        Views.Posts.ScrollableUserPostView.Current.ResetPageCache();
-                    }
+                    //if (Views.Posts.ScrollableUserPostView.Current != null)
+                    //{
+                    //    Views.Posts.ScrollableUserPostView.Current.ResetPageCache();
+                    //}
                     if (Views.Posts.MultiplePostView.Current != null)
                     {
                         Views.Posts.MultiplePostView.Current.ResetPageCache();
@@ -394,10 +394,10 @@ namespace Minista
                     {
                         Views.Posts.CommentView.Current.ResetPageCache();
                     }
-                    if (Views.Posts.ScrollableExplorePostView.Current != null)
-                    {
-                        Views.Posts.ScrollableExplorePostView.Current.ResetPageCache();
-                    }
+                    //if (Views.Posts.ScrollableExplorePostView.Current != null)
+                    //{
+                    //    Views.Posts.ScrollableExplorePostView.Current.ResetPageCache();
+                    //}
                     if (Views.TV.TVView.Current != null)
                     {
                         Views.TV.TVView.Current.ResetPageCache();

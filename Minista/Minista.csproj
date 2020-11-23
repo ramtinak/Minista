@@ -699,15 +699,6 @@
     <Compile Include="Views\Posts\UserDetails\ScrollableUserPostUc.xaml.cs">
       <DependentUpon>ScrollableUserPostUc.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Posts\Trash\ScrollableExplorePostView.xaml.cs">
-      <DependentUpon>ScrollableExplorePostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Posts\Trash\ScrollableHashtagPostView.xaml.cs">
-      <DependentUpon>ScrollableHashtagPostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Posts\Trash\ScrollableUserPostView.xaml.cs">
-      <DependentUpon>ScrollableUserPostView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Posts\SinglePostView.xaml.cs">
       <DependentUpon>SinglePostView.xaml</DependentUpon>
     </Compile>
@@ -1143,18 +1134,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Posts\Trash\ScrollableExplorePostView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Posts\Trash\ScrollableHashtagPostView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Posts\Trash\ScrollableUserPostView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Posts\SinglePostView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1258,7 +1237,7 @@
       <Version>1.0.1</Version>
     </PackageReference>
     <PackageReference Include="LibVLCSharp">
-      <Version>3.4.9</Version>
+      <Version>3.4.6</Version>
     </PackageReference>
     <PackageReference Include="LumiaImagingSDK.UWP">
       <Version>3.0.593</Version>
@@ -1282,7 +1261,7 @@
       <Version>1.0.2.1</Version>
     </PackageReference>
     <PackageReference Include="VideoLAN.LibVLC.UWP">
-      <Version>3.3.0</Version>
+      <Version>3.1.1.1</Version>
     </PackageReference>
     <PackageReference Include="Win2D.uwp">
       <Version>1.25.0</Version>

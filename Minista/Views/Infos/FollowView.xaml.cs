@@ -84,7 +84,16 @@ namespace Minista.Views.Infos
         }
         private void FollowViewLoaded(object sender, RoutedEventArgs e)
         {
+            RefreshControl.RefreshRequested -= RefreshControlRefreshRequested;
+            RefreshControl.RefreshRequested += RefreshControlRefreshRequested;
 
+
+            RefreshControl2.RefreshRequested -= RefreshControl2RefreshRequested;
+            RefreshControl2.RefreshRequested += RefreshControl2RefreshRequested;
+
+
+            RefreshControl3.RefreshRequested -= RefreshControl3RefreshRequested;
+            RefreshControl3.RefreshRequested += RefreshControl3RefreshRequested;
             if (NavigationMode == NavigationMode.Back && FollowVM.User != null)
             {
                 if (FollowVM.User.Pk == User.Pk) 
@@ -147,19 +156,24 @@ namespace Minista.Views.Infos
             if (ScrollView2 != null)
                 ScrollView2.ViewChanging += ScrollViewViewChanging;
         }
-
-        private void FollowersItemsLVRefreshRequested(object sender, EventArgs e)
+        private void RefreshControlRefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)
         {
-            FollowVM.FollowersGenerator.RunLoadMore(true);
+            using (var RefreshCompletionDeferral = args.GetDeferral())
+                FollowVM.MutualFriendsGenerator.RunLoadMore(true);
         }
-
+        private void RefreshControl2RefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)
+        {
+            using (var RefreshCompletionDeferral = args.GetDeferral())
+                FollowVM.FollowersGenerator.RunLoadMore(true);
+        }
+        private void RefreshControl3RefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)
+        {
+            using (var RefreshCompletionDeferral = args.GetDeferral())
+                FollowVM.FollowingsGenerator.RunLoadMore(true);
+        }
         private void FollowingItemsLVLoaded(object sender, RoutedEventArgs e)
         {
             SetFollowingsLV();
-        }
-        private void FollowingItemsLVRefreshRequested(object sender, EventArgs e)
-        {
-            FollowVM.FollowingsGenerator.RunLoadMore(true);
         }
         void SetFollowersLV()
         {

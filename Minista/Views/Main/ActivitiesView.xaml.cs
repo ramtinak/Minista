@@ -47,7 +47,15 @@ namespace Minista.Views.Main
 
         private void ActivitiesViewLoaded(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                RefreshControl.RefreshRequested -= RefreshControlRefreshRequested;
+                RefreshControl.Visualizer.RefreshStateChanged -= RefreshControlRefreshStateChanged;
+            }
+            catch { }
+            RefreshControl.RefreshRequested += RefreshControlRefreshRequested;
+            if (RefreshControl.Visualizer != null)
+                RefreshControl.Visualizer.RefreshStateChanged += RefreshControlRefreshStateChanged;
             //SetLVs();
             if (First)
             {
@@ -86,13 +94,26 @@ namespace Minista.Views.Main
         //    }
         //    catch { }
         //}
-        private void ItemsLVRefreshRequested(object sender, EventArgs e)
+        //private void NonFollowersItemsLVRefreshRequested(object sender, EventArgs e)
+        //{
+        //    ActivitiesVM?.NonFollowersVM?.RunLoadMore(true);
+        //}
+
+        private void RefreshControlRefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)
         {
-            ActivitiesVM?.Refresh();
+            using (var RefreshCompletionDeferral = args.GetDeferral())
+                ActivitiesVM?.Refresh();
         }
-        private void NonFollowersItemsLVRefreshRequested(object sender, EventArgs e)
+        private void RefreshControlRefreshStateChanged(Microsoft.UI.Xaml.Controls.RefreshVisualizer sender, Microsoft.UI.Xaml.Controls.RefreshStateChangedEventArgs args)
         {
-            ActivitiesVM?.NonFollowersVM?.RunLoadMore(true);
+            if (args.NewState == Microsoft.UI.Xaml.Controls.RefreshVisualizerState.Refreshing)
+                RefreshButton.IsEnabled = false;
+            else
+                RefreshButton.IsEnabled = true;
+        }
+        private void RefreshButtonClick(object sender, RoutedEventArgs e)
+        {
+            RefreshControl.RequestRefresh();
         }
 
         private void LikedTaggedGridViewItemClick(object sender, ItemClickEventArgs e)

@@ -52,7 +52,21 @@ namespace Minista.Views.TV
         private void BackButton_Click(object sender, RoutedEventArgs e) => BackAction?.Invoke();
         private void CommentViewLoaded(object sender, RoutedEventArgs e)
         {
-          
+            try
+            {
+                RefreshControl.RefreshRequested -= RefreshControlRefreshRequested;
+            }
+            catch { }
+            RefreshControl.RefreshRequested += RefreshControlRefreshRequested;
+        }
+        private void RefreshControlRefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)
+        {
+            using (var RefreshCompletionDeferral = args.GetDeferral())
+                CommentsVM.RunLoadMore(true);
+        }
+        private void RefreshButtonClick(object sender, RoutedEventArgs e)
+        {
+            RefreshControl.RequestRefresh();
         }
         private void ItemsLV_Loaded(object sender, RoutedEventArgs e)
         {

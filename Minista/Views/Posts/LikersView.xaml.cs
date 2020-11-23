@@ -52,6 +52,15 @@ namespace Minista.Views.Main
 
         private void LikersViewLoaded(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                RefreshControl.RefreshRequested -= RefreshControlRefreshRequested;
+                RefreshControl.Visualizer.RefreshStateChanged -= RefreshControlRefreshStateChanged;
+            }
+            catch { }
+            RefreshControl.RefreshRequested += RefreshControlRefreshRequested;
+            if (RefreshControl.Visualizer != null)
+                RefreshControl.Visualizer.RefreshStateChanged += RefreshControlRefreshStateChanged;
             if (NavigationMode == NavigationMode.Back && LikersVM.Media != null)
             {
                 if (LikersVM.Media.InstaIdentifier == Media.InstaIdentifier)
@@ -99,6 +108,23 @@ namespace Minista.Views.Main
         {
             base.OnNavigatedFrom(e);
             KeyDown -= OnKeyDownHandler;
+        }
+
+        private void RefreshControlRefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)
+        {
+            using (var RefreshCompletionDeferral = args.GetDeferral())
+                LikersVM.RunLoadMore();
+        }
+        private void RefreshControlRefreshStateChanged(Microsoft.UI.Xaml.Controls.RefreshVisualizer sender, Microsoft.UI.Xaml.Controls.RefreshStateChangedEventArgs args)
+        {
+            if (args.NewState == Microsoft.UI.Xaml.Controls.RefreshVisualizerState.Refreshing)
+                RefreshButton.IsEnabled = false;
+            else
+                RefreshButton.IsEnabled = true;
+        }
+        private void RefreshButtonClick(object sender, RoutedEventArgs e)
+        {
+            RefreshControl.RequestRefresh();
         }
         private void OnKeyDownHandler(object sender, KeyRoutedEventArgs e)
         {

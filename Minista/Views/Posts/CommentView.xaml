@@ -9,6 +9,7 @@
     xmlns:local="using:Minista.Views.Posts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Minista.ViewModels.Posts"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -383,7 +384,9 @@
                     x:Name="TopLoading"
                     VerticalAlignment="Top"
                     Visibility="Collapsed" />
-                <controls:PullToRefreshListView
+                <winui:RefreshContainer x:Name="RefreshControl"
+                                                    Grid.Row="1">
+                    <ListView
                     x:Name="ItemsLV"
                     Grid.Row="1"
                     Margin="5"
@@ -391,21 +394,19 @@
                     VerticalAlignment="Stretch"
                     Foreground="{StaticResource DefaultInnerForegroundColor}"
                     IsItemClickEnabled="False"
-                    IsPullToRefreshWithMouseEnabled="True"
                     ItemTemplate="{StaticResource MainTemplate}"
                     ItemsSource="{Binding Items, Mode=OneWay}"
-                    PullThreshold="140"
-                    RefreshRequested="ItemsLVRefreshRequested"
                     SelectionMode="None">
-                    <controls:PullToRefreshListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="Margin" Value="2,0,2,5" />
-                            <Setter Property="Padding" Value="0" />
-                        </Style>
-                    </controls:PullToRefreshListView.ItemContainerStyle>
-                </controls:PullToRefreshListView>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="2,0,2,5" />
+                                <Setter Property="Padding" Value="0" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </winui:RefreshContainer>
                 <loading:LoadingUc
                     x:Name="BottomLoading"
                     Grid.Row="2"
@@ -436,6 +437,28 @@
                 </Grid>
             </Button>
         </Grid>
+        <Button x:Name="RefreshButton"
+                    Background="{x:Null}"
+                    Grid.RowSpan="2"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    Margin="12 0 0 50"
+                    Click="RefreshButtonClick">
+            <Grid>
+
+                <Ellipse Width="45"
+                             Height="45"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Fill="#FF333333" />
+                <FontIcon FontFamily="{StaticResource SymbolFont}"
+                              FontSize="{StaticResource HeaderFontSize}"
+                              Foreground="White"
+                              Glyph="" />
+                <Grid Background="Cyan"
+                          Opacity="0" />
+            </Grid>
+        </Button>
         <Grid Grid.Row="1" MaxWidth="640">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

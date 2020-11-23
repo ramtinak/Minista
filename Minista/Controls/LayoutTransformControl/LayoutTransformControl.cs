@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Toolkit.Uwp.UI.Extensions;
+//using Microsoft.Toolkit.Uwp.UI.Extensions;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -128,7 +128,7 @@ namespace Minista.UI.Controls
         private void ProcessTransform()
         {
             // Get the transform matrix and apply it
-            _transformation = MatrixHelperEx.Round(GetTransformMatrix(Transform), DecimalsAfterRound);
+            _transformation = Extensions.MatrixHelperEx.Round(GetTransformMatrix(Transform), DecimalsAfterRound);
 
             if (_matrixTransform != null)
             {

@@ -56,6 +56,15 @@ namespace Minista.Views.Posts
         }
         private void CommentViewLoaded(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                RefreshControl.RefreshRequested -= RefreshControlRefreshRequested;
+                RefreshControl.Visualizer.RefreshStateChanged -= RefreshControlRefreshStateChanged;
+            }
+            catch { }
+            RefreshControl.RefreshRequested += RefreshControlRefreshRequested;
+            if (RefreshControl.Visualizer != null)
+                RefreshControl.Visualizer.RefreshStateChanged += RefreshControlRefreshStateChanged;
             if (NavigationMode == NavigationMode.Back && CommentsVM.Media != null)
             {
                 if (CommentsVM.Media.InstaIdentifier == Media.InstaIdentifier)
@@ -105,6 +114,27 @@ namespace Minista.Views.Posts
         {
             base.OnNavigatedFrom(e);
             KeyDown -= OnKeyDownHandler;
+        }
+
+        private void RefreshControlRefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)
+        {
+            using (var RefreshCompletionDeferral = args.GetDeferral())
+                CommentsVM.Refresh();
+        }
+        private void RefreshControlRefreshStateChanged(Microsoft.UI.Xaml.Controls.RefreshVisualizer sender, Microsoft.UI.Xaml.Controls.RefreshStateChangedEventArgs args)
+        {
+            if (args.NewState == Microsoft.UI.Xaml.Controls.RefreshVisualizerState.Refreshing)
+            {
+                RefreshButton.IsEnabled = false;
+            }
+            else
+            {
+                RefreshButton.IsEnabled = true;
+            }
+        }
+        private void RefreshButtonClick(object sender, RoutedEventArgs e)
+        {
+            RefreshControl.RequestRefresh();
         }
         private void OnKeyDownHandler(object sender, KeyRoutedEventArgs e)
         {

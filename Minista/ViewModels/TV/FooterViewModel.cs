@@ -206,11 +206,11 @@ namespace Minista.ViewModels.TV
                     Views.Infos.HashtagView.Current?.HideTopLoading();
                 }
                 catch { }
-                try
-                {
-                    Views.Posts.ScrollableHashtagPostView.Current?.HideTopLoading();
-                }
-                catch { }
+                //try
+                //{
+                //    Views.Posts.ScrollableHashtagPostView.Current?.HideTopLoading();
+                //}
+                //catch { }
             }
             else
             {
@@ -219,11 +219,11 @@ namespace Minista.ViewModels.TV
                     Views.Infos.HashtagView.Current?.HideBottomLoading();
                 }
                 catch { }
-                try
-                {
-                    Views.Posts.ScrollableHashtagPostView.Current?.HideBottomLoading();
-                }
-                catch { }
+                //try
+                //{
+                //    Views.Posts.ScrollableHashtagPostView.Current?.HideBottomLoading();
+                //}
+                //catch { }
             }
         }
 

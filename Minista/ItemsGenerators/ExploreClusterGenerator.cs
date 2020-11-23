@@ -107,11 +107,11 @@ namespace Minista.ItemsGenerators
                         Views.Main.ExploreClusterView.Current?.ShowTopLoading();
                     }
                     catch { }
-                    try
-                    {
-                        Views.Posts.ScrollableExplorePostView.Current?.ShowTopLoading();
-                    }
-                    catch { }
+                    //try
+                    //{
+                    //    Views.Posts.ScrollableExplorePostView.Current?.ShowTopLoading();
+                    //}
+                    //catch { }
                 }
                 else
                 {
@@ -125,11 +125,11 @@ namespace Minista.ItemsGenerators
                         Views.Main.ExploreClusterView.Current?.ShowBottomLoading();
                     }
                     catch { }
-                    try
-                    {
-                        Views.Posts.ScrollableExplorePostView.Current?.ShowBottomLoading();
-                    }
-                    catch { }
+                    //try
+                    //{
+                    //    Views.Posts.ScrollableExplorePostView.Current?.ShowBottomLoading();
+                    //}
+                    //catch { }
                 }
 
                 var result = await InstaApi.FeedProcessor.GetTopicalExploreFeedAsync(Pagination, ClusterId);
@@ -206,11 +206,11 @@ namespace Minista.ItemsGenerators
                     Views.Main.ExploreClusterView.Current?.HideTopLoading();
                 }
                 catch { }
-                try
-                {
-                    Views.Posts.ScrollableExplorePostView.Current?.HideTopLoading();
-                }
-                catch { }
+                //try
+                //{
+                //    Views.Posts.ScrollableExplorePostView.Current?.HideTopLoading();
+                //}
+                //catch { }
             }
             else
             {
@@ -224,11 +224,11 @@ namespace Minista.ItemsGenerators
                     Views.Main.ExploreClusterView.Current?.HideBottomLoading();
                 }
                 catch { }
-                try
-                {
-                    Views.Posts.ScrollableExplorePostView.Current?.HideBottomLoading();
-                }
-                catch { }
+                //try
+                //{
+                //    Views.Posts.ScrollableExplorePostView.Current?.HideBottomLoading();
+                //}
+                //catch { }
             }
         }
         public void ScrollViewChanging(object sender, ScrollViewerViewChangingEventArgs e)

@@ -110,11 +110,11 @@ namespace Minista.ItemsGenerators
                         Views.Infos.HashtagView.Current?.ShowTopLoading();
                     }
                     catch { }
-                    try
-                    {
-                        Views.Posts.ScrollableHashtagPostView.Current?.ShowTopLoading();
-                    }
-                    catch { }
+                    //try
+                    //{
+                    //    Views.Posts.ScrollableHashtagPostView.Current?.ShowTopLoading();
+                    //}
+                    //catch { }
                 }
                 else
                 {
@@ -123,11 +123,11 @@ namespace Minista.ItemsGenerators
                         Views.Infos.HashtagView.Current?.ShowBottomLoading();
                     }
                     catch { }
-                    try
-                    {
-                        Views.Posts.ScrollableHashtagPostView.Current?.ShowBottomLoading();
-                    }
-                    catch { }
+                    //try
+                    //{
+                    //    Views.Posts.ScrollableHashtagPostView.Current?.ShowBottomLoading();
+                    //}
+                    //catch { }
                 }
                 var result = await InstaApi.HashtagProcessor.GetHashtagsSectionsAsync(Hashtag, Pagination, HashtagType);
 
@@ -180,11 +180,11 @@ namespace Minista.ItemsGenerators
                     Views.Infos.HashtagView.Current?.HideTopLoading();
                 }
                 catch { }
-                try
-                {
-                    Views.Posts.ScrollableHashtagPostView.Current?.HideTopLoading();
-                }
-                catch { }
+                //try
+                //{
+                //    Views.Posts.ScrollableHashtagPostView.Current?.HideTopLoading();
+                //}
+                //catch { }
             }
             else
             {
@@ -193,11 +193,11 @@ namespace Minista.ItemsGenerators
                     Views.Infos.HashtagView.Current?.HideBottomLoading();
                 }
                 catch { }
-                try
-                {
-                    Views.Posts.ScrollableHashtagPostView.Current?.HideBottomLoading();
-                }
-                catch { }
+                //try
+                //{
+                //    Views.Posts.ScrollableHashtagPostView.Current?.HideBottomLoading();
+                //}
+                //catch { }
             }
         }
 
