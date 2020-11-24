@@ -13,7 +13,7 @@ using InstagramApiSharp.API.RealTime.Responses.Wrappers;
 
 namespace InstagramApiSharp.API.RealTime.Handlers
 {
-    internal class ThreadTypingContainer
+    internal class RealtimeDataContainer
     {
         [JsonProperty("event")]
         public string Event { get; set; }

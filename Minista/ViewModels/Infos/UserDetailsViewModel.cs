@@ -44,7 +44,7 @@ namespace Minista.ViewModels.Infos
         public UserDetailsTVMediasGenerator TVMediaGeneratror { get; set; } = new UserDetailsTVMediasGenerator();
         public UserDetailsShopMediasGenerator ShopMediaGeneratror { get; set; } = new UserDetailsShopMediasGenerator();
 
-
+         
 
         public ObservableCollection<InstaHighlightFeed> Highlights { get; set; } = new ObservableCollection<InstaHighlightFeed>();
         public ObservableCollection<InstaReelFeed> Stories { get; set; } = new ObservableCollection<InstaReelFeed>();

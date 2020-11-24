@@ -45,6 +45,7 @@ namespace InstagramApiSharp.API.RealTime
         public event EventHandler<object> LogReceived;
         public event EventHandler<List<InstaDirectInboxItem>> DirectItemChanged;
         public event EventHandler<PresenceEventEventArgs> PresenceChanged;
+        public event EventHandler<InstaBroadcastEventArgs> BroadcastChanged;
         public event EventHandler<List<InstaRealtimeTypingEventArgs>> TypingChanged;
         //public event EventHandler<Exception> FailedToStart;
         public event EventHandler<object> OnDisconnect;
@@ -458,6 +459,15 @@ namespace InstagramApiSharp.API.RealTime
                                                                 typing.Add(tr);
                                                             }
                                                             catch { }
+                                                        }
+                                                    }
+                                                    else if (item.IsBroadcast)
+                                                    {
+                                                        if (item.HasItemInValue)
+                                                        {
+                                                            var broadcastEventArgs = JsonConvert.DeserializeObject<InstaBroadcastEventArgs>(item.Value);
+                                                            if (broadcastEventArgs != null)
+                                                                BroadcastChanged?.Invoke(this, broadcastEventArgs);
                                                         }
                                                     }
                                                     else if (item.IsThreadItem || item.IsThreadParticipants)

@@ -122,7 +122,6 @@ namespace Minista.Views.Broadcast
                 VlcVideoView.Width = double.NaN;
                 VlcVideoView.Height = double.NaN;
             }
-            CanChangePlayerSize = LastCompositeTransform != null;
             VlcVideoView.RenderTransformOrigin = new Point(0.5, 0.5);
             VlcVideoView.RenderTransform = LastCompositeTransform;
         }

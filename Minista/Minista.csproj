@@ -244,6 +244,9 @@
     <Compile Include="UserControls\Story\StoryViews\SliderVotersViewModel.cs" />
     <Compile Include="UserControls\Story\StoryViews\StoryViewerTemplateSelector.cs" />
     <Compile Include="UserControls\Story\StoryViews\StoryViewerViewModel.cs" />
+    <Compile Include="UserControls\UniversalProfile.xaml.cs">
+      <DependentUpon>UniversalProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Broadcast\LiveBroadcastViewModel.cs" />
     <Compile Include="ViewModels\Broadcast\RelayCommand.cs" />
     <Compile Include="ViewModels\Main\NonFollowersViewModel.cs" />
@@ -959,6 +962,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Story\StoryViews\MainStoryViewerUc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\UniversalProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

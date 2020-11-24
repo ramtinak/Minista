@@ -41,7 +41,8 @@ namespace InstagramApiSharp.API.RealTime.Responses.Wrappers
 
         public bool IsTyping => Path?.Contains("/activity_indicator_id/") ?? false;
         public bool IsThreadItem => Path?.Contains("/items/") ?? false;
-        public bool IsThreadParticipants => Path?.Contains("/participants/") ?? false; 
+        public bool IsThreadParticipants => Path?.Contains("/participants/") ?? false;
+        public bool IsBroadcast => Path?.Contains("/broadcast/") ?? false;
         public bool HasItemInValue => Value?.Contains("{") ?? false;
 
     }
