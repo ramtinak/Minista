@@ -11,6 +11,7 @@ using Windows.Devices.Sensors;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,37 +24,14 @@ namespace Minista.Views.Broadcast
 {
     public sealed partial class LiveBroadcastView : Page
     {
-        private bool CanChangePlayerSize = false;
         CompositeTransform LastCompositeTransform;
         private InstaBroadcast Broadcast;
+        public static LiveBroadcastView Current;
         public LiveBroadcastView()
         {
             this.InitializeComponent();
+            Current = this;
             Loaded += LiveBroadcastView_Loaded;
-            SizeChanged += LiveBroadcastView_SizeChanged;
-        }
-
-        private void LiveBroadcastView_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            try
-            {
-                if (CanChangePlayerSize)
-                {
-                    //if (LastCompositeTransform != null)
-                    //{
-
-                    //    VlcVideoView.Width = ActualHeight;
-                    //    VlcVideoView.Height = ActualWidth;
-                    //}
-                    //else
-                    //{
-                    //    VlcVideoView.Width = double.NaN;
-                    //    VlcVideoView.Height = double.NaN;
-                    //}
-
-                }
-            }
-            catch { }
         }
 
         private async void LiveBroadcastView_Loaded(object sender, RoutedEventArgs e)
@@ -70,6 +48,34 @@ namespace Minista.Views.Broadcast
             }
             catch { }
         }
+        private void OnPointerWheelChanged(CoreWindow sender, PointerEventArgs e)
+        {
+            // Changing volume is not working in LibVLC
+            //try
+            //{
+            //    if (e.CurrentPoint.Properties.MouseWheelDelta > 0)
+            //    {
+            //        if (LiveVM.MediaPlayer != null)
+            //        {
+            //            if (LiveVM.MediaPlayer.Volume < 100)
+            //            {
+            //                LiveVM.MediaPlayer.Volume = LiveVM.MediaPlayer.Volume + 1;
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (LiveVM.MediaPlayer != null)
+            //        {
+            //            if (LiveVM.MediaPlayer.Volume > 0)
+            //            {
+            //                LiveVM.MediaPlayer.Volume = LiveVM.MediaPlayer.Volume - 1;
+            //            }
+            //        }
+            //    }
+            //}
+            //catch { }
+        }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -78,12 +84,14 @@ namespace Minista.Views.Broadcast
             Helper.HideStatusBar();
             if (e.Parameter is InstaBroadcast broadcast && broadcast != null)
                 Broadcast = broadcast;
+            Window.Current.CoreWindow.PointerWheelChanged += OnPointerWheelChanged;
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
             MainPage.Current?.ShowHeaders();
             Helper.ShowStatusBar();
+            Window.Current.CoreWindow.PointerWheelChanged -= OnPointerWheelChanged;
 
             NavigationService.HideSystemBackButton();
             if (MainPage.Current != null)
@@ -91,6 +99,11 @@ namespace Minista.Views.Broadcast
             try
             {
                 LiveVM.Stop();
+            }
+            catch { }
+            try
+            {
+                LiveVM.EndBroadcast();
             }
             catch { }
         }
@@ -105,25 +118,17 @@ namespace Minista.Views.Broadcast
             }
             else
             {
-                if (LastCompositeTransform.Rotation == -90)
-                {
-                    LastCompositeTransform = null;
-                    VlcVideoView.Width = double.NaN;
-                    VlcVideoView.Height = double.NaN;
-                }
-                else
-                {
-                    LastCompositeTransform = new CompositeTransform { Rotation = -90 };
-
-                    VlcVideoView.Width = double.NaN;
-                    VlcVideoView.Height = ActualWidth;
-                    //VlcVideoView.Width = ActualHeight;
-                    //VlcVideoView.Height = ActualWidth;
-                }
+                LastCompositeTransform = null;
+                VlcVideoView.Width = double.NaN;
+                VlcVideoView.Height = double.NaN;
             }
             CanChangePlayerSize = LastCompositeTransform != null;
             VlcVideoView.RenderTransformOrigin = new Point(0.5, 0.5);
             VlcVideoView.RenderTransform = LastCompositeTransform;
         }
+
+        public bool IsInLoading => LoadingUc.Visibility == Visibility.Visible;
+        public void ShowLoading() => LoadingUc.Start();
+        public void HideLoading() => LoadingUc.Stop();
     }
 }

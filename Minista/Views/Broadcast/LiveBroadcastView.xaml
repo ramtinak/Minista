@@ -17,6 +17,7 @@
     NavigationCacheMode="Enabled">
     <Page.Resources>
         <ResourceDictionary>
+            <converters:CountConverter x:Key="CountConverter" />
             <converters:MediaImageVisibilityConverter x:Key="MediaImageVisibilityConverter" />
             <converters:MediaVideoVisibilityConverter x:Key="MediaVideoVisibilityConverter" />
             <converters:PostNameConverter x:Key="PostNameConverter" />
@@ -51,11 +52,13 @@
                 </interactions:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </vlc:VideoView>
-        <Button x:Name="RotateButton" Content="Rotate"
-                Grid.RowSpan="3"
-                VerticalAlignment="Bottom"
-                Click="RotateButton_Click"/>
         <Grid  Margin="48 0 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
             <Grid HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -68,8 +71,13 @@
                                          Height="50"
                                          Width="50"
                                          Margin="5 5"
-                                         Stroke="#FF3C2866"
                                          StrokeThickness="2">
+                        <Ellipse.Stroke>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF90CDFB" Offset="1"/>
+                                <GradientStop Color="#FF187CF5" />
+                            </LinearGradientBrush>
+                        </Ellipse.Stroke>
                         <Ellipse.Fill>
                             <ImageBrush>
                                 <ImageBrush.ImageSource>
@@ -122,9 +130,144 @@
                                   Grid.ColumnSpan="5"
                                   Opacity="0" />
             </Grid>
+            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                <Border VerticalAlignment="Center" Width="{Binding Width, ElementName=ViewerBorder, Mode=TwoWay}"
+                                    HorizontalAlignment="Center"
+                                    CornerRadius="5" Margin="5 1">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF90CDFB" Offset="1"/>
+                            <GradientStop Color="#FF187CF5" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <TextBlock Text="LIVE"
+                           Margin="2"
+                           Foreground="White"
+                           FontFamily="{StaticResource VazirFont}"
+                           FontSize="{StaticResource DefaultFontSize}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center" />
+                </Border>
 
+                <Border x:Name="ViewerBorder" VerticalAlignment="Center" MinWidth="30"
+                                    HorizontalAlignment="Center"
+                                    CornerRadius="5" Margin="5 1" Background="#D34B4B4B">
+                    <TextBlock Text="{Binding ViewerCount, Converter={StaticResource CountConverter}, Mode=TwoWay}"
+                           Margin="2"
+                           Foreground="White"
+                           FontFamily="{StaticResource VazirFont}"
+                           FontSize="{StaticResource DefaultFontSize}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center" />
+                </Border>
+            </StackPanel>
+
+            <Button x:Name="RotateButton" Grid.Column="2" Content="" Height="38" Width="42"
+                    FontFamily="{StaticResource MaterialSymbolFont}"
+                Grid.RowSpan="3"
+                    Margin="5"
+                VerticalAlignment="Center"
+                Click="RotateButton_Click" Foreground="White" Background="#33545454"/>
         </Grid>
-        <Grid Grid.Row="1">
+        <TextBlock x:Name="BroadcastStatus"
+                   Opacity=".8"
+                   Grid.Row="1"
+                           Margin="0 15"
+                           Foreground="White"
+                           FontFamily="{StaticResource VazirFont}"
+                           FontSize="{StaticResource DefaultFontSize}"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Center" />
+        <loading:LoadingUc x:Name="LoadingUc"
+                Grid.RowSpan="3"
+                               Visibility="Collapsed"
+                               VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0" Opacity="0.78"/>
+        <Grid Grid.Row="2" Padding="8">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+                    <GradientStop Color="#6B000000" />
+                    <GradientStop Color="#00000000" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <ListView x:Name="Comments"
+                          ItemsSource="{Binding Items, Mode=OneWay}"
+                          MaxHeight="220"
+                          SelectionMode="None" 
+                          IsItemClickEnabled="True">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Margin" Value="2,0,2,5" />
+                            <Setter Property="Padding" Value="0" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="55" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Ellipse
+                                            Grid.Column="0"
+                                            Width="41"
+                                            Height="41"
+                                            Margin="0,12,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top"
+                                            StrokeThickness="0">
+                                        <Ellipse.Stroke>
+                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop Color="#D78F1EA0" />
+                                                <GradientStop Offset="1" Color="#D795007A" />
+                                            </LinearGradientBrush>
+                                        </Ellipse.Stroke>
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="{Binding User.ProfilePicture}" />
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Grid Grid.Column="1" Margin="5">
+                                        <TextBlock
+                                                    Margin="1.5,3.5,0,0"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource DefaultFontSize}"
+                                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                                    Text="{Binding User.UserName}" />
+
+                                    </Grid>
+                                </Grid>
+                                <TextBlock
+                                        Grid.Row="1"
+                                        Margin="1.5,-8,12,0"
+                                        VerticalAlignment="Top"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="14"
+                                        Foreground="White"
+                                        Text="{Binding Text}"
+                                        TextAlignment="DetectFromContent"
+                                        TextWrapping="Wrap" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </Page>
