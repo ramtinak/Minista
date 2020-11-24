@@ -62,7 +62,7 @@ namespace Minista.ViewModels.Broadcast
             try
             {
                 Timer.Start();
-                await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
                     try
                     {
