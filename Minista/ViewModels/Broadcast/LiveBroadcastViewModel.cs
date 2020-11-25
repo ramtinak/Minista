@@ -22,11 +22,12 @@ namespace Minista.ViewModels.Broadcast
         private double _viewerCount = 0;
         private bool _isPlaying = true;
         private bool _isMute = false;
-        private bool _isCommentDisabled = false;
         private string _broadcastStatus = null;
         private int Interval = 0;
         private MediaPlayer _mediaPlayer;
         private InstaBroadcast _broadcast;
+        private Visibility _commentsVisibility = Visibility.Visible;
+        private Visibility _commentsDisabledVisibility = Visibility.Collapsed;
         public InstaBroadcast Broadcast { get => _broadcast; set => Set(nameof(Broadcast), ref _broadcast, value); }
         public LibVLC LibVLC { get; set; }
         public MediaPlayer MediaPlayer
@@ -38,9 +39,10 @@ namespace Minista.ViewModels.Broadcast
         private DispatcherTimer Timer = new DispatcherTimer();
         public bool IsPlaying { get => _isPlaying; set => Set(nameof(IsPlaying), ref _isPlaying, value); }
         public bool IsMute { get => _isMute; set { Set(nameof(IsMute), ref _isMute, value);  } }
-        public bool IsCommentDisabled { get => _isCommentDisabled; set { Set(nameof(IsCommentDisabled), ref _isCommentDisabled, value); } }
         public double ViewerCount { get => _viewerCount; set { Set(nameof(ViewerCount), ref _viewerCount, value); } }
         public string BroadcastStatus { get => _broadcastStatus; set { Set(nameof(BroadcastStatus), ref _broadcastStatus, value); } }
+        public Visibility CommentsVisibility { get => _commentsVisibility; set { Set(nameof(CommentsVisibility), ref _commentsVisibility, value); } }
+        public Visibility CommentsDisabledVisibility { get => _commentsDisabledVisibility; set { Set(nameof(CommentsDisabledVisibility), ref _commentsDisabledVisibility, value); } }
         public ObservableCollection<InstaBroadcastComment> Items { get; set; } = new ObservableCollection<InstaBroadcastComment>();
 
         #endregion Properties, Fields
@@ -157,6 +159,8 @@ namespace Minista.ViewModels.Broadcast
                 var result = await InstaApi.LiveProcessor.GetCommentsAsync(Broadcast.Id, t.ToString());
                 if (result.Succeeded)
                 {
+                    CommentsVisibility = result.Value.CommentMuted ? Visibility.Collapsed : Visibility.Visible;
+                    CommentsDisabledVisibility = !result.Value.CommentMuted ? Visibility.Collapsed : Visibility.Visible;
                     result.Value.Comments.ForEach(item =>
                     {
                         Items.Add(item);
@@ -166,18 +170,28 @@ namespace Minista.ViewModels.Broadcast
             catch { }
         }
 
-        public async void EndBroadcast()
+        public void EndBroadcast()
         {
-            try
-            {
-                await InstaApi.LiveProcessor.GetFinalViewerListAsync(Broadcast.Id);
-            }
-            catch { }
+            //try
+            //{
+            //    // This should be call from a broadcast owner, not anyone else
+            //    await InstaApi.LiveProcessor.GetFinalViewerListAsync(Broadcast.Id);
+            //}
+            //catch { }
         }
 
         #endregion Ig Calls
 
         #region UI Update
+
+        public void Reset()
+        {
+            ViewerCount = 0;
+            CommentsVisibility = Visibility.Visible;
+            CommentsDisabledVisibility = Visibility.Collapsed;
+            Interval = 0;
+            BroadcastStatus = null;
+        }
 
         public void DetermineLiveStatus(string id, InstaBroadcastStatusType statusType)
         {

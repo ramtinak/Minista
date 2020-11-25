@@ -1,4 +1,5 @@
-﻿using InstagramApiSharp.Classes.Models;
+﻿using InstagramApiSharp.Classes;
+using InstagramApiSharp.Classes.Models;
 using LibVLCSharp.Shared;
 using Minista.Helpers;
 using System;
@@ -38,6 +39,7 @@ namespace Minista.Views.Broadcast
         {
             try
             {
+                LiveVM.Reset();
                 await Task.Delay(1500);
                 if (Broadcast != null)
                 {
@@ -108,7 +110,7 @@ namespace Minista.Views.Broadcast
             catch { }
         }
 
-        private void RotateButton_Click(object sender, RoutedEventArgs e)
+        private void RotateButtonClick(object sender, RoutedEventArgs e)
         {
             if (LastCompositeTransform == null)
             {
@@ -126,6 +128,41 @@ namespace Minista.Views.Broadcast
             VlcVideoView.RenderTransform = LastCompositeTransform;
         }
 
+
+        private async void CommentButtonClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (LiveVM.Broadcast == null) return;
+                if (string.IsNullOrEmpty(CommentText.Text))
+                {
+                    CommentText.Focus(FocusState.Keyboard);
+                    return;
+                }
+                if (LiveVM.CommentsVisibility == Visibility.Collapsed)
+                    return;
+                var result = await Helper.InstaApi.LiveProcessor.CommentAsync(Broadcast.Id, CommentText.Text);
+                if (result.Succeeded)
+                {
+                    // no need to notify, comment will be visible after a few seconds
+                    CommentText.Text = "";
+                }
+                else
+                {
+                    switch (result.Info.ResponseType)
+                    {
+                        case ResponseType.RequestsLimit:
+                        case ResponseType.SentryBlock:
+                            Helper.ShowNotify(result.Info.Message);
+                            break;
+                        case ResponseType.ActionBlocked:
+                            Helper.ShowNotify("Action blocked.\r\nPlease try again 5 or 10 minutes later");
+                            break;
+                    }
+                }
+            }
+            catch { }
+        }
         public bool IsInLoading => LoadingUc.Visibility == Visibility.Visible;
         public void ShowLoading() => LoadingUc.Start();
         public void HideLoading() => LoadingUc.Stop();

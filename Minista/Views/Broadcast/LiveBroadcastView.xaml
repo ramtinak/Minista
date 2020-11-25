@@ -168,9 +168,9 @@
                 Grid.RowSpan="3"
                     Margin="5"
                 VerticalAlignment="Center"
-                Click="RotateButton_Click" Foreground="White" Background="#33545454"/>
+                Click="RotateButtonClick" Foreground="White" Background="#33545454"/>
         </Grid>
-        <TextBlock x:Name="BroadcastStatus"
+        <TextBlock Text="{Binding BroadcastStatus, Mode=TwoWay}"
                    Opacity=".8"
                    Grid.Row="1"
                            Margin="0 15"
@@ -183,18 +183,19 @@
                 Grid.RowSpan="3"
                                Visibility="Collapsed"
                                VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0" Opacity="0.78"/>
-        <Grid Grid.Row="2" Padding="8">
-            <Grid.Background>
+        <Grid Grid.Row="2" Padding="1" MaxWidth="480" 
+                    Background="#A5000000">
+            <!--<Grid.Background>
                 <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
                     <GradientStop Color="#6B000000" />
                     <GradientStop Color="#00000000" Offset="1"/>
                 </LinearGradientBrush>
-            </Grid.Background>
+            </Grid.Background>-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid>
+            <Grid Visibility="{Binding CommentsVisibility, Mode=TwoWay}">
                 <ListView x:Name="Comments"
                           ItemsSource="{Binding Items, Mode=OneWay}"
                           MaxHeight="220"
@@ -267,6 +268,54 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+            </Grid>
+            <Grid x:Name="CommentsGrid"
+                  Grid.Row="1"
+                    Background="#FF1D1D1D">   
+                <Grid
+                    Grid.Row="1"
+                    MaxWidth="750"
+                    Visibility="{Binding CommentsVisibility, Mode=TwoWay}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                            x:Name="CommentText"
+                            MaxHeight="100"
+                            VerticalAlignment="Stretch"
+                            AcceptsReturn="True"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            IsSpellCheckEnabled="False"
+                            PlaceholderText="Type a comment"
+                            TextAlignment="DetectFromContent"
+                            TextWrapping="Wrap" />
+
+                    <AppBarButton
+                            x:Name="CommentButton"
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Background="#FF1D1D1D"
+                            Click="CommentButtonClick">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </Grid>
+
+                <Grid Height="42" Visibility="{Binding CommentsDisabledVisibility, Mode=TwoWay}">
+                    <TextBlock 
+                        Text="Comments off."
+                           Foreground="#FFD7D7D7"
+                           FontFamily="{StaticResource VazirFont}"
+                           FontSize="{StaticResource DefaultFontSize}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center" />
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
