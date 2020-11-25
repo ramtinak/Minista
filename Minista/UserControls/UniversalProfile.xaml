@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Grid>
+        <!--<Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -132,6 +132,6 @@
                 </interactivity:Interaction.Behaviors>
             </Button>
 
-        </Grid>
+        </Grid>-->
     </Grid>
 </UserControl>

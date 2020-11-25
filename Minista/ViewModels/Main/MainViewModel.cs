@@ -20,6 +20,7 @@ using Windows.UI.Xaml;
 using Minista.ViewModels.Direct;
 using Minista.Views.Main;
 using InstagramApiSharp.Helpers;
+using InstagramApiSharp.Enums;
 
 namespace Minista.ViewModels.Main
 {
@@ -53,7 +54,7 @@ namespace Minista.ViewModels.Main
                         await client.Start(InboxViewModel.Instance.SeqId, InboxViewModel.Instance.SnapshotAt);
                         client.DirectItemChanged += InboxViewModel.Instance.RealtimeClientDirectItemChanged;
                         client.TypingChanged += InboxViewModel.Instance.RealtimeClientClientTypingChanged;
-
+                        client.BroadcastChanged += Client_BroadcastChanged;
 
                     });
                 }
@@ -62,6 +63,50 @@ namespace Minista.ViewModels.Main
             MainView.Current?.MainViewInboxUc?.InboxVM?.RunLoadMore(refresh);
             ActivitiesViewModel.Instance?.RunLoadMore(refresh);
         }
+
+        private async void Client_BroadcastChanged(object sender, InstagramApiSharp.API.RealTime.Handlers.InstaBroadcastEventArgs e)
+        {
+            try
+            {
+                var type = (InstaBroadcastStatusType)Enum.Parse(typeof(InstaBroadcastStatusType), e.BroadcastStatus?.Replace("_", ""), true);
+                if (type == InstaBroadcastStatusType.Active)
+                {
+                    if (!StoriesX.Any(x => x.Type == StoryType.Broadcast && x.Broadcast?.Id == e.BroadcastId))
+                    {
+                        var broadcast = new StoryWithLiveSupportModel
+                        {
+                            Broadcast = new InstaBroadcast
+                            {
+                                Id = e.BroadcastId,
+                                BroadcastOwner = e.User.ToUserShortFriendshipFull(),
+                            },
+                            Type = StoryType.Broadcast
+                        };
+
+                        StoriesX.Insert(0, broadcast);
+                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        {
+                            var getInfo = await InstaApi.LiveProcessor.GetInfoAsync(e.BroadcastId);
+                            if (getInfo.Succeeded)
+                            {
+                                broadcast.Broadcast.DashManifest = getInfo.Value.DashManifest;
+                                broadcast.Broadcast.DashPlaybackUrl = getInfo.Value.DashPlaybackUrl;
+                            }
+                        });
+                    }
+                }
+                else if (type == InstaBroadcastStatusType.Stopped || type == InstaBroadcastStatusType.HardStop)
+                {
+                    var first = StoriesX.FirstOrDefault(x => x.Type == StoryType.Broadcast && x.Broadcast?.Id == e.BroadcastId);
+                    if (first != null)
+                        StoriesX.Remove(first);
+                }
+                if (Helpers.NavigationService.Frame.Content is Views.Broadcast.LiveBroadcastView view && view != null)
+                    view.LiveVM?.DetermineLiveStatus(e.BroadcastId, type);
+            }
+            catch { }
+        }
+
         public async void RefreshStories(bool refresh = false)
         {
             try

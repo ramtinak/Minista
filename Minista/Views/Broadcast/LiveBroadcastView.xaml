@@ -31,7 +31,7 @@
         </ResourceDictionary>
     </Page.Resources>
     <Page.DataContext>
-        <vm:LiveBroadcastViewModel x:Name="LiveVM" />
+        <vm:LiveBroadcastViewModel x:Name="LiveVM" x:FieldModifier="public"/>
     </Page.DataContext>
 
     <Grid Background="{StaticResource DefaultBackgroundColor}">
@@ -220,11 +220,10 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="55" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="58" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
                                     <Ellipse
                                             Grid.Column="0"
                                             Width="41"
@@ -253,9 +252,9 @@
                                                     Text="{Binding User.UserName}" />
 
                                     </Grid>
-                                </Grid>
                                 <TextBlock
                                         Grid.Row="1"
+                                        Grid.Column="1"
                                         Margin="1.5,-8,12,0"
                                         VerticalAlignment="Top"
                                         FontFamily="{StaticResource VazirFont}"

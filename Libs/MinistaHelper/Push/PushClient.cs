@@ -35,6 +35,7 @@ using Windows.UI.WebUI;
 using System.Linq;
 using Windows.System.Profile;
 using InstagramApiSharp.Helpers;
+using InstagramApiSharp.API.RealTime.Handlers;
 
 namespace MinistaHelper.Push
 {
@@ -44,6 +45,7 @@ namespace MinistaHelper.Push
         public bool DontTransferSocket { get; set; } = false;
         public event EventHandler<object> FbnsTokenChanged;
         public event EventHandler<PushReceivedEventArgs> MessageReceived;
+        public event EventHandler<InstaBroadcastEventArgs> BroadcastChanged;
         public event EventHandler<object> LogReceived; 
         public FbnsConnectionData ConnectionData { get; private set; } = new FbnsConnectionData();
         public StreamSocket Socket { get; private set; }

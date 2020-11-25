@@ -1,4 +1,5 @@
 ﻿using InstagramApiSharp.Classes.Models;
+using InstagramApiSharp.Enums;
 using InstagramApiSharp.Helpers;
 using LibVLCSharp.Platforms.UWP;
 using LibVLCSharp.Shared;
@@ -142,18 +143,7 @@ namespace Minista.ViewModels.Broadcast
                 if (result.Succeeded)
                 {
                     ViewerCount = result.Value.ViewerCount;
-                    string status = null;
-                    switch(result.Value.BroadcastStatusType)
-                    {
-                        case InstagramApiSharp.Enums.InstaBroadcastStatusType.Interrupted:
-                            status = "Paused";
-                            break;
-                        case InstagramApiSharp.Enums.InstaBroadcastStatusType.Stopped:
-                            status = "LIVE is OVER"; 
-                            Timer.Stop();
-                            break;
-                    }
-                    BroadcastStatus = status;
+                    DetermineLiveStatus(Broadcast.Id, result.Value.BroadcastStatusType);
                 }
             }
             catch { }
@@ -184,10 +174,68 @@ namespace Minista.ViewModels.Broadcast
             }
             catch { }
         }
+
         #endregion Ig Calls
 
         #region UI Update
 
+        public void DetermineLiveStatus(string id, InstaBroadcastStatusType statusType)
+        {
+            try
+            {
+                if (Broadcast == null) return;
+                if (Broadcast.Id == id)
+                {
+                    switch (statusType)
+                    {
+                        case InstaBroadcastStatusType.Interrupted:
+                            LivePaused();
+                            break;
+                        case InstaBroadcastStatusType.Stopped:
+                            LiveStopped();
+                            break;
+                        case InstaBroadcastStatusType.Active:
+                            ActiveLive();
+                            break;
+                        case InstaBroadcastStatusType.HardStop:
+                            HardStopLive();
+                            break;
+                    }
+                }
+            }
+            catch(Exception ex) { ex.PrintException("LiveBroadcastViewModel.DetermineLiveStatus"); }
+        }
+
+        public void ActiveLive()
+        {
+            BroadcastStatus = null;
+        }
+        public void LivePaused()
+        {
+            BroadcastStatus = "Paused";
+        }
+        public void LiveStopped()
+        {
+            try
+            {
+                Timer.Stop();
+                MediaPlayer?.Stop();
+
+                BroadcastStatus = "LIVE is OVER";
+            }
+            catch { }
+        }
+        public void HardStopLive()
+        {
+            try
+            {
+                Timer.Stop();
+                MediaPlayer?.Stop();
+
+                BroadcastStatus = $"They Kicked you OUT, You won't be able to come back to @{Broadcast.BroadcastOwner.UserName.ToLower()}'s lives.";
+            }
+            catch { }
+        }
         async void Show()
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
