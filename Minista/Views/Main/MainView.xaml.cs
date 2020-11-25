@@ -382,7 +382,7 @@ namespace Minista.Views.Main
             catch { }
         }
 
-        private void LVStoriesItemClick(object sender, ItemClickEventArgs e)
+        private async void LVStoriesItemClick(object sender, ItemClickEventArgs e)
         {
             try
             {
@@ -408,7 +408,10 @@ namespace Minista.Views.Main
                             Helpers.NavigationService.Navigate(typeof(StoryView), new object[] { list, index });
                         }
                         else if (storyWithLiveSupportModel.Type == StoryType.Broadcast)
-                            Helpers.NavigationService.Navigate(typeof(Broadcast.LiveBroadcastView), storyWithLiveSupportModel.Broadcast);
+                        {
+                            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, ()=>
+                                Helpers.NavigationService.Navigate(typeof(Broadcast.LiveBroadcastView), storyWithLiveSupportModel.Broadcast));
+                        }
                     }
                     // old code
                     //if (e.ClickedItem is InstaReelFeed reelFeed && reelFeed != null)

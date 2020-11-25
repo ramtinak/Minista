@@ -14,7 +14,7 @@
     xmlns:selector="using:Minista.Selectors"
     xmlns:vlc="using:LibVLCSharp.Platforms.UWP"
     xmlns:vm="using:Minista.ViewModels.Broadcast"
-    NavigationCacheMode="Enabled">
+    NavigationCacheMode="Disabled">
     <Page.Resources>
         <ResourceDictionary>
             <converters:CountConverter x:Key="CountConverter" />
