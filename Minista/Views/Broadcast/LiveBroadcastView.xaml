@@ -52,7 +52,7 @@
                 </interactions:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </vlc:VideoView>
-        <Grid  Margin="48 0 0 0">
+        <Grid  Margin="48 42 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -165,10 +165,9 @@
             <Button x:Name="RotateButton" Grid.Column="2" Content="" Height="38" Width="42"
                     FontFamily="{StaticResource MaterialSymbolFont}"
                     FontSize="{StaticResource BigBigFontSize}"
-                Grid.RowSpan="3"
                     Margin="5"
                 VerticalAlignment="Center"
-                Click="RotateButtonClick" Foreground="White" Background="#33545454"/>
+                Click="RotateButtonClick" Foreground="White" Background="#90545454"/>
         </Grid>
         <TextBlock Text="{Binding BroadcastStatus, Mode=TwoWay}"
                    Opacity=".8"

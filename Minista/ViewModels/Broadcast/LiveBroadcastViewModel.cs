@@ -246,7 +246,7 @@ namespace Minista.ViewModels.Broadcast
                 Timer.Stop();
                 MediaPlayer?.Stop();
 
-                BroadcastStatus = $"They Kicked you OUT, You won't be able to come back to @{Broadcast.BroadcastOwner.UserName.ToLower()}'s lives.";
+               ShowNotify(BroadcastStatus = $"They Kicked you OUT, You won't be able to come back to @{Broadcast.BroadcastOwner.UserName.ToLower()}'s lives.", 4500);
             }
             catch { }
         }
