@@ -382,7 +382,7 @@ namespace Minista.Views.Main
             catch { }
         }
 
-        private async void LVStoriesItemClick(object sender, ItemClickEventArgs e)
+        private void LVStoriesItemClick(object sender, ItemClickEventArgs e)
         {
             try
             {
@@ -409,8 +409,7 @@ namespace Minista.Views.Main
                         }
                         else if (storyWithLiveSupportModel.Type == StoryType.Broadcast)
                         {
-                            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, ()=>
-                                Helpers.NavigationService.Navigate(typeof(Broadcast.LiveBroadcastView), storyWithLiveSupportModel.Broadcast));
+                            Helper.OpenLive(storyWithLiveSupportModel.Broadcast);
                         }
                     }
                     // old code

@@ -27,6 +27,7 @@ namespace Minista.Views.Settings
         private bool IsPageLoaded = false;
         private bool GhostMode = false;
         private int MenuIndex = 0;
+        private int LivePlaybackIndex = 0;
 
         private bool CanDoThings = false;
         public SettingsView()
@@ -42,7 +43,7 @@ namespace Minista.Views.Settings
             try
             {
                 comboAppMenu.SelectedIndex = MenuIndex;
-
+                comboLivePlayback.SelectedIndex = LivePlaybackIndex;
                 toggleGhostMode.IsOn = GhostMode;
 
                 togglePrivateAccount.IsOn = Helper.CurrentUser.IsPrivate;
@@ -119,6 +120,7 @@ namespace Minista.Views.Settings
             {
                 MenuIndex = SettingsHelper.Settings.HeaderPosition == HeaderPosition.Top ? 0 : 1;
                 GhostMode = SettingsHelper.Settings.GhostMode;
+                LivePlaybackIndex = SettingsHelper.Settings.LivePlaybackType == LivePlaybackType.Minista ? 0 : 1;
             }
         }
 
@@ -145,6 +147,19 @@ namespace Minista.Views.Settings
             catch { }
         }
 
+        private void ComboLivePlaybackSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!CanDoThings) return;
+            try
+            {
+                if (comboLivePlayback.SelectedIndex == -1) return;
+                if (comboLivePlayback.SelectedIndex == 0)
+                    SettingsHelper.Settings.LivePlaybackType = LivePlaybackType.Minista;
+                else 
+                    SettingsHelper.Settings.LivePlaybackType = LivePlaybackType.LibVLC;
+            }
+            catch { }
+        }
         private void ToggleGhostModeToggled(object sender, RoutedEventArgs e)
         {
             if (!CanDoThings) return;
@@ -560,5 +575,6 @@ namespace Minista.Views.Settings
             catch { }
             NavigateToPassword();
         }
+
     }
 }

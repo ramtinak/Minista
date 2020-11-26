@@ -10,6 +10,7 @@ namespace Minista.Enums
     {
         Media,
         Story,
-        Profile
+        Profile,
+        Broadcast
     }
 }

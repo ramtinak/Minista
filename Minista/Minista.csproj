@@ -248,7 +248,9 @@
       <DependentUpon>UniversalProfile.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Broadcast\LiveBroadcastViewModel.cs" />
+    <Compile Include="ViewModels\Broadcast\MinistaBroadcasdViewModel.cs" />
     <Compile Include="ViewModels\Broadcast\RelayCommand.cs" />
+    <Compile Include="ViewModels\Broadcast\VlcBroadcastViewModel.cs" />
     <Compile Include="ViewModels\Main\NonFollowersViewModel.cs" />
     <Compile Include="ViewModels\Posts\UserDetails\ScrollableUserShopPostViewModel.cs" />
     <Compile Include="ViewModels\Posts\UserDetails\ScrollableUserTaggedPostViewModel.cs" />
@@ -264,6 +266,9 @@
     </Compile>
     <Compile Include="Views\Broadcast\LiveBroadcastView.xaml.cs">
       <DependentUpon>LiveBroadcastView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Broadcast\VlcLiveBroadcastView.xaml.cs">
+      <DependentUpon>VlcLiveBroadcastView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Direct\MainViewInboxUc.xaml.cs">
       <DependentUpon>MainViewInboxUc.xaml</DependentUpon>
@@ -989,6 +994,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Broadcast\VlcLiveBroadcastView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Direct\DirectRequestsThreadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1341,6 +1350,10 @@
     <ProjectReference Include="..\..\Minista\InstagramApiSharp\InstagramApiSharp.csproj">
       <Project>{d7d254a4-843e-4e23-9513-ac89eb163168}</Project>
       <Name>InstagramApiSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Minista\MinistaLivePlayback\MinistaLivePlayback.csproj">
+      <Project>{86a0b47f-5cd2-42a0-8543-50cd63a10f4e}</Project>
+      <Name>MinistaLivePlayback</Name>
     </ProjectReference>
     <ProjectReference Include="..\Libs\Base\Base.csproj">
       <Project>{c668bae7-96d4-4384-895f-d36feb0f80f8}</Project>

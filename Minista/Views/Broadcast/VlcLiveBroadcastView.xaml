@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Minista.Views.Broadcast.LiveBroadcastView"
+    x:Class="Minista.Views.Broadcast.VlcLiveBroadcastView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -12,6 +12,7 @@
     xmlns:local="using:Minista.Views.Broadcast"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:selector="using:Minista.Selectors"
+    xmlns:vlc="using:LibVLCSharp.Platforms.UWP"
     xmlns:vm="using:Minista.ViewModels.Broadcast"
     NavigationCacheMode="Disabled">
     <Page.Resources>
@@ -30,7 +31,7 @@
         </ResourceDictionary>
     </Page.Resources>
     <Page.DataContext>
-        <vm:MinistaBroadcasdViewModel x:Name="LiveVM" x:FieldModifier="public"/>
+        <vm:VlcBroadcastViewModel x:Name="LiveVM" x:FieldModifier="public"/>
     </Page.DataContext>
 
     <Grid Background="{StaticResource DefaultBackgroundColor}">
@@ -39,8 +40,17 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <MediaElement x:Name="mediaElement" Grid.RowSpan="3"/>
-
+        <vlc:VideoView
+                x:Name="VlcVideoView"
+                Grid.RowSpan="3"
+                FlowDirection="LeftToRight"
+                MediaPlayer="{Binding MediaPlayer}" RenderTransformOrigin="0.5,0.5">
+            <interactivity:Interaction.Behaviors>
+                <interactions:EventTriggerBehavior EventName="Initialized">
+                    <interactions:InvokeCommandAction Command="{Binding InitializedCommand}" />
+                </interactions:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+        </vlc:VideoView>
         <Grid  Margin="48 42 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -213,7 +223,7 @@
                                     <ColumnDefinition Width="58" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                    <Ellipse
+                                <Ellipse
                                             Grid.Column="0"
                                             Width="41"
                                             Height="41"
@@ -221,18 +231,18 @@
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Top"
                                             StrokeThickness="0">
-                                        <Ellipse.Stroke>
-                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                                <GradientStop Color="#D78F1EA0" />
-                                                <GradientStop Offset="1" Color="#D795007A" />
-                                            </LinearGradientBrush>
-                                        </Ellipse.Stroke>
-                                        <Ellipse.Fill>
-                                            <ImageBrush ImageSource="{Binding User.ProfilePicture}" />
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                    <Grid Grid.Column="1" Margin="5">
-                                        <TextBlock
+                                    <Ellipse.Stroke>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="#D78F1EA0" />
+                                            <GradientStop Offset="1" Color="#D795007A" />
+                                        </LinearGradientBrush>
+                                    </Ellipse.Stroke>
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding User.ProfilePicture}" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Grid Grid.Column="1" Margin="5">
+                                    <TextBlock
                                                     Margin="1.5,3.5,0,0"
                                                     VerticalAlignment="Center"
                                                     FontFamily="{StaticResource VazirFont}"
@@ -240,7 +250,7 @@
                                                     Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                     Text="{Binding User.UserName}" />
 
-                                    </Grid>
+                                </Grid>
                                 <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="1"
@@ -259,7 +269,7 @@
             </Grid>
             <Grid x:Name="CommentsGrid"
                   Grid.Row="1"
-                    Background="#FF1D1D1D">   
+                    Background="#FF1D1D1D">
                 <Grid
                     Grid.Row="1"
                     MaxWidth="750"

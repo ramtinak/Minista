@@ -376,6 +376,26 @@ static class Helper
                 NavigationService.Navigate(typeof(Minista.Views.Infos.UserDetailsView), search);
         }
     }
+    public async static void OpenLive(InstaBroadcast broadcast)
+    {
+        if (SettingsHelper.Settings.LivePlaybackType == LivePlaybackType.Minista)
+            NavigationService.Navigate(typeof(Minista.Views.Broadcast.LiveBroadcastView), broadcast);
+        else
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                  NavigationService.Navigate(typeof(Minista.Views.Broadcast.VlcLiveBroadcastView), broadcast));
+        }
+    }
+    public async static void OpenLive(string broadcastId)
+    {
+        if (SettingsHelper.Settings.LivePlaybackType == LivePlaybackType.Minista)
+            NavigationService.Navigate(typeof(Minista.Views.Broadcast.LiveBroadcastView), broadcastId);
+        else
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                  NavigationService.Navigate(typeof(Minista.Views.Broadcast.VlcLiveBroadcastView), broadcastId));
+        }
+    }
     public static void ShowNotify(string text, int duration = 1500)
     {
         try

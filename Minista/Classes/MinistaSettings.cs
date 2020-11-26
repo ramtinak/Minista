@@ -8,6 +8,7 @@ namespace Minista.Classes
 {
     public class MinistaSettings
     {
+        public LivePlaybackType LivePlaybackType { get; set; } = LivePlaybackType.LibVLC;
         public HeaderPosition HeaderPosition { get; set; } = HeaderPosition.Top;
         public bool GhostMode { get; set; } = false;
         public bool AskedAboutPosition { get; set; } = false;
@@ -22,5 +23,10 @@ namespace Minista.Classes
     {
         Top,
         Bottom
+    }
+    public enum LivePlaybackType
+    {
+        Minista,
+        LibVLC
     }
 }

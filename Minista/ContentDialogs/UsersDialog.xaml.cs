@@ -38,6 +38,7 @@ namespace Minista.ContentDialogs
         public InstaReelFeed ReelFeed;
         public InstaMedia Media;
         public InstaUserShort UserProfile;
+        public InstaBroadcast Broadcast;
         public ObservableCollection<UserDialogUc> Items { get; set; } = new ObservableCollection<UserDialogUc>();
         public ObservableCollection<UserDialogUc> ItemsSearch { get; set; } = new ObservableCollection<UserDialogUc>();
         public ObservableCollection<InstaDirectInboxThread> ItemsSenders { get; set; } = new ObservableCollection<InstaDirectInboxThread>();
@@ -63,6 +64,27 @@ namespace Minista.ContentDialogs
                 if (IsPrivate)
                 {
                     txtPrivateAccount.Text = $"Only {media.User.UserName.ToLower()}'s followers can see this post.";
+                    PrivateAccountGrid.Visibility = Visibility.Visible;
+                }
+                else
+                    PrivateAccountGrid.Visibility = Visibility.Collapsed;
+            }
+            catch { }
+        }
+        public UsersDialog(InstaBroadcast broadcast) : this()
+        {
+            Broadcast = broadcast;
+            UsersDialogCommand = UsersDialogCommand.Broadcast;
+            try
+            {
+                IsPrivate = broadcast.BroadcastOwner.IsPrivate;
+            }
+            catch { }
+            try
+            {
+                if (IsPrivate)
+                {
+                    txtPrivateAccount.Text = $"Only {broadcast.BroadcastOwner.UserName.ToLower()}'s followers can see this live.";
                     PrivateAccountGrid.Visibility = Visibility.Visible;
                 }
                 else
@@ -200,6 +222,16 @@ namespace Minista.ContentDialogs
                         }
                         Helper.ShowNotify($"Profile shared to {ItemsSenders.Count} people{(ItemsSenders.Count == 1 ? "" : "s")}");
                     }
+                    else if (UsersDialogCommand == UsersDialogCommand.Broadcast)
+                    {
+                        foreach (var item in ItemsSenders)
+                        {
+                            await SendLive(item);
+                            await Task.Delay(rnd.Next(750, 1500));
+                        }
+                        Helper.ShowNotify($"Live shared to {ItemsSenders.Count} people{(ItemsSenders.Count == 1 ? "" : "s")}");
+                    }
+                    
                 });
             }
             catch { }
@@ -298,6 +330,31 @@ namespace Minista.ContentDialogs
         }
 
 
+        async Task SendLive(InstaDirectInboxThread thread)
+        {
+            try
+            {
+                if (thread.Title.Contains("FAKETHREAD"))
+                {
+                    var userIds = new List<long>();
+
+                    foreach (var user in thread.Users)
+                        userIds.Add(user.Pk);
+                   await Helper.InstaApi.LiveProcessor
+                     .ShareLiveToDirectRecipientAsync("", Broadcast.Id, string.Join(",", userIds));
+                    if (!string.IsNullOrEmpty(MessageText.Text))
+                        await Helper.InstaApi.MessagingProcessor.SendDirectTextAsync(string.Join(",", userIds), null, MessageText.Text);
+                }
+                else
+                {
+                    await Helper.InstaApi.LiveProcessor
+                     .ShareLiveToDirectThreadAsync("", Broadcast.Id, new string[] { thread.ThreadId });
+                    if (!string.IsNullOrEmpty(MessageText.Text))
+                        await Helper.InstaApi.MessagingProcessor.SendDirectTextAsync(null, thread.ThreadId, MessageText.Text);
+                }
+            }
+            catch { }
+        }
         #region Events
         private void LVItemClick(object sender, ItemClickEventArgs e)
         {

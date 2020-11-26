@@ -261,6 +261,53 @@
                                       FontFamily="{StaticResource VazirFont}"
                                       Margin="4 0"
                                       Click="AddPassLockToggleButtonClick" />
+
+
+                        <Rectangle Fill="#FF363636"
+                                   Height="1.5"
+                                   Margin="15 2.5"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" />
+                        <StackPanel>
+                            <Grid Margin="0 5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="Live Playback"
+                                           Margin="6 4"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                           FontSize="{StaticResource DefaultFontSize}"
+                                           FontFamily="{StaticResource VazirFont}" />
+                                <ComboBox x:Name="comboLivePlayback"
+                                      Margin="4"
+                                      Grid.Column="1"
+                                      Width="160"
+                                      BorderThickness=".8"
+                                      Background="Transparent"
+                                      FontSize="{StaticResource DefaultFontSize}"
+                                      FontFamily="{StaticResource VazirFont}"
+                                      SelectionChanged="ComboLivePlaybackSelectionChanged">
+                                    <ComboBoxItem Content="Minista"
+                                              FontSize="{StaticResource DefaultFontSize}"
+                                              FontFamily="{StaticResource VazirFont}" />
+
+                                    <ComboBoxItem Content="LibVLC"
+                                              FontSize="{StaticResource DefaultFontSize}"
+                                              FontFamily="{StaticResource VazirFont}" />
+                                </ComboBox>
+                            </Grid>
+                            <TextBlock Text="Choose a decoder for live broadcasting. Change this if you have problem with LIVE playback." TextWrapping="Wrap"
+                                       Margin="8 2 4 2"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       FontSize="{StaticResource TinyFontSize}"
+                                       FontFamily="{StaticResource VazirFont}"
+                                       Foreground="#FFCBCBCB" />
+
+                        </StackPanel>
                     </StackPanel>
 
                 </uiControls:Expander>

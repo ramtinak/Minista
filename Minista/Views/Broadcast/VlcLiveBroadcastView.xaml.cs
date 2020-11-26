@@ -28,37 +28,27 @@ using Windows.Storage.Streams;
 using System.Xml.Serialization;
 using System.Xml;
 
+
 namespace Minista.Views.Broadcast
 {
-    public sealed partial class LiveBroadcastView : Page
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class VlcLiveBroadcastView : Page
     {
         CompositeTransform LastCompositeTransform;
         private InstaBroadcast Broadcast;
         private string BroadcastId;
-        public static LiveBroadcastView Current;
-
-        const double MaxVolume = 1; 
-        double indexVolume = 1; 
-        double LastPositionVolume = 0; 
-
-        public LiveBroadcastView()
+        public static VlcLiveBroadcastView Current;
+        public VlcLiveBroadcastView()
         {
             InitializeComponent();
             Current = this;
-            Loaded += LiveBroadcastViewLoaded;
-
+            Loaded += VlcLiveBroadcastViewLoaded;
         }
 
-        private async void LiveBroadcastViewLoaded(object sender, RoutedEventArgs e)
+        private async void VlcLiveBroadcastViewLoaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                mediaElement.ManipulationMode = ManipulationModes.TranslateY;
-                mediaElement.ManipulationDelta -= OnManipulationDelta;
-                mediaElement.ManipulationDelta += OnManipulationDelta;
-            }
-            catch { }
-
             try
             {
                 LiveVM.Reset();
@@ -69,7 +59,7 @@ namespace Minista.Views.Broadcast
                     await LiveVM.SetBroadcast(Broadcast);
                     HideLoading();
                     await Task.Delay(500);
-                    LiveVM.Play(mediaElement);
+                    LiveVM.Play();
                 }
                 else if (!string.IsNullOrEmpty(BroadcastId))
                 {
@@ -77,65 +67,8 @@ namespace Minista.Views.Broadcast
                     await LiveVM.SetBroadcast(BroadcastId);
                     HideLoading();
                     await Task.Delay(500);
-                    LiveVM.Play(mediaElement);
+                    LiveVM.Play();
                 }
-            }
-            catch { }
-        }
-        private void OnManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-        {
-            if (LastPositionVolume < e.Position.Y)
-            {
-                if (indexVolume > 0)
-                {
-                    indexVolume -= .005;
-                    VolumeResult(indexVolume);
-                    string.Format("Volume: {0}%", (int)(indexVolume * 100));
-                }
-                else
-                {
-                    VolumeResult(indexVolume = 0);
-                }
-            }
-            else
-            {
-                if (indexVolume < MaxVolume)
-                {
-                    indexVolume += .005;
-                    VolumeResult(indexVolume);
-                }
-                else
-                    VolumeResult(indexVolume = MaxVolume);
-            }
-            LastPositionVolume = e.Position.Y;
-        }
-        private void OnPointerWheelChanged(CoreWindow sender, PointerEventArgs e)
-        {
-            // Changing volume is not working in LibVLC
-            try
-            {
-                if (LiveVM.MinistaPlayer.MediaPlayer != null)
-                {
-                    if (e.CurrentPoint.Properties.MouseWheelDelta > 0)
-                    {
-                        if (LiveVM.MinistaPlayer.MediaPlayer.Volume < 1.0)
-                            VolumeResult(LiveVM.MinistaPlayer.MediaPlayer.Volume + .005);
-                    }
-                    else
-                    {
-                        if (LiveVM.MinistaPlayer.MediaPlayer.Volume > 0)
-                            VolumeResult(LiveVM.MinistaPlayer.MediaPlayer.Volume - .005);
-                    }
-                }
-            }
-            catch { }
-        }
-        void VolumeResult(double volume)
-        {
-            try
-            {
-                if (LiveVM.MinistaPlayer?.MediaPlayer != null)
-                    LiveVM.MinistaPlayer.MediaPlayer.Volume = volume;
             }
             catch { }
         }
@@ -155,18 +88,16 @@ namespace Minista.Views.Broadcast
                 BroadcastId = broadcastId;
                 Broadcast = null;
             }
-            Window.Current.CoreWindow.PointerWheelChanged += OnPointerWheelChanged;
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
             MainPage.Current?.ShowHeaders();
             Helper.ShowStatusBar();
-            Window.Current.CoreWindow.PointerWheelChanged -= OnPointerWheelChanged;
-
             NavigationService.HideSystemBackButton();
             if (MainPage.Current != null)
                 NavigationService.ShowBackButton();
+           
             try
             {
                 Broadcast = null;
@@ -186,17 +117,17 @@ namespace Minista.Views.Broadcast
             if (LastCompositeTransform == null)
             {
                 LastCompositeTransform = new CompositeTransform { Rotation = -90 };
-                mediaElement.Width = double.NaN;
-                mediaElement.Height = double.NaN;
+                VlcVideoView.Width = double.NaN;
+                VlcVideoView.Height = double.NaN;
             }
             else
             {
                 LastCompositeTransform = null;
-                mediaElement.Width = double.NaN;
-                mediaElement.Height = double.NaN;
+                VlcVideoView.Width = double.NaN;
+                VlcVideoView.Height = double.NaN;
             }
-            mediaElement.RenderTransformOrigin = new Point(0.5, 0.5);
-            mediaElement.RenderTransform = LastCompositeTransform;
+            VlcVideoView.RenderTransformOrigin = new Point(0.5, 0.5);
+            VlcVideoView.RenderTransform = LastCompositeTransform;
         }
 
         private async void CommentButtonClick(object sender, RoutedEventArgs e)
