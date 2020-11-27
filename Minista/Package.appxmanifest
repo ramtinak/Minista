@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:desktop4="http://schemas.microsoft.com/appx/manifest/desktop/windows10/4" IgnorableNamespaces="uap mp uap2 uap3 desktop4">
-  <Identity Name="64775ParseDevInc.Minista" Publisher="CN=ACB1F19A-470F-487C-A7C7-D50D6F38E651" Version="2.1.8.0" />
+  <Identity Name="64775ParseDevInc.Minista" Publisher="CN=ACB1F19A-470F-487C-A7C7-D50D6F38E651" Version="2.2.4.0" />
   <mp:PhoneIdentity PhoneProductId="ab8b48e2-aae8-41ca-a146-d5922bff2c74" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Minista - Better Experience with Instagram in Windows 10 Devices</DisplayName>
