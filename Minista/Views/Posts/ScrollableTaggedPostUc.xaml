@@ -103,8 +103,7 @@
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <uc:MediaMainX2Uc DataContext="{Binding}"
-                                                  IsArchivePost="True" />
+                                <uc:MediaMainX2Uc DataContext="{Binding}" />
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
