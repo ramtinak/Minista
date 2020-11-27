@@ -21,7 +21,7 @@ namespace InstagramApiSharp.API.RealTime
         /// <summary>
         ///     Send direct text message to threads
         /// </summary>
-        /// <param name="threadIds">Message thread ids</param>
+        /// <param name="threadId">Message thread ids</param>
         /// <param name="text">Message text</param>
         public async Task<IResult<InstaDirectRespondPayload>> SendDirectTextAsync(string threadId, string text)
         {
@@ -54,7 +54,6 @@ namespace InstagramApiSharp.API.RealTime
         /// <param name="threadId">Thread id</param>
         /// <param name="text">Text to send</param>
         /// <param name="link">Link to send (only one link will approved)</param>
-        /// <returns>Returns True if link sent</returns>
         public async Task<IResult<InstaDirectRespondPayload>> SendDirectLinkAsync(string threadId, string text, string link)
         {
             var data = new Dictionary<string, string>
@@ -72,7 +71,6 @@ namespace InstagramApiSharp.API.RealTime
         /// <param name="recipientId">Recipient id</param>
         /// <param name="text">Text to send</param>
         /// <param name="link">Link to send (only one link will approved)</param>
-        /// <returns>Returns True if link sent</returns>
         public async Task<IResult<InstaDirectRespondPayload>> SendDirectLinkToRecipientsAsync(string recipientId, string text, string link)
         {
             var data = new Dictionary<string, string>
@@ -88,8 +86,7 @@ namespace InstagramApiSharp.API.RealTime
         ///     Send location to direct thread
         /// </summary>
         /// <param name="threadId">Thread ids</param>
-        /// <param name="externalId">External id (get it from <seealso cref="ILocationProcessor.SearchLocationAsync"/></param>
-        /// <returns>Returns True if location sent</returns>
+        /// <param name="externalId">External id (get it from <seealso cref="Processors.ILocationProcessor.SearchLocationAsync"/></param>
         public async Task<IResult<InstaDirectRespondPayload>> SendDirectLocationAsync(string threadId, string externalId)
         {
             var data = new Dictionary<string, string>
@@ -104,8 +101,7 @@ namespace InstagramApiSharp.API.RealTime
         ///     Send location to recipients
         /// </summary>
         /// <param name="recipientId">Recipient id</param>
-        /// <param name="externalId">External id (get it from <seealso cref="ILocationProcessor.SearchLocationAsync"/></param>
-        /// <returns>Returns True if location sent</returns>
+        /// <param name="externalId">External id (get it from <seealso cref="Processors.ILocationProcessor.SearchLocationAsync"/></param>
         public async Task<IResult<InstaDirectRespondPayload>> SendDirectLocationToRecipientsAsync(string recipientId, string externalId)
         {
             var data = new Dictionary<string, string>
@@ -121,7 +117,6 @@ namespace InstagramApiSharp.API.RealTime
         /// </summary>
         /// <param name="threadId">Thread id</param>
         /// <param name="userIdToSend">User id to send</param>
-        /// <returns>Returns True if profile sent</returns>
         public async Task<IResult<InstaDirectRespondPayload>> SendDirectProfileAsync(string threadId, long userIdToSend)
         {
             var data = new Dictionary<string, string>
@@ -137,7 +132,6 @@ namespace InstagramApiSharp.API.RealTime
         /// </summary>
         /// <param name="recipientId">Recipient id</param>
         /// <param name="userIdToSend">User id to send</param>
-        /// <returns>Returns True if profile sent</returns>
         public async Task<IResult<InstaDirectRespondPayload>> SendDirectProfileToRecipientsAsync(string recipientId, long userIdToSend)
         {
             var data = new Dictionary<string, string>
@@ -153,7 +147,6 @@ namespace InstagramApiSharp.API.RealTime
         /// </summary>
         /// <param name="threadId">Thread id</param>
         /// <param name="mediaId">Media id</param>
-        /// <param name="mediaType">Media type</param>
         /// <param name="text">Text to send</param>
         public async Task<IResult<InstaDirectRespondPayload>> ShareMediaToThreadAsync(string threadId, string mediaId, string text = null)
         {
@@ -172,7 +165,6 @@ namespace InstagramApiSharp.API.RealTime
         /// </summary>
         /// <param name="recipientId">Recipient id</param>
         /// <param name="mediaId">Media id</param>
-        /// <param name="mediaType">Media type</param>
         /// <param name="text">Text to send</param>
         public async Task<IResult<InstaDirectRespondPayload>> ShareMediaToUserAsync(string recipientId, string mediaId, string text = null)
         {
@@ -191,7 +183,6 @@ namespace InstagramApiSharp.API.RealTime
         /// </summary>
         /// <param name="threadId">Thread id</param>
         /// <param name="mediaId">Media identifier to send</param>
-        /// <returns>Returns True if felix share sent</returns>
         public async Task<IResult<InstaDirectRespondPayload>> SendDirectFelixShareAsync(string threadId, string mediaId)
         {
             var data = new Dictionary<string, string>
@@ -207,7 +198,6 @@ namespace InstagramApiSharp.API.RealTime
         /// </summary>
         /// <param name="recipientId">Recipient id</param>
         /// <param name="mediaId">Media identifier to send</param>
-        /// <returns>Returns True if felix share sent</returns>
         public async Task<IResult<InstaDirectRespondPayload>> SendDirectFelixShareToRecipientsAsync(string recipientId, string mediaId)
         {
             var data = new Dictionary<string, string>
@@ -224,7 +214,6 @@ namespace InstagramApiSharp.API.RealTime
         /// <param name="threadId">Thread id</param>
         /// <param name="text">Text to send</param>
         /// <param name="hashtag">Hashtag to send</param>
-        /// <returns>Returns True if hashtag sent</returns>
         public async Task<IResult<InstaDirectRespondPayload>> SendDirectHashtagAsync(string threadId, string text, string hashtag)
         {
             var data = new Dictionary<string, string>
@@ -236,14 +225,12 @@ namespace InstagramApiSharp.API.RealTime
             };
             return await SendDirectItem(data);
         }
-
         /// <summary>
         ///     Send hashtag to recipients
         /// </summary>
         /// <param name="recipientId">Recipient id</param>
         /// <param name="text">Text to send</param>
         /// <param name="hashtag">Hashtag to send</param>
-        /// <returns>Returns True if hashtag sent</returns>
         public async Task<IResult<InstaDirectRespondPayload>> SendDirectHashtagToRecipientsAsync(string recipientId, string text, string hashtag)
         {
             var data = new Dictionary<string, string>
@@ -296,23 +283,16 @@ namespace InstagramApiSharp.API.RealTime
             };
             return await SendDirectItem(data);
         }
+        /// <summary>
+        ///     Like a message in thread
+        /// </summary>
+        /// <param name="threadId">Thread id</param>
+        /// <param name="itemId">Item (message) id</param>
         public async Task<IResult<bool>> LikeThreadMessageAsync(string threadId, string itemId)
         {
             try
             {
-                var token =/* ExtensionHelper.GetThreadToken()*/Guid.NewGuid().ToString();
-//item_type=reaction&
-//reaction_type=like&
-//action=send_item&
-//thread_ids=[340282366841710300949128148722678938640]&
-//client_context=6687326311760832960&
-//_csrftoken=tmqdvmqM1YjSauVdSOpIPnbCW3d2Dxxh&
-//mutation_token=6687326311760832960&
-//_uuid=fe3634e6-d3ec-4f01-943e-20381fdd9e19&
-//node_type=item&
-//reaction_status=created&
-//item_id=29414953485080962978249978855555072&
-//device_id=android-35b3eb8488e1e15c
+                var token = ExtensionHelper.GetThreadToken();
                 var data = new Dictionary<string, string>
                 {
                     {"action", "send_item"},
@@ -335,7 +315,6 @@ namespace InstagramApiSharp.API.RealTime
                 await FbnsPacketEncoder.EncodePacket(publishPacket, _outboundWriter);
 
                 return Result.Success(true);
-
             }
             catch (SocketException socketException)
             {
@@ -346,12 +325,16 @@ namespace InstagramApiSharp.API.RealTime
                 return Result.Fail<bool>(exception);
             }
         }
-
+        /// <summary>
+        ///     Indicate activity
+        /// </summary>
+        /// <param name="threadId">Thread id</param>
+        /// <param name="isActive">Active status</param>
         public async Task<IResult<bool>> IndicateActivityAsync(string threadId, bool isActive)
         {
             try
             {
-                var token = ExtensionHelper.GetThreadToken()/*Guid.NewGuid().ToString()*/;
+                var token = ExtensionHelper.GetThreadToken();
 
                 var data = new Dictionary<string, string>
                 {
@@ -389,7 +372,7 @@ namespace InstagramApiSharp.API.RealTime
             try
             {
                 if (string.IsNullOrEmpty(token))
-                    token = ExtensionHelper.GetThreadToken()/*Guid.NewGuid().ToString()*/;
+                    token = ExtensionHelper.GetThreadToken();
 
                 var data = new Dictionary<string, string>
                 {
