@@ -213,13 +213,14 @@ namespace Minista.Views.Uploads
                             HorizontalAlignment = HorizontalAlignment.Stretch,
                             VerticalAlignment = VerticalAlignment.Stretch
                         };
-                        uc.SetFile(file);
+                        uc.SetNewFile(file);
                         item.UploadUc = uc;
                         UploadUcListX.Add(item);
                         //item.SetThumbIfExists();
                         //UploadUcList.Add(uc);
                     }
                     await Task.Delay(500);
+                    var tasks = new List<Task>();
                     foreach (var item in UploadUcListX)
                     {
                         try
@@ -228,13 +229,12 @@ namespace Minista.Views.Uploads
                             {
                                 item.Started = true;
                                 item.Loadings.Start();
+                                tasks.Add(item.UploadUc.InitFileAsync());
                             }
                         }
                         catch { }
                     }
                     await Task.Delay(3000);
-                    foreach (var item in UploadUcListX)
-                        item.SetThumbIfExists();
                     if (UploadUcListX.Count < 9)
                     {
                         var item = new UploadUcItem
@@ -245,6 +245,10 @@ namespace Minista.Views.Uploads
                         UploadUcListX.Add(item);
                     }
                     if (!appendFiles && UploadUcListX.Count > 0) CPresenter.Content = UploadUcListX[0].UploadUc;
+
+                    await Task.WhenAll(tasks);
+                    foreach (var item in UploadUcListX)
+                        item.SetThumbIfExists();
                     LoadingUc.Stop();
 
                 }

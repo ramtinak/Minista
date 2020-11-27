@@ -131,6 +131,15 @@ namespace Minista.Views.Uploads
             return upItem;
         }
         bool CanCrop = false;
+        StorageFile OriginalFile;
+        public void SetNewFile(StorageFile file)
+        {
+            Editing = true;
+            CanCrop = false;
+            OriginalFile = file;
+        }
+        public void InitFile() => SetFile(OriginalFile);
+        public async Task InitFileAsync() => await SetFileAsync(OriginalFile); 
         public async void SetFile(StorageFile file)
         {
             try
