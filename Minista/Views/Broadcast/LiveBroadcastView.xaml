@@ -44,9 +44,8 @@
         <Grid  Margin="48 42 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -119,7 +118,7 @@
                                   Grid.ColumnSpan="5"
                                   Opacity="0" />
             </Grid>
-            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
                 <Border VerticalAlignment="Center" Width="{Binding Width, ElementName=ViewerBorder, Mode=TwoWay}"
                                     HorizontalAlignment="Center"
                                     CornerRadius="5" Margin="5 1">
@@ -149,14 +148,14 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center" />
                 </Border>
-            </StackPanel>
-
-            <Button x:Name="RotateButton" Grid.Column="2" Content="" Height="38" Width="42"
+                <Button x:Name="RotateButton" Grid.Column="2" Content="" Height="38" Width="42"
                     FontFamily="{StaticResource MaterialSymbolFont}"
                     FontSize="{StaticResource BigBigFontSize}"
                     Margin="5"
                 VerticalAlignment="Center"
                 Click="RotateButtonClick" Foreground="White" Background="#90545454"/>
+            </StackPanel>
+
         </Grid>
         <TextBlock Text="{Binding BroadcastStatus, Mode=TwoWay}"
                    Opacity=".8"
