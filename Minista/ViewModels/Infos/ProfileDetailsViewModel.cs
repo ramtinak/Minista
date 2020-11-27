@@ -29,14 +29,20 @@ namespace Minista.ViewModels.Infos
         Visibility _noPostsVisibility = Visibility.Collapsed;
         public Visibility NoPostsVisibility { get { return _noPostsVisibility; } set { _noPostsVisibility = value; OnPropertyChanged("NoPostsVisibility"); } }
 
+        Visibility _broadcastVisibility = Visibility.Collapsed;
+        public Visibility BroadcastVisibility { get { return _broadcastVisibility; } set { _broadcastVisibility = value; OnPropertyChanged("BroadcastVisibility"); View?.SetBroadcastVisibility(value == Visibility.Collapsed); } }
+        private double _storyStrokeThickness = 0;
+        public double StoryStrokeThickness { get { return _storyStrokeThickness; } set { _storyStrokeThickness = value; OnPropertyChanged("StoryStrokeThickness"); } }
 
+
+        private InstaBroadcast _broadcast;
         public ProfileDetailsView View;
         //private InstaStoryFriendshipStatus _friendshipStatus;
         private InstaUserInfo _user;
         //private bool FirstTime = true;
         //private string Username = null;
         public InstaUserInfo User { get { return _user; } set { _user = value; OnPropertyChanged("User"); SetBio(); } }
-
+        public InstaBroadcast Broadcast { get { return _broadcast; } set { _broadcast = value; OnPropertyChanged("Broadcast"); } }
         public UserDetailsMediasGenerator MediaGeneratror { get; set; } = new UserDetailsMediasGenerator();
         public UserDetailsTaggedMediasGenerator TaggedMediaGeneratror { get; set; } = new UserDetailsTaggedMediasGenerator();
         public UserDetailsTVMediasGenerator TVMediaGeneratror { get; set; } = new UserDetailsTVMediasGenerator();
@@ -74,6 +80,19 @@ namespace Minista.ViewModels.Infos
                     GetUserInfo();
                     View.SetBusinessProfile();
                 });
+            }
+            catch { }
+        }
+        public void SetBroadcast(InstaBroadcast broadcast)
+        {
+            try
+            {
+                Broadcast = broadcast;
+                BroadcastVisibility = broadcast != null ? Visibility.Visible : Visibility.Collapsed;
+                StoryStrokeThickness = broadcast != null ? 3 : 0;
+
+                if (broadcast == null)
+                    StoryStrokeThickness = Stories.Count > 0 ? 3 : 0;
             }
             catch { }
         }
@@ -193,13 +212,23 @@ namespace Minista.ViewModels.Infos
             {
                 await MainPage.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
                 {
-                    var stories = await InstaApi.StoryProcessor.GetUsersStoriesAsHighlightsAsync(User.Pk.ToString());
-                    if (stories.Succeeded)
+                    //var stories = await InstaApi.StoryProcessor.GetUsersStoriesAsHighlightsAsync(User.Pk.ToString());
+                    //if (stories.Succeeded)
+                    //{
+                    //    Stories.Clear();
+                    //    if (stories.Value.Items?.Count > 0)
+                    //        Stories.AddRange(stories.Value.Items);
+                    //}
+                    var st = await InstaApi.StoryProcessor.GetUserStoryAndLivesAsync(User.Pk);
+                    if (st.Succeeded)
                     {
                         Stories.Clear();
-                        if (stories.Value.Items?.Count > 0)
-                            Stories.AddRange(stories.Value.Items);
+                        if (st.Value.Reel != null)
+                            Stories.Add(st.Value.Reel);
+                        SetBroadcast(st.Value.Broadcast);
                     }
+                    else
+                        SetBroadcast(null);
                 });
             }
             catch { }

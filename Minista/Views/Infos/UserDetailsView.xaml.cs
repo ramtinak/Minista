@@ -107,6 +107,25 @@ namespace Minista.Views.Infos
             //var media = new InstaMedia();
             //media.Carousel[0].Images[0].Uri;
         }
+
+        public void SetBroadcastVisibility(bool hide)
+        {
+            try
+            {
+                if (AnimationStory != null)
+                {
+                    if (hide)
+                        AnimationStory.Stop();
+                    else
+                        AnimationStory.Begin();
+                }
+            }
+            catch { }
+        }
+        public void SetBroadcast(InstaBroadcast broadcast)
+        {
+            UserDetailsVM?.SetBroadcast(broadcast);
+        }
         public void ResetUserImage()
         {
             try
@@ -383,28 +402,19 @@ namespace Minista.Views.Infos
                 if (e.Parameter is InstaUserShort userShort && userShort != null)
                 {
                     ShowTVTab = false;
-                    //UserDetailsVM = new UserDetailsViewModel();
-                    //DataContext = UserDetailsVM;
                     UserShort = userShort;
                     UserShortFriendship = null;
                     Username = null;
-                    //NavigationCacheMode = NavigationCacheMode.Disabled;
-                    //NavigationCacheMode = NavigationCacheMode.Required;
                     try
                     {
-                        ConnectedAnimation imageAnimation =
-                            ConnectedAnimationService.GetForCurrentView().GetAnimation("UserImage");
+                        ConnectedAnimation imageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("UserImage");
                         if (imageAnimation != null)
                         {
                             ImageAnimationExists = true;
-                            //imageAnimation.Completed += ImageAnimationClose_Completed;
-                            //if (LatestGrid?.Name != InfoGrid.Name)
-                            //    LatestGrid.Background = new SolidColorBrush(Helper.GetColorFromHex("#FF2E2E2E"));
-
                             imageAnimation.TryStart(UserImage);
-                            //GridShadow.Visibility = GVSHOW.Visibility = Visibility.Collapsed;
                         }
-                        else ImageAnimationExists = false;
+                        else
+                            ImageAnimationExists = false;
                     }
                     catch { }
                 }
@@ -415,12 +425,6 @@ namespace Minista.Views.Infos
                     UserShort = null;
                     Username = null;
                 }
-                //else if (e.Parameter is InstaUserShortFriendship userShortFriendship)
-                //{
-                //    UserShortFriendship = userShortFriendship;
-                //    UserShort = null;
-                //    Username = null;
-                //}
                 else if (e.Parameter is string username && !string.IsNullOrEmpty(username))
                 {
                     ShowTVTab = false;
@@ -438,14 +442,14 @@ namespace Minista.Views.Infos
                     {
                         UserImage.Fill = tvSearch.User.ProfilePicture.GetImageBrush();
 
-                        ConnectedAnimation imageAnimation =
-                            ConnectedAnimationService.GetForCurrentView().GetAnimation("UserImage");
+                        ConnectedAnimation imageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("UserImage");
                         if (imageAnimation != null)
                         {
                             ImageAnimationExists = true;
                             imageAnimation.TryStart(UserImage);
                         }
-                        else ImageAnimationExists = false;
+                        else 
+                            ImageAnimationExists = false;
                     }
                     catch { }
                 }
@@ -453,39 +457,23 @@ namespace Minista.Views.Infos
                 else if (e.Parameter is object[] obj)
                 {
                     ShowTVTab = false;
-                    //UserDetailsVM = new UserDetailsViewModel();
-                    //DataContext = UserDetailsVM;
-                    //NavigationCacheMode = NavigationCacheMode.Disabled;
-                    //NavigationCacheMode = NavigationCacheMode.Required;
                     UserShort = obj[0] as InstaUserShort;
                     Username = null;
                     UserShortFriendship = null;
                     try
                     {
                         UserImage.Fill = obj[1] as Brush;
-                        ConnectedAnimation imageAnimation =
-                           ConnectedAnimationService.GetForCurrentView().GetAnimation("UserImage");
+                        ConnectedAnimation imageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("UserImage");
                         if (imageAnimation != null)
                         {
                             ImageAnimationExists = true;
-                            //imageAnimation.Completed += ImageAnimationClose_Completed;
-                            //if (LatestGrid?.Name != InfoGrid.Name)
-                            //    LatestGrid.Background = new SolidColorBrush(Helper.GetColorFromHex("#FF2E2E2E"));
-
                             imageAnimation.TryStart(UserImage);
-                            //GridShadow.Visibility = GVSHOW.Visibility = Visibility.Collapsed;
                         }
                         else
                             ImageAnimationExists = false;
                     }
                     catch { }
                 }
-
-                //if(e.NavigationMode == NavigationMode.New&& CanLoadFirstPopUp)
-                //{
-
-                //    LoadData();
-                //}
             }
   
         }
@@ -530,10 +518,7 @@ namespace Minista.Views.Infos
                 }
                 else
                 {
-#pragma warning disable IDE0019 // Use pattern matching
                     var pi = MPivot.Items[MPivot.SelectedIndex] as PivotItem;
-#pragma warning restore IDE0019 // Use pattern matching
-
                     if (pi != null)
                     {
                         if (pi.Tag is string str && !string.IsNullOrEmpty(str))
@@ -824,9 +809,7 @@ namespace Minista.Views.Infos
                         UserDetailsVM.Refresh();
                     else
                     {
-#pragma warning disable IDE0019 // Use pattern matching
                         var pi = MPivot.Items[MPivot.SelectedIndex] as PivotItem;
-#pragma warning restore IDE0019 // Use pattern matching
                         if (pi != null)
                         {
                             if (pi.Tag is string str && !string.IsNullOrEmpty(str))
@@ -1076,7 +1059,8 @@ namespace Minista.Views.Infos
             try
             {
 
-                if (UserDetailsVM.Stories == null || UserDetailsVM.Stories != null && UserDetailsVM.Stories.Count == 0)
+                if ((UserDetailsVM.Stories == null && UserDetailsVM.Broadcast == null) ||
+                    (UserDetailsVM.Stories != null && UserDetailsVM.Stories.Count == 0 && UserDetailsVM.Broadcast == null))
                     Helpers.NavigationService.Navigate(typeof(ImageVideoView), UserDetailsVM.User);
                 else
                 {
@@ -1088,15 +1072,25 @@ namespace Minista.Views.Infos
                     };
                     openPicture.Click += MenuOpenPictureClick;
 
-                    var openStory = new MenuFlyoutItem
-                    {
-                        Text = "Open stories",
-                        //Height = 48
-                    };
-                    openStory.Click += MenuOpenStoryClick;
-
                     UserImageFlyout.Items.Add(openPicture);
-                    UserImageFlyout.Items.Add(openStory);
+                    if (UserDetailsVM.Stories.Count > 0)
+                    {
+                        var openStory = new MenuFlyoutItem
+                        {
+                            Text = "Open stories",
+                        };
+                        openStory.Click += MenuOpenStoryClick;
+                        UserImageFlyout.Items.Add(openStory);
+                    }
+                    if (UserDetailsVM.Broadcast != null)
+                    {
+                        var openLive = new MenuFlyoutItem
+                        {
+                            Text = "Open live broadcast",
+                        };
+                        openLive.Click += MenuOpenLiveClick;
+                        UserImageFlyout.Items.Add(openLive);
+                    }
                     try
                     {
                         FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
@@ -1109,14 +1103,13 @@ namespace Minista.Views.Infos
             catch { }
         }
 
-        private void MenuOpenPictureClick(object sender, RoutedEventArgs e)
-        {
+        private void MenuOpenLiveClick(object sender, RoutedEventArgs e) => Helper.OpenLive(UserDetailsVM.Broadcast);
+
+        private void MenuOpenPictureClick(object sender, RoutedEventArgs e) =>
             Helpers.NavigationService.Navigate(typeof(ImageVideoView), UserDetailsVM.User);
-        }
-        private void MenuOpenStoryClick(object sender, RoutedEventArgs e)
-        {
+
+        private void MenuOpenStoryClick(object sender, RoutedEventArgs e) =>
             Helpers.NavigationService.Navigate(typeof(Main.StoryView), new object[] { UserDetailsVM.Stories.ToList(), 0 });
-        }
 
         private void RefreshButtonClick(object sender, RoutedEventArgs e)
         {

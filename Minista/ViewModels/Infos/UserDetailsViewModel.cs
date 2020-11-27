@@ -1,6 +1,7 @@
 ﻿using InstagramApiSharp.Classes.Models;
 using Minista.Helpers;
 using Minista.ItemsGenerators;
+using Minista.Models.Main;
 using Minista.Views.Infos;
 using System;
 using System.Collections.Generic;
@@ -28,16 +29,22 @@ namespace Minista.ViewModels.Infos
         public Visibility ChainingVisibility { get { return _chainingVisibility; } set { _chainingVisibility = value; OnPropertyChanged("ChainingVisibility"); } }
         Visibility _noPostsVisibility = Visibility.Collapsed;
         public Visibility NoPostsVisibility { get { return _noPostsVisibility; } set { _noPostsVisibility = value; OnPropertyChanged("NoPostsVisibility"); } }
+        Visibility _broadcastVisibility = Visibility.Collapsed;
+        public Visibility BroadcastVisibility { get { return _broadcastVisibility; } set { _broadcastVisibility = value; OnPropertyChanged("BroadcastVisibility"); View?.SetBroadcastVisibility(value == Visibility.Collapsed); } }
+        private double _storyStrokeThickness = 0;
+        public double StoryStrokeThickness { get { return _storyStrokeThickness; } set { _storyStrokeThickness = value; OnPropertyChanged("StoryStrokeThickness"); } }
 
 
         public UserDetailsView View;
         private InstaUserShort UserShort;
         private InstaStoryFriendshipStatus _friendshipStatus;
         private InstaUserInfo _user;
+        private InstaBroadcast _broadcast;
         //private bool FirstTime = true;
         private string Username = null;
         public InstaUserInfo User { get { return _user; } set { _user = value; OnPropertyChanged("User"); SetBio(); } }
         public InstaStoryFriendshipStatus FriendshipStatus { get { return _friendshipStatus; } set { _friendshipStatus = value; OnPropertyChanged("FriendshipStatus"); } }
+        public InstaBroadcast Broadcast { get { return _broadcast; } set { _broadcast = value; OnPropertyChanged("Broadcast"); } }
 
         public UserDetailsMediasGenerator MediaGeneratror { get; set; } = new UserDetailsMediasGenerator();
         public UserDetailsTaggedMediasGenerator TaggedMediaGeneratror { get; set; } = new UserDetailsTaggedMediasGenerator();
@@ -67,11 +74,13 @@ namespace Minista.ViewModels.Infos
             User = null;
             Username = null;
             TVChannel = null;
+            Broadcast = null;
             Highlights.Clear();
             Stories.Clear();
             ChainingSuggestions.Clear();
-            PrivateVisibility = NoPostsVisibility = ChainingVisibility = IGTVVisibility = HighlightsVisibility = Visibility.Collapsed;
+            PrivateVisibility = NoPostsVisibility = ChainingVisibility = IGTVVisibility = HighlightsVisibility = BroadcastVisibility = Visibility.Collapsed;
             View = null;
+            StoryStrokeThickness = 0;
         }
         public async void SetUsername(string username)
         {
@@ -143,6 +152,19 @@ namespace Minista.ViewModels.Infos
             GetUserInfo();
             GetHighlights();
             GetStories();
+        }
+        public void SetBroadcast(InstaBroadcast broadcast)
+        {
+            try
+            {
+                Broadcast = broadcast;
+                BroadcastVisibility = broadcast != null ? Visibility.Visible : Visibility.Collapsed;
+                StoryStrokeThickness = broadcast != null ? 3 : 0;
+
+                if (broadcast == null)
+                    StoryStrokeThickness = Stories.Count > 0 ? 3 : 0;
+            }
+            catch { }
         }
         //public void SetScrollViewer(ScrollViewer scrollViewer)
         //{
@@ -290,13 +312,23 @@ namespace Minista.ViewModels.Infos
             {
                 await MainPage.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
                 {
-                    var stories = await InstaApi.StoryProcessor.GetUsersStoriesAsHighlightsAsync(UserShort.Pk.ToString());
-                    if (stories.Succeeded)
+                    //var stories = await InstaApi.StoryProcessor.GetUsersStoriesAsHighlightsAsync(UserShort.Pk.ToString());
+                    //if (stories.Succeeded)
+                    //{
+                    //    Stories.Clear();
+                    //    if (stories.Value.Items?.Count > 0)
+                    //        Stories.AddRange(stories.Value.Items);
+                    //}
+                    var st = await InstaApi.StoryProcessor.GetUserStoryAndLivesAsync(UserShort.Pk);
+                    if (st.Succeeded)
                     {
                         Stories.Clear();
-                        if (stories.Value.Items?.Count > 0)
-                            Stories.AddRange(stories.Value.Items);
+                        if (st.Value.Reel != null)
+                            Stories.Add(st.Value.Reel);
+                        SetBroadcast(st.Value.Broadcast);
                     }
+                    else
+                        SetBroadcast(null);
                 });
             }
             catch { }

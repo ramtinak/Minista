@@ -34,6 +34,7 @@ namespace Minista.Views.Infos
         public static ProfileDetailsView Current;
         private bool CanLoadFirstPopUp = false;
         NavigationMode NavigationMode;
+        public Thickness StoryStrokeThickness { get; set; } = new Thickness();
         public ProfileDetailsView()
         {
             this.InitializeComponent();
@@ -88,7 +89,24 @@ namespace Minista.Views.Infos
             }
             catch { }
         }
-
+        public void SetBroadcastVisibility(bool hide)
+        {
+            try
+            {
+                if (AnimationStory != null)
+                {
+                    if (hide)
+                        AnimationStory.Stop();
+                    else
+                        AnimationStory.Begin();
+                }
+            }
+            catch { }
+        }
+        public void SetBroadcast(InstaBroadcast broadcast)
+        {
+            ProfileDetailsVM?.SetBroadcast(broadcast);
+        }
         //NavigationMode NavigationMode = NavigationMode.New;
         bool SetInfo = false;
         private void ProfileDetailsViewLoaded(object sender, RoutedEventArgs e)
@@ -734,7 +752,8 @@ namespace Minista.Views.Infos
         {
             try
             {
-                if (ProfileDetailsVM.Stories == null || ProfileDetailsVM.Stories != null  && ProfileDetailsVM.Stories.Count == 0)
+                if ((ProfileDetailsVM.Stories == null && ProfileDetailsVM.Broadcast == null) ||
+                    (ProfileDetailsVM.Stories != null && ProfileDetailsVM.Stories.Count == 0 && ProfileDetailsVM.Broadcast == null))
                     Helpers.NavigationService.Navigate(typeof(ImageVideoView), ProfileDetailsVM.User);
                 else
                 {
@@ -745,16 +764,27 @@ namespace Minista.Views.Infos
                         Height = 48
                     };
                     openPicture.Click += MenuOpenPictureClick;
-
-                    var openStory = new MenuFlyoutItem
-                    {
-                        Text = "Open stories",
-                        Height = 48
-                    };
-                    openStory.Click += MenuOpenStoryClick;
-
                     UserImageFlyout.Items.Add(openPicture);
-                    UserImageFlyout.Items.Add(openStory);
+
+                    if (ProfileDetailsVM.Stories.Count > 0)
+                    {
+                        var openStory = new MenuFlyoutItem
+                        {
+                            Text = "Open stories",
+                            Height = 48
+                        };
+                        openStory.Click += MenuOpenStoryClick;
+                        UserImageFlyout.Items.Add(openStory);
+                    }
+                    if (ProfileDetailsVM.Broadcast != null)
+                    {
+                        var openLive = new MenuFlyoutItem
+                        {
+                            Text = "Open live broadcast",
+                        };
+                        openLive.Click += MenuOpenLiveClick;
+                        UserImageFlyout.Items.Add(openLive);
+                    }
                     try
                     {
                         FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
@@ -767,14 +797,13 @@ namespace Minista.Views.Infos
             catch { }
         }
 
-        private void MenuOpenPictureClick(object sender, RoutedEventArgs e)
-        {
+        private void MenuOpenLiveClick(object sender, RoutedEventArgs e) => Helper.OpenLive(ProfileDetailsVM.Broadcast);
+
+        private void MenuOpenPictureClick(object sender, RoutedEventArgs e) =>
             Helpers.NavigationService.Navigate(typeof(ImageVideoView), ProfileDetailsVM.User);
-        }
-        private void MenuOpenStoryClick(object sender, RoutedEventArgs e)
-        {
+
+        private void MenuOpenStoryClick(object sender, RoutedEventArgs e) =>
             Helpers.NavigationService.Navigate(typeof(Main.StoryView), new object[] { ProfileDetailsVM.Stories.ToList(), 0 });
-        }
 
         private void RefreshButtonClick(object sender, RoutedEventArgs e)
         {

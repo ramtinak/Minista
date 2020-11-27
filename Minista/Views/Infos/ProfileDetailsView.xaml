@@ -473,6 +473,31 @@
             <selector:MediaUserInfoTemplateSelector x:Key="MediaUserInfoTemplateSelector"
                                                     ImageTemplate="{StaticResource ImageTemplate}"
                                                     CarouselTemplate="{StaticResource CarouselTemplate}" />
+
+            <Storyboard x:Name="AnimationStory">
+                <DoubleAnimation From="1"
+                                                         To="1.15"
+                                                         Duration="0:0:0.750"
+                                                         Storyboard.TargetName="UserImage"
+                                                         AutoReverse="True"
+                                                         RepeatBehavior="Forever"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
+                    <DoubleAnimation.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation From="1"
+                                                         To="1.15"
+                                                         Duration="0:0:0.750"
+                                                         AutoReverse="True"
+                                                         RepeatBehavior="Forever"
+                                                         Storyboard.TargetName="UserImage"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)">
+                    <DoubleAnimation.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
         </ResourceDictionary>
     </Page.Resources>
     <Page.DataContext>
@@ -580,26 +605,51 @@
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <Ellipse x:Name="UserImage"
-                                                     Height="95"
-                                                     Width="95"
-                                                     Margin="5 5"
-                                                     Stroke="#FF3C2866"
-                                                     StrokeThickness="2"
-                                                     Tapped="UserImageTapped">
+                                            <Grid Height="95"
+                                                  Width="95"
+                                                  Tapped="UserImageTapped">
                                                 <FlyoutBase.AttachedFlyout>
                                                     <MenuFlyout x:Name="UserImageFlyout">
 
                                                     </MenuFlyout>
                                                 </FlyoutBase.AttachedFlyout>
-                                                <!--<Ellipse.Fill>
-                                <ImageBrush>
-                                    <ImageBrush.ImageSource>
-                                        <BitmapImage UriSource="{Binding User.ProfilePicUrl, Mode=OneWay}"/>
-                                    </ImageBrush.ImageSource>
-                                </ImageBrush>
-                            </Ellipse.Fill>-->
-                                            </Ellipse>
+                                                <Ellipse x:Name="UserImage"
+                                             Height="80"
+                                             Width="80"
+                                             RenderTransformOrigin="0.5,0.5"
+                                             StrokeThickness="{Binding StoryStrokeThickness, Mode=TwoWay}">
+                                                    <Ellipse.RenderTransform>
+                                                        <CompositeTransform ScaleX="1"
+                                                        ScaleY="1" />
+                                                    </Ellipse.RenderTransform>
+                                                    <!--Stroke="#FF3C2866"-->
+                                                    <Ellipse.Stroke>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#FF90CDFB" Offset="1"/>
+                                                            <GradientStop Color="#FF187CF5" />
+                                                        </LinearGradientBrush>
+                                                    </Ellipse.Stroke>
+                                                </Ellipse>
+                                                <Grid Visibility="{Binding BroadcastVisibility, Mode=TwoWay}">
+                                                    <Ellipse Height="95"
+                                                 Width="95"
+                                                 Stroke="#FF187CF5"
+                                                 StrokeThickness="2">
+                                                    </Ellipse>
+                                                    <Border VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center"
+                                                Background="{Binding Broadcast, Mode=TwoWay, Converter={StaticResource SeenColorConverter}}"
+                                                CornerRadius="5">
+                                                        <TextBlock Text="LIVE"
+                                                Margin="2"
+                                                FontFamily="{StaticResource VazirFont}"
+                                                FontSize="{StaticResource TinyTinyFontSize}"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center" />
+                                                    </Border>
+                                                </Grid>
+                                            </Grid>
+
                                             <Grid Grid.Column="1">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto" />
@@ -1205,7 +1255,7 @@
                                         VerticalAlignment="Stretch"
                                         Grid.RowSpan="4"
                                         Visibility="Collapsed" />
-        <VisualStateManager.VisualStateGroups>
+        <!--<VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
@@ -1230,6 +1280,6 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+        </VisualStateManager.VisualStateGroups>-->
     </Grid>
 </Page>

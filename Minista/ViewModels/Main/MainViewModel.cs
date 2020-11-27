@@ -54,7 +54,7 @@ namespace Minista.ViewModels.Main
                         await client.Start(InboxViewModel.Instance.SeqId, InboxViewModel.Instance.SnapshotAt);
                         client.DirectItemChanged += InboxViewModel.Instance.RealtimeClientDirectItemChanged;
                         client.TypingChanged += InboxViewModel.Instance.RealtimeClientClientTypingChanged;
-                        client.BroadcastChanged += Client_BroadcastChanged;
+                        client.BroadcastChanged += RealtimeClientBroadcastChanged;
 
                     });
                 }
@@ -64,7 +64,7 @@ namespace Minista.ViewModels.Main
             ActivitiesViewModel.Instance?.RunLoadMore(refresh);
         }
 
-        private async void Client_BroadcastChanged(object sender, InstagramApiSharp.API.RealTime.Handlers.InstaBroadcastEventArgs e)
+        private void RealtimeClientBroadcastChanged(object sender, InstagramApiSharp.API.RealTime.Handlers.InstaBroadcastEventArgs e)
         {
             try
             {
@@ -84,15 +84,15 @@ namespace Minista.ViewModels.Main
                         };
 
                         StoriesX.Insert(0, broadcast);
-                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                        {
-                            var getInfo = await InstaApi.LiveProcessor.GetInfoAsync(e.BroadcastId);
-                            if (getInfo.Succeeded)
-                            {
-                                broadcast.Broadcast.DashManifest = getInfo.Value.DashManifest;
-                                broadcast.Broadcast.DashPlaybackUrl = getInfo.Value.DashPlaybackUrl;
-                            }
-                        });
+                        //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                        //{
+                        //    var getInfo = await InstaApi.LiveProcessor.GetInfoAsync(e.BroadcastId);
+                        //    if (getInfo.Succeeded)
+                        //    {
+                        //        broadcast.Broadcast.DashManifest = getInfo.Value.DashManifest;
+                        //        broadcast.Broadcast.DashPlaybackUrl = getInfo.Value.DashPlaybackUrl;
+                        //    }
+                        //});
                     }
                 }
                 else if (type == InstaBroadcastStatusType.Stopped || type == InstaBroadcastStatusType.HardStop)
@@ -103,6 +103,12 @@ namespace Minista.ViewModels.Main
                 }
                 if (Helpers.NavigationService.Frame.Content is Views.Broadcast.LiveBroadcastView view && view != null)
                     view.LiveVM?.DetermineLiveStatus(e.BroadcastId, type);
+                else if (Helpers.NavigationService.Frame.Content is Views.Infos.UserDetailsView userDetails &&
+                    e.User?.Pk == userDetails?.UserDetailsVM?.User?.Pk)
+                    userDetails.SetBroadcast(type == InstaBroadcastStatusType.Active ? new InstaBroadcast { Id = e.BroadcastId } : null);
+                else if (Helpers.NavigationService.Frame.Content is Views.Infos.ProfileDetailsView profileDetails &&
+                    profileDetails != null && e.User?.Pk == CurrentUser?.Pk)
+                    profileDetails.SetBroadcast(type == InstaBroadcastStatusType.Active ? new InstaBroadcast { Id = e.BroadcastId } : null);
             }
             catch { }
         }
