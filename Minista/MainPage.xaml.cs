@@ -57,7 +57,7 @@ namespace Minista
             CreateConfig();
             try
             {
-                if (!CheckLogin())
+                if (CheckLogin())
                 {
                     AllowDrop = true;
                     try
@@ -204,7 +204,7 @@ namespace Minista
         }
         public void ShowHeaders()
         {
-            if(NavigationService.Frame.Content is Views.Sign.SignInView)
+            if (NavigationService.Frame.Content is Views.Sign.SignInView && !CheckLogin())
             {
                 HideHeaders();
                 return;

@@ -34,7 +34,7 @@ Minista is using these libraries/projects to keep features working.
 - [Thrift](https://github.com/apache/thrift)
 - [Iconic ZLib](https://github.com/HelloKitty/Iconic.Zlib.Netstandard)
 - [LumiaImagingSDK](https://github.com/microsoft/Lumia-imaging-sdk)
-- [VLC.MediaElement](https://github.com/kakone/VLC.MediaElement)
+- [LibVLCSharp](https://github.com/videolan/libvlcsharp)
 - [Unigram](https://github.com/UnigramDev/Unigram/)
 
 ## Legal
@@ -49,7 +49,7 @@ v2.0.5:
 - Bugfix for activities
 
 v2.0.1
-- Push notifications (the real one:D)
+- Push notifications
 - Update api version to v136.0.0.34.124
 - Add support for PC and HUB (again)
 

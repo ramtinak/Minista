@@ -50,7 +50,7 @@ namespace InstagramApiSharp.API.RealTime
         //public event EventHandler<Exception> FailedToStart;
         public event EventHandler<object> OnDisconnect;
         
-        readonly FbnsConnectionData ConnectionData = new FbnsConnectionData();
+        //readonly FbnsConnectionData ConnectionData = new FbnsConnectionData();
         public TimeSpan WaitForResponseDelay { get; private set; } = TimeSpan.FromMilliseconds(450);
         public StreamSocket Socket { get; private set; }
         public bool Running => !(_runningTokenSource?.IsCancellationRequested ?? true);

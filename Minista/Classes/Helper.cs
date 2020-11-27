@@ -598,7 +598,7 @@ static class Helper
     }
     public static BitmapImage GetBitmap(this string url) =>  new BitmapImage(new Uri(url));
     public static ImageBrush GetImageBrush(this string url) => new ImageBrush { ImageSource = url.GetBitmap(), Stretch = Stretch.UniformToFill };
-    public static bool CheckLogin() => InstaApi == null || InstaApi != null && !InstaApi.IsUserAuthenticated;
+    public static bool CheckLogin() => InstaApi?.IsUserAuthenticated ?? false;
 
     public static void FullscreenModeInXbox(/*bool full = true*/)
     {
