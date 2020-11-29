@@ -13,7 +13,7 @@
                BorderBrush="Transparent"
                BorderThickness="0">
 
-    <Grid Background="#E51B1B1B"
+    <Grid Background="{StaticResource DefaultBackgroundColor}"
           CornerRadius="5"
           Width="220"
           Height="230"
@@ -42,7 +42,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Rectangle  Height=".8"
-                        Fill="#FF303030"
+                        Fill="{StaticResource SeperatorColor}"
                         Margin="0 3"
                         Grid.ColumnSpan="2" />
 

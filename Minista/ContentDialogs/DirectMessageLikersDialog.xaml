@@ -10,7 +10,7 @@
                BorderBrush="Transparent"
                BorderThickness="0">
 
-    <Grid Background="#E51B1B1B"
+    <Grid Background="{StaticResource DefaultBackgroundColor}"
           BorderBrush="{StaticResource DefaultBackgroundColor}"
           MaxHeight="330"
           MaxWidth="380"
@@ -54,7 +54,7 @@
         <Rectangle Grid.Row="1"
                    Grid.ColumnSpan="4"
                    Height=".8"
-                   Fill="#FF303030"
+                   Fill="{StaticResource SeperatorColor}"
                    Margin="5 2 5 0" />
         <ListView x:Name="LVMenu"
                   Grid.Row="2"

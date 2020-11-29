@@ -18,7 +18,7 @@
         <Grid
             MinWidth="300"
             MaxHeight="350"
-            Background="#FB1B1B1B"
+            Background="{StaticResource DefaultBackgroundColor}"
             BorderBrush="{StaticResource DefaultBackgroundColor}"
             BorderThickness=".8"
             CornerRadius="5">
@@ -60,7 +60,7 @@
                     Grid.ColumnSpan="5"
                     Height=".8"
                     Margin="0,3"
-                    Fill="#FF303030" />
+                    Fill="{StaticResource SeperatorColor}" />
 
                 <Button
                     x:Name="PostButton"

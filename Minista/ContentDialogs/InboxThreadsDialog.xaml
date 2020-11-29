@@ -15,7 +15,7 @@
 
     <Border CornerRadius="5">
 
-        <Grid Background="#FB1B1B1B"
+        <Grid Background="{StaticResource DefaultBackgroundColor}"
               BorderBrush="{StaticResource DefaultBackgroundColor}"
               MaxHeight="440"
               CornerRadius="5"
@@ -79,7 +79,7 @@
 
             <Rectangle  Height=".8"
                         Grid.Row="1"
-                        Fill="#FF303030"
+                        Fill="{StaticResource SeperatorColor}"
                         Margin="0 3"
                         Grid.ColumnSpan="5" />
             <Button x:Name="CancelButton"

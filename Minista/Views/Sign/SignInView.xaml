@@ -134,7 +134,8 @@
 
                 <TextBlock Text="________________ OR ________________"
                            FontFamily="{StaticResource VazirFont}"
-                           FontSize="{StaticResource DefaultFontSize}" Margin="10" Grid.Row="4" Foreground="#FFAEAEAE" TextAlignment="Center"/>
+                           FontSize="{StaticResource DefaultFontSize}" Margin="10" Grid.Row="4"
+                           Foreground="{StaticResource DefaultForegroundColor}" TextAlignment="Center"/>
                 <Button x:Name="FacebookLoginButton"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="{StaticResource DefaultFontSize}"
@@ -151,7 +152,7 @@
                            FontSize="{StaticResource DefaultFontSize}"
                            Margin="10"
                            Grid.Row="6"
-                           Foreground="#FFAEAEAE"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                            TextAlignment="Center" />
                 <Button x:Name="ImportFromLocalButton"
                         FontFamily="{StaticResource VazirFont}"
@@ -183,20 +184,23 @@
                        HorizontalAlignment="Center"
                        TextAlignment="Center" Margin="10"
                            FontFamily="{StaticResource VazirFont}"
-                           FontSize="{StaticResource DefaultFontSize}"/>
+                           FontSize="{StaticResource DefaultFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"/>
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <RadioButton x:Name="ChallengePhoneNumberRadio" 
+                        <RadioButton x:Name="ChallengePhoneNumberRadio" 
+                           Foreground="{StaticResource DefaultForegroundColor}"
                                  x:FieldModifier="public"
                                  Margin="5"
                                  IsChecked="False"
                                  Visibility="{Binding ChallengePhoneNumberRadioVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  FontFamily="{StaticResource VazirFont}"
                                  FontSize="{StaticResource DefaultFontSize}"/>
-                    <RadioButton x:Name="ChallengeEmailRadio" 
+                        <RadioButton x:Name="ChallengeEmailRadio" 
+                           Foreground="{StaticResource DefaultForegroundColor}"
                                  x:FieldModifier="public"
                                  Margin="5"
                                  IsChecked="False" 
@@ -205,7 +209,8 @@
                                  FontFamily="{StaticResource VazirFont}"
                                  FontSize="{StaticResource DefaultFontSize}"/>
                 </Grid>
-                <Button x:Name="ChallengeSendCodeButton" 
+                    <Button x:Name="ChallengeSendCodeButton" 
+                           Foreground="{StaticResource DefaultForegroundColor}"
                         Grid.Row="2" 
                         Margin="10" 
                         Content="Send code" 
@@ -229,6 +234,7 @@
                 <TextBlock Text="You need to submit a phone number to your account, unless instagram will inactive your account!!!" 
                            FontFamily="{StaticResource VazirFont}"
                            FontSize="{StaticResource DefaultFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                        TextWrapping="Wrap" 
                        HorizontalAlignment="Center"
                        TextAlignment="Center" Margin="10"/>
@@ -247,6 +253,7 @@
                 <Button x:Name="SubmitChallengePhoneButton" 
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="{StaticResource DefaultFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                         Grid.Row="2" 
                         Margin="10" 
                         Content="Verify"
@@ -269,6 +276,7 @@
                            x:FieldModifier="public"
                            FontFamily="{StaticResource VazirFont}"
                            FontSize="{StaticResource DefaultFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                            Text="We sent verification code to your sms/email" 
                            TextWrapping="Wrap" 
                            HorizontalAlignment="Center"
@@ -293,6 +301,7 @@
                     <Button x:Name="ChallengeResendCodeButton"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="{StaticResource DefaultFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                             Grid.Row="2"
                             Margin="10"
                             Content="Resend verification code"
@@ -304,6 +313,7 @@
                 <Button x:Name="ChallengeVerifyCodeButton"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="{StaticResource DefaultFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                         Grid.Row="2"
                         Margin="10" 
                         Content="Verify" 
@@ -329,6 +339,7 @@
                 <TextBlock Text="Two factor authentication required" 
                            FontFamily="{StaticResource VazirFont}"
                            FontSize="{StaticResource DefaultFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                        TextWrapping="Wrap" 
                        HorizontalAlignment="Center"
                        TextAlignment="Center" Margin="10" />
@@ -337,7 +348,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <Rectangle Fill="#FF363636"
+                    <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.5"
                                            Margin="5 2"
                                            HorizontalAlignment="Stretch"
@@ -348,9 +359,10 @@
                            Text="" 
                            FontFamily="{StaticResource VazirFont}"
                            FontSize="{StaticResource DefaultFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                        TextWrapping="Wrap" 
                        HorizontalAlignment="Center"
-                       TextAlignment="Center" Margin="5" Foreground="#FF7A7A7A" />
+                       TextAlignment="Center" Margin="5" />
                 </Grid>
 
                 <Grid Grid.Row="2">
@@ -371,6 +383,7 @@
                 <Button x:Name="TwoFactorVerifyCodeButton" 
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="{StaticResource DefaultFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                         Grid.Row="4" 
                         Margin="10" 
                         Content="Verify"
@@ -396,6 +409,7 @@
                                Text="{Binding Interval, Mode=TwoWay}"
                                FontFamily="{StaticResource VazirFont}"
                                FontSize="{StaticResource DefaultFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Grid.Column="1"
@@ -404,6 +418,7 @@
                             x:FieldModifier="public"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="{StaticResource DefaultFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                             IsEnabled="False"
                             Margin="10"
                             Content="Resend code"
@@ -417,6 +432,7 @@
                     <TextBlock Text="Verification method: " 
                            FontFamily="{StaticResource VazirFont}"
                            FontSize="{StaticResource TinyFontSize}"
+                           Foreground="{StaticResource DefaultForegroundColor}"
                        TextWrapping="Wrap"
                                VerticalAlignment="Center"
                        HorizontalAlignment="Center"

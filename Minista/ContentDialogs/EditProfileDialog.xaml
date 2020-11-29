@@ -12,7 +12,7 @@
                BorderBrush="Transparent"
                BorderThickness="0">
     <Border CornerRadius="5">
-        <Grid Background="#FF1B1B1B"
+        <Grid Background="{StaticResource DefaultBackgroundColor}"
               CornerRadius="5"
               BorderBrush="{StaticResource DefaultBackgroundColor}"
               BorderThickness=".8"
@@ -61,7 +61,7 @@
                     </interactivity:Interaction.Behaviors>
                 </AppBarButton>
             </Grid>
-            <Rectangle Fill="#FF363636"
+            <Rectangle Fill="{StaticResource SeperatorColor}"
                        Height="1.2"
                        MinWidth="250"
                        MaxWidth="320"
@@ -126,7 +126,7 @@
                         </Button>
 
                     </Grid>
-                    <Rectangle Fill="#FF363636"
+                    <Rectangle Fill="{StaticResource SeperatorColor}"
                                Height="1.2"
                                MinWidth="250"
                                MaxWidth="320"
@@ -175,7 +175,7 @@
                                      PlaceholderText="Name"
                                      Style="{StaticResource TextBoxCenterWithBackgroundChange}" />
 
-                            <Rectangle Fill="#FF363636"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
                                        Height="1.2"
                                        MinWidth="250"
                                        MaxWidth="320"
@@ -212,7 +212,7 @@
                                      PlaceholderText="Username"
                                      Style="{StaticResource TextBoxCenterWithBackgroundChange}" />
 
-                            <Rectangle Fill="#FF363636"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
                                        Height="1.2"
                                        MinWidth="250"
                                        MaxWidth="320"
@@ -249,7 +249,7 @@
                                      Margin="10 0"
                                      PlaceholderText="Website"
                                      Style="{StaticResource TextBoxCenterWithBackgroundChange}" />
-                            <Rectangle Fill="#FF363636"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
                                        Height="1.2"
                                        MinWidth="250"
                                        MaxWidth="320"
@@ -286,7 +286,7 @@
                                      Margin="10 0"
                                      PlaceholderText="Bio"
                                      Style="{StaticResource TextBoxCenterWithBackgroundChange}" />
-                            <Rectangle Fill="#FF363636"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
                                        Height="1.2"
                                        MinWidth="250"
                                        MaxWidth="320"
@@ -331,7 +331,7 @@
                                      Margin="10 0"
                                      PlaceholderText="Enter your email address"
                                      Style="{StaticResource TextBoxCenterWithBackgroundChange}" />
-                            <Rectangle Fill="#FF363636"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
                                        Height="1.2"
                                        MinWidth="250"
                                        MaxWidth="320"
@@ -368,7 +368,7 @@
                                      Margin="10 0"
                                      PlaceholderText="Enter your phone number"
                                      Style="{StaticResource TextBoxCenterWithBackgroundChange}" />
-                            <Rectangle Fill="#FF363636"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
                                        Height="1.2"
                                        MinWidth="250"
                                        MaxWidth="320"

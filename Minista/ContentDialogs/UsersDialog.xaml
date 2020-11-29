@@ -185,7 +185,7 @@
         <Grid >
         </Grid>
     </ContentDialog.Title>
-    <Grid Background="#F71B1B1B"
+    <Grid Background="{StaticResource DefaultBackgroundColor}"
           CornerRadius="5"
           Width="320"
           Height="450">
@@ -242,7 +242,7 @@
                        Text="Only 's followers can see this post."/>
             <Rectangle Grid.Row="2"
                        Height=".8"
-                       Fill="#FF303030"
+                       Fill="{StaticResource SeperatorColor}"
                        Margin="5"
                        Grid.ColumnSpan="3"/>
         </Grid>
@@ -301,7 +301,7 @@
             </Grid>
             <Rectangle Grid.Row="1"
                        Height=".8"
-                       Fill="#FF303030"
+                       Fill="{StaticResource SeperatorColor}"
                        Margin="5" />
 
             <Grid Grid.Row="2">
@@ -359,7 +359,7 @@
             </Grid>
             <Rectangle Grid.Row="3"
                        Height=".8"
-                       Fill="#FF303030"
+                       Fill="{StaticResource SeperatorColor}"
                        Margin="5" />
 
                 <!--ItemTemplate="{StaticResource MainTemplateX}"-->
@@ -558,7 +558,7 @@
     </Grid>
     <Rectangle Grid.Row="1"
                Height=".8"
-               Fill="#FF303030"
+               Fill="{StaticResource SeperatorColor}"
                Margin="5" />
 
     <Grid Grid.Row="2">
@@ -593,7 +593,7 @@
     </Grid>
     <Rectangle Grid.Row="3"
                Height=".8"
-               Fill="#FF303030"
+               Fill="{StaticResource SeperatorColor}"
                Margin="5" />
     <ListView x:Name="LVUsers"
               Grid.Row="4"
@@ -673,7 +673,7 @@
     </Grid>
     <Rectangle Grid.Row="1"
                Height=".8"
-               Fill="#FF303030"
+               Fill="{StaticResource SeperatorColor}"
                Margin="5" />
 
     <Grid Grid.Row="2">
@@ -708,7 +708,7 @@
     </Grid>
     <Rectangle Grid.Row="3"
                Height=".8"
-               Fill="#FF303030"
+               Fill="{StaticResource SeperatorColor}"
                Margin="5" />
     <ListView x:Name="LVUsersX"
               Grid.Row="4"

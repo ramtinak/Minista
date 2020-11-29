@@ -437,22 +437,8 @@
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Center"
                 Margin="0 20"
-                Click="BiometricsButtonClick">
-            <Grid>
-
-                <Ellipse Width="45"
-                         Height="45"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         Fill="#FF333333" />
-                <FontIcon FontFamily="{StaticResource MaterialSymbolFont}"
-                          FontSize="{StaticResource HeaderFontSize}"
-                          Foreground="White"
-                          Glyph="" />
-                <Grid Background="Cyan"
-                      Opacity="0" />
-            </Grid>
-        </Button>
+                Click="BiometricsButtonClick"
+                Style="{StaticResource BiometricsButtonStyle}"/>
     </Grid>
     
 </Page>

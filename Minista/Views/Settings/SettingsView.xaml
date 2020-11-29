@@ -9,8 +9,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     xmlns:uiControls="using:Minista.UI.Controls">
     <Page.Resources>
-        <SolidColorBrush Color="{StaticResource DefaultItemBackgroundColor}"
-                         x:Key="SystemControlForegroundChromeLowBrush" />
+        <!--<SolidColorBrush Color="{StaticResource DefaultItemBackgroundColor}"
+                         x:Key="SystemControlForegroundChromeLowBrush" />-->
 
     </Page.Resources>
     <!--Background="{StaticResource DefaultBackgroundColor}" {StaticResource DefaultItemBackgroundColor}-->

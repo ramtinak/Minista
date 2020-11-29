@@ -94,7 +94,7 @@
         </ResourceDictionary>
     </ContentDialog.Resources>
     <Border CornerRadius="5">
-        <Grid Background="#FB1B1B1B"
+        <Grid Background="{StaticResource DefaultBackgroundColor}"
               BorderBrush="{StaticResource DefaultBackgroundColor}"
               MaxHeight="400"
               MinHeight="340"
@@ -131,7 +131,7 @@
                 </AppBarButton>
                 <Rectangle Grid.Row="1"
                            Height=".8"
-                           Fill="#FF303030"
+                           Fill="{StaticResource SeperatorColor}"
                            Margin="5" />
             </Grid>
             <ScrollViewer VerticalScrollBarVisibility="Auto"
@@ -213,7 +213,7 @@
                         <Rectangle Grid.Row="1"
                                    Grid.ColumnSpan="4"
                                    Height=".8"
-                                   Fill="#FF303030"
+                                   Fill="{StaticResource SeperatorColor}"
                                    Margin="5" />
                     </Grid>
                     <Grid Grid.Row="2">
@@ -253,7 +253,7 @@
                         <Rectangle Grid.Row="1"
                                    Grid.ColumnSpan="2"
                                    Height=".8"
-                                   Fill="#FF303030"
+                                   Fill="{StaticResource SeperatorColor}"
                                    Margin="5" />
                     </Grid>
                     <Grid Grid.Row="3">
@@ -287,7 +287,7 @@
                         <Rectangle Grid.Row="3"
                                    Grid.ColumnSpan="2"
                                    Height=".8"
-                                   Fill="#FF303030"
+                                   Fill="{StaticResource SeperatorColor}"
                                    Margin="5" />
                     </Grid>
                     <Grid Grid.Row="4">
@@ -339,7 +339,7 @@
                         <Rectangle Grid.Row="5"
                                    Grid.ColumnSpan="2"
                                    Height=".8"
-                                   Fill="#FF303030"
+                                   Fill="{StaticResource SeperatorColor}"
                                    Margin="5" />
                         <ListView x:Name="LVHashtags" Grid.Row="6"
                                   ItemsSource="{x:Bind Hashtags}"
@@ -349,7 +349,7 @@
                         <Rectangle Grid.Row="7"
                                    Grid.ColumnSpan="2"
                                    Height=".8"
-                                   Fill="#FF303030"
+                                   Fill="{StaticResource SeperatorColor}"
                                    Margin="5" />
                     </Grid>
 

@@ -18,7 +18,7 @@
           MaxWidth="320"
           MaxHeight="450">
 
-        <Grid Background="#FB1B1B1B"
+        <Grid Background="{StaticResource DefaultBackgroundColor}"
               BorderBrush="{StaticResource DefaultBackgroundColor}"
               CornerRadius="5"
               MaxWidth="320"
@@ -55,7 +55,7 @@
                            Foreground="{StaticResource DefaultForegroundColor}"
                            Margin="10 0" />
             </Grid>
-            <Rectangle Fill="#FF363636"
+            <Rectangle Fill="{StaticResource SeperatorColor}"
                        Height="1.2"
                        MinWidth="250"
                        MaxWidth="320"

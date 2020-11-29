@@ -11,7 +11,7 @@
     mc:Ignorable="d" Background="{x:Null}" BorderBrush="Transparent" BorderThickness="0">
 
     <Border CornerRadius="5"  >
-        <Grid Background="#FB1B1B1B"
+        <Grid Background="{StaticResource DefaultBackgroundColor}"
               BorderBrush="{StaticResource DefaultBackgroundColor}" MaxHeight="350"
               CornerRadius="5" MaxWidth="300"
               BorderThickness=".8">
@@ -36,7 +36,7 @@
             <Rectangle Grid.Row="1"
                            Grid.ColumnSpan="4"
                            Height=".8"
-                           Fill="#FF303030"
+                           Fill="{StaticResource SeperatorColor}"
                            Margin="5 2 5 0" />
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
@@ -50,7 +50,7 @@
                          Margin="5"
                          VerticalAlignment="Center"
                          HorizontalAlignment="Center"
-                         Stroke="#FF303030"
+                         Stroke="{StaticResource SeperatorColor}"
                          StrokeThickness="2" />
                 <TextBlock x:Name="txtUsername"
                            Foreground="{StaticResource DefaultForegroundColor}"
@@ -64,7 +64,7 @@
                 <Rectangle Grid.Row="2"
                            Grid.ColumnSpan="4"
                            Height=".8"
-                           Fill="#FF303030"
+                           Fill="{StaticResource SeperatorColor}"
                            Margin="5 2 5 0" />
             </Grid>
 
@@ -104,7 +104,7 @@
                 <Rectangle Grid.Column="1"
                            Width=".8"
                            VerticalAlignment="Stretch"
-                           Fill="#FF303030" />
+                           Fill="{StaticResource SeperatorColor}" />
                 <AppBarButton x:Name="OkButton"
                               ToolTipService.ToolTip="Yes, I want to logout"
                               HorizontalAlignment="Stretch"

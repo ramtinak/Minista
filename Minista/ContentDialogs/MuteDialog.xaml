@@ -8,7 +8,7 @@
     mc:Ignorable="d" Background="{x:Null}" BorderBrush="Transparent" BorderThickness="0">
 
     <Border CornerRadius="5">
-        <Grid Background="#E51B1B1B"
+        <Grid Background="{StaticResource DefaultBackgroundColor}"
               CornerRadius="5"
               Width="250"
               BorderBrush="{StaticResource DefaultBackgroundColor}"
@@ -27,7 +27,7 @@
                        HorizontalAlignment="Center" />
             <Rectangle Grid.Row="1"
                        Height=".8"
-                       Fill="#FF303030"
+                       Fill="{StaticResource SeperatorColor}"
                        Margin="5" />
             <TextBlock FontFamily="{StaticResource VazirFont}"
                        Grid.Row="2"
@@ -49,7 +49,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Rectangle  Height=".8"
-                            Fill="#FF303030"
+                            Fill="{StaticResource SeperatorColor}"
                             Margin="0 3" />
 
                 <Button x:Name="MutePostsButton"
@@ -62,7 +62,7 @@
                         Click="MutePostsButtonClick" />
                 <Rectangle Grid.Row="2"
                            Height=".8"
-                           Fill="#FF303030"
+                           Fill="{StaticResource SeperatorColor}"
                            Margin="0 3" />
 
                 <Button x:Name="MutePostsAndStoryButton"
@@ -75,7 +75,7 @@
                         Click="MutePostsAndStoryButtonClick" />
                 <Rectangle Grid.Row="4"
                            Height=".8"
-                           Fill="#FF303030"
+                           Fill="{StaticResource SeperatorColor}"
                            Margin="0 3" />
 
                 <Button x:Name="CancelButton"

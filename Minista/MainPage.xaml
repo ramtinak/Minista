@@ -718,7 +718,6 @@
         </Grid>
 
         <Button VerticalAlignment="Center" Content="Open" Click="Button_Click"/>
-        <Button VerticalAlignment="Center" HorizontalAlignment="Right" Content="Open" Click="Button_Click_1"/>
         <ucMain:ActivityNotifyUc
             x:Name="ActivityNotifyUc"
             MinWidth="52"

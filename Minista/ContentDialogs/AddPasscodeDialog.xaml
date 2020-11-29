@@ -13,7 +13,7 @@
                BorderThickness="0">
 
     <Border CornerRadius="5">
-        <Grid Background="#FB1B1B1B"
+        <Grid Background="{StaticResource DefaultBackgroundColor}"
               BorderBrush="{StaticResource DefaultBackgroundColor}"
               Height="190"
               CornerRadius="5"
@@ -36,7 +36,7 @@
                        Margin="10 3" />
             <Rectangle Grid.Row="1"
                        Height=".8"
-                       Fill="#FF303030"
+                       Fill="{StaticResource SeperatorColor}"
                        Margin="5" />
             <PasswordBox x:Name="PassText"
                          Foreground="{StaticResource DefaultForegroundColor}"
@@ -67,7 +67,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Rectangle  Height=".8"
-                            Fill="#FF303030"
+                            Fill="{StaticResource SeperatorColor}"
                             Margin="0 3"
                             Grid.ColumnSpan="5" />
 
@@ -81,7 +81,7 @@
                         Click="AddButtonClick" />
 
                 <Rectangle  Width="1"
-                            Fill="#FF303030"
+                            Fill="{StaticResource SeperatorColor}"
                             Margin="3"
                             Grid.Row="1"
                             Grid.Column="1" />

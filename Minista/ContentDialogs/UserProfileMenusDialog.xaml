@@ -10,7 +10,7 @@
                BorderBrush="Transparent"
                BorderThickness="0">
 
-    <Grid Background="#E51B1B1B"
+    <Grid Background="{StaticResource DefaultBackgroundColor}"
           BorderBrush="{StaticResource DefaultBackgroundColor}"
           MaxHeight="480"
           CornerRadius="5"
