@@ -65,7 +65,7 @@ namespace MinistaBH
                         };
                         push.MessageReceived += A.OnMessageReceived;
                         push.OpenNow();
-                        push.Start();
+                        //push.Start();
 
                         switch (details.Reason)
                         {

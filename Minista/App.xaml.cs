@@ -311,7 +311,7 @@ namespace Minista
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private /*async*/ void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             Helper.DeleteCachedFolder();
 
@@ -323,15 +323,15 @@ namespace Minista
             {
                 if(Helper.InstaApi?.PushClient != null)
                 {
-                    Helper.InstaApi.PushClient.Shutdown();
+                    //Helper.InstaApi.PushClient.Shutdown();
                     //await Task.Delay(5500);
                     //await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
                     //{
                     //    try
                     //    {
-                    //        await Task.Delay(5500);
-                    //        await Helper.InstaApi.PushClient.TransferPushSocket();
-                    //    }
+                    await Helper.InstaApi.PushClient.TransferPushSocket();
+                    await Task.Delay(3500);
+                    ////    }
                     //    catch { }
 
                     //    });
@@ -353,17 +353,17 @@ namespace Minista
                 deferral.Complete();
             }
         }
-        private async void OnResuming(object sender, object e)
+        private /*async*/ void OnResuming(object sender, object e)
         {
             try
             {
-                if (Helper.InstaApi?.PushClient is PushClient push && push != null)
-                {
-                    if (string.IsNullOrEmpty(push.LatestErr))
-                        push.Start();
-                    else
-                        await push.StartFresh(true);
-                }
+                //if (Helper.InstaApi?.PushClient is PushClient push && push != null)
+                //{
+                //    if (string.IsNullOrEmpty(push.LatestErr))
+                //        push.Start();
+                //    else
+                //        await push.StartFresh(true);
+                //}
                 //if (MultiApiHelper.Pushs.Count > 0)
                 //    for (int i = 0; i < MultiApiHelper.Pushs.Count; i++)
                 //    {

@@ -36,6 +36,7 @@ using System.Linq;
 using Windows.System.Profile;
 using InstagramApiSharp.Helpers;
 using InstagramApiSharp.API.RealTime.Handlers;
+using Windows.Security.Cryptography.Certificates;
 
 namespace MinistaHelper.Push
 {
@@ -56,7 +57,7 @@ namespace MinistaHelper.Push
         private const string SOCKET_ID = "mqttfbns";
 
         private IBackgroundTaskRegistration _socketActivityTask;
-        private IBackgroundTaskRegistration _pushNotifyTask;
+        //private IBackgroundTaskRegistration _pushNotifyTask;
 
         public const int KEEP_ALIVE = 900;    // seconds
         private const int TIMEOUT = 5;
@@ -137,37 +138,40 @@ namespace MinistaHelper.Push
 
             await UnregisterTasksAsync();
             BackgroundTaskBuilder backgroundTaskBuilder;
-            //if (CanRunInBG())
-            //{
-            //    if (_socketActivityTask == null)
-            //    {
-            //        backgroundTaskBuilder = new BackgroundTaskBuilder
-            //        {
-            //            Name = BACKGROUND_ACTIVITY_ENTRY_NAME_POINT,
-            //            TaskEntryPoint = BACKGROUND_ACTIVITY_ENTRY_POINT
-            //        };
-            //        backgroundTaskBuilder.SetTrigger(new SocketActivityTrigger());
-            //        _socketActivityTask = backgroundTaskBuilder.Register();
-            //    }
-            //}
+            if (CanRunInBG())
+            {
+                if (_socketActivityTask == null)
+                {
+                    backgroundTaskBuilder = new BackgroundTaskBuilder
+                    {
+                        Name = BACKGROUND_ACTIVITY_ENTRY_NAME_POINT,
+                        TaskEntryPoint = BACKGROUND_ACTIVITY_ENTRY_POINT
+                    };
+                    backgroundTaskBuilder.SetTrigger(new SocketActivityTrigger());
+                    _socketActivityTask = backgroundTaskBuilder.Register();
+                }
+            }
             backgroundTaskBuilder = new BackgroundTaskBuilder
             {
                 Name = "MinistaBH.NotifyQuickReplyTask",
                 TaskEntryPoint = "MinistaBH.NotifyQuickReplyTask"
             };
             backgroundTaskBuilder.SetTrigger(new ToastNotificationActionTrigger());
-            _pushNotifyTask = backgroundTaskBuilder.Register();
+           /* _pushNotifyTask = */backgroundTaskBuilder.Register();
             
             return true;
         }
-
+        void PrintException(string from, Exception exception)
+        {
+            Log(from + "  " + SocketError.GetStatus(exception.HResult).ToString());
+        }
         /// <summary>
         /// Transfer socket as well as necessary context for background push notification client. 
         /// Transfer only happens if user is logged in.
         /// </summary>
         public async Task TransferPushSocket()
         {
-            return;
+            //return;
             if (!_instaApi.IsUserAuthenticated || _runningTokenSource.IsCancellationRequested) return;
             if (DontTransferSocket) return;
             Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Transferring sockets");
@@ -177,20 +181,24 @@ namespace MinistaHelper.Push
             await Socket.CancelIOAsync();
 
 
-            //Socket.TransferOwnership(
-            //    SOCKET_ID ,
-            //    null,
-            //    TimeSpan.FromSeconds(KEEP_ALIVE - 60));
+            Socket.TransferOwnership(
+                SOCKET_ID
+                ,
+                null,
+                TimeSpan.FromSeconds(KEEP_ALIVE - 60)
+
+                );
+            //Socket.Dispose();
         }
         private bool CanRunInBG() 
         {
             if (IsMobile)
             {
-#if DEBUG
+//#if DEBUG
                 return true;
-#else
-                return false;
-#endif
+//#else
+//                return false;
+//#endif
             }
             else
                 return true;
@@ -201,31 +209,32 @@ namespace MinistaHelper.Push
             if (!_instaApi.IsUserAuthenticated) return;
             try
             {
-                //if (CanRunInBG())
-                //{
-                //    if (SocketActivityInformation.AllSockets.TryGetValue(SOCKET_ID, out var socketInformation))
-                //    {
-                //        var socket = socketInformation.StreamSocket;
-                //        if (string.IsNullOrEmpty(ConnectionData.FbnsToken)) // if we don't have any push data, start fresh
-                //            await StartFresh().ConfigureAwait(false);
-                //        else
-                //        {
-                //            //socket.TransferOwnership(SOCKET_ID);
-                //            await StartWithExistingSocket(socket).ConfigureAwait(false);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        await StartFresh().ConfigureAwait(false);
-                //    }
-                //}
-                //else
+                if (CanRunInBG())
+                {
+                    if (SocketActivityInformation.AllSockets.TryGetValue(SOCKET_ID, out var socketInformation))
+                    {
+                        var socket = socketInformation.StreamSocket;
+                        if (string.IsNullOrEmpty(ConnectionData.FbnsToken)) // if we don't have any push data, start fresh
+                            await StartFresh().ConfigureAwait(false);
+                        else
+                        {
+                            //socket.TransferOwnership(SOCKET_ID);
+                            await StartWithExistingSocket(socket).ConfigureAwait(false);
+                        }
+                    }
+                    else
+                    {
+                        await StartFresh().ConfigureAwait(false);
+                    }
+                }
+                else
                 {
                     await StartFresh().ConfigureAwait(false);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                PrintException("Start", ex);
                 await StartFresh().ConfigureAwait(false);
             }
         }
@@ -252,8 +261,9 @@ namespace MinistaHelper.Push
             {
                 // pass
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                PrintException("StartWithExistingSocket", ex);
                 Shutdown();
             }
         }
@@ -275,55 +285,57 @@ namespace MinistaHelper.Push
                 Socket = new StreamSocket();
                 Socket.Control.KeepAlive = true;
                 Socket.Control.NoDelay = true;
-                //if (await RequestBackgroundAccess() && !withBG)
-                //{
-                //    OnlyOnce = false;
-                //    if (CanRunInBG())
-                //    {
-                //        try
-                //        {
-                //            Socket.EnableTransferOwnership(_socketActivityTask.TaskId, SocketActivityConnectedStandbyAction.Wake);
-                //        }
-                //        catch (Exception connectedStandby)
-                //        {
-                //            Log(connectedStandby);
-                //            Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Connected standby not available");
-                //            try
-                //            {
-                //                Socket.EnableTransferOwnership(_socketActivityTask.TaskId, SocketActivityConnectedStandbyAction.DoNotWake);
-                //            }
-                //            catch (Exception e)
-                //            {
-                //                Log(e);
-                //                Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Failed to transfer socket completely!");
-                //                if (RetryConnection > 3)
-                //                {
-                //                    Shutdown();
-                //                    await StartFresh(true);
-                //                    RetryConnection++;
-                //                    return;
-                //                }
-                //                return;
-                //            }
-                //        }
-                //    }
-                //}
-               
-                //await Socket.ConnectAsync(new HostName("69.171.250.34"), "443", SocketProtectionLevel.Tls12);
+                if (await RequestBackgroundAccess() && !withBG)
+                {
+                    OnlyOnce = false;
+                    if (CanRunInBG())
+                    {
+                        try
+                        {
+                            Socket.EnableTransferOwnership(_socketActivityTask.TaskId, SocketActivityConnectedStandbyAction.Wake);
+                        }
+                        catch (Exception connectedStandby)
+                        {
+                            Log(connectedStandby);
+                            Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Connected standby not available");
+                            try
+                            {
+                                Socket.EnableTransferOwnership(_socketActivityTask.TaskId, SocketActivityConnectedStandbyAction.DoNotWake);
+                            }
+                            catch (Exception e)
+                            {
+                                Log(e);
+                                Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Failed to transfer socket completely!");
+                                if (RetryConnection > 3)
+                                {
+                                    Shutdown();
+                                    await StartFresh(true);
+                                    RetryConnection++;
+                                    return;
+                                }
+                                return;
+                            }
+                        }
+                    }
+                }
+                _runningTokenSource = new CancellationTokenSource();
+                //await Socket.ConnectAsync(new HostName("69.171.250.34"), "443", SocketProtectionLevel.Ssl);
                 await Socket.ConnectAsync(new HostName(HOST_NAME), "443", SocketProtectionLevel.Tls12);
-
+                //var asyncTask =  Socket.ConnectAsync(new HostName(HOST_NAME), "443", SocketProtectionLevel.Tls10);
+                //await asyncTask;
                 _inboundReader = new DataReader(Socket.InputStream);
                 _outboundWriter = new DataWriter(Socket.OutputStream);
                 _inboundReader.ByteOrder = ByteOrder.BigEndian;
                 _inboundReader.InputStreamOptions = InputStreamOptions.Partial;
                 _outboundWriter.ByteOrder = ByteOrder.BigEndian;
-                _runningTokenSource = new CancellationTokenSource();
-
+                await Task.Delay(2500);
                 await FbnsPacketEncoder.EncodePacket(connectPacket, _outboundWriter);
+                await Task.Delay(2500);
                 StartPollingLoop();
             }
             catch (Exception ex)
             {
+                PrintException("StartFresh", ex);
                 Shutdown();
                 if(!OnlyOnce)
                 {
@@ -354,8 +366,10 @@ namespace MinistaHelper.Push
                 {
                     await reader.LoadAsync(FbnsPacketDecoder.PACKET_HEADER_LENGTH);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    PrintException("StartPollingLoop", ex);
+                    Log("StartPollingLoop: " + ex.Message + "\n" + ex.Source + "\n");
                     // Connection closed (most likely)
                     return;
                 }
@@ -364,8 +378,10 @@ namespace MinistaHelper.Push
                     var packet = await FbnsPacketDecoder.DecodePacket(reader);
                     await OnPacketReceived(packet);
                 }
-                catch 
+                catch (Exception ex)
                 {
+                    PrintException("StartPollingLoop22", ex);
+                    Log("StartPollingLoop22: " + ex.Message + "\n" + ex.Source + "\n");
                     if (tried > 3)
                     {
                         Shutdown();
@@ -390,6 +406,7 @@ namespace MinistaHelper.Push
             }
             catch (Exception ex)
             {
+                PrintException("SendPing", ex);
                 Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Failed to ping Push server. Shutting down.");
                 Shutdown();
             }
@@ -460,8 +477,9 @@ namespace MinistaHelper.Push
                         //throw new NotSupportedException($"Packet type {msg.PacketType} is not supported.");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                PrintException("SendPing", ex);
                 Shutdown();
             }
         }
@@ -656,7 +674,7 @@ namespace MinistaHelper.Push
         void Log(object message)
         {
             Debug.WriteLine($"[{DateTime.Now.ToString(CultureInfo.CurrentCulture)} ]: {message}");
-            LogReceived?.Invoke(this, message);
+            LogReceived?.Invoke(this, $"[{DateTime.Now.ToString(CultureInfo.CurrentCulture)} ]: {message}");
 
         }
     }

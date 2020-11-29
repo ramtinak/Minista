@@ -22,42 +22,42 @@ namespace Minista.Helpers
                 {
                     //var api = apiList[0];
                     var currentPK = Helper.InstaApi.GetLoggedUser().LoggedInUser.Pk;
-                    foreach (var api in apiList)
-                    {
-                        // shutdown mqtt
-                        if (api.PushClient != null)
-                        {
-                            try
-                            {
-                                api.PushClient.Shutdown();
-                                await Task.Delay(50);
-                                api.PushClient = null;
-                            }
-                            catch { }
-                        }
-                    }
-                    var canbeMultiple = apiList.Any(x => x.GetCurrentDevice().DeviceGuid.ToString() != Helper.InstaApi.GetCurrentDevice().DeviceGuid.ToString());
-                    if (!canbeMultiple)
-                    {
-                        try
-                        {
-                            var api = Helper.InstaApi ?? apiList[0];
-                            var p = new MinistaHelper.Push.PushClient(apiList.ToList(), api);
-                            p.ValidateData();
-                            p.FbnsTokenChanged += P_FbnsTokenChanged;
-                            p.MessageReceived += PushClientMessageReceived;
-                            p.LogReceived += P_LogReceived;
-                            if (api.GetLoggedUser().LoggedInUser.Pk != currentPK)
-                                p.DontTransferSocket = true;
-                            p.OpenNow();
-                            api.PushClient = p;
+                    //foreach (var api in apiList)
+                    //{
+                    //    // shutdown mqtt
+                    //    if (api.PushClient != null)
+                    //    {
+                    //        try
+                    //        {
+                    //            api.PushClient.Shutdown();
+                    //            await Task.Delay(50);
+                    //            api.PushClient = null;
+                    //        }
+                    //        catch { }
+                    //    }
+                    //}
+                    //var canbeMultiple = apiList.Any(x => x.GetCurrentDevice().DeviceGuid.ToString() != Helper.InstaApi.GetCurrentDevice().DeviceGuid.ToString());
+                    //if (!canbeMultiple)
+                    //{
+                    //    try
+                    //    {
+                    //        var api = Helper.InstaApi ?? apiList[0];
+                    //        var p = new MinistaHelper.Push.PushClient(apiList.ToList(), api);
+                    //        p.ValidateData();
+                    //        p.FbnsTokenChanged += P_FbnsTokenChanged;
+                    //        p.MessageReceived += PushClientMessageReceived;
+                    //        p.LogReceived += P_LogReceived;
+                    //        if (api.GetLoggedUser().LoggedInUser.Pk != currentPK)
+                    //            p.DontTransferSocket = true;
+                    //        p.OpenNow();
+                    //        api.PushClient = p;
 
-                            api.PushClient.Start();
+                    //        api.PushClient.Start();
 
-                        }
-                        catch { }
-                    }
-                    else
+                    //    }
+                    //    catch { }
+                    //}
+                    //else
                     {
                         //foreach (var api in apiList)
                         // open only for one account!
@@ -70,8 +70,8 @@ namespace Minista.Helpers
                                 p.FbnsTokenChanged += P_FbnsTokenChanged;
                                 p.MessageReceived += PushClientMessageReceived;
                                 p.LogReceived += P_LogReceived;
-                                if (api.GetLoggedUser().LoggedInUser.Pk != currentPK)
-                                    p.DontTransferSocket = true;
+                                //if (api.GetLoggedUser().LoggedInUser.Pk != currentPK)
+                                //    p.DontTransferSocket = true;
                                 p.OpenNow();
                                 api.PushClient = p;
 

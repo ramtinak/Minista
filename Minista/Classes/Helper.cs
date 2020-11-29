@@ -566,7 +566,7 @@ static class Helper
         else
             sessionData = new UserSessionData { UserName = username, Password = password };
 
-        DebugLogger = new DebugLogger(InstagramApiSharp.Logger.LogLevel.All);
+        DebugLogger = new DebugLogger(InstagramApiSharp.Logger.LogLevel.None);
         AndroidDevice device = null;
         var dontGenerateToken = false;
         if (InstaApi != null)

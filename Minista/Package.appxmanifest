@@ -70,21 +70,21 @@
         <uap:Extension Category="windows.fileTypeAssociation">
           <uap:FileTypeAssociation Name="ministatheme">
             <uap:DisplayName>Minista Theme</uap:DisplayName>
+            <uap:InfoTip>Minista Theme File</uap:InfoTip>
             <uap:SupportedFileTypes>
               <uap:FileType>.minista-theme</uap:FileType>
             </uap:SupportedFileTypes>
-            <uap:InfoTip>Minista Theme File</uap:InfoTip>
           </uap:FileTypeAssociation>
         </uap:Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="MinistaBH.SocketActivityTask">
           <BackgroundTasks>
             <Task Type="systemEvent" />
-            <Task Type="pushNotification"/>
+            <Task Type="pushNotification" />
           </BackgroundTasks>
         </Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="MinistaBH.NotifyQuickReplyTask">
           <BackgroundTasks>
-            <Task Type="systemEvent"/>
+            <Task Type="systemEvent" />
           </BackgroundTasks>
         </Extension>
       </Extensions>
@@ -93,13 +93,14 @@
   <Capabilities>
     <Capability Name="internetClient" />
     <Capability Name="internetClientServer" />
+    <Capability Name="privateNetworkClientServer" />
     <uap:Capability Name="picturesLibrary" />
     <uap:Capability Name="musicLibrary" />
     <uap:Capability Name="removableStorage" />
     <uap:Capability Name="videosLibrary" />
-    <Capability Name="privateNetworkClientServer"/>
-    <uap3:Capability Name="userNotificationListener"/>
+    <uap3:Capability Name="userNotificationListener" />
     <DeviceCapability Name="microphone" />
     <DeviceCapability Name="webcam" />
+    <DeviceCapability Name="bluetooth" />
   </Capabilities>
 </Package>
