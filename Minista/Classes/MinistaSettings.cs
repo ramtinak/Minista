@@ -18,6 +18,8 @@ namespace Minista.Classes
         public double LockControlX { get; set; } = 0;
         public double LockControlY { get; set; } = 120;
         public bool HandleTelegramLinks { get; set; } = false;
+
+        public MinistaTheme Theme { get; set; } = new MinistaTheme();
     } 
     public enum HeaderPosition
     {

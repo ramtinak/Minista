@@ -17,7 +17,7 @@
 
     <Grid Background="#CC000000">
         <Border CornerRadius="5">
-            <Grid Background="#FF1B1B1B"
+            <Grid Background="{StaticResource DefaultBackgroundColor}"
                   CornerRadius="5"
                   BorderBrush="{StaticResource DefaultBackgroundColor}"
                   BorderThickness=".8"
@@ -68,7 +68,7 @@
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
                 </Grid>
-                <Rectangle Fill="#FF363636"
+                <Rectangle Fill="{StaticResource SeperatorColor}"
                            Height="1.2"
                            MinWidth="250"
                            MaxWidth="320"
@@ -109,7 +109,7 @@
                                 </interactivity:Interaction.Behaviors>
                                 <Button.Flyout>
                                     <Flyout Placement="Bottom">
-                                        <Grid Background="#FF1B1B1B"
+                                        <Grid Background="{StaticResource DefaultBackgroundColor}"
                                               Width="250">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -132,7 +132,7 @@
                             </Button>
 
                         </Grid>
-                        <Rectangle Fill="#FF363636"
+                        <Rectangle Fill="{StaticResource SeperatorColor}"
                                    Height="1.2"
                                    MinWidth="250"
                                    MaxWidth="320"
@@ -181,7 +181,7 @@
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                          Foreground="{StaticResource DefaultForegroundColor}" />
 
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.2"
                                            MinWidth="250"
                                            MaxWidth="320"
@@ -218,7 +218,7 @@
                                          Foreground="{StaticResource DefaultForegroundColor}"
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}" />
 
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.2"
                                            MinWidth="250"
                                            MaxWidth="320"
@@ -255,7 +255,7 @@
                                          PlaceholderText="Website"
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                          Foreground="{StaticResource DefaultForegroundColor}" />
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.2"
                                            MinWidth="250"
                                            MaxWidth="320"
@@ -292,7 +292,7 @@
                                          PlaceholderText="Bio"
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                          Foreground="{StaticResource DefaultForegroundColor}" />
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.2"
                                            MinWidth="250"
                                            MaxWidth="320"
@@ -347,7 +347,7 @@
                                              PlaceholderText="Enter your email address"
                                              Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                              Foreground="{StaticResource DefaultForegroundColor}" />
-                                    <Rectangle Fill="#FF363636"
+                                    <Rectangle Fill="{StaticResource SeperatorColor}"
                                                Height="1.2"
                                                MinWidth="250"
                                                MaxWidth="320"
@@ -384,7 +384,7 @@
                                              PlaceholderText="Enter your phone number"
                                              Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                              Foreground="{StaticResource DefaultForegroundColor}" />
-                                    <Rectangle Fill="#FF363636"
+                                    <Rectangle Fill="{StaticResource SeperatorColor}"
                                                Height="1.2"
                                                MinWidth="250"
                                                MaxWidth="320"
@@ -512,7 +512,7 @@
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
                 </Grid>
-                <Rectangle Fill="#FF363636"
+                <Rectangle Fill="{StaticResource SeperatorColor}"
                            Height="1.2"
                            MinWidth="250"
                            MaxWidth="320"
@@ -535,7 +535,7 @@
         <Border x:Name="PersonalInfoGrid"
                 Visibility="Collapsed"
                 CornerRadius="5">
-            <Grid Background="#FF1B1B1B"
+            <Grid Background="{StaticResource DefaultBackgroundColor}"
                   CornerRadius="5"
                   BorderBrush="{StaticResource DefaultBackgroundColor}"
                   BorderThickness=".8"
@@ -586,7 +586,7 @@
                         </interactivity:Interaction.Behaviors>
                     </AppBarButton>
                 </Grid>
-                <Rectangle Fill="#FF363636"
+                <Rectangle Fill="{StaticResource SeperatorColor}"
                            Height="1.2"
                            MinWidth="250"
                            MaxWidth="320"
@@ -640,7 +640,7 @@
                                          PlaceholderText="Enter your email address"
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                          Foreground="{StaticResource DefaultForegroundColor}" />
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.2"
                                            MinWidth="250"
                                            MaxWidth="320"
@@ -677,7 +677,7 @@
                                          PlaceholderText="Enter your phone number"
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                          Foreground="{StaticResource DefaultForegroundColor}" />
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.2"
                                            MinWidth="250"
                                            MaxWidth="320"
@@ -765,7 +765,7 @@
                                          PlaceholderText="Enter your phone number"
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                          Foreground="{StaticResource DefaultForegroundColor}" />-->
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.2"
                                            MinWidth="250"
                                            MaxWidth="320"

@@ -277,22 +277,8 @@ Only you will be able to see them. Archive posts by tapping on the Archive butto
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="Left"
                     Margin="12 0 0 60"
-                    Click="RefreshButtonClick">
-                <Grid>
-
-                    <Ellipse Width="45"
-                             Height="45"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"
-                             Fill="#FF333333" />
-                    <FontIcon FontFamily="{StaticResource SymbolFont}"
-                              FontSize="{StaticResource HeaderFontSize}"
-                              Foreground="White"
-                              Glyph="" />
-                    <Grid Background="Cyan"
-                          Opacity="0" />
-                </Grid>
-            </Button>
+                    Click="RefreshButtonClick" 
+                    Style="{StaticResource RefreshButtonStyle}"/>
         </Grid>
         <loading:LoadingUc x:Name="BottomLoading"
                            Visibility="Collapsed"

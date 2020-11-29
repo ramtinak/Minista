@@ -81,42 +81,16 @@
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
                 Margin="12 0 0 50"
-                Click="RefreshButtonClick">
-            <Grid>
-
-                <Ellipse Width="45"
-                         Height="45"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         Fill="#FF333333" />
-                <FontIcon FontFamily="{StaticResource SymbolFont}"
-                          FontSize="{StaticResource HeaderFontSize}"
-                          Foreground="White"
-                          Glyph="" />
-                <Grid Background="Cyan"
-                      Opacity="0" />
-            </Grid>
-        </Button>
+                Click="RefreshButtonClick"
+                Style="{StaticResource RefreshButtonStyle}"/>
         <Button x:Name="GoUpButton"
                 Background="{x:Null}"
                 Grid.RowSpan="2"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right"
                 Margin="0 0 12 50"
-                Click="GoUpButtonClick">
-            <Grid>
-
-                <Ellipse Width="45"
-                         Height="45"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         Fill="#FF333333" />
-                <FontIcon FontFamily="{StaticResource SymbolFont}"
-                          FontSize="{StaticResource HeaderFontSize}"
-                          Foreground="White"
-                          Glyph="" />
-            </Grid>
-        </Button>
+                Click="GoUpButtonClick"
+                Style="{StaticResource GoUpButtonStyle}"/>
     </Grid>
 
 </UserControl>

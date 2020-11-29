@@ -9,8 +9,8 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:Minista.Behaviors"
     mc:Ignorable="d" Background="{x:Null}" BorderBrush="Transparent" BorderThickness="0">
-    <Border CornerRadius="5">
-        <Grid Background="#E51B1B1B"
+    <Border CornerRadius="5" Width="220">
+        <Grid Background="{StaticResource DefaultBackgroundColor}"
               BorderBrush="{StaticResource DefaultBackgroundColor}" MaxHeight="480"
               CornerRadius="5"
               BorderThickness=".8">

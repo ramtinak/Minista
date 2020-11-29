@@ -230,7 +230,7 @@
                             </interactivity:Interaction.Behaviors>
                             <Button.Flyout>
                                 <Flyout Placement="Bottom">
-                                    <Grid Width="250" Background="#FF1B1B1B">
+                                    <Grid Width="250" Background="{StaticResource DefaultBackgroundColor}">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="Auto" />
@@ -267,7 +267,7 @@
                                             Margin="5,2"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
-                                            Fill="#FF363636" />
+                                            Fill="{StaticResource SeperatorColor}" />
 
 
                                         <Button
@@ -294,7 +294,7 @@
                                             Margin="5,2"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
-                                            Fill="#FF363636" />
+                                            Fill="{StaticResource SeperatorColor}"/>
                                         <Button
                                             x:Name="UploadStoryButton"
                                             Grid.Row="4"
@@ -319,7 +319,7 @@
                                             Margin="5,2"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
-                                            Fill="#FF363636" />
+                                            Fill="{StaticResource SeperatorColor}"/>
                                         <Button
                                             x:Name="UploadOldPostButton"
                                             Grid.Row="6"

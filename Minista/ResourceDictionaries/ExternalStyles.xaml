@@ -1379,7 +1379,7 @@
                                         <Setter Target="RowTwo.Height" Value="Auto" />
                                         <Setter Target="RotateLayoutTransform.Angle" Value="0" />
                                         <Setter Target="PART_MainContent.RenderTransformOrigin" Value="0.5, 1" />
-                                        <Setter Target="PART_ExpanderToggleButton.Background" Value="{Binding ElementName=PART_MainContent, Path=Background}" />
+                                        <Setter Target="PART_ExpanderToggleButton.Background" Value="Red" />
                                     </VisualState.Setters>
                                     <Storyboard>
                                         <DoubleAnimation

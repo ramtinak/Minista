@@ -340,8 +340,8 @@
                                                     </Grid.RowDefinitions>
                                                     <Grid x:Name="GridHeader"
                                                           Loaded="GridHeaderLoaded" />
-                                                    <Rectangle Fill="#FF363636"
-                                                               Height="1.5"
+                                                    <Rectangle Fill="{StaticResource SeperatorColor}"
+                                                               Height="1.2"
                                                                Grid.Row="1"
                                                                Margin="15 2.5"
                                                                HorizontalAlignment="Stretch"

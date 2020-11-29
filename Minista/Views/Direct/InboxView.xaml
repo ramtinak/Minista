@@ -64,7 +64,7 @@
                     Margin="15,2.5"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Fill="#FF363636" />
+                    Fill="{StaticResource SeperatorColor}" />
             </Grid>
             <Grid Grid.Row="1">
                 <winui:RefreshContainer x:Name="RefreshControl">
@@ -130,23 +130,8 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                     Background="{x:Null}"
-                    Click="RefreshButtonClick">
-                    <Grid>
-
-                        <Ellipse
-                            Width="45"
-                            Height="45"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Fill="#FF333333" />
-                        <FontIcon
-                            FontFamily="{StaticResource SymbolFont}"
-                            FontSize="{StaticResource HeaderFontSize}"
-                            Foreground="White"
-                            Glyph="" />
-                        <Grid Background="Cyan" Opacity="0" />
-                    </Grid>
-                </Button>
+                    Click="RefreshButtonClick" 
+                    Style="{StaticResource RefreshButtonStyle}"/>
             </Grid>
             <Grid
                 x:Name="SearchGrid"

@@ -24,6 +24,18 @@ namespace Minista
         public string DefaultItemBackgroundColor { get; set; } 
         public string DefaultForegroundColor { get; set; }
         public string DefaultInnerForegroundColor { get; set; } 
+
+
+
+
+
+
+
+
+
+
+
+
         public string IconsColor { get; set; }
         public string HighlightColor { get; set; }
         public string ProfileCircleColor { get; set; }

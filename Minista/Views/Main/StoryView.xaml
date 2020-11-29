@@ -410,8 +410,8 @@
                       CornerRadius="8">
                 </Grid>-->
                     <TextBox x:Name="ReplyText"
-                             Foreground="White"
-                             Background="#7F282828"
+                             Foreground="{StaticResource DefaultForegroundColor}"
+                             Background="{StaticResource StoryReplyTextBackgroundColor}"
                              BorderThickness="0"
                              Visibility="Collapsed"
                              Margin="5 5"
@@ -435,7 +435,8 @@
                             VerticalAlignment="Center"
                             Height="42"
                             Margin="5 5"
-                            Background="#7F282828"
+                            Background="{StaticResource StoryButtonBackoundColor}"
+                            Foreground="{StaticResource StoryButtonForeroundColor}"
                             ToolTipService.ToolTip="Story viewers"
                             FontSize="{StaticResource TinyFontSize}"
                             FontFamily="{StaticResource VazirFont}"
@@ -449,7 +450,8 @@
                             Width="60"
                             Grid.Column="2"
                             Margin="5 5"
-                            Background="#7F282828"
+                            Background="{StaticResource StoryButtonBackoundColor}"
+                            Foreground="{StaticResource StoryButtonForeroundColor}"
                             ToolTipService.ToolTip="Share current story"
                             FontSize="{StaticResource BigBigFontSize}"
                             FontFamily="{StaticResource MaterialSymbolFont}" />
@@ -463,10 +465,10 @@
                             Width="60"
                             Grid.Column="2"
                             Margin="5"
-                            Background="#7F282828"
+                            Background="{StaticResource StoryButtonBackoundColor}"
+                            Foreground="{StaticResource StoryButtonForeroundColor}"
                             FontSize="{StaticResource DefaultFontSize}"
-                            FontFamily="{StaticResource VazirFont}"
-                            Foreground="White" />
+                            FontFamily="{StaticResource VazirFont}"/>
                     <!--<Grid Grid.Column="1" Width="60" />-->
                     <Grid Grid.Column="2"
                           Visibility="Collapsed">
@@ -499,7 +501,8 @@
                             Grid.Column="3"
                             Grid.Row="1"
                             Margin="5 5"
-                            Background="#7F282828"
+                            Background="{StaticResource StoryButtonBackoundColor}"
+                            Foreground="{StaticResource StoryButtonForeroundColor}"
                             ToolTipService.ToolTip="More story options"
                             FontSize="{StaticResource BigFontSize}"
                             FontFamily="{StaticResource MaterialSymbolFont}" />

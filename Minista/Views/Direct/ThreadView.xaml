@@ -3179,7 +3179,7 @@
         <SplitView x:Name="SplitView"
                    CompactPaneLength="0"
                    DisplayMode="CompactOverlay"
-                   PaneBackground="#E5141414"
+                   PaneBackground="{StaticResource DirectPaneBackgroundColor}"
                    OpenPaneLength="240"
                    IsTabStop="False"
                    Foreground="White"
@@ -3212,8 +3212,8 @@
                     </Grid>
                 </controls:GridSplitter.Element>
             </controls:GridSplitter>-->
-                    <Grid Width="1"
-                          Background="#FF212121" />
+                    <!--<Grid Width="1"
+                          Background="#FF212121"  Opacity="0"/>-->
                     <ScrollViewer Grid.Column="1">
                         <StackPanel>
 
@@ -3257,7 +3257,7 @@
                                               Grid.Column="2"
                                               Toggled="ToggleApprovalGridToggled" />
                             </Grid>
-                            <Rectangle Fill="#FF363636"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
                                        Height="1.5"
                                        Grid.Row="1"
                                        Grid.ColumnSpan="3"
@@ -3302,7 +3302,7 @@
                                                   Margin="4 10"
                                                   Click="AddPeopleToggleButtonButtonClick" />
                                 </StackPanel>
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.5"
                                            Grid.Row="3"
                                            Grid.ColumnSpan="3"
@@ -3369,7 +3369,7 @@
                                 </ListView>
 
                             </Grid>
-                            <Rectangle Fill="#FF363636"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
                                        Height="1.5"
                                        Grid.Row="1"
                                        Grid.ColumnSpan="3"
@@ -3404,7 +3404,7 @@
                                            Text="You won't receive messages from this group unless someone adds you to the conversation again." />
                             </Grid>
 
-                            <Rectangle Fill="#FF363636"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
                                        Height="1.5"
                                        Grid.Row="1"
                                        Grid.ColumnSpan="3"
@@ -3487,7 +3487,7 @@
                         </ToggleButton>
                         <!---->
                     </Grid>
-                    <Rectangle Fill="#FF363636"
+                    <Rectangle Fill="{StaticResource SeperatorColor}"
                                Height="1.5"
                                Grid.Row="1"
                                Grid.ColumnSpan="3"
@@ -3585,10 +3585,10 @@
                             <uc:RecordDirectVoiceUc x:Name="RecordDirectVoiceUc"
                                                     x:FieldModifier="public"
                                                     Visibility="Collapsed" />
-                            <Grid BorderBrush="#FF252525"
+                            <Grid BorderBrush="{StaticResource DirectTextBoxBorderColor}"
                                   Grid.Row="1"
                                   MinHeight="50"
-                                  BorderThickness="2"
+                                  BorderThickness="1.8"
                                   CornerRadius="25"
                                   Margin="5 5 5 8">
                                 <Grid.ColumnDefinitions>
