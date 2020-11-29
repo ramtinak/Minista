@@ -17,6 +17,25 @@
             </ResourceDictionary.MergedDictionaries>
             <!--<XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />-->
 
+            <!--<SolidColorBrush x:Key="DefaultBackgroundColor">#FFFFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="DefaultItemBackgroundColor">#FFF0E3E4</SolidColorBrush>
+            <SolidColorBrush x:Key="DefaultForegroundColor">#FF000000</SolidColorBrush>
+            <SolidColorBrush x:Key="DefaultInnerForegroundColor">#FF171717</SolidColorBrush>
+            <SolidColorBrush x:Key="SeperatorColor">#FF787878</SolidColorBrush>
+            <SolidColorBrush x:Key="CategoryColor">#FF666666</SolidColorBrush>
+            <SolidColorBrush x:Key="ProfileTextColor">#FF474747</SolidColorBrush>
+            <SolidColorBrush x:Key="SeeMoreColor">#45000000</SolidColorBrush>
+            <SolidColorBrush x:Key="Comment4ButtonBackgroundColor">#FF1F1F1F</SolidColorBrush>
+            <SolidColorBrush x:Key="Comment4ForegroundColor">#FFFFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="RefreshGoUpButtonBackgroundColor">#FFEBDEDF</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectPaneBackgroundColor">#E5858585</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectTextBoxBorderColor">#FF252525</SolidColorBrush>
+            <SolidColorBrush x:Key="StoryReplyTextBackgroundColor">#FF666666</SolidColorBrush>
+            <SolidColorBrush x:Key="StoryButtonBackoundColor">#FF666666</SolidColorBrush>
+            <SolidColorBrush x:Key="StoryButtonForeroundColor">#FF171717</SolidColorBrush>
+            <SolidColorBrush x:Key="UserSuggestionsCardBackgroundColor">#FFF0E3E4</SolidColorBrush>-->
+
+
             <SolidColorBrush x:Key="DefaultBackgroundColor">#FF151515</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultItemBackgroundColor">#FF232323</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultForegroundColor">#FFB4B4B4</SolidColorBrush>
@@ -28,22 +47,18 @@
             <SolidColorBrush x:Key="Comment4ButtonBackgroundColor">#FF1F1F1F</SolidColorBrush>
             <SolidColorBrush x:Key="Comment4ForegroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="RefreshGoUpButtonBackgroundColor">#FF333333</SolidColorBrush>
-
             <SolidColorBrush x:Key="DirectPaneBackgroundColor">#E5141414</SolidColorBrush>
             <SolidColorBrush x:Key="DirectTextBoxBorderColor">#FF252525</SolidColorBrush>
-
             <SolidColorBrush x:Key="StoryReplyTextBackgroundColor">#7F282828</SolidColorBrush>
             <SolidColorBrush x:Key="StoryButtonBackoundColor">#7F282828</SolidColorBrush>
             <SolidColorBrush x:Key="StoryButtonForeroundColor">#FFFFFFFF</SolidColorBrush>
-
-
+            <SolidColorBrush x:Key="UserSuggestionsCardBackgroundColor">#FF252525</SolidColorBrush>
             <!--
             <SolidColorBrush x:Key="SeperatorColor">#FF666666</SolidColorBrush>
             
             <SolidColorBrush x:Key="RefreshGoUpButtonForegroundColor">#FFFFFFFF</SolidColorBrush>
 -->
 
-            <SolidColorBrush x:Key="UserSuggestionsCardBackgroundColor">#FF252525</SolidColorBrush>
 
             <Thickness x:Key="PivotPortraitThemePadding">0</Thickness>
             <Style TargetType="FlyoutPresenter">

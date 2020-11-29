@@ -3459,7 +3459,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Foreground="White"
+                        <TextBlock Foreground="{StaticResource DefaultForegroundColor}"
                                    FontFamily="{StaticResource VazirFont}"
                                    FontSize="{StaticResource DefaultFontSize}"
                                    TextWrapping="Wrap"

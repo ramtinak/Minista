@@ -5,7 +5,7 @@ namespace Minista
     public class MinistaThemeCore
     {
         public MinistaPublisher Publisher { get; set; }
-        public MinistaTheme Theme { get; set; }
+        public MinistaTheme Theme { get; set; } = new MinistaTheme();
         public string Font { get; set; }
     }
 
@@ -20,10 +20,31 @@ namespace Minista
     public class MinistaTheme
     {
         public ElementTheme ElementTheme { get; set; } = ElementTheme.Dark;
-        public string DefaultBackgroundColor { get; set; }
-        public string DefaultItemBackgroundColor { get; set; } 
-        public string DefaultForegroundColor { get; set; }
-        public string DefaultInnerForegroundColor { get; set; } 
+        public string DefaultBackgroundColor { get; set; } = "#FF151515";
+        public string DefaultItemBackgroundColor { get; set; } = "#FF232323";
+        public string DefaultForegroundColor { get; set; } = "#FFB4B4B4";
+        public string DefaultInnerForegroundColor { get; set; } = "#FFC1C1C1";
+        public string SeperatorColor { get; set; } = "#FF363636";
+        public string CategoryColor { get; set; } = "#FF666666";
+        public string ProfileTextColor { get; set; } = "#FFD4D4D4";
+        public string SeeMoreColor { get; set; } = "#45000000";
+        public string Comment4ButtonBackgroundColor { get; set; } = "#FF1F1F1F";
+        public string Comment4ForegroundColor { get; set; } = "#FFFFFFFF";
+        public string RefreshGoUpButtonBackgroundColor { get; set; } = "#FF333333";
+        public string DirectPaneBackgroundColor { get; set; } = "#E5141414";
+        public string DirectTextBoxBorderColor { get; set; } = "#FF252525";
+
+        public string StoryReplyTextBackgroundColor { get; set; } = "#7F282828";
+        public string StoryButtonBackoundColor { get; set; } = "#7F282828";
+        public string StoryButtonForeroundColor { get; set; } = "#FFFFFFFF";
+        public string UserSuggestionsCardBackgroundColor { get; set; } = "#FF252525";
+
+        //<SolidColorBrush x:Key="StoryReplyTextBackgroundColor">#7F282828</SolidColorBrush>
+        //<SolidColorBrush x:Key="StoryButtonBackoundColor">#7F282828</SolidColorBrush>
+        //<SolidColorBrush x:Key="StoryButtonForeroundColor">#FFFFFFFF</SolidColorBrush>
+
+
+        //<SolidColorBrush x:Key="UserSuggestionsCardBackgroundColor">#FF252525</SolidColorBrush>
 
 
 
@@ -33,19 +54,16 @@ namespace Minista
 
 
 
-
-
-
-        public string IconsColor { get; set; }
-        public string HighlightColor { get; set; }
-        public string ProfileCircleColor { get; set; }
-        public string LikedColor { get; set; }
-        public string SeperatorColor { get; set; }
-        public string DirectBackgroundColor { get; set; }
-        public string DirectMyMessageBackgroundColor { get; set; }
-        public string DirectMyMessageForegroundColor { get; set; }
-        public string DirectPeopleMessageBackgroundColor { get; set; }
-        public string DirectPeopleMessageForegroundColor { get; set; }
+        //public string IconsColor { get; set; }
+        //public string HighlightColor { get; set; }
+        //public string ProfileCircleColor { get; set; }
+        //public string LikedColor { get; set; }
+        //public string SeperatorColor { get; set; }
+        //public string DirectBackgroundColor { get; set; }
+        //public string DirectMyMessageBackgroundColor { get; set; }
+        //public string DirectMyMessageForegroundColor { get; set; }
+        //public string DirectPeopleMessageBackgroundColor { get; set; }
+        //public string DirectPeopleMessageForegroundColor { get; set; }
     }
 }
 ///////////////////////////////////// DEFAULT THEME /////////////////////////////////////

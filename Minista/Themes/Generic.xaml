@@ -149,8 +149,8 @@
         </Setter>
     </Style>
     <Style TargetType="localControls:ChatRecordButton">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+        <Setter Property="Background" Value="{StaticResource DefaultBackgroundColor}" />
+        <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
         <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0" />
@@ -184,11 +184,13 @@
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 AutomationProperties.AccessibilityView="Raw"
+                                Foreground="{StaticResource DefaultForegroundColor}"
                                 Text="{TemplateBinding CheckedGlyph}"
                                 Visibility="Collapsed" />
                             <TextBlock
                                 x:Name="UncheckedContentPresenter"
                                 Margin="{TemplateBinding Padding}"
+                                Foreground="{StaticResource DefaultForegroundColor}"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 AutomationProperties.AccessibilityView="Raw"
@@ -201,7 +203,7 @@
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             AutomationProperties.AccessibilityView="Raw"
-                            Foreground="White"
+                                Foreground="{StaticResource DefaultForegroundColor}"
                             Text=""
                             Visibility="Collapsed" />
                         <VisualStateManager.VisualStateGroups>

@@ -72,7 +72,7 @@
             <uap:DisplayName>Minista Theme</uap:DisplayName>
             <uap:InfoTip>Minista Theme File</uap:InfoTip>
             <uap:SupportedFileTypes>
-              <uap:FileType>.minista-theme</uap:FileType>
+              <uap:FileType>.mi-theme</uap:FileType>
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
         </uap:Extension>

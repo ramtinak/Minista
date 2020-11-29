@@ -598,6 +598,7 @@
                                                 </Grid.RowDefinitions>
                                                 <TextBlock Text="{Binding User.MediaCount, Mode=OneWay, Converter={StaticResource CountConverter}}"
                                                            FontFamily="{StaticResource VazirFont}"
+                                                           Foreground="{StaticResource DefaultForegroundColor}"
                                                            FontSize="{StaticResource DefaultFontSize}"
                                                            HorizontalAlignment="Center" />
                                                 <TextBlock Text="Posts"
@@ -618,6 +619,7 @@
                                                 </Grid.RowDefinitions>
                                                 <TextBlock Text="{Binding User.FollowerCount, Mode=OneWay, Converter={StaticResource CountConverter}}"
                                                            FontFamily="{StaticResource VazirFont}"
+                                                           Foreground="{StaticResource DefaultForegroundColor}"
                                                            FontSize="{StaticResource DefaultFontSize}"
                                                            HorizontalAlignment="Center" />
                                                 <TextBlock Text="Followers"
@@ -641,6 +643,7 @@
                                                 </Grid.RowDefinitions>
                                                 <TextBlock Text="{Binding User.FollowingCount, Mode=OneWay, Converter={StaticResource CountConverter}}"
                                                            FontFamily="{StaticResource VazirFont}"
+                                                           Foreground="{StaticResource DefaultForegroundColor}"
                                                            FontSize="{StaticResource DefaultFontSize}"
                                                            HorizontalAlignment="Center" />
                                                 <TextBlock Text="Followings"
@@ -730,11 +733,13 @@
                                         <TextBlock Text="{Binding User.UserName, Mode=OneWay, Converter={StaticResource AddAtToStringConverter}}"
                                                    FontFamily="{StaticResource VazirFont}"
                                                    FontSize="{StaticResource TinyFontSize}"
+                                                           Foreground="{StaticResource DefaultForegroundColor}"
                                                    HorizontalAlignment="Left" />
                                     </Grid>
 
                                     <TextBlock Text="{Binding User.FullName, Mode=OneWay}"
                                                Grid.Row="1"
+                                                           Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                FontFamily="{StaticResource VazirFont}"
                                                FontSize="{StaticResource DefaultFontSize}"
                                                HorizontalAlignment="Left"
@@ -1194,6 +1199,7 @@
                                           HorizontalAlignment="Stretch">
                                         <FontIcon FontFamily="{StaticResource MaterialSymbolFont}"
                                                   FontSize="{StaticResource ExtraBigFontSize}"
+                                                  Foreground="{StaticResource DefaultForegroundColor}"
                                                   Glyph="" />
                                     </Grid>
                                 </PivotItem.Header>

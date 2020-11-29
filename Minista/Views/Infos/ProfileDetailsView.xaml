@@ -536,7 +536,7 @@
                                   FontFamily="{StaticResource VazirFont}"
                                   Margin="5"
                                   Click="AccountToggleButtonClick"
-                                  Foreground="#FFCACACA">
+                                  Foreground="{StaticResource DefaultForegroundColor}">
                         <interactivity:Interaction.Behaviors>
                             <behaviorsX:PointersEvent />
                         </interactivity:Interaction.Behaviors>
@@ -670,6 +670,7 @@
                                                         </Grid.RowDefinitions>
                                                         <TextBlock Text="{Binding User.MediaCount, Mode=OneWay, Converter={StaticResource CountConverter}}"
                                                                    FontFamily="{StaticResource VazirFont}"
+                                                           Foreground="{StaticResource DefaultForegroundColor}"
                                                                    FontSize="{StaticResource DefaultFontSize}"
                                                                    HorizontalAlignment="Center" />
                                                         <TextBlock Text="Posts"
@@ -693,6 +694,7 @@
                                                         </Grid.RowDefinitions>
                                                         <TextBlock Text="{Binding User.FollowerCount, Mode=OneWay, Converter={StaticResource CountConverter}}"
                                                                    FontFamily="{StaticResource VazirFont}"
+                                                           Foreground="{StaticResource DefaultForegroundColor}"
                                                                    FontSize="{StaticResource DefaultFontSize}"
                                                                    HorizontalAlignment="Center" />
                                                         <TextBlock Text="Followers"
@@ -720,6 +722,7 @@
                                                         <TextBlock Text="{Binding User.FollowingCount, Mode=OneWay, Converter={StaticResource CountConverter}}"
                                                                    FontFamily="{StaticResource VazirFont}"
                                                                    FontSize="{StaticResource DefaultFontSize}"
+                                                           Foreground="{StaticResource DefaultForegroundColor}"
                                                                    HorizontalAlignment="Center" />
                                                         <TextBlock Text="Followings"
                                                                    FontFamily="{StaticResource VazirFont}"
@@ -825,6 +828,7 @@
                                                 <TextBlock Text="{Binding User.UserName, Mode=OneWay, Converter={StaticResource AddAtToStringConverter}}"
                                                            FontFamily="{StaticResource VazirFont}"
                                                            FontSize="{StaticResource TinyFontSize}"
+                                                  Foreground="{StaticResource DefaultForegroundColor}"
                                                            HorizontalAlignment="Left" />
                                             </Grid>
 
@@ -832,6 +836,7 @@
                                                        Grid.Row="1"
                                                        FontFamily="{StaticResource VazirFont}"
                                                        FontSize="{StaticResource DefaultFontSize}"
+                                                  Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                        HorizontalAlignment="Left"
                                                        Margin="5 0" />
 
@@ -1147,6 +1152,7 @@
                                               HorizontalAlignment="Stretch">
                                             <FontIcon FontFamily="{StaticResource MaterialSymbolFont}"
                                                       FontSize="{StaticResource ExtraBigFontSize}"
+                                                  Foreground="{StaticResource DefaultForegroundColor}"
                                                       Glyph="" />
                                         </Grid>
                                     </PivotItem.Header>

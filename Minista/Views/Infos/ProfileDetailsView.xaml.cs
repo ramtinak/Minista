@@ -490,6 +490,7 @@ namespace Minista.Views.Infos
             //                   </PivotItem.Header>
             var ff = App.Current.Resources["MaterialSymbolFont"] as FontFamily;
             var fs = (double)App.Current.Resources["ExtraBigFontSize"];
+            var fg = (SolidColorBrush)App.Current.Resources["DefaultForegroundColor"];
             var item = new PivotItem
             {
                 Header = new Grid
@@ -501,7 +502,8 @@ namespace Minista.Views.Infos
                         {
                             FontFamily = ff,
                             FontSize =fs,
-                            Glyph = glyph
+                            Glyph = glyph,
+                            Foreground = fg
                         }
                     }
                 },

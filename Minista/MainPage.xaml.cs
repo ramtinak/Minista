@@ -34,6 +34,7 @@ using Windows.ApplicationModel.Background;
 using Thrift.Collections;
 using Windows.UI.Notifications.Management;
 using InstagramApiSharp.API.RealTime;
+using Minista.Themes;
 
 namespace Minista
 {
@@ -105,6 +106,11 @@ namespace Minista
                                 }
                                 else
                                     await new ContentDialogs.FileAssociationDialog(file).ShowAsync();
+                            }
+                            else if(file.Path.Contains(".mi-theme"))
+                            {
+                                var json = await FileIO.ReadTextAsync(file);
+                                ThemeHelper.InitTheme(json);
                             }
                             else
                                 ShowNotify("This file is not supported.\r\n" + file.Path, 3000);
@@ -973,12 +979,17 @@ namespace Minista
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            var ab = new MinistaWhiteTheme();
+
+            await Task.Delay(1500);
+            var json2 = Newtonsoft.Json.JsonConvert.SerializeObject(ab);
+            json2.PrintDebug();
             FileOpenPicker openPicker = new FileOpenPicker
             {
                 ViewMode = PickerViewMode.Thumbnail,
                 SuggestedStartLocation = PickerLocationId.PicturesLibrary
             };
-            openPicker.FileTypeFilter.Add(".json");
+            openPicker.FileTypeFilter.Add(".mi-theme");
 
             var file = await openPicker.PickSingleFileAsync();
             if (file == null)

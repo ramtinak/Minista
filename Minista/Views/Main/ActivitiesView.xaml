@@ -851,7 +851,7 @@
             VerticalAlignment="Center"
             FontFamily="{StaticResource VazirFont}"
             FontSize="{StaticResource BigFontSize}"
-            Foreground="White"
+            Foreground="{StaticResource DefaultForegroundColor}"
             Text="Activities"
             TextAlignment="Center"
             TextWrapping="NoWrap" />
