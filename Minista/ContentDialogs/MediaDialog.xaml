@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Background="{x:Null}" BorderBrush="Transparent" BorderThickness="0">
 
-    <Grid Background="#E51B1B1B"
+    <Grid Background="{StaticResource DefaultBackgroundColor}"
           BorderBrush="{StaticResource DefaultBackgroundColor}"
           MaxHeight="480"
           Width="270"

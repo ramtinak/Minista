@@ -1,4 +1,6 @@
-﻿namespace Minista
+﻿using Windows.UI.Xaml;
+
+namespace Minista
 {
     public class MinistaThemeCore
     {
@@ -17,6 +19,7 @@
      
     public class MinistaTheme
     {
+        public ElementTheme ElementTheme { get; set; } = ElementTheme.Dark;
         public string DefaultBackgroundColor { get; set; }
         public string DefaultItemBackgroundColor { get; set; } 
         public string DefaultForegroundColor { get; set; }

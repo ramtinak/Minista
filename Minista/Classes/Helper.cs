@@ -833,7 +833,7 @@ static class Helper
     #endregion Theme and App title
 
     #region Get Color from Hex
-    public static SolidColorBrush GetColorBrush(this string hexColorString)
+    public static SolidColorBrush GetColorBrush(this string hexColorString/*, string v*/)
     {
         return new SolidColorBrush(GetColorFromHex(hexColorString));
     }

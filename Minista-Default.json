@@ -6,9 +6,11 @@
     "PublisherInstagram": ""
   },
   "Theme": {
+    "ElementTheme": 2,
     "DefaultBackgroundColor": "#FF151515",
     "DefaultItemBackgroundColor": "#FF232323",
     "DefaultForegroundColor": "#FFB4B4B4",
+    "DefaultInnerForegroundColor": "#FFB4B4B4",
     "IconsColor": "",
     "HighlightColor": "",
     "ProfileCircleColor": "",

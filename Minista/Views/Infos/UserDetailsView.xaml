@@ -605,7 +605,7 @@
                                                            FontSize="{StaticResource TinyFontSize}"
                                                            Grid.Row="1"
                                                            HorizontalAlignment="Center"
-                                                           Foreground="#FF9C9C9C" />
+                                                           Foreground="{StaticResource ProfileTextColor}" />
                                             </Grid>
                                         </Button>
                                         <Button Grid.Column="1"
@@ -625,7 +625,7 @@
                                                            FontSize="{StaticResource TinyFontSize}"
                                                            Grid.Row="1"
                                                            HorizontalAlignment="Center"
-                                                           Foreground="#FF9C9C9C" />
+                                                           Foreground="{StaticResource ProfileTextColor}" />
 
                                             </Grid>
                                         </Button>
@@ -648,7 +648,7 @@
                                                            FontSize="{StaticResource TinyFontSize}"
                                                            Grid.Row="1"
                                                            HorizontalAlignment="Center"
-                                                           Foreground="#FF9C9C9C" />
+                                                           Foreground="{StaticResource ProfileTextColor}" />
 
                                             </Grid>
 
@@ -685,7 +685,7 @@
 
 
                                 </Grid>
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.5"
                                            MinWidth="250"
                                            MaxWidth="290"
@@ -747,7 +747,7 @@
                                                Visibility="{Binding User.Category, Mode=TwoWay, Converter={StaticResource StringToVisibiltyConverter}}"
                                                HorizontalAlignment="Left"
                                                Margin="8 0"
-                                               Foreground="#FF666666" />
+                                               Foreground="{StaticResource CategoryColor}" />
 
 
                                     <Grid x:Name="BiographyGrid"
@@ -783,7 +783,7 @@
                                                HorizontalAlignment="Left"
                                                TextWrapping="Wrap"
                                                Margin="8 0"
-                                               Foreground="#FF666666" />
+                                               Foreground="{StaticResource CategoryColor}" />
                                     <Grid Grid.Row="5"
                                           HorizontalAlignment="Left"
                                           Margin="5 0">
@@ -820,7 +820,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.5"
                                            MinWidth="250"
                                            MaxWidth="290"
@@ -928,7 +928,7 @@
                                                            TextAlignment="Center" />
                                                 <Rectangle Width="1"
                                                            Height="25"
-                                                           Fill="#FF363636"
+                                                           Fill="{StaticResource SeperatorColor}"
                                                            VerticalAlignment="Center"
                                                            Grid.Column="1"
                                                            Grid.RowSpan="2" />
@@ -957,7 +957,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.5"
                                            Margin="5"
                                            MinWidth="250"
@@ -1003,7 +1003,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <Rectangle Fill="#FF363636"
+                                <Rectangle Fill="{StaticResource SeperatorColor}"
                                            Height="1.5"
                                            Margin="5"
                                            MinWidth="250"
@@ -1062,7 +1062,7 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <Rectangle Fill="#FF363636"
+                                    <Rectangle Fill="{StaticResource SeperatorColor}"
                                                Height="1.5"
                                                MinWidth="250"
                                                MaxWidth="290"
@@ -1177,7 +1177,7 @@
 
                                 </ListView>
                             </Grid>
-                            <Rectangle Fill="#FF363636"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
                                        Height="1.5"
                                        MinWidth="250"
                                        MaxWidth="290"

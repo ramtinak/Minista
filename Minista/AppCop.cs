@@ -42,15 +42,13 @@ namespace Minista
                     rootFrame.NavigationFailed += OnNavigationFailed;
                     if (e.PreviousExecutionState != ApplicationExecutionState.Running)
                     {
-                        bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
-                        SplashView extendedSplash = new SplashView(e.SplashScreen, loadState);
+                        SplashView extendedSplash = new SplashView(e.SplashScreen);
                         rootFrame.Content = extendedSplash;
                         Window.Current.Content = rootFrame;
                     }
                     else
                     {
-                        bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
-                        SplashView extendedSplash = new SplashView(e.SplashScreen, loadState);
+                        SplashView extendedSplash = new SplashView(e.SplashScreen);
                         rootFrame.Content = extendedSplash;
                         Window.Current.Content = rootFrame;
                     }
@@ -138,8 +136,7 @@ namespace Minista
                     rootFrame.NavigationFailed += OnNavigationFailed;
                     if (e.PreviousExecutionState != ApplicationExecutionState.Running)
                     {
-                        bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
-                        SplashView extendedSplash = new SplashView(e.SplashScreen, loadState);
+                        SplashView extendedSplash = new SplashView(e.SplashScreen);
                         rootFrame.Content = extendedSplash;
                         Window.Current.Content = rootFrame;
                     }

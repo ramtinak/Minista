@@ -46,6 +46,7 @@ namespace Minista
 
         private static Guid id = Guid.NewGuid();
         public static Guid Id { get { return id; } }
+        public static App CurrentX { get; private set; }
         protected override void OnActivated(IActivatedEventArgs e)
         {
             try
@@ -71,8 +72,7 @@ namespace Minista
                     rootFrame.NavigationFailed += OnNavigationFailed;
                     if (e.PreviousExecutionState != ApplicationExecutionState.Running)
                     {
-                        bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
-                        SplashView extendedSplash = new SplashView(e.SplashScreen, loadState);
+                        SplashView extendedSplash = new SplashView(e.SplashScreen);
                         rootFrame.Content = extendedSplash;
                         Window.Current.Content = rootFrame;
                     }
@@ -99,8 +99,7 @@ namespace Minista
                     rootFrame.NavigationFailed += OnNavigationFailed;
                     if (e.PreviousExecutionState != ApplicationExecutionState.Running)
                     {
-                        bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
-                        SplashView extendedSplash = new SplashView(e.SplashScreen, loadState);
+                        SplashView extendedSplash = new SplashView(e.SplashScreen);
                         rootFrame.Content = extendedSplash;
                         Window.Current.Content = rootFrame;
                     }
@@ -124,6 +123,7 @@ namespace Minista
         public App()
         {
             this.InitializeComponent();
+            CurrentX = this;
             this.Suspending += OnSuspending;
             this.Resuming += OnResuming;
             this.EnteredBackground += OnEnteredBackground;
@@ -220,20 +220,12 @@ namespace Minista
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
                 if (e.PreviousExecutionState != ApplicationExecutionState.Running)
                 {
-                    bool loadState = (e.PreviousExecutionState == ApplicationExecutionState.Terminated);
-                    SplashView extendedSplash = new SplashView(e.SplashScreen, loadState);
+                    SplashView extendedSplash = new SplashView(e.SplashScreen);
                     rootFrame.Content = extendedSplash;
-                    //rootFrame.Content = new Views.BlankPage1();
-
                     Window.Current.Content = rootFrame;
                 }
-                // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
 
@@ -244,17 +236,31 @@ namespace Minista
                     TryEnablePrelaunch();
                 }
                 if (rootFrame.Content == null)
-                {
-                    // When the navigation stack isn't restored navigate to the first page,
-                    // configuring the new page by passing required information as a navigation
-                    // parameter
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
-                // Ensure the current window is active
                 Window.Current.Activate();
             }
         }
 
+        public void InitFrame()
+        {
+            try
+            {
+                ////MainPage.Current.ResetPageCache();
+                //var rootFrame = new Frame();
+                ////rootFrame.Navigate(rootFrame.Content.GetType());
+                ////rootFrame.GoBack();
+                ////MainPage.Current?.ResetMainPage();
+                //rootFrame.Navigate(typeof(MainPage));
+                //MainPage.Current.NavigationCacheMode = NavigationCacheMode.Enabled;
+                //MainPage.Current.NavigationCacheMode = NavigationCacheMode.Disabled;
+
+                //NavigationService.SetFrame(MainPage.Current.MyFrame);
+                //Window.Current.Content = rootFrame;
+                ////Window.Current.Activate();
+                //MainPage.Current?.NavigateToMainView(true);
+            }
+            catch { }
+        }
         /// <summary>
         /// Encapsulates the call to CoreApplication.EnablePrelaunch() so that the JIT
         /// won't encounter that call (and prevent the app from running when it doesn't

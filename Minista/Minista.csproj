@@ -214,6 +214,7 @@
     <Compile Include="Helpers\HyperLinkHelper.cs" />
     <Compile Include="Helpers\MultiApiHelper.cs" />
     <Compile Include="Helpers\PushHelper.cs" />
+    <Compile Include="Helpers\ThemeHelper.cs" />
     <Compile Include="Helpers\UriHelper.cs" />
     <Compile Include="Helpers\VisualUtilities.cs" />
     <Compile Include="ItemsGenerators\TVSearchItemsGenerator.cs" />
@@ -1247,7 +1248,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  
   <!-- External Libraries -->
   <ItemGroup>
     <PackageReference Include="Iconic.Zlib.NetstandardUwp">
@@ -1287,7 +1287,6 @@
       <Version>1.2.3</Version>
     </PackageReference>
   </ItemGroup>
-  
   <!--Mobile Only-->
   <ItemGroup Condition="'$(Platform)' == 'ARM'">
     <PackageReference Include="Microsoft.Toolkit.Uwp">
@@ -1309,7 +1308,6 @@
       <Version>2.1.190606001</Version>
     </PackageReference>
   </ItemGroup>
-
   <!--x64-->
   <ItemGroup Condition="'$(Platform)' == 'x64'">
     <PackageReference Include="Microsoft.Toolkit.Uwp">
@@ -1331,7 +1329,6 @@
       <Version>2.4.3</Version>
     </PackageReference>
   </ItemGroup>
-
   <!--x86-->
   <ItemGroup Condition="'$(Platform)' == 'x86'">
     <PackageReference Include="Microsoft.Toolkit.Uwp">
@@ -1353,7 +1350,6 @@
       <Version>2.4.3</Version>
     </PackageReference>
   </ItemGroup>
-
   <!--ARM64-->
   <ItemGroup Condition="'$(Platform)' == 'ARM64'">
     <PackageReference Include="Microsoft.Toolkit.Uwp">
@@ -1375,7 +1371,6 @@
       <Version>2.4.3</Version>
     </PackageReference>
   </ItemGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\..\Minista\InstagramApiSharp\InstagramApiSharp.csproj">
       <Project>{d7d254a4-843e-4e23-9513-ac89eb163168}</Project>

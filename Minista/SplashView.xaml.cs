@@ -37,7 +37,7 @@ namespace Minista
             rootFrame = new Frame();
         }
 
-        public SplashView(SplashScreen splashscreen, bool loadState)
+        public SplashView(SplashScreen splashscreen)
         {
             this.InitializeComponent();
             splash = splashscreen;

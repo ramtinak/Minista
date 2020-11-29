@@ -22,6 +22,10 @@ namespace Minista.Helpers
     {
         static public Frame Frame { get; private set; } = MainPage.Current.MyFrame;
 
+        internal static void SetFrame(Frame myFrame)
+        {
+            Frame = myFrame;
+        }
         static public void RemoveAllBackStack()
         {
             try
@@ -444,6 +448,7 @@ namespace Minista.Helpers
         }
         static public bool Navigate(Type t, object parameter = null)
         {
+            ("Navigating to " + t.Name).PrintDebug();
             return Frame.Navigate(t, parameter, new EntranceNavigationTransitionInfo() { });
             //return Frame.Navigate(t, parameter, new DrillInNavigationTransitionInfo() { });
         }

@@ -676,7 +676,7 @@
                             Margin="0"
                             Padding="0"
                             HorizontalAlignment="Stretch">
-                            <Grid Background="#9A1A1A1A" CornerRadius="8">
+                            <Grid Background="{StaticResource SeeMoreColor}" CornerRadius="8">
                                 <interactivity:Interaction.Behaviors>
                                     <behaviorsX:Blur
                                         x:Name="FadeBehavior"
@@ -910,7 +910,7 @@
                             x:Name="Comment4Button"
                             Grid.Column="2"
                             Margin="2,0"
-                            Background="#FF1F1F1F"
+                            Background="{StaticResource RefreshGoUpButtonBackgroundColor}"
                             Click="Comment4ButtonClick"
                             Content=""
                             FontFamily="{StaticResource SymbolFont}"

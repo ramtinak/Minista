@@ -424,7 +424,7 @@ namespace Minista
         private async void MainPageLoaded(object sender, RoutedEventArgs e)
         {
             CreateConfig();
-
+            NavigationService.SetFrame(MyFrame);
 
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
@@ -534,7 +534,7 @@ namespace Minista
             //catch (Exception ex)
             //{
             //}
-
+            ("Nav mode: " + e.NavigationMode).PrintDebug();
             try
             {
                 if (DeviceUtil.IsXbox)
@@ -576,6 +576,10 @@ namespace Minista
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+            ResetMainPage();
+        }
+        public void ResetMainPage()
+        {
             NavigationService.StopService();
             try
             {
@@ -965,6 +969,27 @@ namespace Minista
          
             }
             catch { }
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FileOpenPicker openPicker = new FileOpenPicker
+            {
+                ViewMode = PickerViewMode.Thumbnail,
+                SuggestedStartLocation = PickerLocationId.PicturesLibrary
+            };
+            openPicker.FileTypeFilter.Add(".json");
+
+            var file = await openPicker.PickSingleFileAsync();
+            if (file == null)
+                return;
+            var json = await FileIO.ReadTextAsync(file);
+            ThemeHelper.InitTheme(json);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(typeof(Views.Main.MainView));
         }
 
         //private void SettingsButtonClick(object sender, RoutedEventArgs e)

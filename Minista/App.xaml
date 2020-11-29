@@ -21,7 +21,38 @@
             <SolidColorBrush x:Key="DefaultItemBackgroundColor">#FF232323</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultForegroundColor">#FFB4B4B4</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultInnerForegroundColor">#FFC1C1C1</SolidColorBrush>
+            <SolidColorBrush x:Key="SeperatorColor">#FF666666</SolidColorBrush>
+            <SolidColorBrush x:Key="CategoryColor">#FF666666</SolidColorBrush>
+            <SolidColorBrush x:Key="ProfileVisitColor">#FFD4D4D4</SolidColorBrush>
+            <SolidColorBrush x:Key="SeeMoreColor">#45000000</SolidColorBrush>
+            <SolidColorBrush x:Key="Comment4ButtonBackgroundColor">#FF1F1F1F</SolidColorBrush>
+            <SolidColorBrush x:Key="Comment4ForegroundColor">#FFFFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="RefreshGoUpButtonBackgroundColor">#FF333333</SolidColorBrush>
+            <!--<SolidColorBrush x:Key="RefreshGoUpButtonForegroundColor">#FFFFFFFF</SolidColorBrush>
+-->
 
+            <SolidColorBrush x:Key="UserSuggestionsCardBackgroundColor">#FF252525</SolidColorBrush>
+
+            <Style x:Key="CircleButtonStyle" TargetType="Button">
+                <Setter Property="Tag" Value="{TemplateBinding Tag}" />
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Grid>
+                            <Ellipse Width="45"
+                             Height="45"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Fill="#FF333333" />
+                            <ContentControl FontFamily="{StaticResource SymbolFont}"
+                              FontSize="{StaticResource HeaderFontSize}"
+                              Foreground="White" Content="{TemplateBinding Tag}" />
+                            <!--Glyph="L"-->
+                            <Grid Background="Cyan"
+                          Opacity="0" />
+                        </Grid>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
             <Thickness x:Key="PivotPortraitThemePadding">0</Thickness>
 

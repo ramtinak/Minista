@@ -265,7 +265,7 @@
                                 <Grid Width="155"
                                       Height="230"
                                       CornerRadius="5"
-                                      Background="#FF252525">
+                                      Background="{StaticResource UserSuggestionsCardBackgroundColor}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition Height="Auto" />
