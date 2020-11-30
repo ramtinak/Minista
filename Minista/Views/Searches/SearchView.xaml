@@ -179,6 +179,7 @@
                                 </Grid.RowDefinitions>
                                 <ContentControl x:Name="TitleContentControl"
                                                 IsTabStop="False"
+                                                Foreground="{StaticResource DefaultForegroundColor}"
                                                 Margin="{StaticResource PivotPortraitThemePadding}"
                                                 Style="{StaticResource TitleContentControlStyle}"
                                                 Visibility="Collapsed"
@@ -386,6 +387,7 @@
                                                                       HorizontalAlignment="Stretch"
                                                                       VerticalAlignment="Stretch" />
                                                     <ContentControl x:Name="HeaderClipper"
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                                                     Grid.Column="1"
                                                                     UseSystemFocusVisuals="True"
                                                                     HorizontalContentAlignment="Stretch">
@@ -466,7 +468,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Foreground="#FFA6A6A6"
+                    <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
                                FontFamily="{StaticResource VazirFont}"
                                FontSize="{StaticResource DefaultFontSize}"
                                TextWrapping="Wrap"
@@ -525,8 +527,8 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock
-                                       Foreground="White"
+                            <TextBlock 
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        Text="{Binding User.UserName}"
@@ -552,6 +554,7 @@
                                   VerticalAlignment="Center"
                                   FontFamily="{StaticResource SymbolFont}"
                                   FontSize="{StaticResource DefaultFontSize}"
+                                  Foreground="{StaticResource DefaultForegroundColor}"
                                   Visibility="{Binding ShowClose, Converter={StaticResource BooleanToVisibiltyConverter}}"
                                   Click="DismissUserClick" />
                     <Grid Grid.Row="1"
@@ -620,7 +623,7 @@
                                        FontFamily="{StaticResource SegoeUIFont}"
                                        FontSize="21"
                                        FontWeight="SemiBold"
-                                       Foreground="White"
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        TextAlignment="Center" />
@@ -634,7 +637,8 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
+                            <TextBlock 
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        Text="{Binding Hashtag.Name}"
@@ -710,7 +714,8 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Foreground="White"
+                            <TextBlock 
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        Text="{Binding UserName}"
@@ -729,6 +734,8 @@
                               Tapped="UserTapped" />
                     </Grid>
                     <Button Content="{Binding FriendshipStatus,Mode=TwoWay, Converter={StaticResource FollowingConverter}}"
+                            Background="{StaticResource DefaultItemBackgroundColor}"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             Grid.Column="1"
                             Margin="5"
                             HorizontalAlignment="Stretch"
@@ -800,7 +807,7 @@
                                        FontFamily="{StaticResource SegoeUIFont}"
                                        FontSize="21"
                                        FontWeight="SemiBold"
-                                       Foreground="White"
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        TextAlignment="Center" />
@@ -814,7 +821,8 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
+                            <TextBlock 
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        Text="{Binding Name}"
@@ -899,7 +907,8 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Foreground="White"
+                            <TextBlock 
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        Text="{Binding Name}"
@@ -939,7 +948,7 @@
             </Grid.ColumnDefinitions>
             <TextBox x:Name="SearchText"
                      Margin="32 5 5 5"
-                     Foreground="White"
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                      AcceptsReturn="False"
                      FontFamily="{StaticResource VazirFont}"
                      PlaceholderText="Search"
@@ -970,9 +979,15 @@
             <!--<Pivot.LeftHeader>
                 <Grid Width="50" />
             </Pivot.LeftHeader>-->
-            <PivotItem Header="Top"
+            <PivotItem 
                        Padding="0"
                        Margin="0">
+                <PivotItem.Header>
+                    <TextBlock Text="Top"
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               FontSize="{StaticResource HeaderFontSize}"
+                               FontFamily="{StaticResource VazirFont}"/>
+                </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -1010,7 +1025,13 @@
                 </Grid>
 
             </PivotItem>
-            <PivotItem Header="Accounts" Padding="0" Margin="0">
+            <PivotItem Padding="0" Margin="0">
+                <PivotItem.Header>
+                    <TextBlock Text="Accounts"
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               FontSize="{StaticResource HeaderFontSize}"
+                               FontFamily="{StaticResource VazirFont}"/>
+                </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -1047,9 +1068,14 @@
                     </ListView>
                 </Grid>
             </PivotItem>
-            <PivotItem Header="Tags"
-                       Padding="0"
+            <PivotItem Padding="0"
                        Margin="0">
+                <PivotItem.Header>
+                    <TextBlock Text="Tags"
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               FontSize="{StaticResource HeaderFontSize}"
+                               FontFamily="{StaticResource VazirFont}"/>
+                </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -1091,9 +1117,14 @@
                                        Grid.Row="2" />
                 </Grid>
             </PivotItem>
-            <PivotItem Header="Places"
-                       Padding="0"
+            <PivotItem Padding="0"
                        Margin="0">
+                <PivotItem.Header>
+                    <TextBlock Text="Places"
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               FontSize="{StaticResource HeaderFontSize}"
+                               FontFamily="{StaticResource VazirFont}"/>
+                </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />

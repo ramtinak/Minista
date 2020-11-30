@@ -17,6 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
             <!--<XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />-->
 
+            <!--White-->
             <!--<SolidColorBrush x:Key="DefaultBackgroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultItemBackgroundColor">#FFF0E3E4</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultForegroundColor">#FF000000</SolidColorBrush>
@@ -36,10 +37,38 @@
             <SolidColorBrush x:Key="UserSuggestionsCardBackgroundColor">#FFF0E3E4</SolidColorBrush>-->
 
 
-            <SolidColorBrush x:Key="DefaultBackgroundColor">#FF151515</SolidColorBrush>
+            <SolidColorBrush x:Key="DefaultBackgroundColor">#FFC4001D</SolidColorBrush>
+            <SolidColorBrush x:Key="DefaultItemBackgroundColor">#FFAD001A</SolidColorBrush>
+            <SolidColorBrush x:Key="DefaultForegroundColor">#FFCFCFCF</SolidColorBrush>
+            <SolidColorBrush x:Key="DefaultInnerForegroundColor">#FFFFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="SeperatorColor">#FFFF5B57</SolidColorBrush>
+            <SolidColorBrush x:Key="CategoryColor">#FFCFCFCF</SolidColorBrush>
+            <SolidColorBrush x:Key="ProfileTextColor">#FFCFCFCF</SolidColorBrush>
+            <SolidColorBrush x:Key="SeeMoreColor">#45000000</SolidColorBrush>
+            <SolidColorBrush x:Key="Comment4ButtonBackgroundColor">#FFC4001D</SolidColorBrush>
+            <SolidColorBrush x:Key="Comment4ForegroundColor">#FFFFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="RefreshGoUpButtonBackgroundColor">#FFCC001F</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectPaneBackgroundColor">#D4FAFAFA</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectTextBoxBorderColor">#FFB5001B</SolidColorBrush>
+            <SolidColorBrush x:Key="StoryReplyTextBackgroundColor">#DBC7001E</SolidColorBrush>
+            <SolidColorBrush x:Key="StoryButtonBackoundColor">#DBC7001E</SolidColorBrush>
+            <SolidColorBrush x:Key="StoryButtonForeroundColor">#FFFFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="UserSuggestionsCardBackgroundColor">#FFA10018</SolidColorBrush>
+            <SolidColorBrush x:Key="TextBoxBackgroundColor">#FFA10018</SolidColorBrush>
+            <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush">#FF2C42FF</SolidColorBrush>
+            <SolidColorBrush x:Key="LoadingForegroundColor">#FFE8585B</SolidColorBrush>
+            
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush">#FFA10018</SolidColorBrush>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush">#FFA10018</SolidColorBrush> <!--Hover-->
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush">#FFA10018</SolidColorBrush> <!--pRessed-->
+
+
+
+
+            <!--<SolidColorBrush x:Key="DefaultBackgroundColor">#FF151515</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultItemBackgroundColor">#FF232323</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultForegroundColor">#FFB4B4B4</SolidColorBrush>
-            <SolidColorBrush x:Key="DefaultInnerForegroundColor">#FFC1C1C1</SolidColorBrush>
+            <SolidColorBrush x:Key="DefaultInnerForegroundColor">#FF8F8F8F</SolidColorBrush>
             <SolidColorBrush x:Key="SeperatorColor">#FF363636</SolidColorBrush>
             <SolidColorBrush x:Key="CategoryColor">#FF666666</SolidColorBrush>
             <SolidColorBrush x:Key="ProfileTextColor">#FFD4D4D4</SolidColorBrush>
@@ -53,6 +82,29 @@
             <SolidColorBrush x:Key="StoryButtonBackoundColor">#7F282828</SolidColorBrush>
             <SolidColorBrush x:Key="StoryButtonForeroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="UserSuggestionsCardBackgroundColor">#FF252525</SolidColorBrush>
+            <SolidColorBrush x:Key="TextBoxBackgroundColor">#BF292828</SolidColorBrush>
+            <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush">#FF5278FF</SolidColorBrush>
+            <SolidColorBrush x:Key="LoadingForegroundColor">#FF2C42FF</SolidColorBrush>
+            
+            
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush">#FF252525</SolidColorBrush>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush">#FF252525</SolidColorBrush> 
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush">#FF252525</SolidColorBrush>
+            -->
+
+
+
+
+
+
+
+
+
+            <!--<SolidColorBrush x:Key="SystemControlHyperlinkBaseHighBrush"/>
+            <SolidColorBrush x:Key="SystemControlHyperlinkBaseMediumBrush"/>
+            <SolidColorBrush x:Key="SystemControlHyperlinkBaseMediumHighBrush" />-->
+
+
             <!--
             <SolidColorBrush x:Key="SeperatorColor">#FF666666</SolidColorBrush>
             
@@ -61,6 +113,10 @@
 
 
             <Thickness x:Key="PivotPortraitThemePadding">0</Thickness>
+            <Style TargetType="ComboBox">
+                <Setter Property="BorderBrush" Value="{StaticResource DefaultInnerForegroundColor}" />
+                <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
+            </Style>
             <Style TargetType="FlyoutPresenter">
                 <Setter Property="Background" Value="{StaticResource DefaultItemBackgroundColor}" />
                 <Setter Property="Padding" Value="0" />
@@ -1230,7 +1286,7 @@
                                     AutomationProperties.AccessibilityView="Raw"
                                     Content="{TemplateBinding OffContent}"
                                     ContentTemplate="{TemplateBinding OffContentTemplate}"
-                                    Foreground="{TemplateBinding Foreground}"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                                     IsHitTestVisible="False"
                                     Opacity="0" />
                                 <ContentPresenter
@@ -1243,7 +1299,7 @@
                                     AutomationProperties.AccessibilityView="Raw"
                                     Content="{TemplateBinding OnContent}"
                                     ContentTemplate="{TemplateBinding OnContentTemplate}"
-                                    Foreground="{TemplateBinding Foreground}"
+                                    Foreground="{StaticResource DefaultForegroundColor}"
                                     IsHitTestVisible="False"
                                     Opacity="0" />
                                 <Rectangle
@@ -1254,14 +1310,14 @@
                                     Fill="{ThemeResource ToggleSwitchFillOff}"
                                     RadiusX="10"
                                     RadiusY="10"
-                                    Stroke="{ThemeResource ToggleSwitchStrokeOff}"
+                                    Stroke="{StaticResource DefaultInnerForegroundColor}"
                                     StrokeThickness="2" />
                                 <Rectangle
                                     x:Name="SwitchKnobBounds"
                                     Grid.Row="2"
                                     Width="44"
                                     Height="20"
-                                    Fill="{ThemeResource ToggleSwitchFillOn}"
+                                    Fill="{StaticResource DefaultInnerForegroundColor}"
                                     Opacity="0"
                                     RadiusX="10"
                                     RadiusY="10"
@@ -1277,13 +1333,13 @@
                                         x:Name="SwitchKnobOn"
                                         Width="10"
                                         Height="10"
-                                        Fill="{ThemeResource ToggleSwitchKnobFillOn}"
+                                        Fill="{StaticResource DefaultBackgroundColor}"
                                         Opacity="0" />
                                     <Ellipse
                                         x:Name="SwitchKnobOff"
                                         Width="10"
                                         Height="10"
-                                        Fill="{ThemeResource ToggleSwitchKnobFillOff}" />
+                                        Fill="{StaticResource DefaultInnerForegroundColor}" />
                                     <Grid.RenderTransform>
                                         <TranslateTransform x:Name="KnobTranslateTransform" />
                                     </Grid.RenderTransform>
@@ -1816,7 +1872,7 @@
             <Style TargetType="TextBox">
                 <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />
                 <Setter Property="MinHeight" Value="42" />
-                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
                 <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltHighBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}" />
                 <Setter Property="SelectionHighlightColor" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
@@ -1847,7 +1903,7 @@
                                     Grid.RowSpan="1"
                                     Grid.ColumnSpan="2"
                                     Margin="{TemplateBinding BorderThickness}"
-                                    Background="#BF292828"
+                                    Background="{StaticResource TextBoxBackgroundColor}"
                                     CornerRadius="3"
                                     Opacity="{ThemeResource TextControlBackgroundRestOpacity}" />
                                 <Border
@@ -1855,7 +1911,7 @@
                                     Grid.Row="1"
                                     Grid.RowSpan="1"
                                     Grid.ColumnSpan="2"
-                                    BorderBrush="#BF292828"
+                                    BorderBrush="{StaticResource TextBoxBackgroundColor}"
                                     BorderThickness="{TemplateBinding BorderThickness}" />
                                 <ContentPresenter
                                     x:Name="HeaderContentPresenter"
@@ -1891,7 +1947,7 @@
                                     Padding="{TemplateBinding Padding}"
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding PlaceholderText}"
-                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                                     IsHitTestVisible="False"
                                     IsTabStop="False" />
                                 <!--<Button x:Name="DeleteButton"
@@ -1914,7 +1970,7 @@
             <Style x:Key="TextBoxCenter" TargetType="TextBox">
                 <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />
                 <Setter Property="MinHeight" Value="42" />
-                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
                 <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltHighBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}" />
                 <Setter Property="SelectionHighlightColor" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
@@ -1945,7 +2001,7 @@
                                     Grid.RowSpan="1"
                                     Grid.ColumnSpan="2"
                                     Margin="{TemplateBinding BorderThickness}"
-                                    Background="#BF292828"
+                                    Background="{StaticResource TextBoxBackgroundColor}"
                                     CornerRadius="3"
                                     Opacity="{ThemeResource TextControlBackgroundRestOpacity}" />
                                 <Border
@@ -1953,7 +2009,7 @@
                                     Grid.Row="1"
                                     Grid.RowSpan="1"
                                     Grid.ColumnSpan="2"
-                                    BorderBrush="#BF292828"
+                                    BorderBrush="{StaticResource TextBoxBackgroundColor}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     CornerRadius="3" />
                                 <ContentPresenter
@@ -1987,11 +2043,11 @@
                                     x:Name="PlaceholderTextContentPresenter"
                                     Grid.Row="1"
                                     Grid.ColumnSpan="2"
-                                    Margin="{TemplateBinding BorderThickness}"
+                                    Margin="2"
                                     Padding="{TemplateBinding Padding}"
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding PlaceholderText}"
-                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                                     IsHitTestVisible="False"
                                     IsTabStop="False" />
                                 <!--<Button x:Name="DeleteButton"
@@ -2013,7 +2069,7 @@
             <Style x:Key="TextBoxCenterWithBackgroundChange" TargetType="TextBox">
                 <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />
                 <Setter Property="MinHeight" Value="42" />
-                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
                 <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltHighBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}" />
                 <Setter Property="SelectionHighlightColor" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
@@ -2090,7 +2146,7 @@
                                     Padding="{TemplateBinding Padding}"
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding PlaceholderText}"
-                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                                     IsHitTestVisible="False"
                                     IsTabStop="False" />
                                 <!--<Button x:Name="DeleteButton"
@@ -2113,7 +2169,7 @@
             <Style x:Key="CommentTextBoxCenter" TargetType="TextBox">
                 <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />
                 <Setter Property="MinHeight" Value="42" />
-                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
                 <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltHighBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}" />
                 <Setter Property="SelectionHighlightColor" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
@@ -2152,7 +2208,7 @@
                                     Grid.Row="1"
                                     Grid.RowSpan="1"
                                     Grid.ColumnSpan="2"
-                                    BorderBrush="#BF292828"
+                                    BorderBrush="{StaticResource TextBoxBackgroundColor}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     CornerRadius="3" />
                                 <ContentPresenter
@@ -2190,7 +2246,7 @@
                                     Padding="{TemplateBinding Padding}"
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding PlaceholderText}"
-                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                                     IsHitTestVisible="False"
                                     IsTabStop="False" />
                                 <!--<Button x:Name="DeleteButton"
@@ -2213,7 +2269,7 @@
             <Style TargetType="PasswordBox">
                 <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />
                 <Setter Property="MinHeight" Value="{ThemeResource TextControlThemeMinHeight}" />
-                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
                 <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltHighBrush}" />
                 <Setter Property="SelectionHighlightColor" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}" />
@@ -2243,7 +2299,7 @@
                                     Grid.RowSpan="1"
                                     Grid.ColumnSpan="2"
                                     Margin="{TemplateBinding BorderThickness}"
-                                    Background="#BF292828"
+                                    Background="{StaticResource TextBoxBackgroundColor}"
                                     CornerRadius="3"
                                     Opacity="{ThemeResource TextControlBackgroundRestOpacity}" />
                                 <Border
@@ -2251,7 +2307,7 @@
                                     Grid.Row="1"
                                     Grid.RowSpan="1"
                                     Grid.ColumnSpan="2"
-                                    BorderBrush="#BF292828"
+                                    BorderBrush="{StaticResource TextBoxBackgroundColor}"
                                     BorderThickness="{TemplateBinding BorderThickness}" />
                                 <ContentPresenter
                                     x:Name="HeaderContentPresenter"
@@ -2287,7 +2343,7 @@
                                     Padding="{TemplateBinding Padding}"
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding PlaceholderText}"
-                                    Foreground="#FFAAAAAA"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                                     IsHitTestVisible="False"
                                     IsTabStop="False" />
                             </Grid>
@@ -2300,7 +2356,7 @@
             <Style x:Key="TextBoxSearch" TargetType="TextBox">
                 <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />
                 <Setter Property="MinHeight" Value="42" />
-                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource DefaultForegroundColor}" />
                 <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltHighBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundChromeDisabledLowBrush}" />
                 <Setter Property="SelectionHighlightColor" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
@@ -2376,7 +2432,7 @@
                                     Padding="{TemplateBinding Padding}"
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding PlaceholderText}"
-                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                                     IsHitTestVisible="False"
                                     IsTabStop="False" />
                                 <!--<Button x:Name="DeleteButton"
@@ -2423,7 +2479,7 @@
                                         x:Name="NormalRectangle"
                                         Width="20"
                                         Height="20"
-                                        Background="#BF292828"
+                                        Background="{StaticResource TextBoxBackgroundColor}"
                                         CornerRadius="3"
                                         UseLayoutRounding="False" />
                                     <FontIcon
@@ -3000,7 +3056,7 @@
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal" />
                                         <VisualState x:Name="PointerOver">
-                                            <Storyboard>
+                                            <!--<Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Root" Storyboard.TargetProperty="Background">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarButtonBackgroundPointerOver}" />
                                                 </ObjectAnimationUsingKeyFrames>
@@ -3011,7 +3067,7 @@
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarButtonForegroundPointerOver}" />
                                                 </ObjectAnimationUsingKeyFrames>
 
-                                            </Storyboard>
+                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="Pressed">
                                             <Storyboard>
@@ -3022,7 +3078,7 @@
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarButtonBorderBrushPressed}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarButtonForegroundPressed}" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource DefaultInnerForegroundColor}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>

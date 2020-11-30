@@ -88,7 +88,7 @@
                                     Height="30"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Fill="#FF333333" />
+                                    Fill="{StaticResource DefaultItemBackgroundColor}" />
                                 <FontIcon
                                     FontFamily="{StaticResource MaterialSymbolFont}"
                                     FontSize="{StaticResource HeaderFontSize}"
@@ -141,7 +141,7 @@
                                     Height="30"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Fill="#FF333333" />
+                                    Fill="{StaticResource DefaultItemBackgroundColor}" />
                                 <FontIcon
                                     FontFamily="{StaticResource MaterialSymbolFont}"
                                     FontSize="{StaticResource HeaderFontSize}"
@@ -365,7 +365,7 @@
                             Height="30"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Fill="#FF333333"
+                            Fill="{StaticResource DefaultItemBackgroundColor}"
                             Opacity="0.8" />
                         <FontIcon
                             FontFamily="{StaticResource MaterialSymbolFont}"
@@ -428,7 +428,7 @@
                         Height="30"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Fill="#FF333333" />
+                        Fill="{StaticResource DefaultItemBackgroundColor}" />
                     <FontIcon
                         FontFamily="{StaticResource MaterialSymbolFont}"
                         FontSize="{StaticResource HeaderFontSize}"
@@ -818,7 +818,7 @@
                                 Width="4"
                                 Margin="4"
                                 HorizontalAlignment="Stretch"
-                                Fill="#FF2E2E2E" />
+                                Fill="{StaticResource SeperatorColor}" />
                             <Grid Grid.Column="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />

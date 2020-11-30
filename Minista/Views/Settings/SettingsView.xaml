@@ -57,7 +57,7 @@
                             </ComboBox>
                         </Grid>
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -88,11 +88,11 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource TinyFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFCBCBCB" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
                         </StackPanel>
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -116,7 +116,7 @@
                                           Toggled="ToggleElementSoundToggled" />
                         </Grid>
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -148,11 +148,11 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource TinyFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFCBCBCB" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
                         </StackPanel>
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -184,11 +184,11 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource TinyFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFCBCBCB" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
                         </StackPanel>
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -205,6 +205,7 @@
                                        FontSize="{StaticResource DefaultFontSize}"
                                        FontFamily="{StaticResource VazirFont}" />
                             <ToggleButton x:Name="toggleClearCache"
+                                          Foreground="{StaticResource DefaultInnerForegroundColor}"
                                           HorizontalAlignment="Stretch"
                                           VerticalAlignment="Stretch"
                                           Content="Clear"
@@ -228,6 +229,7 @@
                                            FontSize="{StaticResource DefaultFontSize}"
                                            FontFamily="{StaticResource VazirFont}" />
                                 <ToggleButton x:Name="toggleChangeLocation"
+                                          Foreground="{StaticResource DefaultInnerForegroundColor}"
                                               HorizontalAlignment="Stretch"
                                               VerticalAlignment="Stretch"
                                               Content="Change"
@@ -244,12 +246,12 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource TinyFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFCBCBCB" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
                         </StackPanel>
 
 
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -265,7 +267,7 @@
 
 
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -306,7 +308,7 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource TinyFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFCBCBCB" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
                         </StackPanel>
                     </StackPanel>
@@ -330,10 +332,10 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource HeaderFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFBFBFBF" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
                             <Rectangle Fill="{StaticResource SeperatorColor}"
-                                       Height="1.5"
+                                       Height="1"
                                        Margin="10 2.5"
                                        HorizontalAlignment="Stretch"
                                        VerticalAlignment="Stretch" />
@@ -350,7 +352,7 @@
                                           Click="PasswordToggleButtonClick" />
                         </StackPanel>
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -366,7 +368,7 @@
                                           Click="LoginActivityToggleButtonClick" />
                         </StackPanel>
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -396,10 +398,10 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource HeaderFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFBFBFBF" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
                             <Rectangle Fill="{StaticResource SeperatorColor}"
-                                       Height="1.5"
+                                       Height="1"
                                        Margin="10 2.5"
                                        HorizontalAlignment="Stretch"
                                        VerticalAlignment="Stretch" />
@@ -443,10 +445,10 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource TinyFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFCBCBCB" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
                         </StackPanel>
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -462,7 +464,7 @@
                                       Click="BlockedAccountToggleButtonClick" />
                         
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -478,7 +480,7 @@
                                       Click="CloseFriendsToggleButtonClick" />
                         <!---->
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -508,7 +510,7 @@
                                       Margin="4 0"
                                       Click="NotificationsToggleButtonClick" />
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -523,7 +525,7 @@
                                       Click="SavedToggleButtonClick" />
 
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -538,7 +540,7 @@
                                       Click="ArchiveToggleButtonClick" />
 
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -553,7 +555,7 @@
                                       Click="TaggedYouToggleButtonClick" />
 
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -568,7 +570,7 @@
                                       Click="LikedPostsToggleButtonClick" />
 
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -632,7 +634,7 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource HeaderFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFBFBFBF" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
                             <TextBlock FontSize="{StaticResource DefaultFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
                                        TextWrapping="Wrap"
@@ -643,7 +645,7 @@
 
 
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -656,7 +658,7 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource HeaderFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFBFBFBF" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
                             <TextBlock FontSize="{StaticResource DefaultFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
                                        TextWrapping="Wrap"
@@ -672,7 +674,7 @@
                                        TextWrapping="Wrap"
                                        Margin="10 6 6 6">
                                 <Run FontSize="{StaticResource MediumFontSize}"
-                                     Foreground="#FFADADAD">Minista in social networks</Run>
+                                     Foreground="{StaticResource DefaultInnerForegroundColor}">Minista in social networks</Run>
                             <LineBreak />
                                 Instagram: <Hyperlink Click="HyperlinkClick">https://www.instagram.com/MinistaApp</Hyperlink>
                             <LineBreak />
@@ -683,7 +685,7 @@
 
 
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -694,7 +696,7 @@
                                        TextWrapping="Wrap"
                                        Margin="10 6 6 6">
                                 <Run FontSize="{StaticResource MediumFontSize}"
-                                     Foreground="#FFADADAD">Donate if you like Minista:</Run>
+                                     Foreground="{StaticResource DefaultInnerForegroundColor}">Donate if you like Minista:</Run>
                             <LineBreak />
                                 PayPal: <Hyperlink Click="HyperlinkClick">https://www.paypal.me/rmt4006</Hyperlink>
                             <LineBreak />
@@ -705,7 +707,7 @@
 
 
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -717,9 +719,10 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource HeaderFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFBFBFBF" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
                             <TextBlock FontSize="{StaticResource DefaultFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
+                                       Foreground="{StaticResource DefaultForegroundColor}"
                                        TextWrapping="Wrap"
                                        Margin="14 6 6 6">
                              Developer: Nasrollah Jokar [Ramtin] [ <Hyperlink Click="HyperlinkClick">ramtinak@live.com</Hyperlink> | <Hyperlink Click="HyperlinkClick">https://t.me/ramtinak</Hyperlink> ]
@@ -732,7 +735,7 @@
 
 
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.5"
+                                   Height="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
@@ -745,13 +748,14 @@
                                        HorizontalAlignment="Left"
                                        FontSize="{StaticResource HeaderFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
-                                       Foreground="#FFBFBFBF" />
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
                             <TextBlock FontSize="{StaticResource DefaultFontSize}"
                                        FontFamily="{StaticResource VazirFont}"
+                                      Foreground="{StaticResource DefaultForegroundColor}"
                                        TextWrapping="Wrap"
                                        Margin="14 6 6 6">
                                 <Run FontSize="{StaticResource MediumFontSize}"
-                                     Foreground="#FFADADAD">Main testers:</Run>
+                                     Foreground="{StaticResource DefaultInnerForegroundColor}">Main testers:</Run>
                                 <LineBreak />
                                 Majid Jafari [ <Hyperlink Click="HyperlinkClick">https://www.instagram.com/majid.jafari1994</Hyperlink> ]
                                 <LineBreak />
@@ -769,7 +773,7 @@
                             <LineBreak />
                                 <LineBreak />
                                 <Run FontSize="{StaticResource MediumFontSize}"
-                                     Foreground="#FFADADAD">Libraries</Run>
+                                     Foreground="{StaticResource DefaultInnerForegroundColor}">Libraries</Run>
                             <LineBreak />
                                 <Hyperlink Click="HyperlinkX2Click">Microsoft Uwp Toolkit</Hyperlink>
                             <LineBreak />

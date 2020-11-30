@@ -3219,7 +3219,7 @@
 
                             <TextBox x:Name="TextThreadTitle"
                                      Margin="2 12 0 0"
-                                     Foreground="White"
+                                     Foreground="{StaticResource DefaultInnerForegroundColor}"
                                      Text="{Binding CurrentThread.Title, Mode=TwoWay}"
                                      IsEnabled="False"
                                      FontFamily="{StaticResource VazirFont}"
@@ -3248,9 +3248,11 @@
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Left"
                                            FontSize="{StaticResource DefaultFontSize}"
-                                           FontFamily="{StaticResource VazirFont}" />
+                                           FontFamily="{StaticResource VazirFont}" 
+                                     Foreground="{StaticResource DefaultInnerForegroundColor}"/>
                                 <ToggleSwitch x:Name="toggleApprovalGrid"
                                               Style="{StaticResource ToggleSwitchStyle}"
+                                     Foreground="{StaticResource DefaultInnerForegroundColor}"
                                               HorizontalAlignment="Right"
                                               OffContent="{x:Null}"
                                               OnContent=""
@@ -3258,7 +3260,7 @@
                                               Toggled="ToggleApprovalGridToggled" />
                             </Grid>
                             <Rectangle Fill="{StaticResource SeperatorColor}"
-                                       Height="1.5"
+                                       Height="1"
                                        Grid.Row="1"
                                        Grid.ColumnSpan="3"
                                        Margin="5 2.5"
@@ -3273,7 +3275,8 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <TextBlock Foreground="White"
+                                <TextBlock 
+                                     Foreground="{StaticResource DefaultInnerForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="{StaticResource DefaultFontSize}"
                                            TextWrapping="Wrap"
@@ -3284,8 +3287,8 @@
                                             Grid.Row="2"
                                             Visibility="{Binding AddMemberVisibility}">
 
-                                    <Rectangle Fill="#FF363636"
-                                               Height="1.5"
+                                    <Rectangle Fill="{StaticResource SeperatorColor}"
+                                               Height="1"
                                                Grid.Row="1"
                                                Grid.ColumnSpan="3"
                                                Margin="15 2.5"
@@ -3294,6 +3297,7 @@
                                     <ToggleButton x:Name="AddPeopleToggleButton"
                                                   Grid.Row="2"
                                                   Content="Add People..."
+                                     Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                   Style="{StaticResource HeaderToggleButtonWithoutIconStyle}"
                                                   Background="Transparent"
                                                   Tag=""
@@ -3303,7 +3307,7 @@
                                                   Click="AddPeopleToggleButtonButtonClick" />
                                 </StackPanel>
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.5"
+                                           Height="1"
                                            Grid.Row="3"
                                            Grid.ColumnSpan="3"
                                            Margin="15 2.5"
@@ -3393,7 +3397,8 @@
                                               Margin="6 10"
                                               Click="LeaveChatToggleButtonClick"
                                               Foreground="#FFFA5E5E" />
-                                <TextBlock Foreground="#FFBCBCBC"
+                                <TextBlock 
+                                     Foreground="{StaticResource DefaultInnerForegroundColor}"
                                            Grid.Row="1"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="{StaticResource TinyFontSize}"
@@ -3428,7 +3433,8 @@
                                               Margin="6 10"
                                               Click="EndChatToggleButtonClick"
                                               Foreground="#FFFA5E5E" />
-                                <TextBlock Foreground="#FFBCBCBC"
+                                <TextBlock 
+                                     Foreground="{StaticResource DefaultInnerForegroundColor}"
                                            Grid.Row="1"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="{StaticResource TinyFontSize}"
@@ -3479,6 +3485,7 @@
                                       Grid.Column="1"
                                       Grid.RowSpan="2"
                                       TabIndex="1"
+                                      Foreground="{StaticResource DefaultForegroundColor}"
                                       Style="{StaticResource SplitViewTogglePaneButtonStyle2}"
                                       HorizontalAlignment="Right"
                                       Content="&#xE700;"

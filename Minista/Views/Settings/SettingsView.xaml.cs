@@ -482,6 +482,11 @@ namespace Minista.Views.Settings
                     Helper.PurchaseMessage();
                     return;
                 }
+                try
+                {
+                    toggleChangeLocation.IsChecked = false;
+                }
+                catch { }
                 var picker = new FolderPicker
                 {
                     ViewMode = PickerViewMode.Thumbnail,

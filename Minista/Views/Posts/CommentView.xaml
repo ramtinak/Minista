@@ -115,7 +115,7 @@
                         DataContextChanged="TextBlockDataContextChanged"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="14"
-                        Foreground="White"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Tag="{Binding}"
                         TextAlignment="DetectFromContent"
                         TextWrapping="Wrap" />
@@ -185,6 +185,7 @@
                         Grid.ColumnSpan="4"
                         Padding="0"
                         VerticalAlignment="Center"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Click="MoreTailChildCommentsButtonClick"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="13"
@@ -212,6 +213,7 @@
                         Padding="0"
                         VerticalAlignment="Center"
                         Click="MoreHeadChildCommentsButtonClick"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="13"
                         FontWeight="Normal"
@@ -297,7 +299,7 @@
                         DataContextChanged="TextBlockDataContextChanged"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="14"
-                        Foreground="White"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Tag="{Binding}"
                         TextAlignment="DetectFromContent"
                         TextWrapping="Wrap" />
@@ -335,6 +337,7 @@
                             Grid.Column="3"
                             Padding="0"
                             VerticalAlignment="Center"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                             Click="ReplyButtonClick"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="13"
@@ -489,7 +492,7 @@
                         VerticalAlignment="Top"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="{StaticResource DefaultFontSize}"
-                        Foreground="White"
+                        Foreground="{StaticResource DefaultForegroundColor}"
                         Text="{Binding ReplyComment.Text}"
                         TextAlignment="DetectFromContent"
                         TextWrapping="NoWrap" />
@@ -498,6 +501,7 @@
                     x:Name="CloseCommentButton"
                     Grid.Column="4"
                     VerticalAlignment="Center"
+                    Foreground="{StaticResource DefaultForegroundColor}"
                     Click="CloseCommentButtonClick">
                     <AppBarButton.Icon>
                         <FontIcon FontSize="16" Glyph="" />
@@ -519,8 +523,8 @@
                     VerticalAlignment="Stretch"
                     AcceptsReturn="True"
                     FontFamily="{StaticResource VazirFont}"
-                    FontSize="{StaticResource DefaultFontSize}"
-                    Foreground="White"
+                    FontSize="{StaticResource DefaultFontSize}" 
+                    Style="{StaticResource TextBoxCenter}"
                     IsSpellCheckEnabled="False"
                     PlaceholderText="Type a comment to send"
                     TextAlignment="DetectFromContent"
@@ -530,7 +534,8 @@
                     x:Name="CommentButton"
                     Grid.Column="1"
                     VerticalAlignment="Center"
-                    Background="#FF1D1D1D"
+                    Background="{StaticResource DefaultItemBackgroundColor}"
+                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                     Click="CommentButtonClick">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="" />

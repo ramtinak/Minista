@@ -542,7 +542,7 @@
                         </interactivity:Interaction.Behaviors>
                     </ToggleButton>
                     <Rectangle Fill="{StaticResource SeperatorColor}"
-                               Height="1.5"
+                               Height="1"
                                Grid.Row="1"
                                Margin="15 2.5"
                                HorizontalAlignment="Stretch"
@@ -572,12 +572,12 @@
                                                Margin="5"
                                                HorizontalAlignment="Center"
                                                TextAlignment="Center"
-                                               Foreground="{StaticResource ProfileTextColor}">
+                                               Foreground="{StaticResource DefaultInnerForegroundColor}">
                     <Run Text="{Binding User.ProfileVisitCount, Mode=OneWay}" /> profile visits in the last <Run Text="{Binding User.ProfileVisitNumDays, Mode=OneWay}" /> days
                                     </TextBlock>
 
                                     <Rectangle Fill="{StaticResource SeperatorColor}"
-                                               Height="1.5"
+                                               Height="1"
                                                MinWidth="250"
                                                MaxWidth="290"
                                                Grid.Row="1"
@@ -678,7 +678,7 @@
                                                                    FontSize="{StaticResource TinyFontSize}"
                                                                    Grid.Row="1"
                                                                    HorizontalAlignment="Center"
-                                                                   Foreground="{StaticResource ProfileTextColor}" />
+                                                                   Foreground="{StaticResource DefaultInnerForegroundColor}" />
                                                     </Grid>
                                                 </Button>
                                                 <Button Grid.Column="1"
@@ -702,7 +702,7 @@
                                                                    FontSize="{StaticResource TinyFontSize}"
                                                                    Grid.Row="1"
                                                                    HorizontalAlignment="Center"
-                                                                   Foreground="{StaticResource ProfileTextColor}" />
+                                                                   Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
                                                     </Grid>
                                                 </Button>
@@ -729,7 +729,7 @@
                                                                    FontSize="{StaticResource TinyFontSize}"
                                                                    Grid.Row="1"
                                                                    HorizontalAlignment="Center"
-                                                                   Foreground="{StaticResource ProfileTextColor}" />
+                                                                   Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
                                                     </Grid>
 
@@ -745,6 +745,8 @@
                                                     <Button x:Name="EditButton"
                                                             Content="Edit"
                                                             Margin="2"
+                                                            Foreground="{StaticResource DefaultForegroundColor}"
+                                                            Background="{StaticResource DefaultItemBackgroundColor}"
                                                             HorizontalAlignment="Stretch"
                                                             Click="EditButtonClick">
                                                         <interactivity:Interaction.Behaviors>
@@ -784,7 +786,7 @@
 
                                         </Grid>
                                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                                   Height="1.5"
+                                                   Height="1"
                                                    MinWidth="250"
                                                    MaxWidth="290"
                                                    Grid.Row="1"
@@ -870,6 +872,7 @@
                                                 <RichTextBlock x:Name="BiographyText"
                                                                HorizontalAlignment="Stretch"
                                                                FontFamily="{StaticResource VazirFont}"
+                                                               Foreground="{StaticResource DefaultForegroundColor}"
                                                                IsTextSelectionEnabled="False"
                                                                TextWrapping="Wrap"
                                                                Margin="5"
@@ -922,7 +925,7 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                                   Height="1.5"
+                                                   Height="1"
                                                    MinWidth="250"
                                                    MaxWidth="290"
                                                    Grid.Row="0"
@@ -1053,6 +1056,8 @@
                                         <ListView x:Name="LVBusinessInfo"
                                                   x:FieldModifier="public"
                                                   SelectionMode="None"
+                                                  IsItemClickEnabled="True"
+                                                  ItemClick="LVBusinessInfoItemClick"
                                                   Grid.Row="1"
                                                   Width="270">
                                             <ListView.ItemContainerStyle>
@@ -1072,10 +1077,22 @@
                                                     <ItemsWrapGrid Orientation="Horizontal" />
                                                 </ItemsPanelTemplate>
                                             </ListView.ItemsPanel>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Button Content="{Binding BusinessContactMethod}"
+                                                            Tag="{Binding Tag}"
+                                                            Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                                            Background="{StaticResource DefaultItemBackgroundColor}"
+                                                            Width="120" 
+                                                            Margin="5"
+                                                            HorizontalAlignment="Stretch"
+                                                            Click="BusinessButtonClick"/>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
                                         </ListView>
 
                                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                                   Height="1.5"
+                                                   Height="1"
                                                    MinWidth="250"
                                                    MaxWidth="290"
                                                    Grid.Row="0"
@@ -1095,7 +1112,7 @@
                                         </Grid.RowDefinitions>
 
                                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                                   Height="1.5"
+                                                   Height="1"
                                                    Margin="5"
                                                    MinWidth="250"
                                                    MaxWidth="290"
@@ -1106,7 +1123,7 @@
                                                    Grid.Column="1"
                                                    Grid.Row="1"
                                                    FontSize="{StaticResource BigFontSize}"
-                                                   Foreground="#FF8F8F8F"
+                                                   Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                    Margin="5"
                                                    TextWrapping="Wrap"
                                                    TextAlignment="Center"
@@ -1120,7 +1137,7 @@
                                                    Grid.Row="2"
                                                    Grid.ColumnSpan="2"
                                                    FontSize="{StaticResource DefaultFontSize}"
-                                                   Foreground="#FF8F8F8F"
+                                                   Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                    Margin="5"
                                                    TextWrapping="Wrap"
                                                    TextAlignment="Center"
@@ -1132,7 +1149,7 @@
 
                                     </Grid>
                                     <Rectangle Fill="{StaticResource SeperatorColor}"
-                                               Height="1.5"
+                                               Height="1"
                                                MinWidth="250"
                                                MaxWidth="290"
                                                Grid.Row="5"

@@ -898,14 +898,22 @@ namespace Minista
 
             NavigationService.Navigate(typeof(Views.Posts.UploadPostView));
         }
-        public void HandleUriFile(FileActivatedEventArgs e)
+        public async void HandleUriFile(FileActivatedEventArgs e)
         {
             try
             {
                 if (e.Files.Any())
                 {
                     if (e.Files[0] is StorageFile file)
-                        HandleUriFile(file);
+                    {
+                        if (file.Path.Contains(".mi-theme"))
+                        {
+                            var json = await FileIO.ReadTextAsync(file);
+                            ThemeHelper.InitTheme(json);
+                        }
+                        else
+                            HandleUriFile(file);
+                    }
                 } 
             }
             catch {}

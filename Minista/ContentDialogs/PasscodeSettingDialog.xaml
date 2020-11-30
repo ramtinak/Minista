@@ -70,6 +70,7 @@
                     <ToggleSwitch x:Name="ToggleLock"
                                   HorizontalAlignment="Right"
                                   Foreground="{StaticResource DefaultForegroundColor}"
+                                              Style="{StaticResource ToggleSwitchStyle}"
                                   Grid.Column="1"
                                   Toggled="ToggleLockToggled" />
                 </Grid>

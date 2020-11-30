@@ -21,6 +21,7 @@
             <TextBlock x:Name="txtText"
                        FontFamily="{StaticResource VazirFont}"
                        FontSize="{StaticResource TinyFontSize}"
+                       Foreground="{StaticResource DefaultForegroundColor}"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
                        Margin="8" />
@@ -87,7 +88,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid x:Name="MinutesGrid"
                               CornerRadius="4"
-                              Background="White"
+                              Background="{StaticResource DefaultForegroundColor}"
                               MinWidth="30"
                               HorizontalAlignment="Center">
                             <TextBlock x:Name="MinutesText"
@@ -104,12 +105,14 @@
                                    HorizontalAlignment="Center"
                                    FontFamily="{StaticResource VazirFont}"
                                    FontSize="{StaticResource DefaultFontSize}"
+                       Foreground="{StaticResource DefaultForegroundColor}"
                                    Grid.Column="1"
                                    Margin="2 5"
                                    VerticalAlignment="Center" />
                     </Grid>
                     <TextBlock Text="min"
                                FontFamily="{StaticResource VazirFont}"
+                       Foreground="{StaticResource DefaultForegroundColor}"
                                FontSize="10"
                                Grid.Row="1"
                                Grid.ColumnSpan="2"
@@ -128,7 +131,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid x:Name="SecondsGrid"
                               CornerRadius="4"
-                              Background="White"
+                              Background="{StaticResource DefaultForegroundColor}"
                               MinWidth="30"
                               HorizontalAlignment="Center">
                             <TextBlock x:Name="SecondsText"
@@ -144,6 +147,7 @@
                     </Grid>
                     <TextBlock Text="sec"
                                FontFamily="{StaticResource VazirFont}"
+                               Foreground="{StaticResource DefaultForegroundColor}"
                                FontSize="10"
                                Grid.Row="1"
                                Grid.ColumnSpan="2"

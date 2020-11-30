@@ -94,7 +94,8 @@
                 </Grid>
                 <Button x:Name="LoginButton" 
                         Grid.Row="2" Margin="10"
-                        Background="#BF292828"
+                        Background="{StaticResource DefaultItemBackgroundColor}"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="{StaticResource DefaultFontSize}"
                         Content="Login" 
@@ -162,8 +163,8 @@
                         Content="Import user session from local"
                         Height="42"
                         HorizontalAlignment="Stretch"
-                        Foreground="#FFEAEAEA"
-                        Background="#BF292828"
+                        Background="{StaticResource DefaultItemBackgroundColor}"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Click="ImportFromLocalButtonClick" />
                 <!--Click="FacebookLoginButtonClick"-->
             </Grid>

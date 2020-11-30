@@ -433,6 +433,7 @@
                         <FontIcon
                             x:Name="Arrow"
                             Margin="8"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             FontFamily="{StaticResource MaterialSymbolFont}"
                             FontSize="{StaticResource BigFontSize}"
                             Glyph="{TemplateBinding Tag}"
@@ -457,7 +458,7 @@
                             Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
                             ContentTransitions="{TemplateBinding ContentTransitions}"
-                            Foreground="{TemplateBinding Foreground}"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             RenderTransformOrigin="0.5,0.5" />
 
                         <VisualStateManager.VisualStateGroups>

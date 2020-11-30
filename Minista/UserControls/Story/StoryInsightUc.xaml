@@ -50,14 +50,14 @@
                         Margin="5,0"
                         HorizontalAlignment="Left"
                         FontSize="{StaticResource TinyFontSize}"
-                        Foreground="DarkGray"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Style="{StaticResource VazirTextBlock}"
                         Text="{Binding Name}" />
                     <TextBlock
                         Grid.Column="1"
                         Margin="5,0"
                         FontSize="{StaticResource TinyFontSize}"
-                        Foreground="DarkGray"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Style="{StaticResource VazirTextBlock}"
                         Text="{Binding Value}" />
                 </Grid>
@@ -72,14 +72,14 @@
                         Margin="6,0,5,0"
                         HorizontalAlignment="Left"
                         FontSize="{StaticResource TinyFontSize}"
-                        Foreground="#FF666666"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Style="{StaticResource VazirTextBlock}"
                         Text="{Binding Name}" />
                     <TextBlock
                         Grid.Column="1"
                         Margin="6,0,5,0"
                         FontSize="{StaticResource TinyFontSize}"
-                        Foreground="#FF666666"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Style="{StaticResource VazirTextBlock}"
                         Text="{Binding Value}" />
                 </Grid>
@@ -120,6 +120,7 @@
                         HorizontalAlignment="Left"
                         FontSize="{StaticResource DefaultFontSize}"
                         Style="{StaticResource VazirTextBlock}"
+                        Foreground="{StaticResource DefaultForegroundColor}"
                         Text="Interactions" />
                     <StackPanel
                         Grid.Row="1"
@@ -133,7 +134,7 @@
                         <TextBlock
                             Margin="5,0,5,5"
                             FontSize="{StaticResource TinyFontSize}"
-                            Foreground="DarkGray"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                             Style="{StaticResource VazirTextBlock}"
                             Text="Actions taken from this story" />
                     </StackPanel>
@@ -146,7 +147,7 @@
                         Grid.ColumnSpan="2"
                         Height=".8"
                         Margin="5"
-                        Fill="#FF303030" />
+                        Fill="{StaticResource SeperatorColor}" />
                 </Grid>
                 <Grid Grid.Row="4">
                     <Grid.RowDefinitions>
@@ -195,7 +196,7 @@
                         Grid.ColumnSpan="2"
                         Height=".8"
                         Margin="5"
-                        Fill="#FF303030" />
+                        Fill="{StaticResource SeperatorColor}" />
                 </Grid>
 
 
@@ -204,7 +205,7 @@
         <Grid
             x:Name="LoadingGrid"
             Grid.RowSpan="10"
-            Background="#EF1B1B1B"
+            Background="{StaticResource DefaultBackgroundColor}"
             Visibility="Collapsed">
             <uc:LoadingUc
                 x:Name="LoadingUc"

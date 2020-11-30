@@ -49,10 +49,12 @@ namespace Minista.Themes
             RefreshGoUpButtonBackgroundColor = "#FF333333";
             DirectPaneBackgroundColor = "#E5141414";
             DirectTextBoxBorderColor = "#FF252525";
-            StoryReplyTextBackgroundColor = "#7F282828";
-            StoryButtonBackoundColor = "#7F282828";
-            StoryButtonForeroundColor = "#FFFFFFFF";
+            StoryReplyTextBackgroundColor = "#7FB4B4B4";
+            StoryButtonBackoundColor = "#7FB4B4B4";
+            StoryButtonForeroundColor = "#FF232323";
             UserSuggestionsCardBackgroundColor = "#FF252525";
+            HyperlinkTextForeroundColor = "#FF5278FF";
+            TextBoxBackgroundColor = "#FF171717";
         }
     }
 

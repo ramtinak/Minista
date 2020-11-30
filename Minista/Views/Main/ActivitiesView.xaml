@@ -82,7 +82,7 @@
                         VerticalAlignment="Center"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="{StaticResource DefaultFontSize}"
-                        Foreground="White"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                         Text="NOT SUPPORTED YET" />
                 </Grid>
             </DataTemplate>
@@ -124,7 +124,7 @@
                             VerticalAlignment="Center"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="{StaticResource DefaultFontSize}"
-                            Foreground="White"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             Text="{Binding RequestCount}" />
                     </Grid>
                     <Grid
@@ -141,7 +141,7 @@
                             VerticalAlignment="Center"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="{StaticResource DefaultFontSize}"
-                            Foreground="White"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             Text="Follow requests" />
                         <TextBlock
                             Grid.Row="1"
@@ -202,7 +202,7 @@
                             DataContextChanged="TextBlockDataContextChanged"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="{StaticResource DefaultFontSize}"
-                            Foreground="White"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             TextWrapping="Wrap" />
                     </Grid>
 
@@ -274,7 +274,7 @@
                             DataContextChanged="TextBlockDataContextChanged"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="{StaticResource DefaultFontSize}"
-                            Foreground="White"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             TextWrapping="Wrap" />
                     </Grid>
                 </Grid>
@@ -322,7 +322,7 @@
                             DataContextChanged="TextBlockDataContextChanged"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="{StaticResource DefaultFontSize}"
-                            Foreground="White"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             TextWrapping="Wrap" />
                     </Grid>
 
@@ -394,7 +394,7 @@
                             DataContextChanged="TextBlockDataContextChanged"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="{StaticResource DefaultFontSize}"
-                            Foreground="White"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             TextWrapping="Wrap" />
                     </Grid>
 
@@ -466,7 +466,7 @@
                             DataContextChanged="TextBlockDataContextChanged"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="{StaticResource DefaultFontSize}"
-                            Foreground="White"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             TextWrapping="Wrap" />
                     </Grid>
                 </Grid>
@@ -525,7 +525,7 @@
                             FontFamily="{StaticResource SegoeUIFont}"
                             FontSize="21"
                             FontWeight="SemiBold"
-                            Foreground="White"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             Text="#"
                             TextAlignment="Center" />
                     </Grid>
@@ -546,7 +546,7 @@
                             DataContextChanged="TextBlockDataContextChanged"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="{StaticResource DefaultFontSize}"
-                            Foreground="White"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             TextWrapping="Wrap">
                             <!--<Run Text="{Binding RichText}" />
                             <LineBreak />
@@ -606,7 +606,7 @@
                         Click="FollowUnfollowHashtagButtonClick"
                         Content="{Binding HashtagFollow.FollowStatus, Mode=TwoWay, Converter={StaticResource FollowHashtagConverter}}"
                         FontSize="{StaticResource DefaultFontSize}"
-                        Foreground="White" />
+                            Foreground="{StaticResource DefaultForegroundColor}" />
                 </Grid>
 
             </DataTemplate>
@@ -656,7 +656,7 @@
                             DataContextChanged="TextBlockDataContextChanged"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="{StaticResource DefaultFontSize}"
-                            Foreground="White"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             TextWrapping="Wrap">
                             <!--<Run Text="{Binding RichText}" />
                             <LineBreak />
@@ -804,7 +804,7 @@
                                 Margin="3"
                                 FontFamily="{StaticResource VazirFont}"
                                 FontSize="{StaticResource DefaultFontSize}"
-                                Foreground="White"
+                                Foreground="{StaticResource DefaultForegroundColor}"
                                 Text="{Binding UserName}" />
                             <TextBlock
                                 Grid.Row="1"
@@ -930,7 +930,6 @@
                     AcceptsReturn="True"
                     FontFamily="{StaticResource VazirFont}"
                     FontSize="{StaticResource DefaultFontSize}"
-                    Foreground="White"
                     IsSpellCheckEnabled="False"
                     PlaceholderText="Reply to @folani's comment"
                     TextAlignment="DetectFromContent"

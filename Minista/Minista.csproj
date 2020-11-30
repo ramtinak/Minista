@@ -29,7 +29,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <PackageCertificateThumbprint>97C36B75EB7B8B59359E1927BB450A504A467BB2</PackageCertificateThumbprint>
-    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)' == 'ARM'">
@@ -221,6 +221,7 @@
     <Compile Include="ItemsGenerators\UserDetails\UserDetailsShopMediasGenerator.cs" />
     <Compile Include="ItemsGenerators\UserDetails\UserDetailsTaggedMediasGenerator.cs" />
     <Compile Include="ItemsGenerators\UserDetails\UserDetailsTVMediasGenerator.cs" />
+    <Compile Include="Models\BusinessProfile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Selectors\MainStoryTemplateSelector.cs" />
     <Compile Include="Themes\MinistaTheme.cs" />

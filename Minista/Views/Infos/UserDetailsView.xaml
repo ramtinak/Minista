@@ -606,7 +606,7 @@
                                                            FontSize="{StaticResource TinyFontSize}"
                                                            Grid.Row="1"
                                                            HorizontalAlignment="Center"
-                                                           Foreground="{StaticResource ProfileTextColor}" />
+                                                           Foreground="{StaticResource DefaultInnerForegroundColor}" />
                                             </Grid>
                                         </Button>
                                         <Button Grid.Column="1"
@@ -627,7 +627,7 @@
                                                            FontSize="{StaticResource TinyFontSize}"
                                                            Grid.Row="1"
                                                            HorizontalAlignment="Center"
-                                                           Foreground="{StaticResource ProfileTextColor}" />
+                                                           Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
                                             </Grid>
                                         </Button>
@@ -651,7 +651,7 @@
                                                            FontSize="{StaticResource TinyFontSize}"
                                                            Grid.Row="1"
                                                            HorizontalAlignment="Center"
-                                                           Foreground="{StaticResource ProfileTextColor}" />
+                                                           Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
                                             </Grid>
 
@@ -665,6 +665,8 @@
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
                                             <Button Content="{Binding FriendshipStatus,Mode=TwoWay, Converter={StaticResource FollowingConverter}}"
+                            Background="{StaticResource DefaultItemBackgroundColor}"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                                                     Visibility="{Binding FriendshipStatus, Mode=TwoWay, Converter={StaticResource FollowingVisibilityConverter}}"
                                                     Margin="2"
                                                     HorizontalAlignment="Stretch"
@@ -689,7 +691,7 @@
 
                                 </Grid>
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.5"
+                                           Height="1"
                                            MinWidth="250"
                                            MaxWidth="290"
                                            Grid.Row="1"
@@ -773,6 +775,7 @@
 
                                         <RichTextBlock x:Name="BiographyText"
                                                        HorizontalAlignment="Stretch"
+                                                       Foreground="{StaticResource DefaultForegroundColor}"
                                                        FontFamily="{StaticResource VazirFont}"
                                                        IsTextSelectionEnabled="False"
                                                        TextWrapping="Wrap"
@@ -826,7 +829,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.5"
+                                           Height="1"
                                            MinWidth="250"
                                            MaxWidth="290"
                                            Grid.Row="0"
@@ -963,7 +966,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.5"
+                                           Height="1"
                                            Margin="5"
                                            MinWidth="250"
                                            MaxWidth="290"
@@ -979,14 +982,14 @@
                                              Fill="#E9171717" />
                                     <FontIcon FontSize="{StaticResource DefaultFontSize}"
                                               FontFamily="{StaticResource MaterialSymbolFont}"
-                                              Foreground="White"
+                                              Foreground="{StaticResource DefaultForegroundColor}"
                                               Glyph="" />
                                 </Grid>
                                 <TextBlock FontFamily="{StaticResource VazirFont}"
                                            Grid.Row="1"
                                            Grid.Column="1"
                                            FontSize="{StaticResource TinyFontSize}"
-                                           Foreground="#FF8F8F8F"
+                                           Foreground="{StaticResource DefaultInnerForegroundColor}"
                                            Margin="5"
                                            TextWrapping="Wrap"
                                            TextAlignment="Center"
@@ -1009,7 +1012,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.5"
+                                           Height="1"
                                            Margin="5"
                                            MinWidth="250"
                                            MaxWidth="290"
@@ -1031,14 +1034,14 @@
                                                  Fill="#E9171717" />
                                         <FontIcon FontSize="{StaticResource DefaultFontSize}"
                                                   FontFamily="{StaticResource SymbolFont}"
-                                                  Foreground="White"
+                                                  Foreground="{StaticResource DefaultForegroundColor}"
                                                   Glyph="" />
                                     </Grid>
                                     <TextBlock FontFamily="{StaticResource VazirFont}"
                                                Grid.Column="1"
                                                Grid.Row="1"
                                                FontSize="{StaticResource TinyFontSize}"
-                                               Foreground="#FF8F8F8F"
+                                               Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                Margin="5"
                                                TextWrapping="Wrap"
                                                TextAlignment="Center"
@@ -1068,7 +1071,7 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Fill="{StaticResource SeperatorColor}"
-                                               Height="1.5"
+                                               Height="1"
                                                MinWidth="250"
                                                MaxWidth="290"
                                                Margin="5"
@@ -1080,7 +1083,7 @@
                                                FontSize="{StaticResource DefaultFontSize}"
                                                Margin="10 2"
                                                Grid.Row="1"
-                                               Foreground="White"
+                                               Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                HorizontalAlignment="Left"
                                                VerticalAlignment="Center"
                                                TextAlignment="Center" />
@@ -1094,7 +1097,7 @@
                                             Click="SeeAllButtonClick" />
                                 </Grid>
                                 <ListView SelectionMode="None"
-                                          Foreground="White"
+                                          Foreground="{StaticResource DefaultForegroundColor}"
                                           Grid.Row="1"
                                           Grid.ColumnSpan="2"
                                           Margin="5"
@@ -1121,7 +1124,7 @@
                                             <Grid Width="130"
                                                   Height="205"
                                                   CornerRadius="5"
-                                                  Background="#FF252525">
+                                                  Background="{StaticResource UserSuggestionsCardBackgroundColor}">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition />
                                                     <RowDefinition Height="Auto" />
@@ -1170,6 +1173,7 @@
                                                       Tapped="ChainingItemTapped" />
                                                 <Button Content="{Binding FollowText, Mode=TwoWay}"
                                                         Grid.Row="3"
+                                                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                         FontSize="{StaticResource DefaultFontSize}"
                                                         VerticalAlignment="Center"
                                                         HorizontalAlignment="Center"
@@ -1183,7 +1187,7 @@
                                 </ListView>
                             </Grid>
                             <Rectangle Fill="{StaticResource SeperatorColor}"
-                                       Height="1.5"
+                                       Height="1"
                                        MinWidth="250"
                                        MaxWidth="290"
                                        Grid.Row="5"

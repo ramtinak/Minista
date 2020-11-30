@@ -230,23 +230,6 @@ static class Helper
     public const string DoubleTikMaterialIcon = "";
     public const string PendingTikMaterialIcon = "";
 
-    //public static Brush StorySeenColor = GetColorBrush("#DF959595");
-
-    //public static Brush StoryDefaultColor
-    //{
-    //    get
-    //    {
-    //        var linear = new LinearGradientBrush
-    //        {
-    //            StartPoint = new Point(0.7, .2),
-    //            EndPoint = new Point(0.5, 1.2)
-    //        };
-    //        linear.GradientStops.Add(new GradientStop() { Color = "#FFEE1262".GetColorFromHex() });
-    //        linear.GradientStops.Add(new GradientStop() { Color = "#FFFF7F35".GetColorFromHex(), Offset = 1 });
-    //        return linear;
-    //    }
-    //}
-
 
     public const string InstagramUrl = "https://www.instagram.com/";
     public static BitmapImage NoProfilePictureBitmap => "ms-appx:///Assets/Images/no-profile.jpg".GetBitmap();
@@ -262,7 +245,6 @@ static class Helper
     {
         try
         {
-            //"------------------------- BEGIN REMOVING BACK STACK -------------------".PrintDebug();
             var l = NavigationService.Frame.BackStack.ToList();
             for (int i=0;i< l.Count;i++)
             {
@@ -761,7 +743,7 @@ static class Helper
         }
         catch { }
     }
-    public static async void ShowStatusBar()
+    public static async void ShowStatusBar(Color? backgroundColor = null, Color? foregroundColor = null)
     {
         try
         {
@@ -771,8 +753,16 @@ static class Helper
                 await statusBar.ShowAsync();
 
                 statusBar.BackgroundOpacity = 1;
-                statusBar.BackgroundColor = /*color*/ ((SolidColorBrush)Application.Current.Resources["DefaultBackgroundColor}"]).Color/*GetColorFromHex("#FF151515")*/;
-                statusBar.ForegroundColor = Colors.White;
+                if (!backgroundColor.HasValue)
+                {
+                    statusBar.BackgroundColor = /*color*/ ((SolidColorBrush)Application.Current.Resources["DefaultBackgroundColor}"]).Color/*GetColorFromHex("#FF151515")*/;
+                    statusBar.ForegroundColor = Colors.White;
+                }
+                else
+                {
+                    statusBar.BackgroundColor = backgroundColor;
+                    statusBar.ForegroundColor = foregroundColor;
+                }
             }
         }
         catch { }
@@ -788,7 +778,7 @@ static class Helper
         return newTitle;
     }
 
-    public async static void ChangeTileBarTheme()
+    public static void ChangeTileBarTheme(Color? foregroundColor = null, Color? innerForegroundColor = null)
     {
         try
         {
@@ -796,23 +786,12 @@ static class Helper
             var color = Colors.Transparent;
 
             var inactive = GetColorFromHex("#FF646464");
-            if (DeviceHelper.GetDeviceFormFactorType() == DeviceFormFactorType.Phone)
-            {
-                var statusBar = StatusBar.GetForCurrentView();
-                await statusBar.ShowAsync();
-                
-                statusBar.BackgroundOpacity = 1;
-                statusBar.BackgroundColor = /*color*/ ((SolidColorBrush)Application.Current.Resources["DefaultBackgroundColor}"]).Color/*GetColorFromHex("#FF151515")*/;
-                statusBar.ForegroundColor = Colors.White;
-
-                //await statusBar.HideAsync();
-            }
-            else 
+            if (!DeviceUtil.IsMobile)
             {
                 var titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
                 titleBar.BackgroundColor = color;
-                titleBar.ForegroundColor = Colors.White;
+                titleBar.ForegroundColor = foregroundColor ?? Colors.White;
                 titleBar.InactiveBackgroundColor = color;
                 titleBar.InactiveForegroundColor = inactive;
 
@@ -822,7 +801,7 @@ static class Helper
                 titleBar.ButtonPressedBackgroundColor = Colors.Black;
                 titleBar.ButtonInactiveBackgroundColor = color;
 
-                titleBar.ButtonForegroundColor = Colors.White;
+                titleBar.ButtonForegroundColor = innerForegroundColor ?? Colors.White;
                 titleBar.ButtonHoverForegroundColor = Colors.White;
                 titleBar.ButtonPressedForegroundColor = Colors.DarkGray;
                 titleBar.ButtonInactiveForegroundColor = inactive;

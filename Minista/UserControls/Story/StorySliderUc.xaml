@@ -568,6 +568,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock x:Name="txtQuestion"
+                       Foreground="{StaticResource DefaultForegroundColor}"
                        FontFamily="{StaticResource VazirFont}"
                        FontSize="{StaticResource TinyFontSize}"
                        VerticalAlignment="Center"

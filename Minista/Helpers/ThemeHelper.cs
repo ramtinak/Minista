@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Newtonsoft.Json;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Controls;
 
 namespace Minista.Helpers
 {
@@ -33,10 +34,14 @@ namespace Minista.Helpers
                 if (ministaTheme.Theme == null) return;
                 var theme = ministaTheme.Theme;
                 ElementTheme = theme.ElementTheme;
-                (Application.Current.Resources["DefaultBackgroundColor"] as SolidColorBrush).Color = theme.DefaultBackgroundColor.GetColorFromHex();
+                var backgroundColor = theme.DefaultBackgroundColor.GetColorFromHex();
+                var foregroundColor = theme.DefaultForegroundColor.GetColorFromHex();
+                var innerForegroundColor = theme.DefaultInnerForegroundColor.GetColorFromHex();
+
+                (Application.Current.Resources["DefaultBackgroundColor"] as SolidColorBrush).Color = backgroundColor;
                 (Application.Current.Resources["DefaultItemBackgroundColor"] as SolidColorBrush).Color = theme.DefaultItemBackgroundColor.GetColorFromHex();
-                (Application.Current.Resources["DefaultForegroundColor"] as SolidColorBrush).Color = theme.DefaultForegroundColor.GetColorFromHex();
-                (Application.Current.Resources["DefaultInnerForegroundColor"] as SolidColorBrush).Color = theme.DefaultInnerForegroundColor.GetColorFromHex();
+                (Application.Current.Resources["DefaultForegroundColor"] as SolidColorBrush).Color = foregroundColor;
+                (Application.Current.Resources["DefaultInnerForegroundColor"] as SolidColorBrush).Color = innerForegroundColor;
 
 
                 (Application.Current.Resources["SeperatorColor"] as SolidColorBrush).Color = theme.SeperatorColor.GetColorFromHex();
@@ -51,13 +56,31 @@ namespace Minista.Helpers
                 (Application.Current.Resources["DirectPaneBackgroundColor"] as SolidColorBrush).Color = theme.DirectPaneBackgroundColor.GetColorFromHex();
 
 
-
                 (Application.Current.Resources["DirectTextBoxBorderColor"] as SolidColorBrush).Color = theme.DirectTextBoxBorderColor.GetColorFromHex();
                 (Application.Current.Resources["StoryReplyTextBackgroundColor"] as SolidColorBrush).Color = theme.StoryReplyTextBackgroundColor.GetColorFromHex();
                 (Application.Current.Resources["StoryButtonBackoundColor"] as SolidColorBrush).Color = theme.StoryButtonBackoundColor.GetColorFromHex();
                 (Application.Current.Resources["StoryButtonForeroundColor"] as SolidColorBrush).Color = theme.StoryButtonForeroundColor.GetColorFromHex();
                 (Application.Current.Resources["UserSuggestionsCardBackgroundColor"] as SolidColorBrush).Color = theme.UserSuggestionsCardBackgroundColor.GetColorFromHex();
+                (Application.Current.Resources["SystemControlHyperlinkTextBrush"] as SolidColorBrush).Color = theme.HyperlinkTextForeroundColor.GetColorFromHex();
+                (Application.Current.Resources["SystemControlHyperlinkBaseHighBrush"] as SolidColorBrush).Color = theme.HyperlinkTextForeroundColor.GetColorFromHex();
+                (Application.Current.Resources["SystemControlHyperlinkBaseMediumBrush"] as SolidColorBrush).Color = theme.HyperlinkTextForeroundColor.GetColorFromHex();
+                (Application.Current.Resources["SystemControlHyperlinkBaseMediumHighBrush"] as SolidColorBrush).Color = theme.HyperlinkTextForeroundColor.GetColorFromHex();
+                (Application.Current.Resources["LoadingForegroundColor"] as SolidColorBrush).Color = theme.LoadingForegroundColor.GetColorFromHex();
 
+                (Application.Current.Resources["TextBoxBackgroundColor"] as SolidColorBrush).Color = theme.TextBoxBackgroundColor.GetColorFromHex();
+
+                (Application.Current.Resources["SystemControlHighlightListAccentLowBrush"] as SolidColorBrush).Color = theme.UserSuggestionsCardBackgroundColor.GetColorFromHex();
+                (Application.Current.Resources["SystemControlHighlightListAccentMediumBrush"] as SolidColorBrush).Color = theme.UserSuggestionsCardBackgroundColor.GetColorFromHex();
+                (Application.Current.Resources["SystemControlHighlightListAccentHighBrush"] as SolidColorBrush).Color = theme.UserSuggestionsCardBackgroundColor.GetColorFromHex();
+
+                Helper.ShowStatusBar(backgroundColor, foregroundColor);
+                Helper.ChangeTileBarTheme(foregroundColor, innerForegroundColor);
+
+                if (NavigationService.Frame?.Content is Page page)
+                    page.RequestedTheme = ElementTheme;
+
+                if (Window.Current.Content != null && Window.Current.Content is Page page2)
+                    page2.RequestedTheme = ElementTheme;
             }
             catch { }
 

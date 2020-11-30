@@ -69,7 +69,7 @@
                     </AppBarButton>
                 </Grid>
                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                           Height="1.2"
+                           Height="1"
                            MinWidth="250"
                            MaxWidth="320"
                            Grid.Row="1"
@@ -133,7 +133,7 @@
 
                         </Grid>
                         <Rectangle Fill="{StaticResource SeperatorColor}"
-                                   Height="1.2"
+                                   Height="1"
                                    MinWidth="250"
                                    MaxWidth="320"
                                    Grid.Row="1"
@@ -182,7 +182,7 @@
                                          Foreground="{StaticResource DefaultForegroundColor}" />
 
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.2"
+                                           Height="1"
                                            MinWidth="250"
                                            MaxWidth="320"
                                            Grid.Row="3"
@@ -219,7 +219,7 @@
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}" />
 
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.2"
+                                           Height="1"
                                            MinWidth="250"
                                            MaxWidth="320"
                                            Grid.Row="3"
@@ -256,7 +256,7 @@
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                          Foreground="{StaticResource DefaultForegroundColor}" />
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.2"
+                                           Height="1"
                                            MinWidth="250"
                                            MaxWidth="320"
                                            Grid.Row="3"
@@ -293,7 +293,7 @@
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                          Foreground="{StaticResource DefaultForegroundColor}" />
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.2"
+                                           Height="1"
                                            MinWidth="250"
                                            MaxWidth="320"
                                            Grid.Row="3"
@@ -348,7 +348,7 @@
                                              Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                              Foreground="{StaticResource DefaultForegroundColor}" />
                                     <Rectangle Fill="{StaticResource SeperatorColor}"
-                                               Height="1.2"
+                                               Height="1"
                                                MinWidth="250"
                                                MaxWidth="320"
                                                Grid.Row="3"
@@ -385,7 +385,7 @@
                                              Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                              Foreground="{StaticResource DefaultForegroundColor}" />
                                     <Rectangle Fill="{StaticResource SeperatorColor}"
-                                               Height="1.2"
+                                               Height="1"
                                                MinWidth="250"
                                                MaxWidth="320"
                                                Grid.Row="3"
@@ -461,7 +461,7 @@
         <Border x:Name="EditorGrid"
                   Visibility="Collapsed"
                 CornerRadius="5">
-            <Grid Background="#FF1B1B1B"
+            <Grid Background="{StaticResource DefaultBackgroundColor}"
                   CornerRadius="5"
                   BorderBrush="{StaticResource DefaultBackgroundColor}"
                   BorderThickness=".8"
@@ -513,7 +513,7 @@
                     </AppBarButton>
                 </Grid>
                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                           Height="1.2"
+                           Height="1"
                            MinWidth="250"
                            MaxWidth="320"
                            Grid.Row="1"
@@ -587,7 +587,7 @@
                     </AppBarButton>
                 </Grid>
                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                           Height="1.2"
+                           Height="1"
                            MinWidth="250"
                            MaxWidth="320"
                            Grid.Row="1"
@@ -641,7 +641,7 @@
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                          Foreground="{StaticResource DefaultForegroundColor}" />
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.2"
+                                           Height="1"
                                            MinWidth="250"
                                            MaxWidth="320"
                                            Grid.Row="3"
@@ -678,7 +678,7 @@
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                          Foreground="{StaticResource DefaultForegroundColor}" />
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.2"
+                                           Height="1"
                                            MinWidth="250"
                                            MaxWidth="320"
                                            Grid.Row="3"
@@ -766,7 +766,7 @@
                                          Style="{StaticResource TextBoxCenterWithBackgroundChange}"
                                          Foreground="{StaticResource DefaultForegroundColor}" />-->
                                 <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1.2"
+                                           Height="1"
                                            MinWidth="250"
                                            MaxWidth="320"
                                            Grid.Row="3"

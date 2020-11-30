@@ -12,7 +12,7 @@
     <Grid>
         <Grid CornerRadius="5"
               Margin="5"
-              Background="#D7282828">
+              Background="{StaticResource DefaultItemBackgroundColor}" Opacity="0.76">
             <TextBlock x:Name="MediaTest"
                        Text="Media is uploading"
                        FontFamily="{StaticResource VazirFont}"

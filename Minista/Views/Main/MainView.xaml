@@ -573,7 +573,7 @@
                           HorizontalAlignment="Center">
                         <Ellipse Height="70"
                                  Width="70"
-                                 Stroke="{Binding Story,Mode=TwoWay, Converter={StaticResource SeenColorConverter}}"
+                                 Stroke="{Binding Story,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource SeenColorConverter}}"
                                  StrokeThickness="2">
                             <Ellipse.Fill>
                                 <ImageBrush>

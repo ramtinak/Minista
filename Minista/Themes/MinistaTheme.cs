@@ -38,6 +38,9 @@ namespace Minista
         public string StoryButtonBackoundColor { get; set; } = "#7F282828";
         public string StoryButtonForeroundColor { get; set; } = "#FFFFFFFF";
         public string UserSuggestionsCardBackgroundColor { get; set; } = "#FF252525";
+        public string HyperlinkTextForeroundColor { get; set; } = "#FF5278FF";
+        public string TextBoxBackgroundColor { get; set; } = "#BF292828";
+        public string LoadingForegroundColor { get; set; } = "#FF2C42FF";
 
         //<SolidColorBrush x:Key="StoryReplyTextBackgroundColor">#7F282828</SolidColorBrush>
         //<SolidColorBrush x:Key="StoryButtonBackoundColor">#7F282828</SolidColorBrush>

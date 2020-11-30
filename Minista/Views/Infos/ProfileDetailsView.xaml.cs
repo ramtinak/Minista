@@ -1,7 +1,9 @@
 ﻿using InstagramApiSharp.Classes.Models;
+using Minista.Models;
 using Minista.ViewModels.Infos;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -839,29 +841,41 @@ namespace Minista.Views.Infos
             {
                 var user = Helper.CurrentUser;
 
-                LVBusinessInfo.Items.Clear();
+                LVBusinessInfo.ItemsSource = null;
                 if (user.IsBusiness)
                 {
                     GridBusinessInfo.Visibility = Visibility.Visible;
+                    var list = new ObservableCollection<BusinessProfile>();
                     if (!string.IsNullOrEmpty(user.PublicPhoneNumber))
                     {
-                        var btn = GetButton();
-                        btn.Content = user.BusinessContactMethod.ToString();
-                        //btn.Tag = $"+{user.PublicPhoneCountryCode}{user.PublicPhoneNumber}";
-                        btn.Tag = "Phone";
-                        btn.Click += BusinessButtonClick;
-                        LVBusinessInfo.Items.Add(btn);
+                        list.Add(new BusinessProfile
+                        {
+                            BusinessContactMethod = user.BusinessContactMethod.ToString(),
+                            Tag = "Phone"
+                        });
+                        //var btn = GetButton();
+                        //btn.Content = user.BusinessContactMethod.ToString();
+                        ////btn.Tag = $"+{user.PublicPhoneCountryCode}{user.PublicPhoneNumber}";
+                        //btn.Tag = "Phone";
+                        //btn.Click += BusinessButtonClick;
+                        //LVBusinessInfo.Items.Add(btn);
                     }
                     if (!string.IsNullOrEmpty(user.PublicEmail))
                     {
+                        list.Add(new BusinessProfile
+                        {
+                            BusinessContactMethod = "Email",
+                            Tag = "Email"
+                        });
                         var btn = GetButton();
-                        btn.Content = "Email";
-                        //btn.Tag = $"+{user.PublicPhoneCountryCode}{user.PublicPhoneNumber}";
-                        btn.Tag = "Email";
-                        btn.Click += BusinessButtonClick;
-                        LVBusinessInfo.Items.Add(btn);
+                        //btn.Content = "Email";
+                        ////btn.Tag = $"+{user.PublicPhoneCountryCode}{user.PublicPhoneNumber}";
+                        //btn.Tag = "Email";
+                        //btn.Click += BusinessButtonClick;
+                        //LVBusinessInfo.Items.Add(btn);
                     }
-                    if(LVBusinessInfo.Items.Count == 0)
+                    LVBusinessInfo.ItemsSource = list;
+                    if (list.Count == 0)
                         GridBusinessInfo.Visibility = Visibility.Collapsed;
                 }
                 else
@@ -869,6 +883,33 @@ namespace Minista.Views.Infos
             }
             catch { }
         }
+        private void LVBusinessInfoItemClick(object sender, ItemClickEventArgs e)
+        {
+            try
+            { 
+                if (e.ClickedItem is BusinessProfile profile)
+                {
+                    var user = Helper.CurrentUser;
+                    if (profile.Tag == "Phone")
+                    {
+                        $"+{user.PublicPhoneCountryCode}{user.PublicPhoneNumber}".CopyText();
+                        MainPage.Current.ShowInAppNotify($"Email: \"+{user.PublicPhoneCountryCode}{user.PublicPhoneNumber}\" copied ;)", 1500);
+                        if (profile.BusinessContactMethod == "Call")
+                            $"ms-call://?PhoneNumber=+{user.PublicPhoneCountryCode}{user.PublicPhoneNumber}".OpenUrl();
+                        else
+                            $"ms-chat://?PhoneNumber+{user.PublicPhoneCountryCode}{user.PublicPhoneNumber}".OpenUrl();
+                    }
+                    else if (profile.Tag == "Email")
+                    {
+                        user.PublicEmail.CopyText();
+                        MainPage.Current.ShowInAppNotify($"Email: \"{user.PublicEmail}\" copied ;)", 1500);
+                        $"mailto://{user.PublicEmail}".OpenUrl();
+                    }
+                }
+            }
+            catch { }
+        }
+
 
         private void BusinessButtonClick(object sender, RoutedEventArgs e)
         {
@@ -1156,6 +1197,7 @@ namespace Minista.Views.Infos
 
         #region LOADINGS
         public void ShowTopLoading() => TopLoading.Start();
+
         public void HideTopLoading() => TopLoading.Stop();
 
 

@@ -42,7 +42,7 @@ namespace Minista.Helpers
                             {
                                 for (int i = 0; i < matches.Count; i++)
                                 {
-                                    var inp = (matches[i] as Match).ToString();
+                                    var inp = matches[i].ToString();
                                     input = input.Replace(inp, $" {inp} ");
                                 }
                                 //input = input.Trim();
@@ -98,7 +98,7 @@ namespace Minista.Helpers
                             {
                                 for (int i = 0; i < matches.Count; i++)
                                 {
-                                    var inp = (matches[i] as Match).ToString();
+                                    var inp = matches[i].ToString();
                                     input = input.Replace(inp, $" {inp} ");
                                 }
                                 //input = input.Trim();
@@ -164,7 +164,7 @@ namespace Minista.Helpers
             return new Run()
             {
                 Text = text,
-                Foreground = new SolidColorBrush(defaultColor)
+                //Foreground = new SolidColorBrush(defaultColor)
             };
         }
         Hyperlink GetHyperlink(string text, TypedEventHandler<Hyperlink, HyperlinkClickEventArgs> hyperLinkAction, Color hyperColor)
@@ -175,13 +175,13 @@ namespace Minista.Helpers
 
             var hyper = new Hyperlink
             {
-                Foreground = new SolidColorBrush(hyperColor)
+                //Foreground = new SolidColorBrush(hyperColor)
             };
 
             hyper.Inlines.Add(new Run()
             {
                 Text = /*Environment.NewLine +*/ text,
-                Foreground = new SolidColorBrush(hyperColor),
+                //Foreground = new SolidColorBrush(hyperColor),
 
             });
 

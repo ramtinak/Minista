@@ -407,7 +407,7 @@
 
 
                                                 <Rectangle Fill="#FF363636"
-                                                           Height="1.5"
+                                                           Height="1"
                                                            Grid.Row="1"
                                                            Grid.ColumnSpan="3"
                                                            Margin="15 2.5"
@@ -516,7 +516,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DefaultForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        Text="{Binding UserName}"
@@ -536,6 +536,8 @@
                     </Grid>
                     <Button Content="{Binding FriendshipStatus,Mode=TwoWay, Converter={StaticResource FollowingConverter}}"
                             Visibility="{Binding FriendshipStatus, Mode=TwoWay, Converter={StaticResource FollowingVisibilityConverter}}"
+                            Foreground="{StaticResource DefaultForegroundColor}"
+                            Background="{StaticResource DefaultItemBackgroundColor}"
                             Grid.Column="1"
                             Margin="5"
                             HorizontalAlignment="Stretch"
@@ -591,7 +593,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DefaultForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        Text="{Binding UserName}"
@@ -611,6 +613,8 @@
                     </Grid>
                     <Button Content="{Binding FriendshipStatus,Mode=TwoWay, Converter={StaticResource FollowingConverter}}"
                             Visibility="{Binding FriendshipStatus, Mode=TwoWay, Converter={StaticResource FollowingVisibilityConverter}}"
+                            Foreground="{StaticResource DefaultForegroundColor}"
+                            Background="{StaticResource DefaultItemBackgroundColor}"
                             Grid.Column="1"
                             Margin="5"
                             HorizontalAlignment="Stretch"
@@ -618,6 +622,7 @@
                             Click="FollowUnFollowMainButtonClick" />
                     <AppBarButton Content=""
                                   Grid.Column="2"
+                                  Foreground="{StaticResource DefaultForegroundColor}"
                                   FontFamily="{StaticResource MaterialSymbolFont}"
                                   FontSize="{StaticResource BigFontSize}"
                                   Visibility="{Binding Pk,Converter={StaticResource RemoveFollowerVisibilityConverter}}"
@@ -676,7 +681,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DefaultForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        Text="{Binding User.UserName}"
@@ -699,7 +704,9 @@
                               Grid.ColumnSpan="3"
                               Tapped="SuggestionTapped" />
                     </Grid>
-                    <Button Content="Follow"
+                    <Button Content="Follow" 
+                            Foreground="{StaticResource DefaultForegroundColor}"
+                            Background="{StaticResource DefaultItemBackgroundColor}"
                             Grid.Column="1"
                             VerticalAlignment="Center"
                             Margin="5"
@@ -726,7 +733,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Foreground="#FFA6A6A6"
+                    <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
                                FontFamily="{StaticResource VazirFont}"
                                FontSize="{StaticResource DefaultFontSize}"
                                TextWrapping="Wrap"
@@ -764,16 +771,21 @@
                 <TextBlock FontFamily="{StaticResource VazirFont}"
                            FontSize="{StaticResource DefaultFontSize}"
                            FontWeight="Normal"
-                           Foreground="#FF9C9C9C"
+                           Foreground="{StaticResource DefaultInnerForegroundColor}"
                            HorizontalAlignment="Left"
                            Margin="15 0 0 0"
                            VerticalAlignment="Center">
                     <Run Text="{Binding Username}" />
                 </TextBlock>
             </Pivot.Title>
-            <PivotItem Header="Mutual"
-                       Padding="0"
+            <PivotItem Padding="0"
                        Margin="0">
+                <PivotItem.Header>
+                    <TextBlock Text="Mutual"
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               FontSize="{StaticResource HeaderFontSize}"
+                               FontFamily="{StaticResource VazirFont}"/>
+                </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -818,9 +830,14 @@
                                        Grid.Row="2" />
                 </Grid>
             </PivotItem>
-            <PivotItem Header="Followers"
-                       Padding="0"
+            <PivotItem Padding="0"
                        Margin="0">
+                <PivotItem.Header>
+                    <TextBlock Text="Followers"
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               FontSize="{StaticResource HeaderFontSize}"
+                               FontFamily="{StaticResource VazirFont}"/>
+                </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -865,7 +882,7 @@
                                           Click="FollowersSearchButtonClick" />
                         </Grid>
                         <Rectangle Fill="#FF363636"
-                                   Height="1.5"
+                                   Height="1"
                                    Grid.Row="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
@@ -934,9 +951,14 @@
                                        Grid.Row="2" />
                 </Grid>
             </PivotItem>
-            <PivotItem Header="Following"
-                       Padding="0"
+            <PivotItem Padding="0"
                        Margin="0">
+                <PivotItem.Header>
+                    <TextBlock Text="Following"
+                               Foreground="{StaticResource DefaultForegroundColor}"
+                               FontSize="{StaticResource HeaderFontSize}"
+                               FontFamily="{StaticResource VazirFont}"/>
+                </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -981,7 +1003,7 @@
                                           Click="FollowingsSearchButtonClick" />
                         </Grid>
                         <Rectangle Fill="#FF363636"
-                                   Height="1.5"
+                                   Height="1"
                                    Grid.Row="1"
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"

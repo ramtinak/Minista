@@ -98,7 +98,7 @@
                                    FontFamily="{StaticResource SymbolFont}"
                                    FontSize="{StaticResource DefaultFontSize}"
                                    Margin="5"
-                                   Foreground="White"
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    TextWrapping="NoWrap"
@@ -115,7 +115,7 @@
                                               Visibility="{Binding Mode=OneWay, Converter={StaticResource IGTVIconToVisibilityConverter}}">
                         <FontIcon FontSize="{StaticResource BigFontSize}"
                                   FontFamily="{StaticResource MaterialSymbolFont}"
-                                  Foreground="White"
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                   Glyph="" />
                         <!--Glyph=""-->
                     </controls:DropShadowPanel>
@@ -154,7 +154,7 @@
                                    FontFamily="{StaticResource SymbolFont}"
                                    FontSize="{StaticResource DefaultFontSize}"
                                    Margin="5"
-                                   Foreground="White"
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    TextWrapping="NoWrap"
@@ -238,14 +238,16 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <!--Foreground="{StaticResource DefaultForegroundColor}"-->
-                                    <TextBlock Foreground="White"
+                                        <TextBlock 
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                                Text=""
                                                Margin="15 10"
                                                HorizontalAlignment="Left"
                                                VerticalAlignment="Center"
                                                FontFamily="{StaticResource MaterialSymbolFont}"
                                                FontSize="{StaticResource BigFontSize}" />
-                                    <TextBlock Foreground="White"
+                                        <TextBlock 
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                                Text="Search"
                                                Margin="15 10"
                                                Grid.Column="1"
@@ -260,7 +262,7 @@
                                 </Grid>
                                 <ListView x:Name="LVClusters"
                                           SelectionMode="None"
-                                          Foreground="White"
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                           Grid.Row="1"
                                           Margin="5"
                                           ItemsSource="{Binding ExploreGenerator.Clusters, Mode=OneWay}"
@@ -296,7 +298,7 @@
                                                   BorderThickness="0">
                                                 <TextBlock FontFamily="{StaticResource VazirFont}"
                                                            FontSize="{StaticResource DefaultFontSize}"
-                                                           Foreground="White"
+                                   Foreground="{StaticResource DefaultForegroundColor}"
                                                            Margin="8"
                                                            Text="{Binding Name}" />
                                             </Grid>

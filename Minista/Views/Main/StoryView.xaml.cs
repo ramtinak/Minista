@@ -939,7 +939,10 @@ namespace Minista.Views.Main
                     }
                 }
             }
-            catch { }
+            catch(Exception ex)
+            {
+                ex.PrintException("SeenStory");
+            }
         }
         MediaElement LatestMediaElement = null;
         bool VideoIsPlaying = false;

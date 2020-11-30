@@ -248,12 +248,12 @@
                                             Margin="2"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
-                                            Background="Transparent"
+                                            Background="{x:Null}"
                                             Click="UploadPostButtonClick"
                                             Content="Post | NEW {BETA}"
                                             FontFamily="{StaticResource VazirFont}"
                                             FontSize="{StaticResource DefaultFontSize}"
-                                            Foreground="#FF07B8FB">
+                                            Foreground="{StaticResource SystemControlHyperlinkTextBrush}">
 
                                             <interactivity:Interaction.Behaviors>
                                                 <behaviors:PointersEvent />
@@ -261,7 +261,7 @@
                                         </Button>
                                         <Rectangle
                                             Grid.Row="1"
-                                            Height="1.2"
+                                            Height="1"
                                             MinWidth="200"
                                             MaxWidth="220"
                                             Margin="5,2"
@@ -281,14 +281,14 @@
                                             Content="Story | NEW {BETA}"
                                             FontFamily="{StaticResource VazirFont}"
                                             FontSize="{StaticResource DefaultFontSize}"
-                                            Foreground="#FF07B8FB">
+                                            Foreground="{StaticResource SystemControlHyperlinkTextBrush}">
                                             <interactivity:Interaction.Behaviors>
                                                 <behaviors:PointersEvent />
                                             </interactivity:Interaction.Behaviors>
                                         </Button>
                                         <Rectangle
                                             Grid.Row="3"
-                                            Height="1.2"
+                                            Height="1"
                                             MinWidth="200"
                                             MaxWidth="220"
                                             Margin="5,2"
@@ -306,14 +306,14 @@
                                             Content="Story {OLD WAY}"
                                             FontFamily="{StaticResource VazirFont}"
                                             FontSize="{StaticResource DefaultFontSize}"
-                                            Foreground="#FF07B8FB">
+                                            Foreground="{StaticResource SystemControlHyperlinkTextBrush}">
                                             <interactivity:Interaction.Behaviors>
                                                 <behaviors:PointersEvent />
                                             </interactivity:Interaction.Behaviors>
                                         </Button>
                                         <Rectangle
                                             Grid.Row="5"
-                                            Height="1.2"
+                                            Height="1"
                                             MinWidth="200"
                                             MaxWidth="220"
                                             Margin="5,2"
@@ -331,7 +331,7 @@
                                             Content="Post {OLD WAY}"
                                             FontFamily="{StaticResource VazirFont}"
                                             FontSize="{StaticResource DefaultFontSize}"
-                                            Foreground="#FF07B8FB">
+                                            Foreground="{StaticResource SystemControlHyperlinkTextBrush}">
                                             <interactivity:Interaction.Behaviors>
                                                 <behaviors:PointersEvent />
                                             </interactivity:Interaction.Behaviors>
@@ -744,7 +744,10 @@
             AnimationDuration="00:00:00.2000000"
             HorizontalOffset="0"
             ShowDismissButton="True"
-            VerticalOffset="100" />
+            VerticalOffset="100"
+            Foreground="{StaticResource DefaultInnerForegroundColor}"
+            Background="{StaticResource DefaultItemBackgroundColor}"
+            BorderThickness="0"/>
         <!--  StackMode="Replace"  -->
 
         <VisualStateManager.VisualStateGroups>
