@@ -120,6 +120,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\Minista\Keys.cs">
+      <Link>Keys.cs</Link>
+    </Compile>
     <Compile Include="ApplicationSettingsHelper.cs" />
     <Compile Include="CryptoHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -130,7 +133,7 @@
       <Version>1.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.11</Version>
+      <Version>6.2.9</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>

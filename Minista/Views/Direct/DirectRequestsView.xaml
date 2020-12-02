@@ -31,7 +31,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Foreground="#FFA6A6A6"
+            <TextBlock Foreground="{StaticResource DefaultInnerForegroundColor}"
                        FontFamily="{StaticResource VazirFont}"
                        FontSize="{StaticResource DefaultFontSize}"
                        TextWrapping="Wrap"
@@ -42,6 +42,7 @@
             <ToggleButton x:Name="SelectionToggleButton"
                           Style="{StaticResource CenterHeaderToggleButtonWithoutIconStyle}"
                           Background="Transparent"
+                          Foreground="{StaticResource DefaultInnerForegroundColor}"
                           Height="48"
                           Width="48"
                           Tag="數"
@@ -53,6 +54,7 @@
             <ToggleButton x:Name="ExitSelectionToggleButton"
                           Style="{StaticResource CenterHeaderToggleButtonWithoutIconStyle}"
                           Background="Transparent"
+                          Foreground="{StaticResource DefaultInnerForegroundColor}"
                           Height="48"
                           Width="48"
                           Tag=""
@@ -63,15 +65,15 @@
                           Visibility="Collapsed"
                           Click="ExitSelectionToggleButtonClick"/>
 
-            <Rectangle Fill="#FF363636"
-                               Height="1.5"
+            <Rectangle Fill="{StaticResource SeperatorColor}"
+                               Height="1"
                                Grid.Row="1"
                                Grid.ColumnSpan="3"
                                Margin="15 2.5"
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Stretch" />
         </Grid>
-        <TextBlock Foreground="#FFA6A6A6"
+        <TextBlock Foreground="{StaticResource DefaultForegroundColor}"
                    Grid.Row="1"
                    FontFamily="{StaticResource VazirFont}"
                    FontSize="{StaticResource TinyFontSize}"
@@ -127,8 +129,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Rectangle Fill="#FF363636"
-                       Height="1.5"
+            <Rectangle Fill="{StaticResource SeperatorColor}"
+                       Height="1"
                        Margin="15 2.5"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch" />
@@ -145,7 +147,7 @@
                               FontFamily="{StaticResource VazirFont}"
                               Margin="5 0"
                               Click="DeleteAllRequestsToggleButtonClick"
-                              Foreground="#FFFF6C6C" />
+                              Foreground="{StaticResource DirectBlockAllForegroundColor}" />
                 <Grid x:Name="SingleGrid" Visibility="Collapsed">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -164,11 +166,11 @@
                                   FontSize="{StaticResource DefaultFontSize}"
                                   FontFamily="{StaticResource VazirFont}"
                                   Margin="5 0"
-                                  Foreground="#FFFF2727"
+                                  Foreground="{StaticResource DirectBlockPeopleForegroundColor}"
                                   Click="BlockSingleToggleButtonClick" />
 
-                    <Rectangle Fill="#FF363636"
-                               Width="1.5"
+                    <Rectangle Fill="{StaticResource SeperatorColor}"
+                               Width="1"
                                Grid.Column="1"
                                Margin="3 8"
                                HorizontalAlignment="Stretch"
@@ -184,9 +186,9 @@
                                   FontFamily="{StaticResource VazirFont}"
                                   Margin="5 0"
                                   Click="DeleteSingleToggleButtonClick"
-                                  Foreground="#FFFF6C6C" />
-                    <Rectangle Fill="#FF363636"
-                               Width="1.5"
+                                  Foreground="{StaticResource DirectBlockAllForegroundColor}" />
+                    <Rectangle Fill="{StaticResource SeperatorColor}"
+                               Width="1"
                                Grid.Column="3"
                                Margin="3 8"
                                HorizontalAlignment="Stretch"
@@ -221,10 +223,10 @@
                                   FontFamily="{StaticResource VazirFont}"
                                   Margin="5 0"
                                   Click="DeleteMultipleToggleButtonClick"
-                                  Foreground="#FFFF6C6C" />
+                                  Foreground="{StaticResource DirectBlockAllForegroundColor}" />
 
-                    <Rectangle Fill="#FF363636"
-                               Width="1.5"
+                    <Rectangle Fill="{StaticResource SeperatorColor}"
+                               Width="1"
                                Grid.Column="1"
                                Margin="3 8"
                                HorizontalAlignment="Stretch"

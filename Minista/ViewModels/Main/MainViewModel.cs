@@ -60,7 +60,7 @@ namespace Minista.ViewModels.Main
                 }
                 catch { }
             }
-            MainView.Current?.MainViewInboxUc?.InboxVM?.RunLoadMore(refresh);
+            //MainView.Current?.MainViewInboxUc?.InboxVM?.RunLoadMore(refresh);
             ActivitiesViewModel.Instance?.RunLoadMore(refresh);
         }
 

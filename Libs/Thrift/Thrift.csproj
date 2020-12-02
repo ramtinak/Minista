@@ -80,6 +80,9 @@
   <ItemGroup>
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.9" />
+  </ItemGroup>
 
   <!--<ItemGroup>
     <PackageReference Update="NETStandard.Library" Version="2.0.0" />

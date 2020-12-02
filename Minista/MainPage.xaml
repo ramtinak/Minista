@@ -716,9 +716,6 @@
 
 
         </Grid>
-
-        <Button VerticalAlignment="Center" Content="Open" Click="Button_Click" Visibility="Collapsed"
-                />
         <ucMain:ActivityNotifyUc
             x:Name="ActivityNotifyUc"
             MinWidth="52"

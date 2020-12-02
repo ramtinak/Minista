@@ -49,6 +49,11 @@ namespace Minista.Converters
                     }
                 }
             }
+            else if(value is long l)
+            {
+                if(l != 0)
+                    return Helper.GetColorBrush("#DF959595");
+            }
             //if(value != null) return Helper.GetColorBrush("#DF959595");
             return color;
         }

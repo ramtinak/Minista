@@ -14,6 +14,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Composition;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -52,6 +53,19 @@ namespace Minista.Views.Main
             
         }
 
+        public static async void OnLogReceived(object sender, object e)
+        {
+            try
+            {
+                if (Current != null)
+
+                    await Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        Current.TXT.Text += e.ToString() + Environment.NewLine;
+                    });
+            }
+            catch { }
+        }
         private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
         {
             e.Size.Width.PrintDebug();
@@ -527,7 +541,7 @@ namespace Minista.Views.Main
                             {
                                 var index = MainVM.Stories.IndexOf(reel);
                                 MainVM.Stories[index].Seen = seen;
-                                    if (reel.Seen == reel.LatestReelMedia)
+                                    if (reel.Seen == reel.LatestReelMedia || reel.LatestReelMedia == seen)
                                         reel.IsSeen = true;
                                 //if (reel.Seen > 1 && reel.Items.LastOrDefault()?.TakenAt.Year > 2009)
                                 //    if ((int)reel.Seen == (int)reel.Items.LastOrDefault()?.TakenAt.ToUnixTime())

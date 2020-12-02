@@ -46,7 +46,7 @@ namespace MinistaHelper.Push
         public bool DontTransferSocket { get; set; } = false;
         public event EventHandler<object> FbnsTokenChanged;
         public event EventHandler<PushReceivedEventArgs> MessageReceived;
-        public event EventHandler<InstaBroadcastEventArgs> BroadcastChanged;
+        //public event EventHandler<InstaBroadcastEventArgs> BroadcastChanged;
         public event EventHandler<object> LogReceived; 
         public FbnsConnectionData ConnectionData { get; private set; } = new FbnsConnectionData();
         public StreamSocket Socket { get; private set; }
@@ -54,12 +54,17 @@ namespace MinistaHelper.Push
         private const string HOST_NAME = "mqtt-mini.facebook.com"; 
         private const string BACKGROUND_ACTIVITY_ENTRY_NAME_POINT = "MinistaBH.SocketActivityTask";
         private const string BACKGROUND_ACTIVITY_ENTRY_POINT = "MinistaBH.SocketActivityTask";
-        private const string SOCKET_ID = "mqttfbns";
+        private const string SOCKET_ID = "ministamqttfbns";
 
         private IBackgroundTaskRegistration _socketActivityTask;
         //private IBackgroundTaskRegistration _pushNotifyTask;
 
-        public const int KEEP_ALIVE = 900;    // seconds
+        bool OnlyOnce = false;
+        int RetryConnection = 0;
+        bool IsRetrying = false;
+        private const int MAX_RETRY_COUNT = 5;
+        private int RetryConnectionCountInForeground = 0;
+        private const int KEEP_ALIVE = 900;    // seconds
         private const int TIMEOUT = 5;
         private bool _waitingForPubAck;
         private CancellationTokenSource _runningTokenSource;
@@ -68,27 +73,21 @@ namespace MinistaHelper.Push
         private readonly IInstaApi _instaApi;
         private readonly List<IInstaApi> ApiList;
         public bool IsRunningFromBackground { get; set; } = false;
-        public PushClient(List<IInstaApi> apis, IInstaApi api/*, bool tryLoadData = true*/)
+        public PushClient(List<IInstaApi> apis, IInstaApi api)
         {
             _runningTokenSource = new CancellationTokenSource();
-
             ApiList = apis;
             _instaApi = api ?? throw new ArgumentException("Api can't be null", nameof(api));
- 
         }
         public void ValidateData()
         {
             ConnectionData = _instaApi.ConnectionData ?? new FbnsConnectionData();
-            // If token is older than 24 hours then discard it
             var unix = DateTime.UtcNow.ToUnixTime();
             if (ConnectionData.FbnsTokenUpdatedAt > 0 && (unix.FromUnixTimeSeconds() - ConnectionData.FbnsTokenUpdatedAt.FromUnixTimeSeconds()).TotalHours > 24)
             {
-                // token expired, so we need to a new token.
                 ConnectionData.FbnsToken = "";
                 ConnectionData.FbnsTokenUpdatedAt = 0;
             }
-
-            // Build user agent for first time setup
             if (string.IsNullOrEmpty(ConnectionData.UserAgent))
                 ConnectionData.UserAgent = FbnsUserAgent.BuildFbUserAgent(_instaApi);
         }
@@ -238,7 +237,6 @@ namespace MinistaHelper.Push
                 await StartFresh().ConfigureAwait(false);
             }
         }
-
         public async Task StartWithExistingSocket(StreamSocket socket)
         {
             try
@@ -267,16 +265,12 @@ namespace MinistaHelper.Push
                 Shutdown();
             }
         }
-        bool OnlyOnce = false;
-        int RetryConnection = 0;
         public async Task StartFresh() => await StartFresh(false);
         public async Task StartFresh(bool withBG)
         {
             try
             {
                 Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Starting fresh");
-                //Shutdown();
-
                 var connectPacket = new FbnsConnectPacket
                 {
                     Payload = await PayloadProcessor.BuildPayload(ConnectionData)
@@ -319,10 +313,7 @@ namespace MinistaHelper.Push
                     }
                 }
                 _runningTokenSource = new CancellationTokenSource();
-                //await Socket.ConnectAsync(new HostName("69.171.250.34"), "443", SocketProtectionLevel.Ssl);
                 await Socket.ConnectAsync(new HostName(HOST_NAME), "443", SocketProtectionLevel.Tls12);
-                //var asyncTask =  Socket.ConnectAsync(new HostName(HOST_NAME), "443", SocketProtectionLevel.Tls10);
-                //await asyncTask;
                 _inboundReader = new DataReader(Socket.InputStream);
                 _outboundWriter = new DataWriter(Socket.OutputStream);
                 _inboundReader.ByteOrder = ByteOrder.BigEndian;
@@ -345,7 +336,6 @@ namespace MinistaHelper.Push
             }
             
         }
-
         public void Shutdown()
         {
             _runningTokenSource?.Cancel();
@@ -354,8 +344,25 @@ namespace MinistaHelper.Push
             _outboundWriter?.Dispose();
             _outboundWriter = null;
             Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Stopped pinging push server");
+            Retry();
         }
-
+        private async void Retry()
+        {
+            if (IsRunningFromBackground) return;
+            if(RetryConnectionCountInForeground > MAX_RETRY_COUNT)
+            {
+                IsRetrying = true;
+                try
+                {
+                    Socket.Dispose();
+                    Socket = null;
+                }
+                catch { }
+                RetryConnectionCountInForeground++;
+                await StartFresh();
+                IsRetrying = false;
+            }
+        }
         private async void StartPollingLoop()
         {
             int tried = 0;
@@ -418,7 +425,6 @@ namespace MinistaHelper.Push
             RegReq = 79,    // "/fbns_reg_req"
             RegResp = 80    // "/fbns_reg_resp"
         }
-
         private async Task OnPacketReceived(Packet msg)
         {
             try
@@ -511,32 +517,6 @@ namespace MinistaHelper.Push
             }
         }
 
-        //private async Task RegisterClient(string token)
-        //{
-        //    if (string.IsNullOrEmpty(token)) throw new ArgumentNullException(nameof(token));
-        //    if (ConnectionData.FbnsToken == token)
-        //    {
-        //        ConnectionData.FbnsToken = token;
-        //        return;
-        //    }
-
-        //    var uri = new Uri("https://i.instagram.com/api/v1/push/register/");
-        //    var fields = new Dictionary<string, string>
-        //    {
-        //        {"device_type", "android_mqtt"},
-        //        {"is_main_push_channel", "true"},
-        //        {"phone_id", _device.PhoneId.ToString()},
-        //        {"device_sub_type", "2" },
-        //        {"device_token", token},
-        //        {"_csrftoken", _user.CsrfToken },
-        //        {"guid", _device.Uuid.ToString() },
-        //        {"_uuid", _device.Uuid.ToString() },
-        //        {"users", _user.LoggedInUser.Pk.ToString() }
-        //    };
-        //    var result = await _instaApi.PostAsync(uri, new HttpFormUrlEncodedContent(fields));
-
-        //    ConnectionData.FbnsToken = token;
-        //}
         internal async Task RegisterClient(string token)
         {
             if (string.IsNullOrEmpty(token)) throw new ArgumentNullException(nameof(token));
@@ -564,9 +544,9 @@ namespace MinistaHelper.Push
                 {"is_main_push_channel", "true"},
                 {"phone_id", deviceInfo.PhoneGuid.ToString()},
                 {"device_token", token},
-                {"_csrftoken", user.CsrfToken },
-                {"guid", deviceInfo.PhoneGuid.ToString() },
-                {"_uuid", deviceInfo.DeviceGuid.ToString() },
+                {"_csrftoken", user.CsrfToken},
+                {"guid", deviceInfo.PhoneGuid.ToString()},
+                {"_uuid", deviceInfo.DeviceGuid.ToString()},
                 {"users", string.Join(",", users)/*user.LoggedInUser.Pk.ToString()*/ }
             };
             Debug.WriteLine(JsonConvert.SerializeObject(fields, Formatting.Indented));

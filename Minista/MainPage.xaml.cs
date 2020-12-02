@@ -35,6 +35,8 @@ using Thrift.Collections;
 using Windows.UI.Notifications.Management;
 using InstagramApiSharp.API.RealTime;
 using Minista.Themes;
+using MinistaHelper.Push;
+using Minista.Views.Main;
 
 namespace Minista
 {
@@ -53,7 +55,6 @@ namespace Minista
             Current = this;
             Loaded += MainPageLoaded;
             Window.Current.CoreWindow.KeyDown += OnKeyboards;
-            Window.Current.CoreWindow.SizeChanged += CoreWindow_SizeChanged;
             //KeyDown += MainPageKeyDown;
             CreateConfig();
             try
@@ -77,8 +78,6 @@ namespace Minista
             }
             catch { }
         }
-
-
 
         private void OnDragOver(object sender, DragEventArgs e)
         {
@@ -120,24 +119,7 @@ namespace Minista
                 catch { }
             }
         }
-
-        private void CoreWindow_SizeChanged(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.WindowSizeChangedEventArgs args)
-        {
-            //(args.Size.Width + "x" + args.Size.Height).PrintDebug();
-        }
-
-        //private void MainPageKeyDown(object sender, KeyRoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        ("[OriginalKey]\tKey Pressed: " + e.OriginalKey + "\t\t" + (int)e.OriginalKey).PrintDebug();
-        //        "".PrintDebug();
-        //        "".PrintDebug();
-        //    }
-        //    catch { }
-        //}
-
-        private async void OnKeyboards(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
+        private async void OnKeyboards(CoreWindow sender, KeyEventArgs args)
         {
             try
             {
@@ -149,8 +131,6 @@ namespace Minista
 
                 var ctrl = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control);
                 var shift = Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift);
-                //var alt = Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated;
-                //("[VirtualKey]\tKey Pressed: " + args.VirtualKey + "\t\t" + (int)args.VirtualKey).PrintDebug();
                 switch (args.VirtualKey)
                 {
                     case VirtualKey.Escape:
@@ -270,14 +250,14 @@ namespace Minista
             {
                 if (flag)
                 {
-                    if (Views.Main.MainView.Current != null)
+                    if (MainView.Current != null)
                     {
-                        Views.Main.MainView.Current.ResetPageCache();
+                        MainView.Current.ResetPageCache();
                     }
                 }
             }
             catch { }
-            NavigationService.Navigate(typeof(Views.Main.MainView));
+            NavigationService.Navigate(typeof(MainView));
             try
             {
                 if (flag)
@@ -313,29 +293,29 @@ namespace Minista
                     {
                         Views.Direct.DirectRequestsView.Current.ResetPageCache();
                     }
-                    if (Views.Main.ActivitiesView.Current != null)
+                    if (ActivitiesView.Current != null)
                     {
-                        Views.Main.ActivitiesView.Current.ResetPageCache();
-                        //Views.Main.ActivitiesView.Current.NavigationCacheMode = NavigationCacheMode.Disabled;
-                        //Views.Main.ActivitiesView.Current.NavigationCacheMode = NavigationCacheMode.Enabled;
+                        ActivitiesView.Current.ResetPageCache();
+                        //ActivitiesView.Current.NavigationCacheMode = NavigationCacheMode.Disabled;
+                        //ActivitiesView.Current.NavigationCacheMode = NavigationCacheMode.Enabled;
                     }
-                    if (Views.Main.ExploreView.Current != null)
+                    if (ExploreView.Current != null)
                     {
-                        Views.Main.ExploreView.Current.ResetPageCache();
-                        //Views.Main.ExploreView.Current.NavigationCacheMode = NavigationCacheMode.Disabled;
-                        //Views.Main.ExploreView.Current.NavigationCacheMode = NavigationCacheMode.Enabled;
+                        ExploreView.Current.ResetPageCache();
+                        //ExploreView.Current.NavigationCacheMode = NavigationCacheMode.Disabled;
+                        //ExploreView.Current.NavigationCacheMode = NavigationCacheMode.Enabled;
                     }
-                    if (Views.Main.ExploreView.Current != null)
+                    if (ExploreView.Current != null)
                     {
-                        Views.Main.ExploreView.Current.ResetPageCache();
+                        ExploreView.Current.ResetPageCache();
                     }
-                    if (Views.Main.ExploreClusterView.Current != null)
+                    if (ExploreClusterView.Current != null)
                     {
-                        Views.Main.ExploreClusterView.Current.ResetPageCache();
+                        ExploreClusterView.Current.ResetPageCache();
                     }
-                    if (Views.Main.LikersView.Current != null)
+                    if (LikersView.Current != null)
                     {
-                        Views.Main.LikersView.Current.ResetPageCache();
+                        LikersView.Current.ResetPageCache();
                     }
                     if (Views.Searches.SearchView.Current != null)
                     {
@@ -368,8 +348,8 @@ namespace Minista
                     if (Views.Infos.FollowRequestsView.Current != null)
                     {
                         Views.Infos.FollowRequestsView.Current.ResetPageCache();
-                        //Views.Main.ActivitiesView.Current.NavigationCacheMode = NavigationCacheMode.Disabled;
-                        //Views.Main.ActivitiesView.Current.NavigationCacheMode = NavigationCacheMode.Enabled;
+                        //ActivitiesView.Current.NavigationCacheMode = NavigationCacheMode.Disabled;
+                        //ActivitiesView.Current.NavigationCacheMode = NavigationCacheMode.Enabled;
                     }
                     if (Views.Infos.FollowView.Current != null)
                     {
@@ -430,15 +410,9 @@ namespace Minista
         private async void MainPageLoaded(object sender, RoutedEventArgs e)
         {
             CreateConfig();
-            NavigationService.SetFrame(MyFrame);
-
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
-            //AppTitleBar.Height = coreTitleBar.Height;
             coreTitleBar.LayoutMetricsChanged += CoreTitleBarLayoutMetricsChanged;
-            // Set XAML element as a draggable region.
-            //AppTitleBar.Height = coreTitleBar.Height;
-
             UpdateTitleBarLayout(coreTitleBar);
             Window.Current.SetTitleBar(AppTitleBarORG);
             if (InstaApi == null || InstaApi != null && !InstaApi.IsUserAuthenticated)
@@ -497,8 +471,6 @@ namespace Minista
                 SystemOverlayLeftInset = coreTitleBar.SystemOverlayLeftInset;
                 SystemOverlayRightInset = coreTitleBar.SystemOverlayRightInset;
                 SetTitleBarLayout();
-                // Update title bar control size as needed to account for system size changes.
-                //AppTitleBar.Height = coreTitleBar.Height;
             }
             catch { }
         }
@@ -508,8 +480,6 @@ namespace Minista
             {
                 if (SettingsHelper.Settings.HeaderPosition == Classes.HeaderPosition.Top)
                 {
-                    // Get the size of the caption controls area and back button 
-                    // (returned in logical pixels), and move your content around as necessary.
                     LeftPaddingColumn.Width = new GridLength(SystemOverlayLeftInset);
                     RightPaddingColumn.Width = new GridLength(SystemOverlayRightInset);
                 }
@@ -532,15 +502,6 @@ namespace Minista
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-            //try
-            //{
-            //    Application.Current.Resources["DefaultBackgroundColor"] = Helper.GetColorBrush("#18227c");
-            //}
-            //catch (Exception ex)
-            //{
-            //}
-            ("Nav mode: " + e.NavigationMode).PrintDebug();
             try
             {
                 if (DeviceUtil.IsXbox)
@@ -553,23 +514,21 @@ namespace Minista
             ScreenOnRequest = new Windows.System.Display.DisplayRequest();
             if (!DeviceHelper.IsThisMinista())
             {
-                await new MessageDialog("Oops, It seems you changed my app package to crack it.\r\n" +
-                    "Well done, now use my app, if you can:d\r\n" +
-                    "Pay the price dude, don't be cheap:d\r\n" +
-                    "Bye bye").ShowAsync();
-                try
-                {
-                    CoreApplication.Exit();
-                }
-                catch
-                {
-                    try
-                    {
-                        Application.Current.Exit();
-                    }
-                    catch { }
-                }
-                return;
+                await new MessageDialog("Oops, It seems you changed my app package to crack it.\r\n\r\n" +
+                    "You can work with Minista!!!").ShowAsync();
+                //try
+                //{
+                //    CoreApplication.Exit();
+                //}
+                //catch
+                //{
+                //    try
+                //    {
+                //        Application.Current.Exit();
+                //    }
+                //    catch { }
+                //}
+                //return;
             }
             try
             {
@@ -605,19 +564,9 @@ namespace Minista
             try
             {
                 InAppNotify.Show(text, duration);
-
-                //// Show notification using a DataTemplate
-                //object inAppNotificationWithButtonsTemplate;
-                //bool isTemplatePresent = Resources.TryGetValue("InAppNotificationWithButtonsTemplate", out inAppNotificationWithButtonsTemplate);
-
-                //if (isTemplatePresent && inAppNotificationWithButtonsTemplate is DataTemplate)
-                //{
-                //    InAppNotify.Show(inAppNotificationWithButtonsTemplate as DataTemplate);
-                //}
             }
             catch { }
         }
-
         public void ShowLoading(string text = null)
         {
             if (text == null)
@@ -626,30 +575,13 @@ namespace Minista
             LoadingPb.IsActive = true;
             LoadingGrid.Visibility = Visibility.Visible;
         }
-
         public void HideLoading()
         {
             LoadingPb.IsActive = false;
             LoadingGrid.Visibility = Visibility.Collapsed;
         }
-
-        public void SetUserAndPicture()
-        {
-            if (InstaApi == null) return;
-            //if (InstaApi.IsUserAuthenticated)
-            //{
-            //    var user = InstaApi.GetLoggedUser().LoggedInUser;
-            //    UserPicture.Fill = user.ProfilePicture.GetImageBrush();
-            //    UserNameText.Text = user.UserName;
-            //    SplitView.CompactPaneLength = 60;
-            //    SplitView.DisplayMode = SplitViewDisplayMode.CompactInline;
-            //    //SplitView.IsPaneOpen = true;
-            //}
-        }
-
         private void SearchButtonClick(object sender, RoutedEventArgs e)
         {
-            //SearchButton.Visibility = Visibility.Collapsed;
             NavigationService.Navigate(typeof(Views.Searches.SearchView));
         }
          
@@ -657,39 +589,20 @@ namespace Minista
         {
             NavigationService.Navigate(typeof(Views.Direct.InboxView));
         }
-        //MinistaHelper.Push.PushClient PushClient;
         private void ActivityButtonClick(object sender, RoutedEventArgs e)
         {
-            //PushClient = new MinistaHelper.Push.PushClient(InstaApi, false);
-            //PushClient.MessageReceived += PushClient_MessageReceived;
-
-            //PushClient.Start();
-            NavigationService.Navigate(typeof(Views.Main.ActivitiesView));
-        }
-
-        private void PushClient_MessageReceived(object sender,InstagramApiSharp.API. PushReceivedEventArgs e)
-        {
-            PushHelper.HandleNotify(e.NotificationContent, InstaApiList);
+            NavigationService.Navigate(typeof(ActivitiesView));
         }
 
         private  void ProfileButtonClick(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(typeof(Views.Infos.ProfileDetailsView));
         }
-        //private void PushClientMessageReceived(object sender, InstagramApiSharp.API.Push.MessageReceivedEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine(e?.Json);
-        //    Helpers.PushHelper.HandleNotify(e.NotificationContent, Helper.InstaApiList);
-        //    //Helpers.NotificationHelper.ShowToast(e.NotificationContent.Message, e.NotificationContent.OptionalAvatarUrl, e.NotificationContent.Title ?? "");
-        //}
 
         private void ExploreButtonClick(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(typeof(Views.Main.ExploreView));
+            NavigationService.Navigate(typeof(ExploreView));
         }
-
-
-
 
         public void SetDirectMessageCount(InstaDirectInboxContainer inbox)
         {
@@ -755,7 +668,7 @@ namespace Minista
 
         private void HomeButtonClick(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(typeof(Views.Main.MainView));
+            NavigationService.Navigate(typeof(MainView));
         }
 
         private void BackButtonClick(object sender, RoutedEventArgs e)
@@ -987,6 +900,15 @@ namespace Minista
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (InstaApi.PushClient is PushClient push)
+            {
+                push.LogReceived-= MainView.OnLogReceived;
+                push.LogReceived += MainView.OnLogReceived;
+                push.OpenNow();
+
+                push.Start();
+            }
+            return;
             var ab = new MinistaWhiteTheme();
 
             await Task.Delay(1500);
@@ -1008,7 +930,7 @@ namespace Minista
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(typeof(Views.Main.MainView));
+            NavigationService.Navigate(typeof(MainView));
         }
 
         //private void SettingsButtonClick(object sender, RoutedEventArgs e)

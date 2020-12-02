@@ -37,7 +37,7 @@ using MinistaHelper;
 
 namespace InstagramApiSharp.API.RealTime
 {
-    public partial class RealtimeClient
+    public sealed partial class RealtimeClient
     {
         private const string DEFAULT_HOST = "edge-mqtt.facebook.com";
         public RealtimeResponseList Responses { get; private set; } = new RealtimeResponseList();
@@ -166,7 +166,7 @@ namespace InstagramApiSharp.API.RealTime
             Socket = new StreamSocket();
             Socket.Control.KeepAlive = true;
             Socket.Control.NoDelay = true;
-            Socket.Control.OutboundBufferSizeInBytes = 10 * 1024 * 1024;
+            Socket.Control.OutboundBufferSizeInBytes = 20 * 1024 * 1024;
             try
             {
                 await Socket.ConnectAsync(new HostName(DEFAULT_HOST), "443", SocketProtectionLevel.Tls12);

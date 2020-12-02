@@ -9,13 +9,13 @@ namespace Minista.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             //#FF1D1C1C   #FF252525
-            if (value == null) return "#FF1D1C1C".GetColorBrush();
+            if (value == null) return "DirectItemPeopleBackgroundColor".GetColorFromResource();
             if (value is InstaDirectInboxItem data && data != null)
             {
                 if(data.UserId == Helper.CurrentUser.Pk)
-                    return "#FF373737".GetColorBrush();
+                    return "DirectItemSelfBackgroundColor".GetColorFromResource();
             }
-            return "#FF1D1C1C".GetColorBrush();
+            return "DirectItemPeopleBackgroundColor".GetColorFromResource();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

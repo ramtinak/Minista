@@ -2,6 +2,7 @@
 using Microsoft.Services.Store.Engagement;
 using Minista.Helpers;
 using MinistaHelper.Push;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -89,8 +90,16 @@ namespace Minista
             else if (e.Kind == ActivationKind.ToastNotification)
             {
                 e.GetType().PrintDebug();
+
                 var args = e as ToastNotificationActivatedEventArgs;
                 args.PrintDebug();
+                Debug.WriteLine("--------------------+OnActivated+------------------");
+                Debug.WriteLine(args.Argument);
+                Debug.WriteLine("UserInput: ");
+                if (args?.UserInput?.Count > 0)
+                    foreach (var val in args.UserInput)
+                        Debug.WriteLine(val.Key + " : " + JsonConvert.SerializeObject(val.Value));
+                Debug.WriteLine("--------------------+------------------");
                 Frame rootFrame = CreateRootFrame();
                 if (rootFrame.Content == null)
                 //if (!(Window.Current.Content is Frame rootFrame))
@@ -387,11 +396,22 @@ namespace Minista
         {
         }
 
-        protected override /*async*/ void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+        protected override /*async*/ void OnBackgroundActivated(BackgroundActivatedEventArgs e)
         {
-            base.OnBackgroundActivated(args);
-            _ = args.TaskInstance.GetDeferral();
-            ("ONBGAC:     " + args.TaskInstance.TriggerDetails.GetType()).PrintDebug();
+            base.OnBackgroundActivated(e);
+            ("ONBGAC:     " + e.TaskInstance.TriggerDetails.GetType()).PrintDebug();
+
+            var args = e.TaskInstance.TriggerDetails as ToastNotificationActionTriggerDetail;
+
+            args.PrintDebug();
+            Debug.WriteLine("--------------------+OnActivated+------------------");
+            Debug.WriteLine(args.Argument);
+            Debug.WriteLine("UserInput: ");
+            if (args?.UserInput?.Count > 0)
+                foreach (var val in args.UserInput)
+                    Debug.WriteLine(val.Key + " : " + JsonConvert.SerializeObject(val.Value));
+            Debug.WriteLine("--------------------+------------------");
+
         }   
     }
 }

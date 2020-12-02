@@ -29,7 +29,7 @@ namespace Minista.Helpers
                     GoLike(push, apiList.GetUserName(push.IntendedRecipientUserId));
                     return;
                 default:
-                    Helpers.NotificationHelper.ShowToast(push.Message, push.OptionalAvatarUrl, push.Title ?? "");
+                    NotificationHelper.ShowToast(push.Message, push.OptionalAvatarUrl, push.Title ?? "");
                     return;
             }
         }

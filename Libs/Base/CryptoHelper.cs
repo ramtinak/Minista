@@ -10,10 +10,10 @@ using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 
 
-public static class CryptoHelper
+public static partial class CryptoHelper
 {
-    const string Key = "KEY";
-    public const string Key2 = "SECKEY";
+    const string Key = Key0/*"KEY"*/;
+    public const string Key2 = Key1 /*"SECKEY"*/;
     public static string Encrypt(string plainString, string key = Key)
     {
         try

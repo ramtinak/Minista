@@ -438,6 +438,9 @@ static class Helper
         }
         catch { }
     }
+    public static SolidColorBrush GetColorFromResource(this string resourceKey) => Application.Current.Resources[resourceKey] as SolidColorBrush;
+    public static void SetColorToResource(this string resourceKey, Color color) => (Application.Current.Resources[resourceKey] as SolidColorBrush).Color = color;
+
     public static void RemoveItemRequested(string mediaId)
     {
         try

@@ -73,6 +73,16 @@ namespace Minista.Helpers
                 (Application.Current.Resources["SystemControlHighlightListAccentMediumBrush"] as SolidColorBrush).Color = theme.UserSuggestionsCardBackgroundColor.GetColorFromHex();
                 (Application.Current.Resources["SystemControlHighlightListAccentHighBrush"] as SolidColorBrush).Color = theme.UserSuggestionsCardBackgroundColor.GetColorFromHex();
 
+
+                // DM
+                (Application.Current.Resources["DirectItemBorderBrushColor"] as SolidColorBrush).Color = theme.DirectItemBorderBrushColor.GetColorFromHex();
+                (Application.Current.Resources["DirectItemTextForegroundColor"] as SolidColorBrush).Color = theme.DirectItemTextForegroundColor.GetColorFromHex();
+                (Application.Current.Resources["DirectItemTimeForegroundColor"] as SolidColorBrush).Color = theme.DirectItemTimeForegroundColor.GetColorFromHex();
+                (Application.Current.Resources["DirectItemSelfBackgroundColor"] as SolidColorBrush).Color = theme.DirectItemSelfBackgroundColor.GetColorFromHex();
+                (Application.Current.Resources["DirectItemPeopleBackgroundColor"] as SolidColorBrush).Color = theme.DirectItemPeopleBackgroundColor.GetColorFromHex();
+
+
+
                 Helper.ShowStatusBar(backgroundColor, foregroundColor);
                 Helper.ChangeTileBarTheme(foregroundColor, innerForegroundColor);
 

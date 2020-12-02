@@ -571,9 +571,11 @@
                     </Grid.RowDefinitions>
                     <Grid VerticalAlignment="Center"
                           HorizontalAlignment="Center">
+                        <!--Stroke="{Binding Story,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource SeenColorConverter}}"-->
+
                         <Ellipse Height="70"
                                  Width="70"
-                                 Stroke="{Binding Story,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource SeenColorConverter}}"
+                                 Stroke="{Binding Story.StrokeColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  StrokeThickness="2">
                             <Ellipse.Fill>
                                 <ImageBrush>
@@ -990,6 +992,11 @@
                 Click="GoUpButtonClick"
                 Style="{StaticResource GoUpButtonStyle}"/>
 
+        <ScrollViewer Height="250" VerticalAlignment="Bottom">
+            <TextBlock x:Name="TXT"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                   TextWrapping="Wrap"/>
+
+        </ScrollViewer>
         <!--<VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="sdc">
                 <VisualState x:Name="sd">

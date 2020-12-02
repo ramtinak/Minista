@@ -25,24 +25,16 @@ namespace NotificationHandler
         internal static DebugLogger DebugLogger;
         public static IInstaApi BuildApi(string username = null, string password = null)
         {
-            UserSessionData sessionData;
-            if (string.IsNullOrEmpty(username))
-                sessionData = UserSessionData.ForUsername("FAKEUSER").WithPassword("FAKEPASS");
-            else
-                sessionData = new UserSessionData { UserName = username, Password = password };
-
-            DebugLogger = new DebugLogger(LogLevel.All);
+            UserSessionData sessionData= UserSessionData.ForUsername("FAKEUSER").WithPassword("FAKEPASS");
             var api = InstaApiBuilder.CreateBuilder()
                       .SetUser(sessionData)
 
 #if DEBUG
-                  .UseLogger(DebugLogger)
+                  .UseLogger(new DebugLogger(LogLevel.All))
 #endif
 
                       .Build();
-            api.SetTimeout(TimeSpan.FromMinutes(2));
-
-            //InstaApi = api;
+            api.SetTimeout(TimeSpan.FromMinutes(1));
             return api;
         }
 
@@ -63,7 +55,7 @@ namespace NotificationHandler
                                 var json = await FileIO.ReadTextAsync(item);
                                 if (!string.IsNullOrEmpty(json))
                                 {
-                                    var content = Decrypt(json);
+                                    var content = CryptoHelper.Decrypt(json);
                                     var api = BuildApi();
                                     await api.LoadStateDataFromStringAsync(content);
                                     InstaApiList.Add(api);
@@ -75,37 +67,6 @@ namespace NotificationHandler
                 }
             }
             catch { }
-        }
-        const string Abc = "x*kKG$js=VmnfxQ@VB=su+_j9G6_TsY=E_Bjx3";
-        static string Decrypt(string encryptedString, string key = null)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(key)) key = Abc;
-                var hashKey = GetMD5Hash(key);
-                IBuffer decryptBuffer = CryptographicBuffer.DecodeFromBase64String(encryptedString);
-                var AES = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesEcbPkcs7);
-                var symmetricKey = AES.CreateSymmetricKey(hashKey);
-                var decryptedBuffer = CryptographicEngine.Decrypt(symmetricKey, decryptBuffer, null);
-                string decryptedString = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, decryptedBuffer);
-                return decryptedString;
-            }
-            catch (Exception)
-            {
-                //ex.PrintException("DecryptException");
-                return "";
-            }
-        }
-        private static IBuffer GetMD5Hash(string key)
-        {
-            IBuffer bufferUTF8Msg = CryptographicBuffer.ConvertStringToBinary(key, BinaryStringEncoding.Utf8);
-            HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
-            IBuffer hashBuffer = hashAlgorithmProvider.HashData(bufferUTF8Msg);
-            if (hashBuffer.Length != hashAlgorithmProvider.HashLength)
-            {
-                throw new Exception("There was an error creating the hash");
-            }
-            return hashBuffer;
         }
     }
 }

@@ -42,13 +42,17 @@ namespace Minista
         public string TextBoxBackgroundColor { get; set; } = "#BF292828";
         public string LoadingForegroundColor { get; set; } = "#FF2C42FF";
 
-        //<SolidColorBrush x:Key="StoryReplyTextBackgroundColor">#7F282828</SolidColorBrush>
-        //<SolidColorBrush x:Key="StoryButtonBackoundColor">#7F282828</SolidColorBrush>
-        //<SolidColorBrush x:Key="StoryButtonForeroundColor">#FFFFFFFF</SolidColorBrush>
 
-
-        //<SolidColorBrush x:Key="UserSuggestionsCardBackgroundColor">#FF252525</SolidColorBrush>
-
+        //<SolidColorBrush x:Key="DirectItemBorderBrushColor">#FFA60019</SolidColorBrush>
+        //<SolidColorBrush x:Key="DirectItemTextForegroundColor">#FFFFFFFF</SolidColorBrush>
+        //<SolidColorBrush x:Key="DirectItemTimeForegroundColor">#FF858585</SolidColorBrush>
+        //<SolidColorBrush x:Key="DirectItemSelfBackgroundColor">#FF373737</SolidColorBrush>
+        //<SolidColorBrush x:Key="DirectItemPeopleBackgroundColor">#FF1D1C1C</SolidColorBrush>
+        public string DirectItemBorderBrushColor { get; set; } = "#FFA60019";
+        public string DirectItemTextForegroundColor { get; set; } = "#FFFFFFFF";
+        public string DirectItemTimeForegroundColor { get; set; } = "#FF858585";
+        public string DirectItemSelfBackgroundColor { get; set; } = "#FF373737";
+        public string DirectItemPeopleBackgroundColor { get; set; } = "#FF1D1C1C";
 
 
 

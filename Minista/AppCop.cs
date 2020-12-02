@@ -148,10 +148,21 @@ namespace Minista
                 Window.Current.Content.GetType().PrintDebug();
                 Window.Current.Activate();
                 if (isNull)
+                {
+                    if (e.Files?.Count > 0 && e.Files[0] is StorageFile file)
+                    {
+                        if (file.Path.Contains(".mi-theme"))
+                        {
+                            var json = await FileIO.ReadTextAsync(file);
+                            ThemeHelper.InitTheme(json);
+                            return;
+                        }
+                    }
                     await Task.Delay(6500);
+                }
                 try
                 {
-                    MainPage.Current?.HandleUriFile(e as FileActivatedEventArgs);
+                    MainPage.Current?.HandleUriFile(e);
                 }
                 catch { }
                 //if (Helper.InstaApi != null)

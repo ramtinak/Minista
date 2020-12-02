@@ -14,7 +14,7 @@ public static class ApplicationSettingsHelper
     }
     public static void SetChanges()
     {
-        SaveSettingsValue(ChangeKey, "MsKoskeshiBishNist");
+        SaveSettingsValue(ChangeKey, "Nist");
     }
 
     public static void RemoveSettingsValue(string key)

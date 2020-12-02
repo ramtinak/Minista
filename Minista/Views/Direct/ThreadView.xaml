@@ -261,7 +261,7 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="#FFCDCDCD"
+                            <TextBlock Foreground="{StaticResource DirectItemText2ForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="35"
                                        TextWrapping="Wrap"
@@ -275,7 +275,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -345,7 +345,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
+                        <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                               MinHeight="50"
                               BorderThickness="1"
                               MaxWidth="340"
@@ -358,7 +358,7 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource TinyFontSize}"
                                        TextWrapping="Wrap"
@@ -384,7 +384,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -491,7 +491,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
+                        <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                               MinHeight="50"
                               BorderThickness="1"
                               MaxWidth="360"
@@ -502,7 +502,7 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        TextWrapping="Wrap"
@@ -511,7 +511,7 @@
                                        Margin="15 2"
                                        DataContext="{Binding StoryShare.Title}"
                                        DataContextChanged="TextBlockDataContextChanged" />
-                            <TextBlock Foreground="#FFCDCDCD"
+                            <TextBlock Foreground="{StaticResource DirectItemText2ForegroundColor}"
                                        Grid.Row="1"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource TinyFontSize}"
@@ -524,7 +524,7 @@
                                        DataContextChanged="TextBlockDataContextChanged" />
                             <Grid Grid.Row="2"
                                   HorizontalAlignment="Right">
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -578,7 +578,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
+                        <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                               MinHeight="50"
                               MaxWidth="360"
                               BorderThickness="1"
@@ -589,7 +589,7 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="#FFCDCDCD"
+                            <TextBlock Foreground="{StaticResource DirectItemText2ForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource TinyFontSize}"
                                        TextWrapping="Wrap"
@@ -600,7 +600,7 @@
                                        DataContextChanged="TextBlockDataContextChanged" />
                             <Grid Grid.Row="1"
                                   HorizontalAlignment="Right">
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -653,14 +653,14 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
-                              Background="#FF1D1C1C"
+                        <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
+                              Background="{StaticResource DirectItemPeopleBackgroundColor}"
                               MinHeight="50"
                               BorderThickness="1"
                               MaxWidth="360"
                               CornerRadius="25"
                               Margin="5">
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        TextWrapping="Wrap"
@@ -699,7 +699,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
+                        <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                               MinHeight="50"
                               BorderThickness="1"
                               MaxWidth="360"
@@ -710,7 +710,7 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        TextWrapping="Wrap"
@@ -719,7 +719,7 @@
                                        Margin="15 2"
                                        DataContext="{Binding Placeholder.Title}"
                                        DataContextChanged="TextBlockDataContextChanged" />
-                            <TextBlock Foreground="#FFCDCDCD"
+                            <TextBlock Foreground="{StaticResource DirectItemText2ForegroundColor}"
                                        Grid.Row="1"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource TinyFontSize}"
@@ -731,7 +731,7 @@
                                        DataContextChanged="TextBlockDataContextChanged" />
                             <Grid Grid.Row="2"
                                   HorizontalAlignment="Right">
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -791,7 +791,7 @@
                         </Grid.ColumnDefinitions>
                         <!--Background="#FF373737"-->
 
-                        <Grid BorderBrush="#FF252525"
+                        <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                               Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                               MinHeight="60"
                               MinWidth="70"
@@ -803,7 +803,7 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        TextWrapping="Wrap"
@@ -818,7 +818,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -919,7 +919,7 @@
                         </Ellipse>
                     </Grid>
                     <Grid Grid.Column="1"
-                          BorderBrush="#FF252525"
+                          BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                           Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                           HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
                           MaxWidth="285"
@@ -985,7 +985,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Foreground="#FF858585"
+                            <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="10.5"
                                        TextWrapping="NoWrap"
@@ -1044,7 +1044,7 @@
                               Tapped="LikedUsersGridTapped" />
                         <!--<ListView x:Name="LVReactionUsers"
                                   SelectionMode="None"
-                                  Foreground="White"
+                                  Foreground="{StaticResource DirectItemTextForegroundColor}"
                                   Grid.Column="1"
                                   Margin="0"
                                   ScrollViewer.HorizontalScrollMode="Enabled"
@@ -1135,7 +1135,7 @@
                           Width="290"-->
                     <Grid Grid.Column="1"
                           MaxWidth="290"
-                          BorderBrush="#FF252525"
+                          BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                           Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                           HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
                           BorderThickness="1"
@@ -1157,8 +1157,8 @@
                                      Visibility="{Binding Media.Percentage, Converter={StaticResource DoubleToVisibilityConverter}}"
                                      VerticalAlignment="Stretch"
                                      HorizontalAlignment="Stretch"
-                                     Foreground="#B6292828"
-                                     Background="#4DFFFFFF">
+                                     Foreground="{StaticResource DirectUploadProgressForegroundColor}"
+                                     Background="{StaticResource DirectUploadProgressBackgroundColor}">
                             <ProgressBar.RenderTransform>
                                 <CompositeTransform Rotation="-90" />
                             </ProgressBar.RenderTransform>
@@ -1169,7 +1169,7 @@
                                       VerticalAlignment="Center"
                                       HorizontalAlignment="Center"
                                       Visibility="{Binding Media.Percentage, Converter={StaticResource DoubleToVisibilityConverter}}"
-                                      Foreground="#D8575757" />
+                                      Foreground="{StaticResource DirectUploadProgressRingForegroundColor}" />
 
                         <Grid Grid.Row="1"
                               HorizontalAlignment="Right">
@@ -1177,7 +1177,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Foreground="#FF858585"
+                            <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="10.5"
                                        TextWrapping="NoWrap"
@@ -1281,7 +1281,7 @@
                         </Ellipse>
                     </Grid>
                     <Grid Grid.Column="1"
-                          BorderBrush="#FF252525"
+                          BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                           Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                           Width="205.5"
                           MaxHeight="182"
@@ -1345,7 +1345,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Foreground="#FF858585"
+                            <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="10.5"
                                        TextWrapping="NoWrap"
@@ -1455,7 +1455,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
+                        <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                               BorderThickness="1"
                               MaxWidth="300"
                               CornerRadius="25"
@@ -1483,7 +1483,7 @@
                                                           OffsetY="5.0"
                                                           Color="Black"
                                                           Margin="15 2">
-                                    <TextBlock Foreground="White"
+                                    <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                                FontFamily="{StaticResource VazirFont}"
                                                FontSize="{StaticResource TinyFontSize}"
                                                TextWrapping="Wrap"
@@ -1518,7 +1518,7 @@
                                                               OffsetY="5.0"
                                                               Color="Black"
                                                               Grid.Column="2">
-                                        <TextBlock Foreground="White"
+                                        <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                                    FontFamily="{StaticResource VazirFont}"
                                                    FontSize="{StaticResource TinyFontSize}"
                                                    Text="{Binding FelixShareMedia.User.UserName}"
@@ -1535,7 +1535,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -1644,7 +1644,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
+                        <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                               Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                               MinHeight="45"
                               BorderThickness="1.5"
@@ -1655,7 +1655,7 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        TextWrapping="Wrap"
@@ -1673,7 +1673,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -1779,7 +1779,7 @@
                         </Ellipse>
                     </Grid>
                     <Grid Grid.Column="1"
-                          BorderBrush="#FF252525"
+                          BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                           Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                           Width="205.5"
                           MaxHeight="168"
@@ -1828,7 +1828,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Foreground="#FF858585"
+                            <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="10.5"
                                        TextWrapping="NoWrap"
@@ -1945,7 +1945,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource TinyFontSize}"
                                        TextWrapping="Wrap"
@@ -1954,7 +1954,7 @@
                                        Margin="5 2"
                                        DataContext="{Binding Converter={StaticResource ReelShareConverter}}"
                                        DataContextChanged="TextBlockDataContextChanged" />
-                            <Grid BorderBrush="#FF252525"
+                            <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                                   MinHeight="50"
                                   Grid.Row="1"
                                   BorderThickness="1"
@@ -1973,8 +1973,8 @@
                                     </controls:ImageEx.Source>
                                 </controls:ImageEx>
                             </Grid>
-                            <Grid BorderBrush="#FF252525"
-                                  Background="#FF1D1C1C"
+                            <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
+                                  Background="{StaticResource DirectItemPeopleBackgroundColor}"
                                   MinHeight="50"
                                   Grid.Row="2"
                                   BorderThickness="1"
@@ -1983,7 +1983,7 @@
                                   Margin="5"
                                   HorizontalAlignment="Left"
                                   Visibility="{Binding ReelShareMedia.Text,Converter={StaticResource NullableToVisibilityConverter}}">
-                                <TextBlock Foreground="White"
+                                <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="{StaticResource DefaultFontSize}"
                                            TextWrapping="Wrap"
@@ -1999,7 +1999,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -2103,7 +2103,7 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource TinyFontSize}"
                                        TextWrapping="Wrap"
@@ -2112,8 +2112,8 @@
                                        Margin="5 2"
                                        DataContext="{Binding Converter={StaticResource ReelShareConverter}}"
                                        DataContextChanged="TextBlockDataContextChanged" />
-                            <Grid BorderBrush="#FF252525"
-                                  Background="#FF1D1C1C"
+                            <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
+                                  Background="{StaticResource DirectItemPeopleBackgroundColor}"
                                   Grid.Row="1"
                                   MinHeight="45"
                                   BorderThickness="1"
@@ -2121,7 +2121,7 @@
                                   MaxWidth="360"
                                   Margin="5"
                                   Visibility="{Binding Converter={StaticResource NullableToVisibilityConverter}}">
-                                <TextBlock Foreground="White"
+                                <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="{StaticResource DefaultFontSize}"
                                            TextWrapping="Wrap"
@@ -2136,7 +2136,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -2202,7 +2202,7 @@
                         </Ellipse>
                     </Grid>
                     <Grid Grid.Column="1"
-                          BorderBrush="#FF252525"
+                          BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                           Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                           Width="205.5"
                           MaxHeight="168"
@@ -2248,7 +2248,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Foreground="#FF858585"
+                            <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="10.5"
                                        TextWrapping="NoWrap"
@@ -2351,7 +2351,7 @@
                         </Ellipse>
                     </Grid>
                     <Grid Grid.Column="1"
-                          BorderBrush="#FF252525"
+                          BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                           Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                           MinWidth="80"
                           MaxHeight="75"
@@ -2402,7 +2402,7 @@
                                                      Grid.Column="1"
                                                      DataContext="{Binding}"
                                                      VerticalAlignment="Center"
-                                                     Foreground="#FF007ACC"
+                                                     Foreground="{StaticResource DirectVoiceProgressForegroundColor}"
                                                      HorizontalAlignment="Stretch"
                                                      DataContextChanged="ProgressVoiceDataContextChanged" />
 
@@ -2413,7 +2413,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Foreground="#FF858585"
+                            <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="10.5"
                                        TextWrapping="NoWrap"
@@ -2514,7 +2514,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
+                        <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                               Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                               MinHeight="50"
                               BorderThickness="1"
@@ -2527,7 +2527,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="White"
+                            <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource DefaultFontSize}"
                                        TextWrapping="Wrap"
@@ -2545,7 +2545,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Rectangle Height="1"
-                                           Fill="#FF252525" />
+                                           Fill="{StaticResource DirectItemBorderBrushColor}" />
                                 <controls:ImageEx HorizontalAlignment="Stretch"
                                                   VerticalAlignment="Stretch"
                                                   Height="155"
@@ -2559,7 +2559,7 @@
                                         </ImageBrush>
                                     </controls:ImageEx.Background>
                                 </controls:ImageEx>
-                                <TextBlock Foreground="White"
+                                <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="{StaticResource DefaultFontSize}"
                                            TextWrapping="Wrap"
@@ -2570,7 +2570,7 @@
                                            DataContext="{Binding LinkMedia.LinkContext.LinkTitle}"
                                            DataContextChanged="TextBlockDataContextChanged"
                                            Visibility="{Binding Converter={StaticResource NullableToVisibilityConverter}}" />
-                                <TextBlock Foreground="#FFA6A6A6"
+                                <TextBlock Foreground="{StaticResource DirectLinkMediaForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="{StaticResource TinyFontSize}"
                                            TextWrapping="Wrap"
@@ -2581,7 +2581,7 @@
                                            DataContext="{Binding LinkMedia.LinkContext.LinkSummary}"
                                            DataContextChanged="TextBlockDataContextChanged"
                                            Visibility="{Binding Converter={StaticResource NullableToVisibilityConverter}}" />
-                                <TextBlock Foreground="#FFA6A6A6"
+                                <TextBlock Foreground="{StaticResource DirectLinkMediaForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="{StaticResource TinyFontSize}"
                                            TextWrapping="Wrap"
@@ -2599,7 +2599,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -2668,7 +2668,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Fill="#FF252525"
+                            <Rectangle Fill="{StaticResource DirectItemBorderBrushColor}"
                                        Width="2"
                                        HorizontalAlignment="Stretch"
                                        VerticalAlignment="Stretch" />
@@ -2683,7 +2683,7 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <TextBlock Foreground="White"
+                                    <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                                FontFamily="{StaticResource VazirFont}"
                                                FontSize="{StaticResource TinyFontSize}"
                                                TextWrapping="Wrap"
@@ -2692,7 +2692,7 @@
                                                Margin="5 2"
                                                DataContext="{Binding LiveViewerInvite.Title}"
                                                DataContextChanged="TextBlockDataContextChanged" />
-                                    <TextBlock Foreground="White"
+                                    <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                                FontFamily="{StaticResource VazirFont}"
                                                FontSize="{StaticResource TinyFontSize}"
                                                TextWrapping="Wrap"
@@ -2704,7 +2704,7 @@
                                                DataContextChanged="TextBlockDataContextChanged" />
                                 </Grid>
 
-                                <Grid BorderBrush="#FF252525"
+                                <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                                       MinHeight="50"
                                       Grid.Row="1"
                                       BorderThickness="1"
@@ -2771,7 +2771,7 @@
                                                                       Offset="1" />
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
-                                                <TextBlock Foreground="White"
+                                                <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                                            FontFamily="{StaticResource VazirFont}"
                                                            FontSize="{StaticResource TinyFontSize}"
                                                            Grid.Column="2"
@@ -2791,7 +2791,7 @@
                                                                       Offset="1" />
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
-                                                <!--<TextBlock Foreground="White"
+                                                <!--<TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="{StaticResource TinyFontSize}"
                                            Grid.Column="2"
@@ -2806,7 +2806,7 @@
                                         </Grid>
 
                                     </Grid>
-                                    <TextBlock Foreground="White"
+                                    <TextBlock Foreground="{StaticResource DirectItemTextForegroundColor}"
                                                FontFamily="{StaticResource VazirFont}"
                                                FontSize="{StaticResource DefaultFontSize}"
                                                TextWrapping="Wrap"
@@ -2823,7 +2823,7 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Foreground="#FF858585"
+                                    <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                                FontFamily="{StaticResource VazirFont}"
                                                FontSize="10.5"
                                                TextWrapping="NoWrap"
@@ -2894,7 +2894,7 @@
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Foreground="#FFCDCDCD"
+                        <TextBlock Foreground="{StaticResource DirectItemText2ForegroundColor}"
                                    FontFamily="{StaticResource VazirFont}"
                                    FontSize="{StaticResource TinyFontSize}"
                                    TextWrapping="Wrap"
@@ -2909,7 +2909,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Foreground="#FF858585"
+                            <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="10.5"
                                        TextWrapping="NoWrap"
@@ -2979,7 +2979,7 @@
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Grid BorderBrush="#FF252525"
+                        <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                               Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                               MinHeight="185"
                               BorderThickness="1"
@@ -3023,7 +3023,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Foreground="#FF858585"
+                            <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="10.5"
                                        TextWrapping="NoWrap"
@@ -3112,7 +3112,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid BorderBrush="#FF252525"
+                        <Grid BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                               MinHeight="50"
                               MaxWidth="360"
                               BorderThickness="1"
@@ -3122,7 +3122,7 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="#FFCDCDCD"
+                            <TextBlock Foreground="{StaticResource DirectItemText2ForegroundColor}"
                                        FontFamily="{StaticResource VazirFont}"
                                        FontSize="{StaticResource TinyFontSize}"
                                        TextWrapping="Wrap"
@@ -3133,7 +3133,7 @@
                                        DataContextChanged="TextBlockDataContextChanged" />
                             <Grid Grid.Row="1"
                                   HorizontalAlignment="Right">
-                                <TextBlock Foreground="#FF858585"
+                                <TextBlock Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                            FontFamily="{StaticResource VazirFont}"
                                            FontSize="10.5"
                                            TextWrapping="NoWrap"
@@ -3182,7 +3182,7 @@
                    PaneBackground="{StaticResource DirectPaneBackgroundColor}"
                    OpenPaneLength="240"
                    IsTabStop="False"
-                   Foreground="White"
+                   Foreground="{StaticResource DefaultForegroundColor}"
                    PanePlacement="Right"
                    IsPaneOpen="False">
             <SplitView.Pane>
@@ -3198,7 +3198,7 @@
                                    ResizeBehavior="BasedOnAlignment"
                                    ResizeDirection="Auto"
                                    Background="#FF343434"
-                                   Foreground="White"
+                                   Foreground="{StaticResource DirectItemTextForegroundColor}"
                                    FontSize="13">
                 <controls:GridSplitter.Element>
                     <Grid>
@@ -3206,7 +3206,7 @@
                                    IsHitTestVisible="False"
                                    VerticalAlignment="Center"
                                    Text="&#xE784;"
-                                   Foreground="White"
+                                   Foreground="{StaticResource DirectItemTextForegroundColor}"
                                    FontFamily="Segoe MDL2 Assets">
                         </TextBlock>
                     </Grid>
@@ -3396,7 +3396,7 @@
                                               FontFamily="{StaticResource VazirFont}"
                                               Margin="6 10"
                                               Click="LeaveChatToggleButtonClick"
-                                              Foreground="#FFFA5E5E" />
+                                              Foreground="{StaticResource DirectLeaveChatForegroundColor}" />
                                 <TextBlock 
                                      Foreground="{StaticResource DefaultInnerForegroundColor}"
                                            Grid.Row="1"
@@ -3432,7 +3432,7 @@
                                               FontFamily="{StaticResource VazirFont}"
                                               Margin="6 10"
                                               Click="EndChatToggleButtonClick"
-                                              Foreground="#FFFA5E5E" />
+                                              Foreground="{StaticResource DirectLeaveChatForegroundColor}" />
                                 <TextBlock 
                                      Foreground="{StaticResource DefaultInnerForegroundColor}"
                                            Grid.Row="1"
@@ -3472,7 +3472,7 @@
                                    VerticalAlignment="Center"
                                    Margin="12 8 5 2"
                                    Text="{Binding CurrentThread.Title,Mode=TwoWay}" />
-                        <TextBlock Foreground="#FF919191"
+                        <TextBlock Foreground="{StaticResource DirectIsTypingForegroundColor}"
                                    FontFamily="{StaticResource VazirFont}"
                                    FontSize="{StaticResource TinyFontSize}"
                                    TextWrapping="Wrap"
@@ -3538,7 +3538,7 @@
 
                         <ListView x:Name="LVGiphy"
                                   SelectionMode="None"
-                                  Foreground="White"
+                                  Foreground="{StaticResource DirectItemTextForegroundColor}"
                                   Grid.Row="2"
                                   Margin="14 0"
                                   ItemsSource="{Binding GiphsItems}"
@@ -3567,8 +3567,8 @@
                                 <DataTemplate>
                                     <Grid Width="{Binding Images.FixedWidth.Width}"
                                           Height="135"
-                                          BorderBrush="#FF252525"
-                                          Background="#FF1D1C1C"
+                                          BorderBrush="{StaticResource DirectItemBorderBrushColor}"
+                                          Background="{StaticResource DirectItemPeopleBackgroundColor}"
                                           BorderThickness="1"
                                           CornerRadius="25">
                                         <Image Stretch="Fill"
@@ -3623,7 +3623,7 @@
                                               Click="SendButtonClick" />
                                 <TextBox x:Name="TextMessage"
                                          Margin="1"
-                                         Foreground="White"
+                                         Foreground="{StaticResource DirectItemTextForegroundColor}"
                                          FontFamily="{StaticResource VazirFont}"
                                          AcceptsReturn="True"
                                          PlaceholderText="Write a message..."
@@ -3655,7 +3655,7 @@
                                                     SizeChanged="ElapsedPanel_SizeChanged"
                                                     Orientation="Horizontal"
                                                      HorizontalAlignment="Left">
-                                            <Ellipse Fill="#FFFA2929"
+                                            <Ellipse Fill="{StaticResource DirectVoiceRecoderEllipseForegroundColor}"
                                                      Width="12"
                                                      Height="12"
                                                      Margin="12,0,8,0" />
@@ -3663,6 +3663,7 @@
                                                        Text="0:00,00"
                                                        Margin="0,0,0,1"
                                                        Width="64"
+                                                       Foreground="{StaticResource DirectVoiceRecoderTimeForegroundColor}"
                                                        VerticalAlignment="Center" />
                                         </StackPanel>
                                         <StackPanel x:Name="SlidePanel"
@@ -3671,11 +3672,11 @@
                                                     HorizontalAlignment="Right"
                                                     Margin="0,0,84,0"
                                                     Grid.Column="1">
-                                            <FontIcon Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                            <FontIcon Foreground="{StaticResource DirectUploadProgressForegroundColor}"
                                                       Glyph="&#xE00E;"
                                                       FontSize="12"
                                                       Margin="0,1,4,0" />
-                                            <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                            <TextBlock Foreground="{StaticResource DirectUploadProgressForegroundColor}"
                                                        Text="SLIDE TO CANCEL"
                                                        VerticalAlignment="Center"
                                                        Margin="0,0,0,0"
@@ -3685,6 +3686,7 @@
 
                                         <HyperlinkButton x:Name="ButtonCancelRecording"
                                                          Click="ButtonCancelRecording_Click"
+                                                         Foreground="{StaticResource SystemControlHyperlinkTextBrush}"
                                                          Content="Cancel"
                                                          HorizontalAlignment="Center"
                                                          Visibility="Collapsed"
@@ -3747,7 +3749,7 @@
 
                                                 <MenuFlyoutItem x:Name="HeartMenuFlyoutItem"
                                                                 Text=""
-                                                                Foreground="#FFE03939"
+                                                                Foreground="{StaticResource DirectHeartButtonForegroundColor}"
                                                                 FontFamily="{StaticResource MaterialSymbolFont}"
                                                                 FontSize="{StaticResource HeavyBigFontSize}"
                                                                 Click="HeartMenuFlyoutItemClick"
@@ -3787,7 +3789,7 @@
                                           Grid.Column="2"
                                           Canvas.ZIndex="1000">
                                         <Border x:Name="Ellipse"
-                                                Background="#FF0068FF"
+                                                Background="{StaticResource DirectHeartButtonForegroundColor}"
                                                 Width="58"
                                                 Height="52"
                                                 Margin="0 0 -7 0"
@@ -3795,6 +3797,7 @@
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center" />
                                         <localControls:ChatRecordButton x:Name="btnVoiceMessage"
+                                                                        Background="{x:Null}"
                                                                         AllowFocusOnInteraction="False"
                                                                         RecordingStarted="VoiceButton_RecordingStarted"
                                                                         RecordingStopped="VoiceButton_RecordingStopped"

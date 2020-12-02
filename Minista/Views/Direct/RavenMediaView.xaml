@@ -17,9 +17,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <CommandBar OverflowButtonVisibility="Collapsed">
+        <CommandBar OverflowButtonVisibility="Collapsed" Background="{StaticResource DefaultItemBackgroundColor}">
             <!--<AppBarSeparator />-->
             <AppBarButton Icon="Save"
+                          Foreground="{StaticResource DefaultForegroundColor}"
                           Label="Save"
                           Click="SaveButtonClick" />
 
