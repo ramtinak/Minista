@@ -1,5 +1,6 @@
 ﻿using InstagramApiSharp.Classes.Models;
 using InstagramApiSharp.Helpers;
+using Minista.Helpers;
 using Minista.Models.Main;
 using System;
 using System.Collections.Generic;
@@ -133,6 +134,16 @@ namespace Minista.Views.Main
             //{
             //    (item.GetLoggedUser().UserName + "  " + item.PushClient.IsShutdown).PrintDebug();
             //}
+            InitTheme();
+        }
+        async void InitTheme()
+        {
+            try
+            {
+                await Task.Delay(30000);
+                ThemeHelper.InitTheme(SettingsHelper.Settings.CurrentTheme);
+            }
+            catch { }
         }
 
         private void RefreshControlRefreshRequested(Microsoft.UI.Xaml.Controls.RefreshContainer sender, Microsoft.UI.Xaml.Controls.RefreshRequestedEventArgs args)

@@ -42,7 +42,7 @@ namespace Minista
 
         public string DirectPaneBackgroundColor { get; set; } = "#E5141414";
         public string DirectTextBoxBorderColor { get; set; } = "#FF252525";
-        public string DirectItemBorderBrushColor { get; set; } = "#FFA60019";
+        public string DirectItemBorderBrushColor { get; set; } = "#FF373737";
         public string DirectItemTextForegroundColor { get; set; } = "#FFFFFFFF";
         public string DirectItemTimeForegroundColor { get; set; } = "#FF858585";
         public string DirectItemSelfBackgroundColor { get; set; } = "#FF373737";
@@ -62,6 +62,7 @@ namespace Minista
         public string DirectVoiceRecordForegroundColor { get; set; } = "#FFFFFFFF";
         public string DirectHeartButtonForegroundColor { get; set; } = "#FF8A0015";
         public string DirectItemText2ForegroundColor { get; set; } = "#FFCDCDCD";
+        public string DirectVoicePlayerBackgroundColor { get; set; } = "#FF1A1A1A";
 
 
 

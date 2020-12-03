@@ -61,6 +61,55 @@
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
+
+                        <Grid Margin="0 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="Theme"
+                                       Margin="6 4"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       FontSize="{StaticResource DefaultFontSize}"
+                                       FontFamily="{StaticResource VazirFont}" />
+                            <AppBarButton x:Name="ExportThemeButton"
+                                          Icon="Save"
+                                          Grid.Column="1"
+                                          Foreground="{StaticResource DefaultForegroundColor}"
+                                          Label="Export"
+                                          ToolTipService.ToolTip="Export current theme"
+                                          Click="ExportThemeButtonClick" />
+                            <ComboBox x:Name="comboAppTheme"
+                                      Margin="4"
+                                      Grid.Column="2"
+                                      Width="160"
+                                      BorderThickness=".8"
+                                      Background="Transparent"
+                                      VerticalAlignment="Center"
+                                      FontSize="{StaticResource DefaultFontSize}"
+                                      FontFamily="{StaticResource VazirFont}"
+                                      SelectionChanged="ComboAppThemeSelectionChanged">
+                                <ComboBoxItem Content="Dark"
+                                              FontSize="{StaticResource DefaultFontSize}"
+                                              FontFamily="{StaticResource VazirFont}" />
+
+                                <ComboBoxItem Content="White"
+                                              FontSize="{StaticResource DefaultFontSize}"
+                                              FontFamily="{StaticResource VazirFont}" />
+                                
+                                <ComboBoxItem Content="Custom"
+                                              FontSize="{StaticResource DefaultFontSize}"
+                                              FontFamily="{StaticResource VazirFont}" />
+                            </ComboBox>
+                        </Grid>
+                        <Rectangle Fill="{StaticResource SeperatorColor}"
+                                   Height="1"
+                                   Margin="15 2.5"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" />
                         <StackPanel>
                             <Grid Margin="0 5">
                                 <Grid.ColumnDefinitions>

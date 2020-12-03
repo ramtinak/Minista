@@ -19,6 +19,8 @@ using Windows.UI.Xaml.Documents;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.AccessCache;
+using Minista.Themes;
+using Newtonsoft.Json;
 
 namespace Minista.Views.Settings
 {
@@ -56,6 +58,7 @@ namespace Minista.Views.Settings
 
                 ShowSavedLocationFolder();
                 CalculateCacheSize();
+                comboAppTheme.SelectedIndex = (int)SettingsHelper.Settings.AppTheme;
             }
             catch { }
             IsPageLoaded = true;
@@ -157,6 +160,39 @@ namespace Minista.Views.Settings
                     SettingsHelper.Settings.LivePlaybackType = LivePlaybackType.Minista;
                 else 
                     SettingsHelper.Settings.LivePlaybackType = LivePlaybackType.LibVLC;
+            }
+            catch { }
+        }
+        private void ComboAppThemeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!CanDoThings) return;
+            try
+            {
+                if (comboAppTheme.SelectedIndex == -1) return;
+                SettingsHelper.Settings.AppTheme = (AppTheme)comboAppTheme.SelectedIndex;
+                MinistaThemeCore themeCore = null;
+                var theme = new MinistaTheme();
+                if (comboAppTheme.SelectedIndex == 1)
+                {
+                    themeCore = SettingsHelper.GetMeTheme("Light");
+                    theme = new MinistaWhiteTheme();
+                }
+                else if (comboAppTheme.SelectedIndex == 2)
+                {
+                    if (SettingsHelper.Settings.CurrentTheme != null)
+                        themeCore = SettingsHelper.Settings.CurrentTheme;
+                    theme = SettingsHelper.Settings.CurrentTheme?.Theme ?? new MinistaDarkTheme();
+                }
+                else
+                {
+                    themeCore = SettingsHelper.GetMeTheme("Dark");
+                    theme = new MinistaDarkTheme();
+                }
+                if (themeCore == null)
+                    themeCore = SettingsHelper.GetUnkownTheme();
+                themeCore.Theme = theme;
+                SettingsHelper.Settings.CurrentTheme = themeCore;
+                ThemeHelper.InitTheme(themeCore);
             }
             catch { }
         }
@@ -581,5 +617,22 @@ namespace Minista.Views.Settings
             NavigateToPassword();
         }
 
+        private async void ExportThemeButtonClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var picker = new FileSavePicker();
+                picker.FileTypeChoices.Add("Minista theme file", new string[] { ".mi-theme" });
+                picker.CommitButtonText = "Export";
+                picker.SuggestedFileName = $"Minista {SettingsHelper.Settings.AppTheme} theme";
+                var file = await picker.PickSaveFileAsync();
+                if (file == null) return;
+
+                var json = JsonConvert.SerializeObject(SettingsHelper.Settings.CurrentTheme);
+                await FileIO.WriteTextAsync(file, json, Windows.Storage.Streams.UnicodeEncoding.Utf8);
+                Helper.ShowNotify("Theme exported to:\r\n" + file.Path, 3000);
+            }
+            catch { }
+        }
     }
 }

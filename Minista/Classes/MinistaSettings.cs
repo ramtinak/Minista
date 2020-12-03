@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Minista.Themes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,12 @@ namespace Minista.Classes
         public double LockControlY { get; set; } = 120;
         public bool HandleTelegramLinks { get; set; } = false;
 
-        public MinistaTheme Theme { get; set; } = new MinistaTheme();
+        public MinistaThemeCore CurrentTheme { get; set; } = new MinistaThemeCore
+        {
+            Theme = new MinistaDarkTheme()
+        };
+
+        public AppTheme AppTheme { get; set; } = AppTheme.Dark;
     } 
     public enum HeaderPosition
     {
@@ -30,5 +36,11 @@ namespace Minista.Classes
     {
         Minista,
         LibVLC
+    }
+    public enum AppTheme
+    {
+        Dark,
+        Light,
+        Custom
     }
 }

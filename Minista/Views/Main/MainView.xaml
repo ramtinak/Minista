@@ -122,7 +122,7 @@
                                                    FontFamily="{StaticResource VazirFont}"
                                                    FontSize="{StaticResource DefaultFontSize}"
                                                    Margin="5"
-                                                   Foreground="{StaticResource DefaultForegroundColor}"
+                                                   Foreground="{StaticResource Comment4ForegroundColor}"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    TextWrapping="NoWrap"

@@ -140,9 +140,9 @@
             <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush">#FF252525</SolidColorBrush>
             <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush">#FF252525</SolidColorBrush> 
             <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush">#FF252525</SolidColorBrush>
-            
-         
-            <SolidColorBrush x:Key="DirectItemBorderBrushColor">#FFA60019</SolidColorBrush>
+
+
+            <SolidColorBrush x:Key="DirectItemBorderBrushColor">#FF373737</SolidColorBrush>
             <SolidColorBrush x:Key="DirectItemTextForegroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="DirectItemTimeForegroundColor">#FF858585</SolidColorBrush>
             <SolidColorBrush x:Key="DirectItemSelfBackgroundColor">#FF373737</SolidColorBrush>
@@ -165,7 +165,9 @@
             <SolidColorBrush x:Key="DirectVoiceRecordForegroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="DirectHeartButtonForegroundColor">#FF0068FF</SolidColorBrush>
             <SolidColorBrush x:Key="DirectItemText2ForegroundColor">#FFCDCDCD</SolidColorBrush>
-            
+            <!--#FF1A1A1A-->
+            <SolidColorBrush x:Key="DirectVoicePlayerBackgroundColor">#FFEDEDED</SolidColorBrush>
+
 
 
 

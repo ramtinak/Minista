@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Minista.Helpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -96,6 +97,8 @@ namespace Minista
                 if (CanLoaded)
                     await SessionHelper.LoadSessionsAsync();
                 await Task.Delay(100);
+
+                ThemeHelper.InitTheme(SettingsHelper.Settings.CurrentTheme);
             }
             catch { }
             try

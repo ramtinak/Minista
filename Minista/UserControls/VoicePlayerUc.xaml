@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Height="52">
 
-    <Grid>
+    <Grid Background="{StaticResource DirectVoicePlayerBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
@@ -40,7 +40,7 @@
                           FontFamily="{StaticResource VazirFont}"
                           Margin="2 0"
                           Click="PlayPauseButtonClick" />
-            <Rectangle Fill="#FF363636"
+            <Rectangle Fill="{StaticResource SeperatorColor}"
                        Width="1.5"
                        Grid.Column="1"
                        Margin="1 8"
@@ -56,7 +56,7 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="5 4" />
-            <Rectangle Fill="#FF363636"
+            <Rectangle Fill="{StaticResource SeperatorColor}"
                        Width="1.5"
                        Grid.Column="3"
                        Margin="1 8"
@@ -72,7 +72,7 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="5 4" />
-            <Rectangle Fill="#FF363636"
+            <Rectangle Fill="{StaticResource SeperatorColor}"
                        Width="1.5"
                        Grid.Column="5"
                        Margin="1 8"
@@ -93,7 +93,7 @@
                           FontFamily="{StaticResource VazirFont}"
                           Margin="2 0"
                           Click="FasterModeButtonClick" />
-            <Rectangle Fill="#FF363636"
+            <Rectangle Fill="{StaticResource SeperatorColor}"
                        Width="1.5"
                        Grid.Column="7"
                        Margin="1 8"
@@ -115,7 +115,7 @@
                           Click="HideButtonClick" />
 
         </Grid>
-        <Rectangle Fill="#FF363636"
+        <Rectangle Fill="{StaticResource SeperatorColor}"
                    Grid.Row="1"
                    Height="1.5"
                    Margin="15 2.5"

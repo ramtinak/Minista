@@ -40,7 +40,12 @@ namespace Minista.Views.Sign
         {
             e.NewValue.ToString().PrintDebug();
         }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
 
+            ThemeHelper.InitTheme(SettingsHelper.Settings.CurrentTheme);
+        }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);

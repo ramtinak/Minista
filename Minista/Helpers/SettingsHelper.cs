@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using Minista.Helpers;
 using Windows.UI.Xaml;
 using MinistaHelper;
+using Minista.Themes;
+
 namespace Minista
 {
     internal static class SettingsHelper
@@ -50,8 +52,61 @@ namespace Minista
                         ElementSoundPlayer.State = ElementSoundPlayerState.On;
                 }
                 catch { }
+
+                try
+                {
+                    MinistaThemeCore themeCore = null;
+                    MinistaTheme theme = null;
+                    switch(Settings.AppTheme)
+                    {
+                        case AppTheme.Custom:
+                            if (Settings.CurrentTheme != null)
+                                themeCore = Settings.CurrentTheme;
+                            theme = Settings.CurrentTheme?.Theme ?? new MinistaDarkTheme();
+                            break;
+                        case AppTheme.Light:
+                            themeCore = GetMeTheme("Light");
+                            theme = new MinistaWhiteTheme();
+                            break;
+                        case AppTheme.Dark:
+                        default:
+                            themeCore = GetMeTheme("Dark");
+                            theme = new MinistaDarkTheme();
+                            break;
+                    }
+                    if (themeCore == null)
+                        themeCore = GetUnkownTheme();
+                    themeCore.Theme = theme;
+                    Settings.CurrentTheme = themeCore;
+                    ThemeHelper.InitTheme(themeCore);
+                }
+                catch { }
             }
             catch { }
+        }
+        internal static MinistaThemeCore GetMeTheme(string name)
+        {
+            return new MinistaThemeCore
+            {
+                Publisher = new MinistaPublisher
+                {
+                    Name = $"Minista {name} theme",
+                    Publisher = "Ramtin",
+                    Version = "1.0.0"
+                }
+            };
+        }
+        internal static MinistaThemeCore GetUnkownTheme()
+        {
+            return new MinistaThemeCore
+            {
+                Publisher = new MinistaPublisher
+                {
+                    Name = "Minista Unknown theme",
+                    Publisher = "Unknown",
+                    Version = "1.0.0"
+                }
+            };
         }
 
         public static void SaveSettings()
