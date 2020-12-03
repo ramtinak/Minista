@@ -51,7 +51,7 @@ namespace NotifySharp
                     {
                         new ToastButton("Send", action)
                         {
-                            ActivationType = ToastActivationType.Foreground,
+                            ActivationType = ToastActivationType.Background,
                             ImageUri = "Assets/Icons/send.png",
                             TextBoxId = "textBox"
                         }

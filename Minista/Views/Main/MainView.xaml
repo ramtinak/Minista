@@ -992,7 +992,7 @@
                 Click="GoUpButtonClick"
                 Style="{StaticResource GoUpButtonStyle}"/>
 
-        <ScrollViewer Height="250" VerticalAlignment="Bottom">
+        <ScrollViewer Height="250" VerticalAlignment="Bottom" Visibility="Collapsed">
             <TextBlock x:Name="TXT"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                    TextWrapping="Wrap"/>
 

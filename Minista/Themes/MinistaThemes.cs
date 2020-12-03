@@ -55,6 +55,38 @@ namespace Minista.Themes
             UserSuggestionsCardBackgroundColor = "#FF252525";
             HyperlinkTextForeroundColor = "#FF5278FF";
             TextBoxBackgroundColor = "#FF171717";
+
+            LoadingForegroundColor = "#FF2C42FF";
+            DirectItemBorderBrushColor = "#FFB8B1B1";
+            DirectItemTextForegroundColor = "#FF000000";
+            DirectItemTimeForegroundColor = "#FF3D3D3D";
+            DirectItemSelfBackgroundColor = "#FFDED6D6";
+            DirectItemPeopleBackgroundColor = "#00FFF6F6";
+            DirectBlockAllForegroundColor = "#FFFF6C6C";
+            DirectBlockPeopleForegroundColor = "#FFFF2727";
+            DirectAcceptForegroundColor = "#FF34C08B";
+            DirectUploadProgressBackgroundColor = "#4DFFFFFF";
+            DirectUploadProgressForegroundColor = "#B6292828";
+            DirectUploadProgressRingForegroundColor = "#D8575757";
+            DirectVoiceProgressForegroundColor = "#FF007ACC";
+            DirectLinkMediaForegroundColor = "#FFA6A6A6";
+            DirectLeaveChatForegroundColor = "#FFFA5E5E";
+            DirectIsTypingForegroundColor = "#FF919191";
+
+
+
+            //<SolidColorBrush x:Key="DirectVoiceRecoderEllipseForegroundColor">#FFFA2929</SolidColorBrush>
+            //<SolidColorBrush x:Key="DirectVoiceRecoderTimeForegroundColor">#FFFFFFFF</SolidColorBrush>
+            //<SolidColorBrush x:Key="DirectVoiceRecordForegroundColor">#FFFFFFFF</SolidColorBrush>
+            //<SolidColorBrush x:Key="DirectHeartButtonForegroundColor">#FF0068FF</SolidColorBrush>
+            //<SolidColorBrush x:Key="DirectItemText2ForegroundColor">#FF2E2E2E</SolidColorBrush>
+            DirectVoiceRecoderEllipseForegroundColor = "#FFFA2929";
+            DirectVoiceRecoderTimeForegroundColor = "#FF000000";
+            DirectVoiceRecordForegroundColor = "#FF000000";
+            DirectHeartButtonForegroundColor = "#FF0068FF";
+            DirectItemText2ForegroundColor = "#FF2E2E2E";
+
+
         }
     }
 

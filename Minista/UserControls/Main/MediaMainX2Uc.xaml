@@ -500,7 +500,7 @@
                 Margin="35,25"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
-                Background="#C5000000"
+                Background="{StaticResource DefaultBackgroundColor}"
                 CornerRadius="10">
                 <TextBlock
                     x:Name="CountText"
@@ -508,7 +508,7 @@
                     VerticalAlignment="Center"
                     FontFamily="{StaticResource VazirFont}"
                     FontSize="{StaticResource DefaultFontSize}"
-                    Foreground="{StaticResource DefaultForegroundColor}"
+                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                     Text="9/9" />
             </Grid>
         </Grid>

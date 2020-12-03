@@ -409,6 +409,12 @@ namespace Minista
 
         private async void MainPageLoaded(object sender, RoutedEventArgs e)
         {
+
+            var ab = new MinistaWhiteTheme();
+
+            await Task.Delay(1500);
+            var json2 = Newtonsoft.Json.JsonConvert.SerializeObject(ab);
+            json2.PrintDebug();
             CreateConfig();
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;

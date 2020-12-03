@@ -50,6 +50,7 @@ namespace Minista
         public static App CurrentX { get; private set; }
         protected override void OnActivated(IActivatedEventArgs e)
         {
+            PushHelper.Register();
             try
             {
                 if (DeviceUtil.IsXbox)
@@ -102,8 +103,8 @@ namespace Minista
                 Debug.WriteLine("--------------------+------------------");
                 Frame rootFrame = CreateRootFrame();
                 if (rootFrame.Content == null)
-                //if (!(Window.Current.Content is Frame rootFrame))
                 {
+                    NotificationActivationHelper.HandleActivation(args.Argument, args.UserInput, true);
                     // Create a Frame to act as the navigation context and navigate to the first page
                     rootFrame.NavigationFailed += OnNavigationFailed;
                     if (e.PreviousExecutionState != ApplicationExecutionState.Running)
@@ -116,7 +117,10 @@ namespace Minista
                     Window.Current.Content = rootFrame;
                 }
                 else
+                {
+                    NotificationActivationHelper.HandleActivation(args.Argument, args.UserInput);
                     MainPage.Current?.HandleUriProtocol();
+                }
 
                 rootFrame.Content.GetType().PrintDebug();
                 Window.Current.Content.GetType().PrintDebug();
@@ -185,6 +189,7 @@ namespace Minista
         /// <param name="e">Details about the launch request and process.</param>
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            PushHelper.Register();
             bool canEnablePrelaunch = Windows.Foundation.Metadata.ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch");
 
             if (e != null)

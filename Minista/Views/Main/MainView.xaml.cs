@@ -53,24 +53,19 @@ namespace Minista.Views.Main
             
         }
 
-        public static async void OnLogReceived(object sender, object e)
+        public static /*async*/ void OnLogReceived(object sender, object e)
         {
-            try
-            {
-                if (Current != null)
+            //try
+            //{
+            //    if (Current != null)
 
-                    await Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        Current.TXT.Text += e.ToString() + Environment.NewLine;
-                    });
-            }
-            catch { }
+            //        await Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            //        {
+            //            Current.TXT.Text += e.ToString() + Environment.NewLine;
+            //        });
+            //}
+            //catch { }
         }
-        private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
-        {
-            e.Size.Width.PrintDebug();
-        }
-
         public /*async*/ void SetAnimation(StorageFile file)
         {
             try
@@ -161,12 +156,6 @@ namespace Minista.Views.Main
             RefreshControl.RequestRefresh();
         }
 
-        //private void PushClient_MessageReceived(object sender, InstagramApiSharp.API.Push.MessageReceivedEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine(e?.Json);
-        //    Helpers.PushHelper.HandleNotify(e.NotificationContent, Helper.InstaApiList);
-        //    //Helpers.NotificationHelper.ShowToast(e.NotificationContent.Message, e.NotificationContent.OptionalAvatarUrl, e.NotificationContent.Title ?? "");
-        //}
         public async void TryToRefresh(bool all = false)
         {
             if (all) 

@@ -60,7 +60,7 @@
                 <Rectangle
                     Grid.Row="1"
                     Grid.ColumnSpan="3"
-                    Height="1.5"
+                    Height="1"
                     Margin="15,2.5"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"

@@ -3495,7 +3495,7 @@
                         <!---->
                     </Grid>
                     <Rectangle Fill="{StaticResource SeperatorColor}"
-                               Height="1.5"
+                               Height="1"
                                Grid.Row="1"
                                Grid.ColumnSpan="3"
                                Margin="10 2.5"

@@ -22,7 +22,6 @@ namespace NotificationHandler
     {
         public static readonly StorageFolder LocalFolder = ApplicationData.Current.LocalFolder;
         public static List<IInstaApi> InstaApiList { get; set; } = new List<IInstaApi>();
-        internal static DebugLogger DebugLogger;
         public static IInstaApi BuildApi(string username = null, string password = null)
         {
             UserSessionData sessionData= UserSessionData.ForUsername("FAKEUSER").WithPassword("FAKEPASS");

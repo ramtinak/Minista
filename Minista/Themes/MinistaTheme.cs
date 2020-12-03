@@ -31,9 +31,6 @@ namespace Minista
         public string Comment4ButtonBackgroundColor { get; set; } = "#FF1F1F1F";
         public string Comment4ForegroundColor { get; set; } = "#FFFFFFFF";
         public string RefreshGoUpButtonBackgroundColor { get; set; } = "#FF333333";
-        public string DirectPaneBackgroundColor { get; set; } = "#E5141414";
-        public string DirectTextBoxBorderColor { get; set; } = "#FF252525";
-
         public string StoryReplyTextBackgroundColor { get; set; } = "#7F282828";
         public string StoryButtonBackoundColor { get; set; } = "#7F282828";
         public string StoryButtonForeroundColor { get; set; } = "#FFFFFFFF";
@@ -43,20 +40,28 @@ namespace Minista
         public string LoadingForegroundColor { get; set; } = "#FF2C42FF";
 
 
-        //<SolidColorBrush x:Key="DirectItemBorderBrushColor">#FFA60019</SolidColorBrush>
-        //<SolidColorBrush x:Key="DirectItemTextForegroundColor">#FFFFFFFF</SolidColorBrush>
-        //<SolidColorBrush x:Key="DirectItemTimeForegroundColor">#FF858585</SolidColorBrush>
-        //<SolidColorBrush x:Key="DirectItemSelfBackgroundColor">#FF373737</SolidColorBrush>
-        //<SolidColorBrush x:Key="DirectItemPeopleBackgroundColor">#FF1D1C1C</SolidColorBrush>
+        public string DirectPaneBackgroundColor { get; set; } = "#E5141414";
+        public string DirectTextBoxBorderColor { get; set; } = "#FF252525";
         public string DirectItemBorderBrushColor { get; set; } = "#FFA60019";
         public string DirectItemTextForegroundColor { get; set; } = "#FFFFFFFF";
         public string DirectItemTimeForegroundColor { get; set; } = "#FF858585";
         public string DirectItemSelfBackgroundColor { get; set; } = "#FF373737";
         public string DirectItemPeopleBackgroundColor { get; set; } = "#FF1D1C1C";
-
-
-
-
+        public string DirectBlockAllForegroundColor { get; set; } = "#FFFF6C6C";
+        public string DirectBlockPeopleForegroundColor { get; set; } = "#FFFF2727";
+        public string DirectAcceptForegroundColor { get; set; } = "#FF34C08B";
+        public string DirectUploadProgressBackgroundColor { get; set; } = "#4DFFFFFF";
+        public string DirectUploadProgressForegroundColor { get; set; } = "#B6292828";
+        public string DirectUploadProgressRingForegroundColor { get; set; } = "#D8575757";
+        public string DirectVoiceProgressForegroundColor { get; set; } = "#FF007ACC";
+        public string DirectLinkMediaForegroundColor { get; set; } = "#FFA6A6A6";
+        public string DirectLeaveChatForegroundColor { get; set; } = "#FFFA5E5E";
+        public string DirectIsTypingForegroundColor { get; set; } = "#FF919191";
+        public string DirectVoiceRecoderEllipseForegroundColor { get; set; } = "#FFFA2929";
+        public string DirectVoiceRecoderTimeForegroundColor { get; set; } = "#FFFFFFFF";
+        public string DirectVoiceRecordForegroundColor { get; set; } = "#FFFFFFFF";
+        public string DirectHeartButtonForegroundColor { get; set; } = "#FF8A0015";
+        public string DirectItemText2ForegroundColor { get; set; } = "#FFCDCDCD";
 
 
 

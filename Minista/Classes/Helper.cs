@@ -839,6 +839,13 @@ static class Helper
         byte g = Convert.ToByte(match.Groups["g"].Value, 16);
         return Color.FromArgb(a, r, g, b);
     }
+    public static Color? GetNullableColorFromHex(this string hexColorString)
+    {
+        if (string.IsNullOrEmpty(hexColorString))
+            return null;
+
+        return hexColorString.GetColorFromHex();
+    }
     #endregion
 
     #region Random string generator

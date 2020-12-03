@@ -150,13 +150,13 @@ namespace MinistaHelper.Push
                     _socketActivityTask = backgroundTaskBuilder.Register();
                 }
             }
-            backgroundTaskBuilder = new BackgroundTaskBuilder
-            {
-                Name = "MinistaBH.NotifyQuickReplyTask",
-                TaskEntryPoint = "MinistaBH.NotifyQuickReplyTask"
-            };
-            backgroundTaskBuilder.SetTrigger(new ToastNotificationActionTrigger());
-           /* _pushNotifyTask = */backgroundTaskBuilder.Register();
+           // backgroundTaskBuilder = new BackgroundTaskBuilder
+           // {
+           //     Name = "MinistaBH.NotifyQuickReplyTask",
+           //     TaskEntryPoint = "MinistaBH.NotifyQuickReplyTask"
+           // };
+           // backgroundTaskBuilder.SetTrigger(new ToastNotificationActionTrigger());
+           ///* _pushNotifyTask = */backgroundTaskBuilder.Register();
             
             return true;
         }

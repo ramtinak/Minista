@@ -178,25 +178,28 @@ namespace MinistaBH
         //
         public static void HandleNotify(PushNotification push, IReadOnlyList<IInstaApi> apiList)
         {
-            HandleNotify(push, apiList.GetUserName(push.IntendedRecipientUserId));
-        }
-        public static void HandleNotify(PushNotification push, string user)
-        {
-            switch (push.CollapseKey)
-            {
-                case "direct_v2_message":
-                    GoDirect(push, user);
-                    return;
-                case "like":
-                    GoLike(push, user);
-                    return;
-                case "comment": //comment_like
-                    GoLike(push, user);
-                    return;
-                default:
-                    NotificationHelper.ShowToast(push.Message, push.OptionalAvatarUrl, push.Title ?? "");
-                    return;
-            }
+            push.IgAction += $"&currentUser={push.IntendedRecipientUserId}";
+            if (push.CollapseKey == "direct_v2_message")
+                GoDirect(push, apiList.GetUserName(push.IntendedRecipientUserId));
+            else
+                GoLike(push, apiList.GetUserName(push.IntendedRecipientUserId));
+
+            //switch (push.CollapseKey)
+            //{
+            //    case "direct_v2_message":
+            //        GoDirect(push, apiList.GetUserName(push.IntendedRecipientUserId));
+            //        return;
+            //    case "like":
+            //        //GoLike(push, apiList.GetUserName(push.IntendedRecipientUserId));
+            //        //return; 
+            //    //case "comment": //comment_like
+            //        //GoLike(push, apiList.GetUserName(push.IntendedRecipientUserId));
+            //        //return;
+            //    default:
+            //        GoLike(push, apiList.GetUserName(push.IntendedRecipientUserId));
+            //        //NotificationHelper.ShowToast(push.Message, push.OptionalAvatarUrl, push.Title ?? "");
+            //        return;
+            //}
         }
         static void GoDirect(PushNotification push, string user)
         {
@@ -207,14 +210,14 @@ namespace MinistaBH
                 var img = push.OptionalAvatarUrl;
                 if (msg.Contains("sent you a post") || msg.Contains("sent you a story"))
                 {
-                    if (msg.Contains(" "))
-                    {
-                        var name = msg.Substring(0, msg.IndexOf(" "));
-                        var text = msg.Substring(msg.IndexOf(" ") + 1);
-                        Notify.SendMessageWithoutTextNotify(/*$"[{user}] " + */name, text, img, act, push.OptionalImage);
-                    }
-                    else
-                        Notify.SendMessageWithoutTextNotify(null, /*$"[{user}] " + */msg, img, act, push.OptionalImage);
+                    //if (msg.Contains(" "))
+                    //{
+                    //    var name = msg.Substring(0, msg.IndexOf(" "));
+                    //    var text = msg.Substring(msg.IndexOf(" ") + 1);
+                    //    Notify.SendMessageWithoutTextNotify(/*$"[{user}] " + */name, text, img, act);
+                    //}
+                    //else
+                    Notify.SendMessageWithoutTextNotify(null, /*$"[{user}] " + */msg, img, act);
                 }
                 else
                 {
@@ -224,10 +227,10 @@ namespace MinistaBH
 
                         var text = msg.Substring(msg.IndexOf(":") + 1);
 
-                        Notify.SendMessageNotify(/*$"[{user}] " +*/ name, text, img, act, push.OptionalImage);
+                        Notify.SendMessageNotify(/*$"[{user}] " + */name, text, img, act);
                     }
                     else
-                        Notify.SendMessageNotify(null,/* $"[{user}] " +*/ msg, img, act, push.OptionalImage);
+                        Notify.SendMessageNotify(null, /*$"[{user}] " +*/ msg, img, act);
                 }
 
             }
@@ -241,14 +244,14 @@ namespace MinistaBH
                 var msg = push.Message;
                 var act = push.IgAction;
                 var img = push.OptionalAvatarUrl;
-                if (msg.Contains(" "))
-                {
-                    var name = msg.Substring(0, msg.IndexOf(" "));
-                    var text = msg.Substring(msg.IndexOf(" ") + 1);
-                    Notify.SendLikeNotify(/*$"[{user}] " +*/ name, text, img, act, push.OptionalImage);
-                }
-                else
-                    Notify.SendLikeNotify(null,/* $"[{user}] " + */msg, img, act, push.OptionalImage);
+                //if (msg.Contains(" "))
+                //{
+                //    var name = msg.Substring(0, msg.IndexOf(" "));
+                //    var text = msg.Substring(msg.IndexOf(" ") + 1);
+                //    Notify.SendLikeNotify(/*$"[{user}] " + */name, text, img, act);
+                //}
+                //else
+                Notify.SendLikeNotify(null, /*$"[{user}] "+*/msg, img, act);
 
             }
             catch { }

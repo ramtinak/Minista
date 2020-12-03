@@ -34,10 +34,37 @@
             <SolidColorBrush x:Key="StoryReplyTextBackgroundColor">#FF666666</SolidColorBrush>
             <SolidColorBrush x:Key="StoryButtonBackoundColor">#FF666666</SolidColorBrush>
             <SolidColorBrush x:Key="StoryButtonForeroundColor">#FF171717</SolidColorBrush>
-            <SolidColorBrush x:Key="UserSuggestionsCardBackgroundColor">#FFF0E3E4</SolidColorBrush>-->
+            <SolidColorBrush x:Key="UserSuggestionsCardBackgroundColor">#FFF0E3E4</SolidColorBrush>
+            <SolidColorBrush x:Key="TextBoxBackgroundColor">#BF292828</SolidColorBrush>
+            <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush">#FF5278FF</SolidColorBrush>
+            <SolidColorBrush x:Key="LoadingForegroundColor">#FF2C42FF</SolidColorBrush>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush">#FF252525</SolidColorBrush>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush">#FF252525</SolidColorBrush>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush">#FF252525</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectItemBorderBrushColor">#FFB8B1B1</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectItemTextForegroundColor">#FF000000</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectItemTimeForegroundColor">#FF3D3D3D</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectItemSelfBackgroundColor">#FFDED6D6</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectItemPeopleBackgroundColor">#00FFF6F6</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectBlockAllForegroundColor">#FFFF6C6C</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectBlockPeopleForegroundColor">#FFFF2727</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectAcceptForegroundColor">#FF34C08B</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectUploadProgressBackgroundColor">#4DFFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectUploadProgressForegroundColor">#B6292828</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectUploadProgressRingForegroundColor">#D8575757</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectVoiceProgressForegroundColor">#FF007ACC</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectLinkMediaForegroundColor">#FFA6A6A6</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectLeaveChatForegroundColor">#FFFA5E5E</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectIsTypingForegroundColor">#FF919191</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectVoiceRecoderEllipseForegroundColor">#FFFA2929</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectVoiceRecoderTimeForegroundColor">#FF000000</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectVoiceRecordForegroundColor">#FF000000</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectHeartButtonForegroundColor">#FF0068FF</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectItemText2ForegroundColor">#FF2E2E2E</SolidColorBrush>-->
 
 
-            <SolidColorBrush x:Key="DefaultBackgroundColor">#FFC4001D</SolidColorBrush>
+
+            <!--<SolidColorBrush x:Key="DefaultBackgroundColor">#FFC4001D</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultItemBackgroundColor">#FFAD001A</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultForegroundColor">#FFCFCFCF</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultInnerForegroundColor">#FFFFFFFF</SolidColorBrush>
@@ -59,8 +86,8 @@
             <SolidColorBrush x:Key="LoadingForegroundColor">#FFE8585B</SolidColorBrush>
             
             <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush">#FFA10018</SolidColorBrush>
-            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush">#FFA10018</SolidColorBrush> <!--Hover-->
-            <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush">#FFA10018</SolidColorBrush> <!--pRessed-->
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush">#FFA10018</SolidColorBrush>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush">#FFA10018</SolidColorBrush> 
 
 
             <SolidColorBrush x:Key="DirectItemBorderBrushColor">#FFA60019</SolidColorBrush>
@@ -85,8 +112,10 @@
             <SolidColorBrush x:Key="DirectVoiceRecoderEllipseForegroundColor">#FFFA2929</SolidColorBrush>
             <SolidColorBrush x:Key="DirectVoiceRecoderTimeForegroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="DirectVoiceRecordForegroundColor">#FFFFFFFF</SolidColorBrush>
-            <SolidColorBrush x:Key="DirectHeartButtonForegroundColor">#FF8A0015</SolidColorBrush>
-            <!--<SolidColorBrush x:Key="DefaultBackgroundColor">#FF151515</SolidColorBrush>
+            <SolidColorBrush x:Key="DirectHeartButtonForegroundColor">#FF8A0015</SolidColorBrush>-->
+            
+            
+            <SolidColorBrush x:Key="DefaultBackgroundColor">#FF151515</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultItemBackgroundColor">#FF232323</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultForegroundColor">#FFB4B4B4</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultInnerForegroundColor">#FF8F8F8F</SolidColorBrush>
@@ -135,7 +164,8 @@
             <SolidColorBrush x:Key="DirectVoiceRecoderTimeForegroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="DirectVoiceRecordForegroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="DirectHeartButtonForegroundColor">#FF0068FF</SolidColorBrush>
-            -->
+            <SolidColorBrush x:Key="DirectItemText2ForegroundColor">#FFCDCDCD</SolidColorBrush>
+            
 
 
 

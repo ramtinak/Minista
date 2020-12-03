@@ -214,6 +214,7 @@
     <Compile Include="CustomMTC\TVCustomMTC.cs" />
     <Compile Include="Helpers\HyperLinkHelper.cs" />
     <Compile Include="Helpers\MultiApiHelper.cs" />
+    <Compile Include="Helpers\NotificationActivationHelper.cs" />
     <Compile Include="Helpers\PushHelper.cs" />
     <Compile Include="Helpers\ThemeHelper.cs" />
     <Compile Include="Helpers\UriHelper.cs" />
