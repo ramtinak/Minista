@@ -37,6 +37,7 @@ using InstagramApiSharp.API.RealTime;
 using Minista.Themes;
 using MinistaHelper.Push;
 using Minista.Views.Main;
+using InstagramApiSharp.API;
 
 namespace Minista
 {
@@ -937,6 +938,44 @@ namespace Minista
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(typeof(MainView));
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            //{
+            //  "Title": null,
+            //  "Message": "Minista App (@ministaapp) has requested to follow you.",
+            //  "TickerText": null,
+            //  "IgAction": "user?username=ministaapp",
+            //  "CollapseKey": "private_user_follow_request",
+            //  "OptionalImage": null,
+            //  "OptionalAvatarUrl": "https://instagram.fevn1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/62231151_371563176829566_537134867805110272_n.jpg?_nc_ht=instagram.fevn1-1.fna.fbcdn.net&_nc_ohc=_S4Ei3Q3ZDsAX-HVjOo&tp=1&oh=384bd91ead130669a6eba37288050aaa&oe=5FF226E3",
+            //  "Sound": null,
+            //  "PushId": "5b59a0b8cd64eHa61202a11H5b59a5522d920H4b",
+            //  "PushCategory": "private_user_follow_request",
+            //  "IntendedRecipientUserId": "44579170833",
+            //  "SourceUserId": "1647718432",
+            //  "IgActionOverride": null,
+            //  "BadgeCount": {
+            //    "Direct": 0,
+            //    "Ds": 0,
+            //    "Activities": 0
+            //  },
+            //  "InAppActors": null
+            //}
+
+            var p = new PushNotification
+            {
+                Message = "Minista App (@ministaapp) has requested to follow you.",
+                IgAction = "user?username=ministaapp",
+                CollapseKey = "private_user_follow_request",
+                OptionalAvatarUrl = "https://instagram.fevn1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/62231151_371563176829566_537134867805110272_n.jpg?_nc_ht=instagram.fevn1-1.fna.fbcdn.net&_nc_ohc=_S4Ei3Q3ZDsAX-HVjOo&tp=1&oh=384bd91ead130669a6eba37288050aaa&oe=5FF226E3",
+                PushId = "5b59a0b8cd64eHa61202a11H5b59a5522d920H4b",
+                IntendedRecipientUserId = "44579170833",
+                SourceUserId = "1647718432",
+            };
+
+            PushHelper.HandleNotify(p, InstaApiList);
         }
 
         //private void SettingsButtonClick(object sender, RoutedEventArgs e)

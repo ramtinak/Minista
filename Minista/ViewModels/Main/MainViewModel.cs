@@ -145,7 +145,7 @@ namespace Minista.ViewModels.Main
                             {
                                 var item = stories.Value.Items[i];
                                 var m = item.ToStoryModel();
-                                
+
                                 if (string.IsNullOrEmpty(id) || !string.IsNullOrEmpty(id) && id != item.Id)
                                 {
                                     list.Add(m);
@@ -165,11 +165,11 @@ namespace Minista.ViewModels.Main
                                 {
                                     var users = new List<string>();
                                     foreach (var item in stories.Value.Items.Take(5))// 5ta ro migirim!
-                                        //if (item.IsHashtag)
-                                        //    users.Add(item.Owner.Pk.ToString());
-                                        //else
-                                            //users.Add(item.User.Pk.ToString());
-                                            users.Add(item.Id);
+                                                                                     //if (item.IsHashtag)
+                                                                                     //    users.Add(item.Owner.Pk.ToString());
+                                                                                     //else
+                                                                                     //users.Add(item.User.Pk.ToString());
+                                    users.Add(item.Id);
 
                                     var storiesAfterResult = await InstaApi.StoryProcessor.GetUsersStoriesAsHighlightsAsync(users.ToArray());
                                     if (storiesAfterResult.Succeeded)
@@ -178,8 +178,8 @@ namespace Minista.ViewModels.Main
                                         for (int i = 0; i < Stories.Count; i++)
                                         {
                                             var item = Stories[i];
-                                            //var single = storiesAfter.SingleOrDefault(ss => ss.User.Pk.ToString() == item.User.Pk.ToString());
-                                            var single = storiesAfter.SingleOrDefault(ss => ss.Id == item.Id);
+                                        //var single = storiesAfter.SingleOrDefault(ss => ss.User.Pk.ToString() == item.User.Pk.ToString());
+                                        var single = storiesAfter.SingleOrDefault(ss => ss.Id == item.Id);
                                             if (single != null)
                                             {
                                                 item.Items.Clear();
@@ -213,15 +213,23 @@ namespace Minista.ViewModels.Main
                                 catch { listX.Add(xtem); }
                             }
                         }
-                        
+
                         StoriesX.AddRange(listX);
-                        if(StoriesX.Count > 0)
+                        if (StoriesX.Count > 0)
                             StoreisVisibility = Visibility.Visible;
                     }
                     else
                     {
                         if (stories.Info.ResponseType == ResponseType.LoginRequired)
                             MainPage.Current.LoggedOut();
+                        if (stories.Info.ResponseType == ResponseType.ChallengeRequired ||
+                        stories.Info.ResponseType == ResponseType.ChallengeRequiredV2)
+                        {
+                            InstaApi.SetChallengeInfo(stories.Info.Challenge);
+
+                            MainPage.Current.InAppChallenge.StartChallengeV2(stories.Info.Challenge);
+                            return;
+                        }
                         //if (Stories.Count == 0)
                         //    StoreisVisibility = Visibility.Collapsed;
                         if (StoriesX.Count == 0)

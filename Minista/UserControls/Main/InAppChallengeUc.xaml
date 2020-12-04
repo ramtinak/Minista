@@ -1,0 +1,43 @@
+﻿<UserControl
+    x:Class="Minista.UserControls.Main.InAppChallengeUc"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Minista.UserControls.Main"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid x:Name="ChallengeV2Grid"
+              x:FieldModifier="public"
+              Background="{StaticResource DefaultBackgroundColor}">
+        <WebView x:Name="ChallengeV2kWebView"
+                     x:FieldModifier="public"
+                     DOMContentLoaded="ChallengeV2kWebViewDOMContentLoaded"
+                     NewWindowRequested="WebViewFacebookNewWindowRequested"
+                     NavigationStarting="ChallengeV2kWebViewNavigationStarting"
+                     PermissionRequested="FacebookWebViewPermissionRequested"
+                     UnsupportedUriSchemeIdentified="ChallengeV2kWebViewUnsupportedUriSchemeIdentified" />
+
+        <Grid x:Name="ChallengeV2LoadingGrid"
+                  x:FieldModifier="public"
+                  Background="{StaticResource DefaultBackgroundColor}"
+                  Visibility="{x:Bind ChallengeV2LoadingGridVisibility, Mode=TwoWay}">
+            <ProgressRing x:Name="ChallengeV2LoadingRing"
+                              x:FieldModifier="public"
+                              Width="75"
+                              Height="75"
+                              IsActive="{x:Bind ChallengeV2LoadingRingIsActive, Mode=TwoWay}" />
+        </Grid>
+        <Button x:Name="ChallengeV2CloseButton"
+                    Click="ChallengeV2CloseButtonClick"
+                    Background="#FF212121"
+                    Content=""
+                    FontFamily="{StaticResource SymbolFont}"
+                    Foreground="White"
+                    Margin="15 45 15 15"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right" />
+    </Grid>
+</UserControl>

@@ -214,7 +214,6 @@
     <Compile Include="CustomMTC\TVCustomMTC.cs" />
     <Compile Include="Helpers\HyperLinkHelper.cs" />
     <Compile Include="Helpers\MultiApiHelper.cs" />
-    <Compile Include="Helpers\NotificationActivationHelper.cs" />
     <Compile Include="Helpers\PushHelper.cs" />
     <Compile Include="Helpers\ThemeHelper.cs" />
     <Compile Include="Helpers\UriHelper.cs" />
@@ -233,6 +232,9 @@
     </Compile>
     <Compile Include="UserControls\Main\ActivityNotifyUc.xaml.cs">
       <DependentUpon>ActivityNotifyUc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Main\InAppChallengeUc.xaml.cs">
+      <DependentUpon>InAppChallengeUc.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Main\MediaTagUc.xaml.cs">
       <DependentUpon>MediaTagUc.xaml</DependentUpon>
@@ -924,6 +926,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Main\ActivityNotifyUc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Main\InAppChallengeUc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

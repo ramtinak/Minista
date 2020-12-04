@@ -233,7 +233,7 @@ namespace Minista.Views.Sign
         }
 
 
-        private void DeleteFacebookCookies()
+        internal static void DeleteFacebookCookies()
         {
             try
             {
@@ -288,7 +288,7 @@ namespace Minista.Views.Sign
             }
             catch { }
         }
-        private HttpCookieCollection GetBrowserCookie(Uri targetUri)
+        internal static HttpCookieCollection GetBrowserCookie(Uri targetUri)
         {
             var httpBaseProtocolFilter = new HttpBaseProtocolFilter();
             var cookieManager = httpBaseProtocolFilter.CookieManager;
@@ -497,7 +497,8 @@ namespace Minista.Views.Sign
             {
                 try
                 {
-                    UserAgentHelper.SetUserAgent("Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/_BuildID_) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36");
+                    //UserAgentHelper.SetUserAgent("Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/_BuildID_) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36");
+                    UserAgentHelper.SetUserAgent($"Mozilla/5.0 (Linux; Android 10; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.86 Mobile Safari/537.36");
                 }
                 catch { }
                 try
@@ -534,10 +535,11 @@ namespace Minista.Views.Sign
         {
             // {"location": "instagram://checkpoint/dismiss", "type": "CHALLENGE_REDIRECTION", "status": "ok"}
 
-            SignInVM.LoadingOff();
+            //SignInVM.LoadingOff();
+            SignInVM.ChallengeV2LoadingOff();
             try
             {
-                string html = await FacebookWebView.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
+                string html = await ChallengeV2kWebView.InvokeScriptAsync("eval", new string[] { "document.documentElement.outerHTML;" });
 
                 if (html.Contains("\"instagram://checkpoint/dismiss\"") || html.Contains("instagram://checkpoint/dismiss"))
                 {

@@ -677,6 +677,12 @@
             VerticalAlignment="Bottom"
             x:FieldModifier="public"
             Visibility="Collapsed" />
+
+        <ucMain:InAppChallengeUc x:Name="InAppChallenge" 
+                                 x:FieldModifier="public"
+                                 VerticalAlignment="Stretch"
+                                 HorizontalAlignment="Stretch"
+                                 Visibility="Collapsed"/>
         <Grid
             x:Name="LoadingGrid"
             Grid.RowSpan="3"
@@ -704,6 +710,7 @@
 
 
         </Grid>
+        <Button Content="SHow" VerticalAlignment="Center" Click="Button_Click_2"/>
         <ucMain:ActivityNotifyUc
             x:Name="ActivityNotifyUc"
             MinWidth="52"

@@ -114,9 +114,9 @@ namespace MinistaHelper.Push
                         //_socketActivityTask = task.Value;
                         task.Value.Unregister(true);
                         break;
-                    case "MinistaBH.NotifyQuickReplyTask":
-                        task.Value.Unregister(true);
-                        break;
+                    //case "MinistaBH.NotifyQuickReplyTask":
+                    //    task.Value.Unregister(true);
+                    //    break;
                 }
             }
             await Task.Delay(15);

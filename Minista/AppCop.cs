@@ -23,7 +23,6 @@ namespace Minista
     {
         protected override async void OnShareTargetActivated(ShareTargetActivatedEventArgs e)
         {
-            PushHelper.Register();
             try
             {
                 if (DeviceUtil.IsXbox)
@@ -119,7 +118,6 @@ namespace Minista
         }
         protected async override void OnFileActivated(FileActivatedEventArgs e)
         {
-            PushHelper.Register();
             try
             {
                 if (DeviceUtil.IsXbox)

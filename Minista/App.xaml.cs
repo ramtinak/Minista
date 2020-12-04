@@ -48,9 +48,8 @@ namespace Minista
         private static Guid id = Guid.NewGuid();
         public static Guid Id { get { return id; } }
         public static App CurrentX { get; private set; }
-        protected override void OnActivated(IActivatedEventArgs e)
+        protected override async void OnActivated(IActivatedEventArgs e)
         {
-            PushHelper.Register();
             try
             {
                 if (DeviceUtil.IsXbox)
@@ -102,9 +101,10 @@ namespace Minista
                         Debug.WriteLine(val.Key + " : " + JsonConvert.SerializeObject(val.Value));
                 Debug.WriteLine("--------------------+------------------");
                 Frame rootFrame = CreateRootFrame();
+                bool wait = false;
                 if (rootFrame.Content == null)
                 {
-                    NotificationActivationHelper.HandleActivation(args.Argument, args.UserInput, true);
+                    wait = true;
                     // Create a Frame to act as the navigation context and navigate to the first page
                     rootFrame.NavigationFailed += OnNavigationFailed;
                     if (e.PreviousExecutionState != ApplicationExecutionState.Running)
@@ -118,16 +118,41 @@ namespace Minista
                 }
                 else
                 {
-                    NotificationActivationHelper.HandleActivation(args.Argument, args.UserInput);
+                    NotificationActivationHelper.HandleActivation(Helper.InstaApi, Helper.InstaApiList,
+                        args.Argument, args.UserInput, false, OpenProfile, OpenLive);
                     MainPage.Current?.HandleUriProtocol();
                 }
 
                 rootFrame.Content.GetType().PrintDebug();
                 Window.Current.Content.GetType().PrintDebug();
                 Window.Current.Activate();
-            }
 
+                // wait 
+                if (wait)
+                {
+                    await Task.Delay(3500);
+                    NotificationActivationHelper.HandleActivation(Helper.InstaApi, Helper.InstaApiList, args.Argument,
+                    args.UserInput, true, OpenProfile, OpenLive);
+            }
+            }
         }
+        internal async void OpenProfile(long pk)
+        {
+            try
+            {
+                await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, ()=> Helper.OpenProfile(pk));
+            }
+            catch { }
+        }
+        internal async void OpenLive(string id)
+        {
+            try
+            {
+                await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => Helper.OpenLive(id));
+            }
+            catch { }
+        }
+
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -189,7 +214,7 @@ namespace Minista
         /// <param name="e">Details about the launch request and process.</param>
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            PushHelper.Register();
+            PushHelperX.Register();
             bool canEnablePrelaunch = Windows.Foundation.Metadata.ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch");
 
             if (e != null)
