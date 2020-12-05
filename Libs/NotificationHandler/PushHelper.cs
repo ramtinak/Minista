@@ -13,9 +13,6 @@ namespace Minista.Helpers
 {
     public static partial class PushHelper
     {
-        //comment
-        //direct_v2_message
-        //
         public static void HandleNotify(PushNotification push, IReadOnlyList<IInstaApi> apiList)
         {
             push.IgAction += $"&currentUser={push.IntendedRecipientUserId}";
@@ -31,25 +28,14 @@ namespace Minista.Helpers
                 GoPrivateFriendshipRequest(push);
             else if (push.CollapseKey == "live_broadcast")
                 GoLiveBroadcast(push);
+            else if (push.CollapseKey == "post")
+                GoNewPost(push);
+            else if (push.CollapseKey == "comment")
+                GoComment(push);
+            else if (push.CollapseKey == "subscribed_igtv_post")
+                GoNewIgtv(push);
             else
                 GoLike(push, apiList.GetUserName(push.IntendedRecipientUserId));
-
-            //switch (push.CollapseKey)
-            //{
-            //    case "direct_v2_message":
-            //        GoDirect(push, apiList.GetUserName(push.IntendedRecipientUserId));
-            //        return;
-            //    case "like":
-            //        //GoLike(push, apiList.GetUserName(push.IntendedRecipientUserId));
-            //        //return; 
-            //    //case "comment": //comment_like
-            //        //GoLike(push, apiList.GetUserName(push.IntendedRecipientUserId));
-            //        //return;
-            //    default:
-            //        GoLike(push, apiList.GetUserName(push.IntendedRecipientUserId));
-            //        //NotificationHelper.ShowToast(push.Message, push.OptionalAvatarUrl, push.Title ?? "");
-            //        return;
-            //}
         }
         static void GoDirect(PushNotification push, string user)
         {
@@ -137,7 +123,40 @@ namespace Minista.Helpers
                 var img = push.OptionalAvatarUrl;
                 Notify.SendDirectPendingRequestNotify(msg, img, act);
             }
-            catch { } 
+            catch { }
+        }
+        static void GoNewPost(PushNotification push)
+        {
+            try
+            {
+                var msg = push.Message;
+                var act = push.IgAction;
+                var img = push.OptionalAvatarUrl;
+                Notify.SendNewPostNotify(msg, img, act);
+            }
+            catch { }
+        }
+        static void GoComment(PushNotification push)
+        {
+            try
+            {
+                var msg = push.Message;
+                var act = push.IgAction;
+                var img = push.OptionalAvatarUrl;
+                Notify.SendCommentNotify(msg, img, act);
+            }
+            catch { }
+        }
+        static void GoNewIgtv(PushNotification push)
+        {
+            try
+            {
+                var msg = push.Message;
+                var act = push.IgAction;
+                var img = push.OptionalAvatarUrl;
+                Notify.SendNewIgtvNotify(msg, img, act);
+            }
+            catch { }
         }
         public static string GetUserName(this IReadOnlyCollection<IInstaApi> apis, string u)
         {

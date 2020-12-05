@@ -16,14 +16,17 @@ namespace Minista.Helpers
         public static async void HandleActivation(IInstaApi defaultApi, List<IInstaApi> apiList, string args,
             ValueSet valuePairs, bool wait = false, 
             Action<long> profileAction = null, Action<string> liveAction = null,
-            Action<string, InstaUserShortFriendship> threadAction = null)
+            Action<string, InstaUserShortFriendship> threadAction = null, Action<string> commentAction = null,
+            Action<InstaMedia> tvAction = null)
             =>
-            await HandleActivationAsync(defaultApi, apiList, args, valuePairs, wait, profileAction, liveAction, threadAction);
+            await HandleActivationAsync(defaultApi, apiList, args, valuePairs, wait, 
+                profileAction, liveAction, threadAction, commentAction, tvAction);
 
         public static async Task HandleActivationAsync(IInstaApi defaultApi, List<IInstaApi> apiList, string args,
             ValueSet valuePairs, bool wait = false, 
             Action<long> profileAction = null, Action<string> liveAction = null,
-            Action<string, InstaUserShortFriendship> threadAction = null)
+            Action<string, InstaUserShortFriendship> threadAction = null, Action<string> commentAction = null, 
+            Action<InstaMedia> tvAction = null)
         {
             try
             {
@@ -35,10 +38,13 @@ namespace Minista.Helpers
                 var queries = HttpUtility.ParseQueryString(args, out string type);
                 if (queries?.Count > 0)
                 {
-                    var currentUser = queries["currentUser"];
-                    var collapsedKey = queries["collapseKey"];
-                    var sourceUserId = queries["sourceUserId"];
-                    var pushCategory = queries["pushCategory"];
+                    var action = queries.GetValueIfPossible("action");
+                    var currentUser = queries.GetValueIfPossible("currentUser");
+                    var collapsedKey = queries.GetValueIfPossible("collapseKey");
+                    var sourceUserId = queries.GetValueIfPossible("sourceUserId");
+                    var pushCategory = queries.GetValueIfPossible("pushCategory");
+                    var id = queries.GetValueIfPossible("id")?.Trim();
+                    var itemId = queries.GetValueIfPossible("x");
 
                     IInstaApi api;
                     if (apiList?.Count > 1)
@@ -56,8 +62,6 @@ namespace Minista.Helpers
                     if (type == "direct_v2")
                     {
                         //direct_v2?id=340282366841710300949128136069129367828&x=29641841166106199869991401113518080
-                        var threadId = queries["id"];
-                        var itemId = queries.GetValueIfPossible("x");
                         if (string.IsNullOrEmpty(pushCategory) || pushCategory == "direct_v2_message") // messaging
                         {
                             //textBox : "00000005544666"
@@ -65,23 +69,23 @@ namespace Minista.Helpers
                             {
                                 var text = valuePairs["textBox"].ToString();
 
-                                await api.MessagingProcessor.SendDirectTextAsync(null, threadId, text.Trim());
+                                await api.MessagingProcessor.SendDirectTextAsync(null, id, text.Trim());
 
                             }
                         }
-                        else if(pushCategory == "direct_v2_pending" && queries["action"] is string pendingRequestAction)// pending requests
+                        else if (pushCategory == "direct_v2_pending")// pending requests
                         {
                             // Accept   Delete   Block  Dismiss
                             long userPk = await GetUserId(api, sourceUserId, null);
                             if (userPk == -1) return;
 
-                            if (pendingRequestAction == "acceptDirectRequest")
-                                await api.MessagingProcessor.ApproveDirectPendingRequestAsync(threadId);
-                            else if (pendingRequestAction == "deleteDirectRequest")
-                                await api.MessagingProcessor.DeclineDirectPendingRequestsAsync(threadId);
-                            else if (pendingRequestAction == "blockDirectRequest")
+                            if (action == "acceptDirectRequest")
+                                await api.MessagingProcessor.ApproveDirectPendingRequestAsync(id);
+                            else if (action == "deleteDirectRequest")
+                                await api.MessagingProcessor.DeclineDirectPendingRequestsAsync(id);
+                            else if (action == "blockDirectRequest")
                             {
-                                await api.MessagingProcessor.DeclineDirectPendingRequestsAsync(threadId);
+                                await api.MessagingProcessor.DeclineDirectPendingRequestsAsync(id);
                                 await api.UserProcessor.BlockUserAsync(userPk);
                             }
                             else //openPendingThread
@@ -115,11 +119,11 @@ namespace Minista.Helpers
                                     {
                                         Pk = u.Pk
                                     };
-                                threadAction?.Invoke(threadId, userShortFriendship);
+                                threadAction?.Invoke(id, userShortFriendship);
                             }
                         }
                     }
-                    else if (collapsedKey == "private_user_follow_request" && queries["action"] is string followRequestAction)
+                    else if (collapsedKey == "private_user_follow_request")
                     {
                         //user?username=ministaapp
                         // Minista App (@ministaapp) has requested to follow you.
@@ -127,9 +131,9 @@ namespace Minista.Helpers
                         //collapseKey=private_user_follow_request&action=openProfile"
                         long userPk = await GetUserId(api, sourceUserId, queries["username"]);
                         if (userPk == -1) return;
-                        if (followRequestAction == "acceptFriendshipRequest")
+                        if (action == "acceptFriendshipRequest")
                             await api.UserProcessor.AcceptFriendshipRequestAsync(userPk);
-                        else if (followRequestAction == "declineFriendshipRequest")
+                        else if (action == "declineFriendshipRequest")
                             await api.UserProcessor.IgnoreFriendshipRequestAsync(userPk);
                         else
                             profileAction?.Invoke(userPk);
@@ -138,8 +142,57 @@ namespace Minista.Helpers
                     else if (type == "broadcast" && collapsedKey == "live_broadcast")
                     {
                         //broadcast?id=18035667694304049&reel_id=1647718432&published_time=1607056892
-                        if (queries["id"] is string broadcastId)
-                            liveAction?.Invoke(broadcastId);
+                        liveAction?.Invoke(id);
+                    }
+                    else if (collapsedKey == "post")
+                    {
+                        // media?id=2455052815714850188_1647718432&media_id=2455052815714850188_1647718432
+                        if (action == "likeMedia")
+                            await api.MediaProcessor.LikeMediaAsync(id);
+                        else if (action == "commentMedia" && valuePairs?.Count > 0)
+                        {
+                            var text = valuePairs["textBox"].ToString();
+
+                            await api.CommentProcessor.CommentMediaAsync(id, text.Trim());
+                        }
+                        else
+                            commentAction?.Invoke(id);
+                    }
+                    else if (collapsedKey == "comment")
+                    {
+                        var mediaId = id ?? queries.GetValueIfPossible("media_id");
+                        var targetMediaId = queries.GetValueIfPossible("target_comment_id");
+
+                        if (string.IsNullOrEmpty(mediaId)) return;
+                        if(action != "openComment" && string.IsNullOrEmpty(targetMediaId)) return;
+                        // comments_v2?media_id=2450763156807842703_44428109093&target_comment_id=17915232835518492&permalink_enabled=True
+                        if (action == "likeComment")
+                            await api.CommentProcessor.LikeCommentAsync(targetMediaId);
+                        else if (action == "commentMedia" && valuePairs?.Count > 0)
+                        {
+                            var text = valuePairs["textBox"].ToString();
+
+                            await api.CommentProcessor.ReplyCommentMediaAsync(mediaId, targetMediaId, text.Trim());
+                        }
+                        else
+                            commentAction?.Invoke(mediaId);
+                    }
+                    else if (collapsedKey == "subscribed_igtv_post")
+                    {
+                        if (string.IsNullOrEmpty(id)) return;
+                        // tv_viewer?id=2457476214378560971
+                        var mediaInfo = await api.MediaProcessor.GetMediaByIdAsync(id);
+                        if (!mediaInfo.Succeeded) return;
+                        var mediaId = mediaInfo.Value.InstaIdentifier;
+                        if (action == "likeMedia")
+                            await api.CommentProcessor.LikeCommentAsync(mediaId);
+                        else if (action == "commentMedia" && valuePairs?.Count > 0)
+                        {
+                            var text = valuePairs["textBox"].ToString();
+                            await api.CommentProcessor.CommentMediaAsync(mediaId, text.Trim());
+                        }
+                        else
+                            tvAction?.Invoke(mediaInfo.Value);
                     }
                 }
             }

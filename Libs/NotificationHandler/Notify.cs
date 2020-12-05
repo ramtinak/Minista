@@ -82,7 +82,7 @@ namespace NotifySharp
                             },
                             new AdaptiveText()
                             {
-                                Text =message
+                                Text = message
                             }
                         },
                         AppLogoOverride = new ToastGenericAppLogo()
@@ -305,6 +305,174 @@ namespace NotifySharp
             var toastNotif = new ToastNotification(toastContent.GetXml());
 
             // And send the notification
+            ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+        }
+        public static void SendNewPostNotify(string message, string image, string action, string heroImage = null)
+        {
+            var toastContent = new ToastContent()
+            {
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = message
+                            }
+                        },
+                        AppLogoOverride = new ToastGenericAppLogo()
+                        {
+                            Source = image,
+                            HintCrop = ToastGenericAppLogoCrop.Circle
+                        },
+                        HeroImage = heroImage != null ? new ToastGenericHeroImage { Source = heroImage } : null
+                    }
+                },
+                Actions = new ToastActionsCustom()
+                {
+                    Inputs =
+                    {
+                        new ToastTextBox("textBox")
+                        {
+                            PlaceholderContent = "Send a comment"
+                        }
+                    },
+                    Buttons =
+                    {
+                        new ToastButton("Send", action + "&action=commentMedia")
+                        {
+                            ActivationType = ToastActivationType.Background,
+                            ImageUri = "Assets/Icons/send.png",
+                            TextBoxId = "textBox"
+                        },
+                        new ToastButton("Like", action + "&action=likeMedia")
+                        {
+                            ActivationType = ToastActivationType.Background
+                        },
+                        new ToastButton("Open", action + "&action=openMedia")
+                        {
+                            ActivationType = ToastActivationType.Foreground
+                        }
+                    }
+                },
+                Launch = action
+            };
+
+            var toastNotif = new ToastNotification(toastContent.GetXml());
+            ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+        }
+        public static void SendCommentNotify(string message, string image, string action, string heroImage = null)
+        {
+            var toastContent = new ToastContent()
+            {
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = message
+                            }
+                        },
+                        AppLogoOverride = new ToastGenericAppLogo()
+                        {
+                            Source = image,
+                            HintCrop = ToastGenericAppLogoCrop.Circle
+                        },
+                        HeroImage = heroImage != null ? new ToastGenericHeroImage { Source = heroImage } : null
+                    }
+                },
+                Actions = new ToastActionsCustom()
+                {
+                    Inputs =
+                    {
+                        new ToastTextBox("textBox")
+                        {
+                            PlaceholderContent = "Reply to comment"
+                        }
+                    },
+                    Buttons =
+                    {
+                        new ToastButton("Send", action + "&action=commentMedia")
+                        {
+                            ActivationType = ToastActivationType.Background,
+                            ImageUri = "Assets/Icons/send.png",
+                            TextBoxId = "textBox"
+                        },
+                        new ToastButton("Like", action + "&action=likeComment")
+                        {
+                            ActivationType = ToastActivationType.Background
+                        },
+                        new ToastButton("Open", action + "&action=openComment")
+                        {
+                            ActivationType = ToastActivationType.Foreground
+                        }
+                    }
+                },
+                Launch = action
+            };
+
+            var toastNotif = new ToastNotification(toastContent.GetXml());
+            ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+        }
+        public static void SendNewIgtvNotify(string message, string image, string action, string heroImage = null)
+        {
+            var toastContent = new ToastContent()
+            {
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = message
+                            }
+                        },
+                        AppLogoOverride = new ToastGenericAppLogo()
+                        {
+                            Source = image,
+                            HintCrop = ToastGenericAppLogoCrop.Circle
+                        },
+                        HeroImage = heroImage != null ? new ToastGenericHeroImage { Source = heroImage } : null
+                    }
+                },
+                Actions = new ToastActionsCustom()
+                {
+                    Inputs =
+                    {
+                        new ToastTextBox("textBox")
+                        {
+                            PlaceholderContent = "Send a comment"
+                        }
+                    },
+                    Buttons =
+                    {
+                        new ToastButton("Send", action + "&action=commentMedia")
+                        {
+                            ActivationType = ToastActivationType.Background,
+                            ImageUri = "Assets/Icons/send.png",
+                            TextBoxId = "textBox"
+                        },
+                        new ToastButton("Like", action + "&action=likeMedia")
+                        {
+                            ActivationType = ToastActivationType.Background
+                        },
+                        new ToastButton("Open", action + "&action=openMedia")
+                        {
+                            ActivationType = ToastActivationType.Foreground
+                        }
+                    }
+                },
+                Launch = action
+            };
+
+            var toastNotif = new ToastNotification(toastContent.GetXml());
             ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
         }
     }

@@ -120,7 +120,7 @@ namespace Minista
                 else
                 {
                     NotificationActivationHelper.HandleActivation(Helper.InstaApi, Helper.InstaApiList,
-                        args.Argument, args.UserInput, false, OpenProfile, OpenLive, OpenPendingThreadRequest);
+                        args.Argument, args.UserInput, false, OpenProfile, OpenLive, OpenPendingThreadRequest, OpenPost, OpenTV);
                     MainPage.Current?.HandleUriProtocol();
                 }
 
@@ -133,8 +133,8 @@ namespace Minista
                 {
                     await Task.Delay(3500);
                     NotificationActivationHelper.HandleActivation(Helper.InstaApi, Helper.InstaApiList, args.Argument,
-                    args.UserInput, true, OpenProfile, OpenLive, OpenPendingThreadRequest);
-            }
+                    args.UserInput, true, OpenProfile, OpenLive, OpenPendingThreadRequest, OpenPost, OpenTV);
+                }
             }
         }
         internal async void OpenProfile(long pk)
@@ -166,6 +166,25 @@ namespace Minista
             }
             catch { }
         }
+        internal async void OpenPost(string id)
+        {
+            try
+            {
+                await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        NavigationService.Navigate(typeof(Views.Posts.SinglePostView), id));
+            }
+            catch { }
+        }
+        internal async void OpenTV(InstaMedia tv)
+        {
+            try
+            {
+                await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                       NavigationService.Navigate(typeof(Views.TV.TVPlayer), new object[] { new List<InstaMedia> { tv }, 0 }));
+            }
+            catch { }
+        }
+
 
 
         /// <summary>
