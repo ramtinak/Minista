@@ -126,8 +126,6 @@
     <Compile Include="Notify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushHelper.cs" />
-    <Compile Include="Toast\PostActivation.cs" />
-    <Compile Include="Toast\ToastActivation.cs" />
     <EmbeddedResource Include="Properties\NotificationHandler.rd.xml" />
   </ItemGroup>
   <ItemGroup>

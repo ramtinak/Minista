@@ -966,13 +966,14 @@ namespace Minista
 
             var p = new PushNotification
             {
-                Message = "Minista App (@ministaapp) has requested to follow you.",
-                IgAction = "user?username=ministaapp",
-                CollapseKey = "private_user_follow_request",
+                Message = "del.geen wants to send you a message.",
+                IgAction = "direct_v2?id=340282366841710300949128332882718514370&t=p",
+                CollapseKey = "direct_v2_message",
                 OptionalAvatarUrl = "https://instagram.fevn1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/62231151_371563176829566_537134867805110272_n.jpg?_nc_ht=instagram.fevn1-1.fna.fbcdn.net&_nc_ohc=_S4Ei3Q3ZDsAX-HVjOo&tp=1&oh=384bd91ead130669a6eba37288050aaa&oe=5FF226E3",
-                PushId = "5b59a0b8cd64eHa61202a11H5b59a5522d920H4b",
+                PushId = "5b5b4a70e31a8Ha61202a11H5b5b4f0a4347aH23",
+                PushCategory = "direct_v2_pending",
                 IntendedRecipientUserId = "44579170833",
-                SourceUserId = "1647718432",
+                SourceUserId = "8651542203",
             };
 
             PushHelper.HandleNotify(p, InstaApiList);

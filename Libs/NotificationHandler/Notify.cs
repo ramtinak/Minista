@@ -253,5 +253,59 @@ namespace NotifySharp
             ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
         }
 
+        public static void SendDirectPendingRequestNotify(string message, string image, string action, string heroImage = null)
+        {
+            var toastContent = new ToastContent()
+            {
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = message
+                            }
+                        },
+                        AppLogoOverride = new ToastGenericAppLogo()
+                        {
+                            Source = image,
+                            HintCrop = ToastGenericAppLogoCrop.Circle
+                        },
+                        HeroImage = heroImage != null ? new ToastGenericHeroImage { Source = heroImage } : null
+                    }
+                },
+                Actions = new ToastActionsCustom()
+                {
+                    Buttons =
+                    {
+                        new ToastButton("Accept", action + "&action=acceptDirectRequest")
+                        {
+                            ActivationType = ToastActivationType.Background
+                        },
+                        new ToastButton("Delete", action + "&action=deleteDirectRequest")
+                        {
+                            ActivationType = ToastActivationType.Background
+                        },
+                        new ToastButton("Block", action + "&action=blockDirectRequest")
+                        {
+                            ActivationType = ToastActivationType.Background
+                        },
+                        new ToastButton("Open", action + "&action=openPendingThread")
+                        {
+                            ActivationType = ToastActivationType.Foreground
+                        }
+                    }
+                },
+                Launch = action
+            };
+
+            // Create the toast notification
+            var toastNotif = new ToastNotification(toastContent.GetXml());
+
+            // And send the notification
+            ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+        }
     }
 }

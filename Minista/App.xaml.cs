@@ -1,4 +1,5 @@
 ﻿//using Microsoft.Services.Store.Engagement;
+using InstagramApiSharp.Classes.Models;
 using Microsoft.Services.Store.Engagement;
 using Minista.Helpers;
 using MinistaHelper.Push;
@@ -119,7 +120,7 @@ namespace Minista
                 else
                 {
                     NotificationActivationHelper.HandleActivation(Helper.InstaApi, Helper.InstaApiList,
-                        args.Argument, args.UserInput, false, OpenProfile, OpenLive);
+                        args.Argument, args.UserInput, false, OpenProfile, OpenLive, OpenPendingThreadRequest);
                     MainPage.Current?.HandleUriProtocol();
                 }
 
@@ -132,7 +133,7 @@ namespace Minista
                 {
                     await Task.Delay(3500);
                     NotificationActivationHelper.HandleActivation(Helper.InstaApi, Helper.InstaApiList, args.Argument,
-                    args.UserInput, true, OpenProfile, OpenLive);
+                    args.UserInput, true, OpenProfile, OpenLive, OpenPendingThreadRequest);
             }
             }
         }
@@ -149,6 +150,19 @@ namespace Minista
             try
             {
                 await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => Helper.OpenLive(id));
+            }
+            catch { }
+        }
+        internal async void OpenPendingThreadRequest(string threadId, InstaUserShortFriendship userShortFriendship)
+        {
+            try
+            {
+                await Helper.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    var thread = ViewModels.Direct.ThreadViewModel.CreateFakeThread(userShortFriendship);
+                    thread.ThreadId = threadId;
+                    NavigationService.Navigate(typeof(Views.Direct.DirectRequestsThreadView), thread);
+                });
             }
             catch { }
         }

@@ -21,8 +21,11 @@ namespace Minista.Helpers
             push.IgAction += $"&currentUser={push.IntendedRecipientUserId}";
             push.IgAction += $"&sourceUserId={push.SourceUserId}";
             push.IgAction += $"&collapseKey={push.CollapseKey}";
+            push.IgAction += $"&pushCategory={push.PushCategory}";
 
-            if (push.CollapseKey == "direct_v2_message")
+            if (push.PushCategory == "direct_v2_pending")
+                GoDirectPendingRequest(push);
+            else if (push.CollapseKey == "direct_v2_message")
                 GoDirect(push, apiList.GetUserName(push.IntendedRecipientUserId));
             else if (push.CollapseKey == "private_user_follow_request")
                 GoPrivateFriendshipRequest(push);
@@ -124,6 +127,17 @@ namespace Minista.Helpers
                 Notify.SendLiveBroadcastNotify(msg, img, act);
             }
             catch { }
+        }
+        static void GoDirectPendingRequest(PushNotification push)
+        {
+            try
+            {
+                var msg = push.Message;
+                var act = push.IgAction;
+                var img = push.OptionalAvatarUrl;
+                Notify.SendDirectPendingRequestNotify(msg, img, act);
+            }
+            catch { } 
         }
         public static string GetUserName(this IReadOnlyCollection<IInstaApi> apis, string u)
         {

@@ -25,13 +25,24 @@ namespace Minista.ViewModels.Direct
     {
         public ObservableCollection<InstaDirectInboxItem> Items { get; set; } = new ObservableCollection<InstaDirectInboxItem>();
         public InstaDirectInboxThread CurrentThread;
-        public void SetThread(InstaDirectInboxThread directInboxThread)
+        public async void SetThread(InstaDirectInboxThread directInboxThread)
         {
             CurrentThread = directInboxThread;
 
             try
             {
                 Items.Clear();
+                if (directInboxThread.Items.Count == 0)
+                {
+                    var result = await InstaApi.MessagingProcessor
+                       .GetDirectInboxThreadAsync(directInboxThread.ThreadId,
+                       PaginationParameters.MaxPagesToLoad(1), Views.Direct.InboxView.Current?.InboxVM?.SeqId ?? 0);
+                    if (result.Succeeded)
+                    {
+                        directInboxThread.Items.AddRange(result.Value.Items);
+                    }
+                }
+
                 var items = directInboxThread.Items;
                 items.Reverse();
                 items.ForEach(x => Items.Insert(0, x));

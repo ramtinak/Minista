@@ -7,18 +7,23 @@ using System.Diagnostics;
 using InstagramApiSharp.API;
 using Windows.Foundation.Collections;
 using InstagramApiSharp.Helpers;
+using InstagramApiSharp.Classes.Models;
 
 namespace Minista.Helpers
 {
     static public class NotificationActivationHelper
     {
         public static async void HandleActivation(IInstaApi defaultApi, List<IInstaApi> apiList, string args,
-            ValueSet valuePairs, bool wait = false, Action<long> profileAction = null, Action<string> liveAction = null)
+            ValueSet valuePairs, bool wait = false, 
+            Action<long> profileAction = null, Action<string> liveAction = null,
+            Action<string, InstaUserShortFriendship> threadAction = null)
             =>
-            await HandleActivationAsync(defaultApi, apiList, args, valuePairs, wait, profileAction, liveAction);
+            await HandleActivationAsync(defaultApi, apiList, args, valuePairs, wait, profileAction, liveAction, threadAction);
 
         public static async Task HandleActivationAsync(IInstaApi defaultApi, List<IInstaApi> apiList, string args,
-            ValueSet valuePairs, bool wait = false, Action<long> profileAction = null, Action<string> liveAction = null)
+            ValueSet valuePairs, bool wait = false, 
+            Action<long> profileAction = null, Action<string> liveAction = null,
+            Action<string, InstaUserShortFriendship> threadAction = null)
         {
             try
             {
@@ -33,6 +38,7 @@ namespace Minista.Helpers
                     var currentUser = queries["currentUser"];
                     var collapsedKey = queries["collapseKey"];
                     var sourceUserId = queries["sourceUserId"];
+                    var pushCategory = queries["pushCategory"];
 
                     IInstaApi api;
                     if (apiList?.Count > 1)
@@ -50,16 +56,67 @@ namespace Minista.Helpers
                     if (type == "direct_v2")
                     {
                         //direct_v2?id=340282366841710300949128136069129367828&x=29641841166106199869991401113518080
-                        //textBox : "00000005544666"
-                        var thread = queries["id"];
-                        var itemId = queries["x"];
-
-                        if (valuePairs?.Count > 0)
+                        var threadId = queries["id"];
+                        var itemId = queries.GetValueIfPossible("x");
+                        if (string.IsNullOrEmpty(pushCategory) || pushCategory == "direct_v2_message") // messaging
                         {
-                            var text = valuePairs["textBox"].ToString();
+                            //textBox : "00000005544666"
+                            if (valuePairs?.Count > 0)
+                            {
+                                var text = valuePairs["textBox"].ToString();
 
-                            await api.MessagingProcessor.SendDirectTextAsync(null, thread, text.Trim());
+                                await api.MessagingProcessor.SendDirectTextAsync(null, threadId, text.Trim());
 
+                            }
+                        }
+                        else if(pushCategory == "direct_v2_pending" && queries["action"] is string pendingRequestAction)// pending requests
+                        {
+                            // Accept   Delete   Block  Dismiss
+                            long userPk = await GetUserId(api, sourceUserId, null);
+                            if (userPk == -1) return;
+
+                            if (pendingRequestAction == "acceptDirectRequest")
+                                await api.MessagingProcessor.ApproveDirectPendingRequestAsync(threadId);
+                            else if (pendingRequestAction == "deleteDirectRequest")
+                                await api.MessagingProcessor.DeclineDirectPendingRequestsAsync(threadId);
+                            else if (pendingRequestAction == "blockDirectRequest")
+                            {
+                                await api.MessagingProcessor.DeclineDirectPendingRequestsAsync(threadId);
+                                await api.UserProcessor.BlockUserAsync(userPk);
+                            }
+                            else //openPendingThread
+                            {
+                                var userInfo = await api.UserProcessor.GetUserInfoByIdAsync(userPk);
+                                if (!userInfo.Succeeded) return;
+                                var u = userInfo.Value;
+                                var userShortFriendship = new InstaUserShortFriendship
+                                {
+                                    UserName = u.UserName,
+                                    Pk = u.Pk,
+                                    ProfilePicture = u.ProfilePicture,
+                                    ProfilePicUrl = u.ProfilePicUrl,
+                                    IsPrivate = u.IsPrivate,
+                                    IsBestie = u.IsBestie,
+                                    IsVerified = u.IsVerified,
+                                    FullName = u.FullName,
+                                };
+                                if (u.FriendshipStatus != null)
+                                    userShortFriendship.FriendshipStatus = new InstaFriendshipShortStatus
+                                    {
+                                        Following = u.FriendshipStatus.Following,
+                                        IncomingRequest = u.FriendshipStatus.IncomingRequest,
+                                        IsBestie = u.FriendshipStatus.IsBestie,
+                                        IsPrivate = u.FriendshipStatus.IsPrivate,
+                                        OutgoingRequest = u.FriendshipStatus.OutgoingRequest,
+                                        Pk = u.Pk
+                                    };
+                                else
+                                    userShortFriendship.FriendshipStatus = new InstaFriendshipShortStatus
+                                    {
+                                        Pk = u.Pk
+                                    };
+                                threadAction?.Invoke(threadId, userShortFriendship);
+                            }
                         }
                     }
                     else if (collapsedKey == "private_user_follow_request" && queries["action"] is string followRequestAction)
@@ -68,23 +125,14 @@ namespace Minista.Helpers
                         // Minista App (@ministaapp) has requested to follow you.
                         //"user?username=rmtjj73&currentUser=44579170833&sourceUserId=14564882672&
                         //collapseKey=private_user_follow_request&action=openProfile"
-                        long userPk = -1;
-                        long.TryParse(sourceUserId, out userPk);
-                        if (userPk <= 0)
-                        {
-                            var userResult = await api.UserProcessor.GetUserAsync(queries["username"]);
-                            if (!userResult.Succeeded) return;
-                            userPk = userResult.Value.Pk;
-                        }
+                        long userPk = await GetUserId(api, sourceUserId, queries["username"]);
+                        if (userPk == -1) return;
                         if (followRequestAction == "acceptFriendshipRequest")
                             await api.UserProcessor.AcceptFriendshipRequestAsync(userPk);
                         else if (followRequestAction == "declineFriendshipRequest")
                             await api.UserProcessor.IgnoreFriendshipRequestAsync(userPk);
                         else
-                        {
                             profileAction?.Invoke(userPk);
-                            //Helper.OpenProfile(userPk); 
-                        }
 
                     }
                     else if (type == "broadcast" && collapsedKey == "live_broadcast")
@@ -96,6 +144,25 @@ namespace Minista.Helpers
                 }
             }
             catch { }
+        }
+        static async Task<long> GetUserId(IInstaApi api, string sourceUserId, string username)
+        {
+            long.TryParse(sourceUserId, out long userPk);
+            if (userPk <= 0)
+            {
+                if (string.IsNullOrEmpty(username)) return -1;
+                var userResult = await api.UserProcessor.GetUserAsync(username);
+                if (!userResult.Succeeded) return -1;
+                userPk = userResult.Value.Pk;
+            }
+            return userPk;
+        }
+        static string GetValueIfPossible(this Dictionary<string, string> keyValuePairs, string key)
+        {
+            if (keyValuePairs.Any(x => x.Key == key))
+                return keyValuePairs[key];
+            else
+                return null;
         }
     }
 }
