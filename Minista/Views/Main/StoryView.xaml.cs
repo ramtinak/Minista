@@ -41,6 +41,8 @@ using UICompositionAnimations.Helpers;
 using UICompositionAnimations.Enums;
 
 using System.Numerics;
+using Minista.Classes;
+
 namespace Minista.Views.Main
 {
     public sealed partial class StoryView : Page, INotifyPropertyChanged
@@ -540,11 +542,11 @@ namespace Minista.Views.Main
         {
             try
             {
-                try
-                {
-                    Items[StoryIndex]?.MediaElement.CurrentState.PrintDebug();
-                }
-                catch { }
+                //try
+                //{
+                //    Items[StoryIndex]?.MediaElement.CurrentState.PrintDebug();
+                //}
+                //catch { }
                 if (Items[StoryIndex]?.StoryItem.MediaType == InstaMediaType.Image && !Items[StoryIndex].IsImageOpened)
                     return;
      
@@ -556,7 +558,7 @@ namespace Minista.Views.Main
                 }
                 if (IsHolding)
                 {
-                    $"Holding is on".PrintDebug();
+                    //$"Holding is on".PrintDebug();
 
                     if (Items[StoryIndex]?.StoryItem != null)
                         if (Items[StoryIndex]?.StoryItem.MediaType == InstaMediaType.Video)
@@ -1857,12 +1859,15 @@ namespace Minista.Views.Main
                 var item = Items[StoryIndex].StoryItem;
                 if (item.MediaType == InstaMediaType.Image)
                 {
-                    var url = item.Images.FirstOrDefault().Uri;
+                    var url = (SettingsHelper.Settings.DownloadQuality == DownloadQuality.HighestQuality ?
+                        item.Images?[0] : item.Images.LastOrDefault()).Uri;
+
                     DownloadHelper.Download(url, item.Images.LastOrDefault().Uri, false, item.User.UserName, null, true, true);
                 }
                 else
                 {
-                    var url = item.Videos.FirstOrDefault().Uri;
+                    var url = (SettingsHelper.Settings.DownloadQuality == DownloadQuality.HighestQuality ?
+                        item.Videos?[0] : item.Videos.LastOrDefault()).Uri;
                     DownloadHelper.Download(url, item.Images.LastOrDefault().Uri, true, item.User.UserName, null, true, true);
                 }
             }

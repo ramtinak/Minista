@@ -110,6 +110,54 @@
                                    Margin="15 2.5"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch" />
+
+
+
+                        <StackPanel>
+                            <Grid Margin="0 5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock TextWrapping="Wrap"
+                                       Text="Menu position"
+                                       Margin="6 4"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       FontSize="{StaticResource DefaultFontSize}"
+                                       FontFamily="{StaticResource VazirFont}" />
+                                <ComboBox x:Name="comboDownloadQuality"
+                                      Margin="4"
+                                      Grid.Column="1"
+                                      Width="160"
+                                      BorderThickness=".8"
+                                      Background="Transparent"
+                                      FontSize="{StaticResource DefaultFontSize}"
+                                      FontFamily="{StaticResource VazirFont}"
+                                      SelectionChanged="ComboDownloadQualitySelectionChanged">
+                                    <ComboBoxItem Content="Highest quality"
+                                              FontSize="{StaticResource DefaultFontSize}"
+                                              FontFamily="{StaticResource VazirFont}" />
+
+                                    <ComboBoxItem Content="Lowest quality"
+                                              FontSize="{StaticResource DefaultFontSize}"
+                                              FontFamily="{StaticResource VazirFont}" />
+                                </ComboBox>
+                            </Grid>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="This option only works if multiple qualities exist."
+                                       Margin="8 2 4 2"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       FontSize="{StaticResource TinyFontSize}"
+                                       FontFamily="{StaticResource VazirFont}"
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
+                        </StackPanel>
+                        <Rectangle Fill="{StaticResource SeperatorColor}"
+                                   Height="1"
+                                   Margin="15 2.5"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" />
                         <StackPanel>
                             <Grid Margin="0 5">
                                 <Grid.ColumnDefinitions>

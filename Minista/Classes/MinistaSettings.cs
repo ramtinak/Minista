@@ -26,6 +26,8 @@ namespace Minista.Classes
         };
 
         public AppTheme AppTheme { get; set; } = AppTheme.Dark;
+
+        public DownloadQuality DownloadQuality { get; set; } = DownloadQuality.HighestQuality;
     } 
     public enum HeaderPosition
     {
@@ -42,5 +44,10 @@ namespace Minista.Classes
         Dark,
         Light,
         Custom
+    }
+    public enum DownloadQuality
+    {
+        HighestQuality,
+        LowestQuality
     }
 }

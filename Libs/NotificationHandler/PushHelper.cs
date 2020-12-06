@@ -160,6 +160,7 @@ namespace Minista.Helpers
         }
         public static string GetUserName(this IReadOnlyCollection<IInstaApi> apis, string u)
         {
+            if (string.IsNullOrEmpty(u)) return null;
             var user = apis.FirstOrDefault(x => x.GetLoggedUser().LoggedInUser.Pk == long.Parse(u));
             return user?.GetLoggedUser().UserName;
         }

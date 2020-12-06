@@ -1,4 +1,5 @@
 ﻿using InstagramApiSharp.Classes.Models;
+using Minista.Classes;
 using Minista.Helpers;
 using System;
 using System.Collections.Generic;
@@ -110,14 +111,16 @@ namespace Minista.Views.Infos
                     {
                         case InstaMediaType.Image:
                             {
-                                var url = Media.Images?[0].Uri;
-                                DownloadHelper.Download(url, url, false);
+                                var url = (SettingsHelper.Settings.DownloadQuality == DownloadQuality.HighestQuality ?
+                                    Media.Images?[0] : Media.Images.LastOrDefault()).Uri;
+                                DownloadHelper.Download(url, Media.Images?.LastOrDefault().Uri, false);
                             }
                             break;
                         case InstaMediaType.Video:
                             {
-                                var url = Media.Videos?[0].Uri;
-                                DownloadHelper.Download(url, Media.Images?[0].Uri, true);
+                                var url = (SettingsHelper.Settings.DownloadQuality == DownloadQuality.HighestQuality ?
+                                    Media.Videos?[0] : Media.Videos.LastOrDefault()).Uri;
+                                DownloadHelper.Download(url, Media.Images?.LastOrDefault().Uri, true);
                             }
                             break;
                     }

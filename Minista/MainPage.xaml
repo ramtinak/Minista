@@ -710,7 +710,7 @@
 
 
         </Grid>
-        <Button Content="SHow" VerticalAlignment="Center" Click="Button_Click_2"/>
+        <!--<Button Content="SHow" VerticalAlignment="Center" Click="Button_Click_2"/>-->
         <ucMain:ActivityNotifyUc
             x:Name="ActivityNotifyUc"
             MinWidth="52"

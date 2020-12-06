@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
@@ -96,11 +97,51 @@ namespace Minista.Helpers
                     MainPage.Current.ShowInAppNotify($"Download started...", 1200);
 
                 DownloadOperation download = downloader.CreateDownload(new Uri(url), destinationFile);
-                await download.StartAsync().AsTask();
+                await download.StartAsync().AsTask(new CancellationTokenSource().Token, new Progress<DownloadOperation>(DownloadProgress));
 
             }
             catch (Exception ex) { ex.PrintException("Download"); }
         }
+        private static void DownloadProgress(DownloadOperation download)
+        {
+            // DownloadOperation.Progress is updated in real-time while the operation is ongoing. Therefore,
+            // we must make a local copy so that we can have a consistent view of that ever-changing state
+            // throughout this method's lifetime.
+            BackgroundDownloadProgress currentProgress = download.Progress;
 
+            (string.Format(CultureInfo.CurrentCulture, "Progress: {0}, Status: {1}", download.Guid,
+                currentProgress.Status)).PrintDebug();
+
+            double percent = 100;
+            if (currentProgress.TotalBytesToReceive > 0)
+            {
+                percent = currentProgress.BytesReceived * 100 / currentProgress.TotalBytesToReceive;
+            }
+
+            (string.Format(
+                CultureInfo.CurrentCulture,
+                " - Transferred bytes: {0} of {1}, {2}%",
+                currentProgress.BytesReceived,
+                currentProgress.TotalBytesToReceive,
+                percent)).PrintDebug();
+
+            if (currentProgress.HasRestarted)
+            {
+                (" - Download restarted").PrintDebug();
+            }
+
+            if (currentProgress.HasResponseChanged)
+            {
+                // We have received new response headers from the server.
+                // Be aware that GetResponseInformation() returns null for non-HTTP transfers (e.g., FTP).
+                ResponseInformation response = download.GetResponseInformation();
+                int headersCount = response != null ? response.Headers.Count : 0;
+
+                (" - Response updated; Header count: " + headersCount).PrintDebug();
+
+                // If you want to stream the response data this is a good time to start.
+                // download.GetResultStreamAt(0);
+            }
+        }
     }
 }

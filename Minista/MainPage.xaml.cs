@@ -38,6 +38,7 @@ using Minista.Themes;
 using MinistaHelper.Push;
 using Minista.Views.Main;
 using InstagramApiSharp.API;
+using Newtonsoft.Json;
 
 namespace Minista
 {
@@ -940,7 +941,7 @@ namespace Minista
             NavigationService.Navigate(typeof(MainView));
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private async void Button_Click_2(object sender, RoutedEventArgs e)
         {
             //{
             //  "Title": null,
@@ -964,21 +965,60 @@ namespace Minista
             //  "InAppActors": null
             //}
 
-            var p = new PushNotification
+            //var p = new PushNotification
+            //{
+            //    Message = "ministaapp just posted an IGTV video.",//"2449256854614833779_1647718432"
+            //    IgAction = "tv_viewer?id=2457508981540087540",
+            //    CollapseKey = "subscribed_igtv_post",
+            //    OptionalAvatarUrl = "https://instagram.fevn1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/62231151_371563176829566_537134867805110272_n.jpg?_nc_ht=instagram.fevn1-1.fna.fbcdn.net&_nc_ohc=_S4Ei3Q3ZDsAX-HVjOo&tp=1&oh=384bd91ead130669a6eba37288050aaa&oe=5FF226E3",
+            //    PushId = "5b5b4a70e31a8Ha61202a11H5b5b4f0a4347aH23",
+            //    PushCategory = "subscribed_igtv_post",
+            //    IntendedRecipientUserId = "44579170833",
+            //    SourceUserId = "1647718432",
+            //};
+            //PushHelper.HandleNotify(p, InstaApiList);
+            FileOpenPicker openPicker = new FileOpenPicker
             {
-                Message = "ministaapp just posted an IGTV video.",//"2449256854614833779_1647718432"
-                IgAction = "tv_viewer?id=2457508981540087540",
-                CollapseKey = "subscribed_igtv_post",
-                OptionalAvatarUrl = "https://instagram.fevn1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/62231151_371563176829566_537134867805110272_n.jpg?_nc_ht=instagram.fevn1-1.fna.fbcdn.net&_nc_ohc=_S4Ei3Q3ZDsAX-HVjOo&tp=1&oh=384bd91ead130669a6eba37288050aaa&oe=5FF226E3",
-                PushId = "5b5b4a70e31a8Ha61202a11H5b5b4f0a4347aH23",
-                PushCategory = "subscribed_igtv_post",
-                IntendedRecipientUserId = "44579170833",
-                SourceUserId = "1647718432",
+                ViewMode = PickerViewMode.Thumbnail,
+                SuggestedStartLocation = PickerLocationId.PicturesLibrary
             };
+            openPicker.FileTypeFilter.Add(".json");
 
-            PushHelper.HandleNotify(p, InstaApiList);
+            var file = await openPicker.PickSingleFileAsync();
+            if (file == null)
+                return; 
+            var json = await FileIO.ReadTextAsync(file);
+            var list = JsonConvert.DeserializeObject<cc>(json);
+            foreach (var p in list)
+            {
+                PushNotification notification = new PushNotification
+                {
+                    Sound = p.Sound,
+                    SourceUserId = p.SourceUserId,
+                    BadgeCount = new BadgeCount
+                    {
+                        Activities = p.BadgeCount.Activities,
+                        Direct = p.BadgeCount.Direct,
+                        Ds = p.BadgeCount.Ds
+                    },
+                    CollapseKey = p.CollapseKey,
+                    PushCategory = p.PushCategory,
+                    IgAction = p.IgAction,
+                    IgActionOverride = p.IgActionOverride,
+                    InAppActors = p.InAppActors,
+                    IntendedRecipientUserId = p.IntendedRecipientUserId,
+                    Message = p.Message,
+                    OptionalAvatarUrl = p.OptionalAvatarUrl,
+                    OptionalImage = p.OptionalImage,
+                    PushId = p.PushId,
+                    TickerText = p.TickerText,
+                    Title = p.Title,
+
+                };
+                PushHelper.HandleNotify(notification, InstaApiList.ToList());
+            }
         }
-
+        public class cc : List<PushNotification2> { }
         //private void SettingsButtonClick(object sender, RoutedEventArgs e)
         //{
         //    NavigationService.Navigate(typeof(Views.Settings.SettingsView));

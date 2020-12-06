@@ -1,4 +1,5 @@
 ﻿using InstagramApiSharp.Classes.Models;
+using Minista.Classes;
 using Minista.Helpers;
 using System;
 using System.Collections.Generic;
@@ -431,13 +432,23 @@ namespace Minista.ContentDialogs
                 var album = Media.Carousel[SelectedIndex];
                 if (album.MediaType == InstaMediaType.Image)
                 {
-                    var url = album.Images?[0].Uri;
-                    DownloadHelper.Download(url, url, false, Media.User.UserName, Media.Caption?.Text);
+                    if (album.Images?.Count > 0)
+                    {
+                        var url = (SettingsHelper.Settings.DownloadQuality == DownloadQuality.HighestQuality ?
+                            album.Images[0] : album.Images.LastOrDefault()).Uri;
+                        DownloadHelper.Download(url, album.Images?.LastOrDefault().Uri, false, Media.User.UserName, Media.Caption?.Text);
+                    }
+                    else return;
                 }
                 else
                 {
-                    var url = album.Videos?[0].Uri;
-                    DownloadHelper.Download(url, album.Images?[0].Uri, true, Media.User.UserName, Media.Caption?.Text);
+                    if (album.Videos?.Count > 0)
+                    {
+                        var url = (SettingsHelper.Settings.DownloadQuality == DownloadQuality.HighestQuality ? 
+                            album.Videos[0] : album.Videos.LastOrDefault()).Uri;
+                        DownloadHelper.Download(url, album.Images?.LastOrDefault().Uri, true, Media.User.UserName, Media.Caption?.Text);
+                    }
+                    else return;
                 }
                 var caption = "";
                 if (Media.Caption != null && !string.IsNullOrEmpty(Media.Caption.Text))
@@ -458,14 +469,16 @@ namespace Minista.ContentDialogs
                 {
                     case InstaMediaType.Image:
                         {
-                            var url = Media.Images?[0].Uri;
-                            DownloadHelper.Download(url, url,false,Media.User.UserName, Media.Caption?.Text);
+                            var url = (SettingsHelper.Settings.DownloadQuality == DownloadQuality.HighestQuality ?
+                                Media.Images?[0] : Media.Images.LastOrDefault()).Uri;
+                            DownloadHelper.Download(url, Media.Images?.LastOrDefault().Uri, false,Media.User.UserName, Media.Caption?.Text);
                         }
                         break;
                     case InstaMediaType.Video:
                         {
-                            var url = Media.Videos?[0].Uri;
-                            DownloadHelper.Download(url, Media.Images?[0].Uri, true, Media.User.UserName, Media.Caption?.Text);
+                            var url = (SettingsHelper.Settings.DownloadQuality == DownloadQuality.HighestQuality ?
+                                Media.Videos?[0] : Media.Videos.LastOrDefault()).Uri;
+                            DownloadHelper.Download(url, Media.Images?.LastOrDefault().Uri, true, Media.User.UserName, Media.Caption?.Text);
                         }
                         break;
                     case InstaMediaType.Carousel:
@@ -473,13 +486,15 @@ namespace Minista.ContentDialogs
                         {
                             if (album.MediaType == InstaMediaType.Image)
                             {
-                                var url = album.Images?[0].Uri;
-                                DownloadHelper.Download(url, url, false, Media.User.UserName, Media.Caption?.Text);
+                                var url = (SettingsHelper.Settings.DownloadQuality == DownloadQuality.HighestQuality ?
+                                album.Images?[0] : album.Images.LastOrDefault()).Uri;
+                                DownloadHelper.Download(url, album.Images?.LastOrDefault().Uri, false, Media.User.UserName, Media.Caption?.Text);
                             }
                             else
                             {
-                                var url = album.Videos?[0].Uri;
-                                DownloadHelper.Download(url, album.Images?[0].Uri, true, Media.User.UserName, Media.Caption?.Text);
+                                var url = (SettingsHelper.Settings.DownloadQuality == DownloadQuality.HighestQuality ?
+                                 album.Videos?[0] : album.Videos.LastOrDefault()).Uri;
+                                DownloadHelper.Download(url, album.Images?.LastOrDefault().Uri, true, Media.User.UserName, Media.Caption?.Text);
                             }
                         }
                         break;
