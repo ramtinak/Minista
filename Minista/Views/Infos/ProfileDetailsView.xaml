@@ -549,9 +549,10 @@
                                VerticalAlignment="Stretch" />
                 </Grid>
                 <winui:RefreshContainer x:Name="RefreshControl" Grid.Row="1">
-                    <ScrollViewer  x:Name="SCMain"
-                                   ViewChanging="ScrollViewViewChanging"
-                                   ScrollViewer.IsVerticalScrollChainingEnabled="False">
+                    <ScrollViewer x:Name="SCMain"
+                                  ViewChanging="ScrollViewViewChanging"
+                                  ViewChanged="ScrollViewViewChanged"
+                                  ScrollViewer.IsVerticalScrollChainingEnabled="False">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />

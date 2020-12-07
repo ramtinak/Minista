@@ -336,28 +336,28 @@ namespace Minista.Views.Infos
             {
                 var sc = sender as ScrollViewer;
                 HandleGoUpRefreshButtons(sc);
-                if (sc.VerticalOffset >= GridMainScrollViewer.ActualHeight && !tryingEnableSCs)
-                {
-                    tryingEnableSCs = true;
-                    sc.DisableScroll();
-                    S1?.EnableScroll();
-                    S2?.EnableScroll();
-                    //isMainScrollEnabled = false;
-                    ("DISABELING SC MAIN").PrintDebug();
-                    GridMainScrollViewer.Height = 0;
-                    //SCMain.ChangeView(null, GridMainScrollViewer.ActualHeight, null);
-                    try
-                    {
-                        await Task.Delay(40);
+                //if (sc.VerticalOffset >= GridMainScrollViewer.ActualHeight && !tryingEnableSCs)
+                //{
+                //    tryingEnableSCs = true;
+                //    sc.DisableScroll();
+                //    S1?.EnableScroll();
+                //    S2?.EnableScroll();
+                //    //isMainScrollEnabled = false;
+                //    ("DISABELING SC MAIN").PrintDebug();
+                //    GridMainScrollViewer.Height = 0;
+                //    //SCMain.ChangeView(null, GridMainScrollViewer.ActualHeight, null);
+                //    try
+                //    {
+                //        await Task.Delay(40);
 
-                        S1?.ChangeView(null, lastSC1Offset, null);
-                        S2?.ChangeView(null, lastSC2Offset, null);
+                //        S1?.ChangeView(null, lastSC1Offset, null);
+                //        S2?.ChangeView(null, lastSC2Offset, null);
 
-                    }
-                    catch { }
-                    await Task.Delay(500);
-                    tryingEnableSCs = false;
-                }
+                //    }
+                //    catch { }
+                //    await Task.Delay(500);
+                //    tryingEnableSCs = false;
+                //}
             }
             catch { }
         }
@@ -574,19 +574,22 @@ namespace Minista.Views.Infos
         #region Scroll
         private ScrollViewer S1, S2;
 
-        private bool tryingEnableSCs = false; 
+        //private bool tryingEnableSCs = false; 
         //bool isMainScrollEnabled = true;
 
-        private double _lastMainVerticalOffset;
-        private bool _isMainHideTitleGrid;
-        private bool _triedFirst = false;
-        private double lastSC1Offset = 0;
-        private double lastSC2Offset = 0;
+        //private double _lastMainVerticalOffset;
+        //private bool _isMainHideTitleGrid;
+        //private bool _triedFirst = false;
+        //private double lastSC1Offset = 0;
+        //private double lastSC2Offset = 0;
         private void OnLVTopLoaded(object sender, RoutedEventArgs e)
         {
             S1 = LVTop.FindScrollViewer();
             if (S1 != null)
+            { 
                 S1.ViewChanging += OnSCViewChanging;
+                S1.ViewChanged += InnerLVsScrollViewViewChanged;
+            }
             HashtagVM.HashtagsTopGenerator.SetLV(S1);
         }
 
@@ -595,62 +598,163 @@ namespace Minista.Views.Infos
             S2 = LVRecent.FindScrollViewer();
             if (S2 != null)
             {
-                if (SCMain.VerticalScrollMode == ScrollMode.Disabled)
-                    S2.EnableScroll();
+                //if (SCMain.VerticalScrollMode == ScrollMode.Disabled)
+                //    S2.EnableScroll();
                 S2.ViewChanging += OnSCViewChanging;
+                S2.ViewChanged += InnerLVsScrollViewViewChanged;
             }
             HashtagVM.HashtagsRecentGenerator.SetLV(S2);
         }
-        private async void OnSCViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
+        private /*async*/ void OnSCViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
         {
             var scrollViewer = sender as ScrollViewer;
 
             HandleGoUpRefreshButtons(scrollViewer);
-            if ((scrollViewer.VerticalOffset - _lastMainVerticalOffset) > 5 && !_isMainHideTitleGrid)
-            {
-                _isMainHideTitleGrid = true;
-            }
-            else if (scrollViewer.VerticalOffset < _lastMainVerticalOffset && _isMainHideTitleGrid)
-            {
-                _isMainHideTitleGrid = false;
-                "2".PrintDebug();
-                if (scrollViewer.VerticalOffset < 3.0)
-                {
-                    return;
-                    //SCMain.EnableScroll();
-                }
-            }
-            if (scrollViewer.VerticalOffset < 3.0)
-            {
-                "3".PrintDebug();
+            //if ((scrollViewer.VerticalOffset - _lastMainVerticalOffset) > 5 && !_isMainHideTitleGrid)
+            //{
+            //    _isMainHideTitleGrid = true;
+            //}
+            //else if (scrollViewer.VerticalOffset < _lastMainVerticalOffset && _isMainHideTitleGrid)
+            //{
+            //    _isMainHideTitleGrid = false;
+            //    "2".PrintDebug();
+            //    if (scrollViewer.VerticalOffset < 3.0)
+            //    {
+            //        return;
+            //        //SCMain.EnableScroll();
+            //    }
+            //}
+            //if (scrollViewer.VerticalOffset < 3.0)
+            //{
+            //    "3".PrintDebug();
 
-                _isMainHideTitleGrid = true;
+            //    _isMainHideTitleGrid = true;
 
-            }
-            if (_lastMainVerticalOffset > scrollViewer.VerticalOffset)
-            {
-                if (scrollViewer.VerticalOffset < 3.0 && _isMainHideTitleGrid && !_triedFirst)
-                {
-                    _triedFirst = true; 
-                    ("DISABELING SC1 SC2").PrintDebug();
-                    lastSC1Offset = S1.VerticalOffset;
-                    if (S2 != null)
-                        lastSC2Offset = S2.VerticalOffset;
-                    scrollViewer.DisableScroll();
-                    await Task.Delay(150);
-                    SCMain.EnableScroll();
-                    GridMainScrollViewer.Height = double.NaN;
-                    await Task.Delay(10);
-                    SCMain.EnableScroll();
-                    SCMain.ChangeView(null, GridMainScrollViewer.ActualHeight - 10, null);
-                    await Task.Delay(750);
-                    _triedFirst = false;
+            //}
+            //if (_lastMainVerticalOffset > scrollViewer.VerticalOffset)
+            //{
+            //    if (scrollViewer.VerticalOffset < 3.0 && _isMainHideTitleGrid && !_triedFirst)
+            //    {
+            //        _triedFirst = true; 
+            //        ("DISABELING SC1 SC2").PrintDebug();
+            //        lastSC1Offset = S1.VerticalOffset;
+            //        if (S2 != null)
+            //            lastSC2Offset = S2.VerticalOffset;
+            //        scrollViewer.DisableScroll();
+            //        await Task.Delay(150);
+            //        SCMain.EnableScroll();
+            //        GridMainScrollViewer.Height = double.NaN;
+            //        await Task.Delay(10);
+            //        SCMain.EnableScroll();
+            //        SCMain.ChangeView(null, GridMainScrollViewer.ActualHeight - 10, null);
+            //        await Task.Delay(750);
+            //        _triedFirst = false;
 
-                }
-            }
-            _lastMainVerticalOffset = scrollViewer.VerticalOffset;
+            //    }
+            //}
+            //_lastMainVerticalOffset = scrollViewer.VerticalOffset;
         }
         #endregion Scroll
 
+        #region Scroll v2
+        private double _scrollingHost;
+        private bool _scrollingHostDisabled = false;
+
+        private double _innerScrolls;
+        private bool _innerScrollsDisabled = true;
+        private void ScrollViewViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            var scrollViewer = sender as ScrollViewer;
+            if (_scrollingHostDisabled)
+            {
+                if (!e.IsIntermediate)
+                {
+                    scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null, true);
+                }
+
+                _scrollingHost = scrollViewer.VerticalOffset;
+                return;
+            }
+
+            if (scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight - 12 && _scrollingHost < scrollViewer.VerticalOffset)
+            {
+                _scrollingHostDisabled = true;
+                SetScrollMode(false);
+
+                SetInnerScrollMode(true);
+                _innerScrollsDisabled = false;
+            }
+
+            _scrollingHost = scrollViewer.VerticalOffset;
+        }
+
+        private void InnerLVsScrollViewViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            var scrollViewer2 = sender as ScrollViewer;
+            if (_innerScrollsDisabled)
+            {
+                if (!e.IsIntermediate)
+                {
+                    scrollViewer2.ChangeView(null, 12, null, false);
+                }
+
+                _innerScrolls = scrollViewer2.VerticalOffset;
+                return;
+            }
+
+            if (scrollViewer2.VerticalOffset <= 12 && _innerScrolls > scrollViewer2.VerticalOffset)
+            {
+                SetScrollMode(true);
+                _scrollingHostDisabled = false;
+
+                _innerScrollsDisabled = true;
+                SetInnerScrollMode(false);
+            }
+
+            _innerScrolls = scrollViewer2.VerticalOffset;
+        }
+        private IEnumerable<ScrollViewer> GetScrollViewers()
+        {
+            if (S1 != null)
+                yield return S1;
+
+            if (S2 != null)
+                yield return S2;
+        }
+
+        public void SetInnerScrollMode(bool enable)
+        {
+            foreach (var scrollViewer in GetScrollViewers())
+            {
+                if (enable)
+                {
+                    scrollViewer.VerticalScrollMode = ScrollMode.Auto;
+                    scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                    scrollViewer.ChangeView(null, 12, null, true);
+                }
+                else
+                {
+                    scrollViewer.ChangeView(null, 12, null, true);
+                    scrollViewer.VerticalScrollMode = ScrollMode.Disabled;
+                    scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                }
+            }
+        }
+        private void SetScrollMode(bool enable)
+        {
+            if (enable)
+            {
+                SCMain.VerticalScrollMode = ScrollMode.Auto;
+                SCMain.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                SCMain.ChangeView(null, SCMain.ScrollableHeight - 48, null, false);
+            }
+            else
+            {
+                SCMain.ChangeView(null, SCMain.ScrollableHeight, null, true);
+                SCMain.VerticalScrollMode = ScrollMode.Disabled;
+                SCMain.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+            }
+        }
+        #endregion
     }
 }

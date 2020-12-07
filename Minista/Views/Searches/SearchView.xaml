@@ -761,28 +761,28 @@
                             <ColumnDefinition Width="70" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Ellipse Grid.Column="0"
-                                 Height="60"
+                        <Ellipse Height="60"
                                  Width="60"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Center"
-                                 StrokeThickness="0">
-                            <Ellipse.Stroke>
+                                 StrokeThickness="1"
+                                 Stroke="{StaticResource DefaultInnerForegroundColor}">
+                            <!--<Ellipse.Stroke>
                                 <LinearGradientBrush EndPoint="0.5,1"
                                                      StartPoint="0.5,0">
                                     <GradientStop Color="#D78F1EA0" />
                                     <GradientStop Color="#D795007A"
                                                   Offset="1" />
                                 </LinearGradientBrush>
-                            </Ellipse.Stroke>
+                            </Ellipse.Stroke>-->
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding ProfilePicture}" />
                             </Ellipse.Fill>
                         </Ellipse>
-                        <Grid VerticalAlignment="Bottom"
-                              HorizontalAlignment="Right"
+                        <Grid VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
                               Margin="2 -2">
-                            <Ellipse Height="20"
+                            <!--<Ellipse Height="20"
                                      Width="20"
                                      Margin="5 5"
                                      StrokeThickness=".8">
@@ -802,7 +802,7 @@
                                                       Offset="1" />
                                     </LinearGradientBrush>
                                 </Ellipse.Fill>
-                            </Ellipse>
+                            </Ellipse>-->
                             <TextBlock Text="#"
                                        FontFamily="{StaticResource SegoeUIFont}"
                                        FontSize="21"

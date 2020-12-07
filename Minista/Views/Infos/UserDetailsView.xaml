@@ -508,7 +508,8 @@
         <Grid Grid.Row="1">
             <winui:RefreshContainer x:Name="RefreshControl">
                 <ScrollViewer  x:Name="SCMain"
-                               ViewChanging="ScrollViewViewChanging">
+                               ViewChanging="ScrollViewViewChanging"
+                               ViewChanged="ScrollViewViewChanged">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -1209,7 +1210,6 @@
                                 </PivotItem.Header>
 
                                 <local:AdaptiveGridViewOriginal x:Name="LV"
-                                                        Margin="5"
                                                                 DesiredWidth="150"
                                                                 ItemHeight="200"
                                                                 SelectionMode="None"

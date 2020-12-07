@@ -480,6 +480,18 @@ namespace Minista.Views.Infos
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+            try
+            {
+                if (_scrollingHostDisabled)
+                {
+                    _scrollingHostDisabled = false;
+                    SetInnerScrollMode(false);
+                    SCMain.VerticalScrollMode = ScrollMode.Auto;
+                    SCMain.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                    SCMain.ChangeView(null, 0, null, false);
+                }
+                }
+            catch { }
             KeyDown -= OnKeyDownHandler;
             try
             {
@@ -702,7 +714,10 @@ namespace Minista.Views.Infos
             S1 = (sender as AdaptiveGridViewOriginal).FindScrollViewer();
             //S1 = (sender as AdaptiveGridViewX).FindScrollViewer();
             if (S1 != null)
+            {
                 S1.ViewChanging += OnSCViewChanging;
+                S1.ViewChanged += InnerLVsScrollViewViewChanged;
+            }
             UserDetailsVM.MediaGeneratror.SetLV(S1);
         }
         private void GvTVMediaGeneratrorLoaded(object sender, RoutedEventArgs e)
@@ -710,9 +725,10 @@ namespace Minista.Views.Infos
             S2 = (sender as AdaptiveGridViewOriginal).FindScrollViewer();
             if (S2 != null)
             {
-                if (SCMain.VerticalScrollMode == ScrollMode.Disabled)
-                    S2.EnableScroll();
+                //if (SCMain.VerticalScrollMode == ScrollMode.Disabled)
+                //    S2.EnableScroll();
                 S2.ViewChanging += OnSCViewChanging;
+                S2.ViewChanged += InnerLVsScrollViewViewChanged;
             }
             UserDetailsVM.TVMediaGeneratror.SetLV(S2);
         }
@@ -722,9 +738,10 @@ namespace Minista.Views.Infos
             S3 = (sender as AdaptiveGridViewOriginal).FindScrollViewer();
             if (S3 != null)
             {
-                if (SCMain.VerticalScrollMode == ScrollMode.Disabled)
-                    S3.EnableScroll();
+                //if (SCMain.VerticalScrollMode == ScrollMode.Disabled)
+                //    S3.EnableScroll();
                 S3.ViewChanging += OnSCViewChanging;
+                S3.ViewChanged += InnerLVsScrollViewViewChanged;
             }
             UserDetailsVM.TVMediaGeneratror.SetLV(S3);
         }
@@ -733,9 +750,10 @@ namespace Minista.Views.Infos
             S4 = (sender as AdaptiveGridViewOriginal).FindScrollViewer();
             if (S4 != null)
             {
-                if (SCMain.VerticalScrollMode == ScrollMode.Disabled)
-                    S4.EnableScroll();
+                //if (SCMain.VerticalScrollMode == ScrollMode.Disabled)
+                //    S4.EnableScroll();
                 S4.ViewChanging += OnSCViewChanging;
+                S4.ViewChanged += InnerLVsScrollViewViewChanged;
             }
             UserDetailsVM.TaggedMediaGeneratror.SetLV(S4);
         }
@@ -780,7 +798,7 @@ namespace Minista.Views.Infos
             var cs = Resources["GridViewItemContainerStyle"] as Style;
             var gv = new AdaptiveGridViewOriginal
             {
-                Margin = new Thickness(5),
+                //Margin = new Thickness(5),
                 DesiredWidth = 180,
                 //MinItemHeight = 140,
                 //MinItemWidth = 140,
@@ -895,6 +913,8 @@ namespace Minista.Views.Infos
             }
             catch { }
         }
+
+
         #region Animation
 
         private CompositionAnimationGroup CreateOpacityAnimation()
@@ -1021,6 +1041,8 @@ namespace Minista.Views.Infos
             _refreshButtonVisual.StartAnimation("Scale.X", scaleAnimation);
             _refreshButtonVisual.StartAnimation("Scale.Y", scaleAnimation);
         }
+
+        #region Click and tap events 
         private void GoUpButtonClick(object sender, RoutedEventArgs e)
         {
             SCMain.ScrollToElement(0);
@@ -1125,8 +1147,6 @@ namespace Minista.Views.Infos
         {
 
         }
-
-
         private async void FollowUnfollowButtonClick(object sender, RoutedEventArgs e)
         {
             try
@@ -1347,6 +1367,8 @@ namespace Minista.Views.Infos
             }
             catch { }
         }
+#endregion Click and tap events 
+
         #region Scroll handling
         private ScrollViewer S1, S2, S3, S4;
 
@@ -1495,6 +1517,112 @@ namespace Minista.Views.Infos
             catch { }
         }
         #endregion Scroll handling
+
+        #region Scroll v2
+        private double _scrollingHost;
+        private bool _scrollingHostDisabled = false;
+
+        private double _innerScrolls;
+        private bool _innerScrollsDisabled = true;
+        private void ScrollViewViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            var scrollViewer = sender as ScrollViewer;
+            if (_scrollingHostDisabled)
+            {
+                if (!e.IsIntermediate)
+                {
+                    scrollViewer.ChangeView(null, scrollViewer.ScrollableHeight, null, true);
+                }
+
+                _scrollingHost = scrollViewer.VerticalOffset;
+                return;
+            }
+
+            if (scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight - 12 && _scrollingHost < scrollViewer.VerticalOffset)
+            {
+                _scrollingHostDisabled = true;
+                SetScrollMode(false);
+
+                SetInnerScrollMode(true);
+                _innerScrollsDisabled = false;
+            }
+
+            _scrollingHost = scrollViewer.VerticalOffset;
+        }
+
+        private void InnerLVsScrollViewViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            var scrollViewer2 = sender as ScrollViewer;
+            if (_innerScrollsDisabled)
+            {
+                if (!e.IsIntermediate)
+                {
+                    scrollViewer2.ChangeView(null, 12, null, false);
+                }
+
+                _innerScrolls = scrollViewer2.VerticalOffset;
+                return;
+            }
+
+            if (scrollViewer2.VerticalOffset <= 12 && _innerScrolls > scrollViewer2.VerticalOffset)
+            {
+                SetScrollMode(true);
+                _scrollingHostDisabled = false;
+
+                _innerScrollsDisabled = true;
+                SetInnerScrollMode(false);
+            }
+
+            _innerScrolls = scrollViewer2.VerticalOffset;
+        }
+        private IEnumerable<ScrollViewer> GetScrollViewers()
+        {
+            if (S1 != null)
+                yield return S1;
+
+            if (S2 != null)
+                yield return S2;
+            if (S3 != null)
+                yield return S3;
+
+            if (S4 != null)
+                yield return S4;
+        }
+
+        public void SetInnerScrollMode(bool enable)
+        {
+            foreach (var scrollViewer in GetScrollViewers())
+            {
+                if (enable)
+                {
+                    scrollViewer.VerticalScrollMode = ScrollMode.Auto;
+                    scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                    scrollViewer.ChangeView(null, 12, null, true);
+                }
+                else
+                {
+                    scrollViewer.ChangeView(null, 12, null, true);
+                    scrollViewer.VerticalScrollMode = ScrollMode.Disabled;
+                    scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                }
+            }
+        }
+        private void SetScrollMode(bool enable)
+        {
+            if (enable)
+            {
+                SCMain.VerticalScrollMode = ScrollMode.Auto;
+                SCMain.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                SCMain.ChangeView(null, SCMain.ScrollableHeight - 48, null, false);
+            }
+            else
+            {
+                SCMain.ChangeView(null, SCMain.ScrollableHeight, null, true);
+                SCMain.VerticalScrollMode = ScrollMode.Disabled;
+                SCMain.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+            }
+        }
+        #endregion
 
         #region LOADINGS
         public void ShowTopLoading() => TopLoading.Start();
