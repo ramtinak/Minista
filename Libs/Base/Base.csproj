@@ -126,6 +126,7 @@
     <Compile Include="ApplicationSettingsHelper.cs" />
     <Compile Include="CryptoHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UniversalDevice.cs" />
     <EmbeddedResource Include="Properties\Base.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +145,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Classes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Minista\InstagramApiSharp\InstagramApiSharp.csproj">
+      <Project>{d7d254a4-843e-4e23-9513-ac89eb163168}</Project>
+      <Name>InstagramApiSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

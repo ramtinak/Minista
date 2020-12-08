@@ -38,6 +38,7 @@ using Windows.Storage.AccessCache;
 using Minista.Views.Security;
 using Windows.Foundation.Metadata;
 using InstagramApiSharp.Classes.Android.DeviceInfo;
+using Base;
 //using Google.Protobuf.WellKnownTypes;
 // xml tags:
 // \n = &#xA;
@@ -81,38 +82,8 @@ static class Helper
         {
         };
     }
-    public static readonly JArray SupportedCapabalities = new JArray
-        {
-            new JObject
-            {
-                {"name","SUPPORTED_SDK_VERSIONS"},
-                {"value","66.0,67.0,68.0,69.0,70.0,71.0,72.0,73.0,74.0,75.0,76.0,77.0,78.0,79.0,80.0,81.0,82.0,83.0"+
-                    "84.0,85.0,86.0,87.0,88.0,89.0,90.0,91.0,92.0,93.0,94.0,95.0,96.0,97.0,98.0,99.0,100.0,101.0"}
-            },
-            new JObject
-            {
-                {"name","FACE_TRACKER_VERSION"},
-                {"value","14"}
-            },
-            new JObject
-            {
-                {"name","COMPRESSION"},
-                {"value","ETC2_COMPRESSION"}
-            },
-            new JObject
-            {
-                {"name","world_tracker"},
-                {"value","world_tracker_enabled"}
-            },
-            new JObject
-            {
-                {"name","gyroscope"},
-                {"value","gyroscope_enabled"}
-            }
-        };
-
     public const string AppName = "Minista";
-    public const string SessionFileType = ".mises";
+    public const string SessionFileType = ".mises2";
     public const string FolderToken = "MinistaFTokenRmt";
     private static CoreDispatcher _dispatcher;
     public static CoreDispatcher Dispatcher
@@ -476,9 +447,6 @@ static class Helper
         return str;
     }
     #region Purchase
-    //public static bool IsAppPurchased = false;
-    public static bool IsAppPurchasedForKharejia = false;
-
     static StoreContext StoreContext = null;
     private static async Task ConfigureStorePurchase()
     {
@@ -522,13 +490,11 @@ static class Helper
                 if (license.IsTrial)
                 {
                     Debug.WriteLine("Price: " + "Trial license");
-                    IsAppPurchasedForKharejia = false;
                     return false;
                 }
                 else
                 {
                     Debug.WriteLine("Price: " + "Full license");
-                    IsAppPurchasedForKharejia = true;
                     return true;
                 }
             }
@@ -538,7 +504,6 @@ static class Helper
             }
         }
         catch { }
-        IsAppPurchasedForKharejia = false;
         return false;
     }
     #endregion Purchase
@@ -551,20 +516,20 @@ static class Helper
         else
             sessionData = new UserSessionData { UserName = username, Password = password };
 
-        DebugLogger = new DebugLogger(InstagramApiSharp.Logger.LogLevel.None);
-        AndroidDevice device = null;
+        DebugLogger = new DebugLogger(InstagramApiSharp.Logger.LogLevel.All);
+        //AndroidDevice device = null;
         var dontGenerateToken = false;
         if (InstaApi != null)
             if (InstaApi.IsUserAuthenticated)
             {
-                device = InstaApi.GetCurrentDevice();
+                //device = InstaApi.GetCurrentDevice();
                 dontGenerateToken = true;
             }
 
         //var delay = RequestDelay.FromSeconds(2, 4);
         var api = InstaApiBuilder.CreateBuilder()
                   .SetUser(sessionData)
-                  .SetDevice(device)
+                  .SetDevice(new UniversalDevice())
                   .UseNewDevices()
                   //.SetApiVersion(InstagramApiSharp.Enums.InstaApiVersionType.Version64)
                   //.SetRequestDelay(delay)
@@ -702,8 +667,8 @@ static class Helper
     }
     public async static Task<StorageFile> GenerateRandomOutputFile()
     {
-        var folder = await KnownFolders.PicturesLibrary.GetFolderAsync(Helper.AppName);
-        var outfile = await folder.CreateFileAsync(Helper.GenerateString("MINISTA_") + ".jpg", CreationCollisionOption.GenerateUniqueName);
+        var folder = await KnownFolders.PicturesLibrary.GetFolderAsync(AppName);
+        var outfile = await folder.CreateFileAsync(GenerateString("MINISTA_") + ".jpg", CreationCollisionOption.GenerateUniqueName);
         return outfile;
     }
     static public async Task RunInBackground(Action action)
@@ -724,7 +689,7 @@ static class Helper
                 {
                     ex.PrintException("RunInBackgroundEX");
                 }
-            }, new CancellationTokenSource().Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            }, new CancellationTokenSource().Token, TaskCreationOptions.None, TaskScheduler.Default);
         }
         catch (Exception ex)
         {

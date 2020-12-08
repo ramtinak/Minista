@@ -19,7 +19,7 @@
         <uap:DefaultTile Wide310x150Logo="Assets\Logos\Wide310x150Logo.png">
         </uap:DefaultTile>
         <!--<uap:SplashScreen  />-->
-        <uap:SplashScreen Image="Assets\Logos\SplashScreen.png" BackgroundColor="#232323" />
+        <uap:SplashScreen Image="Assets\Logos\SplashScreen.png" BackgroundColor="#232323" a:Optional="true" xmlns:a="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"  />
       </uap:VisualElements>
       <Extensions>
         <uap3:Extension Category="windows.appUriHandler">
@@ -36,7 +36,7 @@
             <uap:InfoTip>Minista Session Details</uap:InfoTip>
             <uap:EditFlags OpenIsSafe="true" />
             <uap:SupportedFileTypes>
-              <uap:FileType>.mises</uap:FileType>
+              <uap:FileType>.mises2</uap:FileType>
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
         </uap:Extension>

@@ -524,11 +524,6 @@ namespace Minista.Views.Settings
         {
             try
             {
-                if (!Helper.IsAppPurchasedForKharejia)
-                {
-                    Helper.PurchaseMessage();
-                    return;
-                }
                 try
                 {
                     toggleChangeLocation.IsChecked = false;

@@ -5,6 +5,7 @@
     xmlns:local="using:Minista"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:Minista.UserControls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -18,7 +19,10 @@
                               IsActive="False"
                               Margin="0 15"
                               VerticalAlignment="Center"
-                              Foreground="#D83E3E3E" />
+                              Foreground="#D83E3E3E" Visibility="Collapsed"/>
+                <uc:LoadingUc x:Name="LoadingUc"
+                              Margin="0 15"
+                              VerticalAlignment="Center"/>
                 <TextBlock x:Name="LoadingText"
                            Text="Loading..."
                            HorizontalAlignment="Center"

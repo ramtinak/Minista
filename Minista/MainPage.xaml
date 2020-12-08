@@ -739,7 +739,8 @@
             VerticalOffset="100"
             Foreground="{StaticResource DefaultInnerForegroundColor}"
             Background="{StaticResource DefaultItemBackgroundColor}"
-            BorderThickness="0"/>
+            BorderBrush="{StaticResource DefaultBackgroundColor}"
+            BorderThickness="1"/>
         <!--  StackMode="Replace"  -->
 
         <VisualStateManager.VisualStateGroups>

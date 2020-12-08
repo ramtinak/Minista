@@ -1,4 +1,5 @@
-﻿using InstagramApiSharp.API;
+﻿using Base;
+using InstagramApiSharp.API;
 using InstagramApiSharp.API.Builder;
 using InstagramApiSharp.Classes;
 using InstagramApiSharp.Logger;
@@ -125,9 +126,7 @@ namespace MinistaBH
             //var delay = RequestDelay.FromSeconds(2, 4);
             var api = InstaApiBuilder.CreateBuilder()
                       .SetUser(sessionData)
-                  //.SetApiVersion(InstagramApiSharp.Enums.InstaApiVersionType.Version64)
-                  //.SetRequestDelay(delay)
-
+                      .SetDevice(new UniversalDevice())
 #if DEBUG
                   .UseLogger(DebugLogger)
 #endif
@@ -151,7 +150,7 @@ namespace MinistaBH
                     for (int i = 0; i < files.Count; i++)
                     {
                         var item = files[i];
-                        if (item.Path.ToLower().EndsWith(".mises"))
+                        if (item.Path.ToLower().EndsWith(".mises2"))
                         {
                             try
                             {

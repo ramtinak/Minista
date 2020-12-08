@@ -246,7 +246,7 @@ namespace Minista.Helpers
                 var rnd = new Random();
                 var data = new JObject
                 {
-                    {"supported_capabilities_new", Helper.SupportedCapabalities.ToString(Formatting.None)},
+                    {"supported_capabilities_new", InstagramApiSharp.API.InstaApiConstants.SupportedCapabalities.ToString(Formatting.None)},
                     {"allow_multi_configures", "1"},
                     {"timezone_offset", InstaApi.GetTimezoneOffset().ToString()},
                     {"_csrftoken", _user.CsrfToken},

@@ -30,19 +30,56 @@ namespace Minista
 {
     sealed partial class App : Application
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
         public App()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             CurrentX = this;
-            this.Suspending += OnSuspending;
-            this.Resuming += OnResuming;
-            this.EnteredBackground += OnEnteredBackground;
-            this.UnhandledException += App_UnhandledException;
-            //ExtensionHelper.GetAppVersion().PrintDebug();
+            Suspending += OnSuspending;
+            Resuming += OnResuming;
+            EnteredBackground += OnEnteredBackground;
+            UnhandledException += App_UnhandledException;
+        }
+
+        private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            e.Exception.PrintException("App_UnhandledException");
+            e.Handled = true;
+        }
+        protected async override void OnLaunched(LaunchActivatedEventArgs e)
+        {
+            PushHelperX.Register();
+            bool canEnablePrelaunch = Windows.Foundation.Metadata.ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch");
+
+            if (e != null)
+            {
+                if (e.PreviousExecutionState == ApplicationExecutionState.Running)
+                {
+                    Window.Current.Activate();
+                    return;
+                }
+            }
+            Helper.ChangeAppMinSize(540, 744);
+            if (!(Window.Current.Content is Frame rootFrame))
+            {
+                rootFrame = CreateRootFrame();
+                rootFrame.NavigationFailed += OnNavigationFailed;
+                if (e.PreviousExecutionState != ApplicationExecutionState.Running)
+                {
+                    SplashView extendedSplash = new SplashView(e.SplashScreen);
+                    rootFrame.Content = extendedSplash;
+                    Window.Current.Content = rootFrame;
+                }
+                Window.Current.Content = rootFrame;
+            }
+
+            if (e.PrelaunchActivated == false)
+            {
+                if (canEnablePrelaunch)
+                    TryEnablePrelaunch();
+                if (rootFrame.Content == null)
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                Window.Current.Activate();
+            }
             DeviceHelper.GetDeviceInfo();
             try
             {
@@ -60,163 +97,35 @@ namespace Minista
             catch { }
             try
             {
-                if (/*AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Xbox"*/ DeviceUtil.IsXbox)
-                {
+                if (DeviceUtil.IsXbox)
                     FocusVisualKind = FocusVisualKind.Reveal;
-                }
             }
             catch { }
-            //try
-            //{
-            //    Application.Current.Resources["DefaultBackgroundColor"] = Helper.GetColorBrush("#18227c");
-            //}
-            //catch (Exception ex)
-            //{
-            //}
-        }
-
-        private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
-        {
-            //var ex = e.Exception;
-            //var stac = Environment.StackTrace;
-            //var fuc = ex.PrintException("App_UnhandledException");
-            e.Handled = true;
-        }
-
-        /// <summary>
-        /// Invoked when the application is launched normally by the end user.  Other entry points
-        /// will be used such as when the application is launched to open a specific file.
-        /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
-        protected async override void OnLaunched(LaunchActivatedEventArgs e)
-        {
-            PushHelperX.Register();
-            bool canEnablePrelaunch = Windows.Foundation.Metadata.ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch");
-
-            if (e != null)
-            {
-                if (e.PreviousExecutionState == ApplicationExecutionState.Running)
-                {
-                    Window.Current.Activate();
-                    return;
-                }
-            }
-            Helper.ChangeAppMinSize(540, 744);
-
             try
             {
-
-                //StoreServicesNotificationChannelParameters parameters =
-                //    new StoreServicesNotificationChannelParameters();
-                //parameters.CustomNotificationChannelUri = "Assign your channel URI here";
-
-                //StoreServicesEngagementManager engagementManager = StoreServicesEngagementManager.GetDefault();
-                //await engagementManager.RegisterNotificationChannelAsync(parameters);
-
                 await Helper.RunInBackground(async () =>
                 {
                     StoreServicesEngagementManager engagementManager = StoreServicesEngagementManager.GetDefault();
 
                     await engagementManager.RegisterNotificationChannelAsync();
                 });
-
             }
             catch
             {
-                //
-            }
-
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-            if (!(Window.Current.Content is Frame rootFrame))
-            {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = CreateRootFrame();
-
-                rootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (e.PreviousExecutionState != ApplicationExecutionState.Running)
-                {
-                    SplashView extendedSplash = new SplashView(e.SplashScreen);
-                    rootFrame.Content = extendedSplash;
-                    Window.Current.Content = rootFrame;
-                }
-                Window.Current.Content = rootFrame;
-            }
-
-            if (e.PrelaunchActivated == false)
-            {
-                if (canEnablePrelaunch)
-                {
-                    TryEnablePrelaunch();
-                }
-                if (rootFrame.Content == null)
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                Window.Current.Activate();
             }
         }
-
-        public void InitFrame()
-        {
-            try
-            {
-                ////MainPage.Current.ResetPageCache();
-                //var rootFrame = new Frame();
-                ////rootFrame.Navigate(rootFrame.Content.GetType());
-                ////rootFrame.GoBack();
-                ////MainPage.Current?.ResetMainPage();
-                //rootFrame.Navigate(typeof(MainPage));
-                //MainPage.Current.NavigationCacheMode = NavigationCacheMode.Enabled;
-                //MainPage.Current.NavigationCacheMode = NavigationCacheMode.Disabled;
-
-                //NavigationService.SetFrame(MainPage.Current.MyFrame);
-                //Window.Current.Content = rootFrame;
-                ////Window.Current.Activate();
-                //MainPage.Current?.NavigateToMainView(true);
-            }
-            catch { }
-        }
-        /// <summary>
-        /// Encapsulates the call to CoreApplication.EnablePrelaunch() so that the JIT
-        /// won't encounter that call (and prevent the app from running when it doesn't
-        /// find it), unless this method gets called. This method should only
-        /// be called when the caller determines that we are running on a system that
-        /// supports CoreApplication.EnablePrelaunch().
-        /// </summary>
-        private void TryEnablePrelaunch()
-        {
-            Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
-        }
+        private void TryEnablePrelaunch() => Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
         public Frame CreateRootFrame()
         {
-#pragma warning disable IDE0019 // Use pattern matching
             Frame rootFrame = Window.Current.Content as Frame;
-#pragma warning restore IDE0019 // Use pattern matching
-
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
             if (rootFrame == null)
             {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame
-                {
-
-                    //// Set the default language
-                    //Language = Windows.Globalization.ApplicationLanguages.Languages[0]
-                };
+                rootFrame = new Frame();
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
-                // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
-
             return rootFrame;
         }
-        /// <summary>
-        /// Invoked when Navigation to a certain page fails
-        /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             Helper.DeleteCachedFolder();
@@ -224,14 +133,6 @@ namespace Minista
             Helper.DeleteCachedFilesFolder();
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
-
-        /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
-        /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             Helper.DeleteCachedFolder();
@@ -297,12 +198,10 @@ namespace Minista
                 exception.PrintException();
             }
         }
-
         private void OnEnteredBackground(object sender, EnteredBackgroundEventArgs e)
         {
         }
-
-        protected override /*async*/ void OnBackgroundActivated(BackgroundActivatedEventArgs e)
+        protected override void OnBackgroundActivated(BackgroundActivatedEventArgs e)
         {
             base.OnBackgroundActivated(e);
             ("ONBGAC:     " + e.TaskInstance.TriggerDetails.GetType()).PrintDebug();

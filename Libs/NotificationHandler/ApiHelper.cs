@@ -1,4 +1,5 @@
-﻿using InstagramApiSharp.API;
+﻿using Base;
+using InstagramApiSharp.API;
 using InstagramApiSharp.API.Builder;
 using InstagramApiSharp.Classes;
 using InstagramApiSharp.Logger;
@@ -27,7 +28,7 @@ namespace NotificationHandler
             UserSessionData sessionData= UserSessionData.ForUsername("FAKEUSER").WithPassword("FAKEPASS");
             var api = InstaApiBuilder.CreateBuilder()
                       .SetUser(sessionData)
-
+                      .SetDevice(new UniversalDevice())
 #if DEBUG
                   .UseLogger(new DebugLogger(LogLevel.All))
 #endif
@@ -47,7 +48,7 @@ namespace NotificationHandler
                     for (int i = 0; i < files.Count; i++)
                     {
                         var item = files[i];
-                        if (item.Path.ToLower().EndsWith(".mises"))
+                        if (item.Path.ToLower().EndsWith(".mises2"))
                         {
                             try
                             {

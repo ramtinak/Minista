@@ -20,30 +20,22 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minista
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class SplashView : Page
     {
-        private SplashScreen splash; // Variable to hold the splash screen object.
-        internal bool dismissed = false; // Variable to track splash screen dismissal status.
+        private readonly SplashScreen splash;
+        internal bool dismissed = false; 
         internal Frame rootFrame;
-        //private readonly DispatcherTimer _timer;
         public SplashView(bool canLoaded =false)
         {
             App.ActivateDisplayRequest();
-
             CanLoaded = canLoaded;
             Loaded += SplashViewLoaded;
             rootFrame = new Frame();
         }
-
         public SplashView(SplashScreen splashscreen)
         {
             this.InitializeComponent();
             splash = splashscreen;
-            //StatusBar statusbar = StatusBar.GetForCurrentView();
-            //statusbar.HideAsync();
             if (splash != null)
                 splash.Dismissed += new TypedEventHandler<SplashScreen, object>(DismissedEventHandler);
             Loaded += SplashViewLoaded;
@@ -61,30 +53,9 @@ namespace Minista
             catch { }
             if (e != null && e.Parameter != null && e.Parameter is bool b)
                 CanLoaded = b;
-
-          
         }
         private async void SplashViewLoaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                //Application.Current.Resources["DefaultBackgroundColor"] = Helper.GetColorBrush("#c4001d");
-                //Application.Current.Resources["DefaultItemBackgroundColor"] = Helper.GetColorBrush("#7f0000");
-                //Application.Current.Resources["DefaultForegroundColor"] = Helper.GetColorBrush("#ffffff");
-                //Application.Current.Resources["DefaultInnerForegroundColor"] = Helper.GetColorBrush("#ffffff");
-
-                //Application.Current.Resources["DefaultBackgroundColor"] = Helper.GetColorBrush("#000000");
-                //Application.Current.Resources["DefaultItemBackgroundColor"] = Helper.GetColorBrush("#170400");
-                //Application.Current.Resources["DefaultForegroundColor"] = Helper.GetColorBrush("#ffff00");
-                //Application.Current.Resources["DefaultInnerForegroundColor"] = Helper.GetColorBrush("#ffea00");
-
-                //// WHITE THEME
-                //Application.Current.Resources["DefaultBackgroundColor"] = Helper.GetColorBrush("#FFFFFFFF");
-                //Application.Current.Resources["DefaultItemBackgroundColor"] = Helper.GetColorBrush("#FFE8E8E8");
-                //Application.Current.Resources["DefaultForegroundColor"] = Helper.GetColorBrush("#FF2F2F2F");
-                //Application.Current.Resources["DefaultInnerForegroundColor"] = Helper.GetColorBrush("#FF575757");
-            }
-            catch /*(Exception ex)*/{ }
             try
             { 
                 ShowLoading();
@@ -115,21 +86,20 @@ namespace Minista
         private void Dismiss()
         {
             rootFrame.Navigate(typeof(MainPage));
-            // Place the frame in the current Window
             Window.Current.Content = rootFrame;
         }
         public void ShowLoading()
         {
-            LoadingPb.IsActive = true;
-            LoadingGrid.Visibility = Visibility.Visible;
+            LoadingUc.Start();
+            //LoadingPb.IsActive = true;
+            //LoadingGrid.Visibility = Visibility.Visible;
         }
         public void HideLoading()
         {
-            LoadingPb.IsActive = false;
-            LoadingGrid.Visibility = Visibility.Collapsed;
+            LoadingUc.Stop();
+            //LoadingPb.IsActive = false;
+            //LoadingGrid.Visibility = Visibility.Collapsed;
         }
-
-        // Include code to be executed when the system has transitioned from the splash screen to the extended splash screen (application's first view).
         void DismissedEventHandler(SplashScreen sender, object e)
         {
             dismissed = true;
