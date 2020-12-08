@@ -1,10 +1,17 @@
-﻿using InstagramApiSharp.Classes.Android.DeviceInfo;
+﻿/*
+ * Developer: Ramtin Jokar [ Ramtinak@live.com ] [ My Telegram Account: https://t.me/ramtinak ]
+ * 
+ * Copyright (c) December, 2020
+ * 
+ * IRANIAN DEVELOPERS
+ * 
+ */
+
+using InstagramApiSharp.Classes.Android.DeviceInfo;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Graphics.Display;
 using Windows.Security.ExchangeActiveSyncProvisioning;
 
@@ -12,16 +19,11 @@ namespace Base
 {
     public class UniversalDevice : AndroidDevice
     {
-        // 24cb229b-1ed9-4458-8ab4-028fd43cb910
-        //<--------- Device Information --------->
-        //DeviceManufacturer: Acer                      >>>>>>  eas.SystemManufacturer
-        //DeviceModel: Aspire A715-71G                  >>>>>>  eas.SystemProductName
-        //<--------- Device Information --------->
         public UniversalDevice()
         {
             var Rnd = new Random();
             EasClientDeviceInformation deviceInfo = new EasClientDeviceInformation();
-            var deviceGuid = deviceInfo.Id; // Default
+            var deviceGuid = deviceInfo.Id;
             DeviceGuid = deviceGuid;
             DeviceId = ApiRequestMessage.GenerateDeviceIdFromGuid(deviceGuid);
             PhoneGuid = GetPhoneGuid(deviceGuid);
@@ -35,12 +37,6 @@ namespace Base
                 IGBandwidthTotalBytesB = ((int)((double.Parse(IGBandwidthSpeedKbps, CultureInfo.InvariantCulture) * double.Parse(IGBandwidthTotalTimeMS, CultureInfo.InvariantCulture)) + Rnd.Next(100, 999))).ToString();
             }
             catch { }
-            //sb.AppendLine("DeviceManufacturer: " + eas.SystemManufacturer);
-            //new Windows.Security.ExchangeActiveSyncProvisioning.EasClientDeviceInformation().Id
-
-
-            //DeviceManufacturer: Acer                      >>>>>>  deviceInfo.SystemManufacturer
-            //DeviceModel: Aspire A715-71G                  >>>>>>  deviceInfo.SystemProductName
             var deviceModel = GetDeviceModelIfPossible(deviceInfo.SystemProductName);
             var displayInfo = DisplayInformation.GetForCurrentView();
             var dpi = displayInfo.LogicalDpi + "dpi";
@@ -58,7 +54,6 @@ namespace Base
             Dpi = dpi;
             HardwareModel = id.Substring(1 , 2) + id.Substring(2) + id.Substring(0, 2);
         }
-        public AndroidDevice Build() => this;
         string GetBoardNameIfPossible(string device)
         {
             if (device.Contains(' '))
