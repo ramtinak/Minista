@@ -1186,7 +1186,9 @@
                                                             ItemTemplateSelector="{StaticResource MediaUserInfoTemplateSelector}"
                                                             ItemsSource="{Binding MediaGeneratror.Items, Mode=OneWay}"
                                                             ContainerContentChanging="LVContainerContentChanging"
-                                                            ItemContainerStyle="{StaticResource GridViewItemContainerStyle}">
+                                                            ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                ScrollViewer.VerticalScrollMode="Disabled">
                                         <local:AdaptiveGridViewOriginal.ItemContainerTransitions>
                                             <TransitionCollection>
                                                 <EntranceThemeTransition />

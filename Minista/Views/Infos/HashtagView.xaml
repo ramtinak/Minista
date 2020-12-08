@@ -17,13 +17,15 @@
       xmlns:posts="using:Minista.Views.Posts"
       NavigationCacheMode="Enabled"
       mc:Ignorable="d"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      x:Name="ThisPage">
     <Page.DataContext>
         <vm:HashtagViewModel x:Name="HashtagVM"
                              x:FieldModifier="public" />
     </Page.DataContext>
     <Page.Resources>
         <ResourceDictionary>
+
             <Style TargetType="Pivot">
                 <Setter Property="Margin"
                         Value="0" />
@@ -427,6 +429,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
             <Style x:Key="GridViewItemContainerStyle"
                    TargetType="GridViewItem">
                 <Setter Property="HorizontalContentAlignment"
@@ -438,7 +441,7 @@
                 <Setter Property="VerticalAlignment"
                         Value="Stretch" />
                 <Setter Property="Margin"
-                        Value="1" />
+                        Value="1.5" />
                 <Setter Property="Padding"
                         Value="0" />
             </Style>
@@ -585,7 +588,7 @@
             <winui:RefreshContainer x:Name="RefreshControl">
                 <ScrollViewer x:Name="SCMain"
                               ViewChanging="ScrollViewViewChanging"
-                               ViewChanged="ScrollViewViewChanged">
+                                  ScrollViewer.IsVerticalScrollChainingEnabled="False">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -609,8 +612,8 @@
                                        TextWrapping="Wrap">
                     #<Run Text="{Binding Hashtag.Name}" />
                             </TextBlock>
-                            <Rectangle Fill="#FF363636"
-                                       Height="1.4"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
+                                       Height="1"
                                        MinWidth="250"
                                        MaxWidth="290"
                                        Grid.Row="1"
@@ -633,24 +636,27 @@
                                              Height="65"
                                              Width="65"
                                              Margin="5 5"
-                                             Stroke="#FF3C2866"
+                                             Stroke="{StaticResource DefaultInnerForegroundColor}"
                                              StrokeThickness="2">
                                         <Ellipse.Fill>
                                             <ImageBrush>
                                                 <ImageBrush.ImageSource>
-                                                    <BitmapImage UriSource="{Binding Stories[0].User.ProfilePicture}" />
+                                                    <BitmapImage UriSource="{Binding HashtagsTopGenerator.Items[0].Images[0].Uri}" />
+                                                    <!--<BitmapImage UriSource="{Binding Stories[0].User.ProfilePicture}" />-->
                                                 </ImageBrush.ImageSource>
                                             </ImageBrush>
                                         </Ellipse.Fill>
                                     </Ellipse>
                                     <Grid VerticalAlignment="Bottom"
                                           HorizontalAlignment="Right"
-                                          Margin="2 -2">
+                                          Margin="2 5">
                                         <Ellipse Height="20"
                                                  Width="20"
                                                  Margin="5 5"
-                                                 StrokeThickness=".8">
-                                            <Ellipse.Stroke>
+                                                 StrokeThickness=".8"
+                                                 Stroke="{StaticResource DefaultItemBackgroundColor}"
+                                                 Fill="{StaticResource UserSuggestionsCardBackgroundColor}">
+                                            <!--<Ellipse.Stroke>
                                                 <LinearGradientBrush EndPoint="0.5,1"
                                                                      StartPoint="0.5,0">
                                                     <GradientStop Color="#FFD03728" />
@@ -665,13 +671,13 @@
                                                     <GradientStop Color="#FFD12C2C"
                                                                   Offset="1" />
                                                 </LinearGradientBrush>
-                                            </Ellipse.Fill>
+                                            </Ellipse.Fill>-->
                                         </Ellipse>
                                         <TextBlock Text="#"
                                                    FontFamily="{StaticResource SegoeUIFont}"
                                                    FontSize="21"
                                                    FontWeight="SemiBold"
-                                                   Foreground="White"
+                                                   Foreground="{StaticResource DefaultInnerForegroundColor}"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    TextAlignment="Center" />
@@ -789,8 +795,8 @@
 
                             </ListView>
 
-                            <Rectangle Fill="#FF363636"
-                                       Height="1.4"
+                            <Rectangle Fill="{StaticResource SeperatorColor}"
+                                       Height="1"
                                        MinWidth="250"
                                        MaxWidth="290"
                                        Grid.Row="4"
@@ -802,24 +808,35 @@
                         </Grid>
                         <Pivot x:Name="MainPivot"
                                Grid.Row="1"
-                               Padding="0"
-                               Margin="0"
                                SelectionChanged="MainPivotSelectionChanged">
-                            <PivotItem Header="Top"
-                                       Padding="0"
+                            <PivotItem Padding="0"
                                        Margin="0">
-
-                                <local:AdaptiveGridViewOriginal x:Name="LVTop"
-                                                                ItemHeight="100"
-                                                                DesiredWidth="100"
+                                <PivotItem.Header>
+                                    <Grid MinWidth="90"
+                                          HorizontalAlignment="Stretch">
+                                        <TextBlock FontFamily="{StaticResource VazirFont}"
+                                                  FontSize="{StaticResource HeaderFontSize}"
+                                                   HorizontalAlignment="Center"
+                                                  Foreground="{StaticResource DefaultForegroundColor}"
+                                                  Text="Top" />
+                                    </Grid>
+                                </PivotItem.Header>
+                                <local:AdaptiveGridViewOriginal x:Name="LVTop" 
+                                                                    DesiredWidth="100"
+                                                                    ScrollViewer.IsVerticalScrollChainingEnabled="False"
+                                                                    ItemHeight="100"
                                                         SelectionMode="None"
                                                         Loaded="OnLVTopLoaded"
                                                         ItemClick="LVItemClick"
                                                         IsItemClickEnabled="True"
+                                                                HorizontalAlignment="Stretch"
+                                                                VerticalAlignment="Stretch"
                                                         ItemsSource="{Binding HashtagsTopGenerator.Items, Mode=OneWay}"
                                                         ItemTemplateSelector="{StaticResource MediaHashtagInfoTemplateSelector}"
                                                         ContainerContentChanging="LVContainerContentChanging"
-                                                        ItemContainerStyle="{StaticResource GridViewItemContainerStyle}">
+                                                        ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                                                ScrollViewer.VerticalScrollMode="Enabled">
                                     <local:AdaptiveGridViewOriginal.ItemContainerTransitions>
                                         <TransitionCollection>
                                             <EntranceThemeTransition />
@@ -885,12 +902,19 @@
                                         </Grid>
                                     </local:AdaptiveGridViewOriginal.Header>
                                 </local:AdaptiveGridViewOriginal>
-
-
                             </PivotItem>
-                            <PivotItem Header="Recent"
-                                       Padding="0"
+                            <PivotItem Padding="0"
                                        Margin="0">
+                                <PivotItem.Header>
+                                    <Grid MinWidth="90"
+                                          HorizontalAlignment="Stretch">
+                                        <TextBlock FontFamily="{StaticResource VazirFont}"
+                                                  FontSize="{StaticResource HeaderFontSize}"
+                                                   HorizontalAlignment="Center"
+                                                  Foreground="{StaticResource DefaultForegroundColor}"
+                                                  Text="Recent" />
+                                    </Grid>
+                                </PivotItem.Header>
                                 <local:AdaptiveGridViewOriginal x:Name="LVRecent"
                                                                 ItemHeight="100"
                                                                 DesiredWidth="100"
@@ -901,7 +925,9 @@
                                                         ItemsSource="{Binding HashtagsRecentGenerator.Items, Mode=OneWay}"
                                                         ItemTemplateSelector="{StaticResource MediaHashtagInfoTemplateSelector}"
                                                         ContainerContentChanging="LVContainerContentChanging"
-                                                        ItemContainerStyle="{StaticResource GridViewItemContainerStyle}">
+                                                        ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                ScrollViewer.VerticalScrollMode="Disabled">
                                     <local:AdaptiveGridViewOriginal.ItemContainerTransitions>
                                         <TransitionCollection>
                                             <EntranceThemeTransition />
@@ -935,8 +961,6 @@
                            Visibility="Collapsed"
                            VerticalAlignment="Bottom"
                            Grid.Row="2" />
-
-
         <posts:ScrollableHashtagPostUc x:Name="ScrollableHashtagPostUc"
                                      x:FieldModifier="public"
                                      HorizontalAlignment="Stretch"

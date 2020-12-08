@@ -1210,8 +1210,6 @@
                                 </PivotItem.Header>
 
                                 <local:AdaptiveGridViewOriginal x:Name="LV"
-                                                                DesiredWidth="150"
-                                                                ItemHeight="200"
                                                                 SelectionMode="None"
                                                         ItemClick="LVItemClick"
                                                         IsItemClickEnabled="True"
@@ -1219,7 +1217,9 @@
                                                         ItemTemplateSelector="{StaticResource MediaUserInfoTemplateSelector}"
                                                         ItemsSource="{Binding MediaGeneratror.Items, Mode=OneWay}"
                                                         ContainerContentChanging="LVContainerContentChanging"
-                                                        ItemContainerStyle="{StaticResource GridViewItemContainerStyle}">
+                                                        ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
+                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                                ScrollViewer.VerticalScrollMode="Disabled">
                                     <!--<local:AdaptiveGridView.Header>
                         </local:AdaptiveGridView.Header>-->
                                     <!--<GridView.ItemsPanel>

@@ -201,8 +201,10 @@
                         Width="20"
                         Height="20"
                         Margin="5,5"
-                        StrokeThickness=".8">
-                        <Ellipse.Stroke>
+                        StrokeThickness=".8"
+                                                 Stroke="{StaticResource DefaultItemBackgroundColor}"
+                                                 Fill="{StaticResource UserSuggestionsCardBackgroundColor}">
+                        <!--<Ellipse.Stroke>
                             <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                 <GradientStop Color="#FFD03728" />
                                 <GradientStop Offset="1" Color="#FFCE6319" />
@@ -213,7 +215,7 @@
                                 <GradientStop Color="#FFCD7812" />
                                 <GradientStop Offset="1" Color="#FFD12C2C" />
                             </LinearGradientBrush>
-                        </Ellipse.Fill>
+                        </Ellipse.Fill>-->
                     </Ellipse>
                     <TextBlock
                         HorizontalAlignment="Center"

@@ -490,7 +490,7 @@ namespace Minista.Views.Infos
                     SCMain.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
                     SCMain.ChangeView(null, 0, null, false);
                 }
-                }
+            }
             catch { }
             KeyDown -= OnKeyDownHandler;
             try
