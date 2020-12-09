@@ -1,0 +1,158 @@
+﻿<UserControl
+    x:Class="Minista.Views.Stories.StoryItemUc"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Minista.Views.Stories"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+             xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+             xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+             xmlns:converters="using:Minista.Converters"
+             xmlns:uc="using:Minista.UserControls.Story.StoryViews" 
+    d:DataContext="{d:DesignInstance Type=local:StoryItemUc}"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:MediaImageVisibilityConverter x:Key="MediaImageVisibilityConverter"/>
+            <converters:MediaVideoVisibilityConverter x:Key="MediaVideoVisibilityConverter"/>
+
+
+            <Style x:Key="RefreshButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
+                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundTransparentBrush}" />
+                <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+                <Setter Property="Padding" Value="8,4,8,4" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="FontFamily" Value="{StaticResource VazirFont}" />
+                <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
+                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="RootGrid">
+                                <Grid>
+                                    <Ellipse x:Name="RootEllipse" Width="80"
+                                             Height="80"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Fill="{StaticResource RefreshGoUpButtonBackgroundColor}" />
+                                    <FontIcon x:Name="FontIconCon" 
+                                              FontFamily="{StaticResource SymbolFont}"
+                                              FontSize="{StaticResource ExtraBigFontSize}"
+                                              Foreground="{StaticResource DefaultForegroundColor}"
+                                              Glyph="" RenderTransformOrigin="0.5,0.5" Loaded="FontIconConLoaded" >
+                                        <FontIcon.RenderTransform>
+                                            <RotateTransform Angle="0"/>
+                                        </FontIcon.RenderTransform>
+                                    </FontIcon>
+                                    <Grid Background="Black" Opacity="0" />
+                                </Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="RootEllipse" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FontIconCon" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="RootEllipse" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootEllipse" Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FontIconCon" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <PointerDownThemeAnimation Storyboard.TargetName="RootEllipse" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootEllipse" Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FontIconCon" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="{StaticResource DefaultBackgroundColor}">
+        <Image x:Name="BackgroundImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill"
+               Source="{Binding Images[0].Uri,Mode=OneWay}"/>
+        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#2D000000"/>
+        <controls:DropShadowPanel Visibility="{Binding MediaType, Mode=OneWay, Converter={StaticResource MediaImageVisibilityConverter}}" 
+                                  BlurRadius="9.0"
+                                  ShadowOpacity="0.70"
+                                  OffsetX="5.0"
+                                  OffsetY="5.0"
+                                  Color="Black"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center" 
+                                  Grid.Row="1">
+            <controls:ImageEx x:Name="Image"
+                              x:FieldModifier="public"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              MinWidth="350"
+                              MaxWidth="480"
+                              Stretch="Uniform"
+                              ImageExFailed="OnImageExFailed"
+                              ImageExOpened="OnImageExOpened"/>
+        </controls:DropShadowPanel>
+        <controls:DropShadowPanel Visibility="{Binding MediaType, Mode=OneWay, Converter={StaticResource MediaVideoVisibilityConverter}}" 
+                                  BlurRadius="9.0"
+                                  ShadowOpacity="0.70"
+                                  OffsetX="5.0"
+                                  OffsetY="5.0"
+                                  Color="Black"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center" 
+                                  Grid.Row="1">
+            <MediaElement x:Name="MediaElement" 
+                          x:FieldModifier="public"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          AreTransportControlsEnabled="False"
+                          Stretch="Uniform"
+                          MinWidth="350"
+                          MaxWidth="480"
+                          AutoPlay="False" 
+                          PosterSource="{Binding Images[0].Uri,Mode=OneWay}"
+                          MediaFailed="OnMediaFailed"
+                          MediaOpened="OnMediaOpened"/>
+        </controls:DropShadowPanel>
+        <Grid x:Name="StorySuffItems" x:FieldModifier="public"
+                  Grid.RowSpan="6" />
+
+
+        <Button x:Name="RefreshButton"
+                Background="{x:Null}"
+                Grid.RowSpan="2"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Visibility="Collapsed"
+                Click="RefreshButtonClick"
+                Style="{StaticResource RefreshButtonStyle}"/>
+    </Grid>
+</UserControl>

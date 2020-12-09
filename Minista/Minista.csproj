@@ -303,11 +303,14 @@
     <Compile Include="Views\Settings\Security\PasswordView.xaml.cs">
       <DependentUpon>PasswordView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Stories\StoryItemUc.xaml.cs">
+    <Compile Include="Views\Stories\Uc\StoryItemUc.xaml.cs">
       <DependentUpon>StoryItemUc.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Stories\StoryViewX.xaml.cs">
       <DependentUpon>StoryViewX.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stories\UserStoryUc.xaml.cs">
+      <DependentUpon>UserStoryUc.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Studio\Drawings\CropUI.cs" />
     <Compile Include="Views\Studio\Drawings\DoodleUI.cs" />
@@ -1205,11 +1208,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Stories\StoryItemUc.xaml">
+    <Page Include="Views\Stories\Uc\StoryItemUc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Stories\StoryViewX.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stories\UserStoryUc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,104 +1,20 @@
-﻿<Page x:Class="Minista.Views.Main.StoryView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:local="using:Minista.Views.Main"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
-      xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-      xmlns:converters="using:Minista.Converters"
-      xmlns:uc="using:Minista.UserControls.Story.StoryViews"
-      mc:Ignorable="d"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+﻿<UserControl
+    x:Class="Minista.Views.Stories.UserStoryUc"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Minista.Views.Stories"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Minista.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
 
-    <Page.Resources>
-        <ResourceDictionary>
-            <converters:MediaImageVisibilityConverter x:Key="MediaImageVisibilityConverter" />
-            <converters:MediaVideoVisibilityConverter x:Key="MediaVideoVisibilityConverter" />
-            <converters:PostNameConverter x:Key="PostNameConverter" />
-            <converters:PostLocationConverter x:Key="PostLocationConverter" />
-            <converters:PostPictureConverter x:Key="PostPictureConverter" />
-            <converters:DateTimeConverter x:Key="DateTimeConverter" />
-            
-            <converters:StoryItemProfilePictureConverter x:Key="StoryItemProfilePictureConverter" />
-            <converters:StoryItemUsernameConverter x:Key="StoryItemUsernameConverter" />
-            <converters:StoryItemHashtagVisibilityConverter x:Key="StoryItemHashtagVisibilityConverter" />
+    <Grid Background="{StaticResource DefaultBackgroundColor}">
 
-            <Style x:Key="GridViewItemContainerStyle"
-                   TargetType="GridViewItem">
-                <Setter Property="HorizontalContentAlignment"
-                        Value="Stretch" />
-                <Setter Property="HorizontalAlignment"
-                        Value="Stretch" />
-                <Setter Property="VerticalContentAlignment"
-                        Value="Stretch" />
-                <Setter Property="VerticalAlignment"
-                        Value="Stretch" />
-                <Setter Property="Margin"
-                        Value="1" />
-                <Setter Property="Padding"
-                        Value="0" />
-            </Style>
-            <Storyboard x:Name="ShowTitleStoryboard"
-                        Completed="ShowTitleCompleted">
-                <DoubleAnimation Duration="0:0:0.750"
-                                 To="1"
-                                 Storyboard.TargetProperty="Opacity"
-                                 Storyboard.TargetName="TitleGrid" />
-            </Storyboard>
-            <Storyboard x:Name="HideTitleStoryboard"
-                        Completed="HideTitleCompleted">
-                <DoubleAnimation Duration="0:0:0.750"
-                                 To="0"
-                                 Storyboard.TargetProperty="Opacity"
-                                 Storyboard.TargetName="TitleGrid" />
-            </Storyboard>
-
-
-            <Storyboard x:Name="ShowHoldingStoryboard">
-                <DoubleAnimation Duration="0:0:0.750"
-                                 To="1"
-                                 Storyboard.TargetProperty="Opacity"
-                                 Storyboard.TargetName="UserGrid" />
-
-                <DoubleAnimation Duration="0:0:0.750"
-                                 To="1"
-                                 Storyboard.TargetProperty="Opacity"
-                                 Storyboard.TargetName="BottomStuffGrid" />
-                <DoubleAnimation Duration="0:0:0.750"
-                                 To="1"
-                                 Storyboard.TargetProperty="Opacity"
-                                 Storyboard.TargetName="ProgressGrid" />
-            </Storyboard>
-            <Storyboard x:Name="HideHoldingStoryboard"
-                        Completed="HideHoldingStoryboardCompleted">
-                <DoubleAnimation Duration="0:0:0.750"
-                                 To="0"
-                                 Storyboard.TargetProperty="Opacity"
-                                 Storyboard.TargetName="UserGrid" />
-                <DoubleAnimation Duration="0:0:0.750"
-                                 To="0"
-                                 Storyboard.TargetProperty="Opacity"
-                                 Storyboard.TargetName="BottomStuffGrid" />
-                <DoubleAnimation Duration="0:0:0.750"
-                                 To="0"
-                                 Storyboard.TargetProperty="Opacity"
-                                 Storyboard.TargetName="ProgressGrid" />
-            </Storyboard>
-
-            <Storyboard x:Name="ShowReactionStoryboard"
-                        Completed="ShowReactionStoryboardCompleted">
-                <DoubleAnimation Duration="0:0:4.50"
-                                 From="0"
-                                 To="-850"
-                                 Storyboard.TargetProperty="TranslateY"
-                                 Storyboard.TargetName="ReactionCompositeTransform" />
-            </Storyboard>
-        </ResourceDictionary>
-    </Page.Resources>
-    <Grid Background="{StaticResource DefaultBackgroundColor}"
-          Tapped="MainGridTapped">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -114,6 +30,9 @@
                   Grid.RowSpan="4">
                 <!--Content inja gharar migire-->
             </Grid>
+            <FlipView x:Name="Flips" Background="{StaticResource DefaultBackgroundColor}">
+                
+            </FlipView>
             <Grid x:Name="ProgressGrid">
             </Grid>
             <Grid Background="Cyan"
@@ -137,8 +56,6 @@
             <Grid x:Name="MainGridK"
                   Grid.RowSpan="6"
                   Tapped="MainGridKTapped" />
-            <Grid x:Name="StorySuffItems" x:FieldModifier="public"
-                  Grid.RowSpan="6" />
             <Grid x:Name="UserGrid"
                   Grid.Row="1">
                 <Button Background="{x:Null}"
@@ -184,11 +101,8 @@
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                TextAlignment="Center" />
-
                                 </Grid>
-
                             </Grid>
-
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
@@ -215,9 +129,6 @@
                                                Foreground="White"
                                                TextAlignment="Center" />
                                 </controls:DropShadowPanel>
-
-                                <!--Text="{Binding  Converter={StaticResource DateTimeConverter}, Mode=OneWay}"-->
-
                                 <Grid HorizontalAlignment="Left"
                                       VerticalAlignment="Center"
                                       Grid.Column="1"
@@ -255,10 +166,8 @@
                                   Opacity="0" />
                         </Grid>
                     </Button.Content>
-
                 </Button>
             </Grid>
-
             <Grid x:Name="TitleGrid"
                   Visibility="Collapsed"
                   Opacity="0"
@@ -266,7 +175,7 @@
 
                 <Image x:Name="TitleCover"
                        Opacity=".850" />
-                <Grid Background="#DA000000" />
+                <Grid Background="Red"  />
                 <TextBlock x:Name="TitleText"
                            Text="{Binding Converter={StaticResource StoryItemUsernameConverter}}"
                            FontFamily="{StaticResource VazirFont}"
@@ -277,7 +186,6 @@
                            VerticalAlignment="Center"
                            TextAlignment="Center" />
             </Grid>
-
             <Grid x:Name="ReactionGrid"
                   VerticalAlignment="Bottom"
                   Visibility="Collapsed"
@@ -311,7 +219,6 @@
                         Visibility="Collapsed"
                         FontSize="{StaticResource BigFontSize}">
                     <Grid>
-
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -387,13 +294,6 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <!--Background="#7F282828"-->
-                    <!--<Grid x:Name="GridReply"
-                      Visibility="Collapsed"
-                
-                      VerticalAlignment="Bottom"
-                      CornerRadius="8">
-                </Grid>-->
                     <TextBox x:Name="ReplyText"
                              Foreground="{StaticResource DefaultForegroundColor}"
                              Background="{StaticResource StoryReplyTextBackgroundColor}"
@@ -454,28 +354,6 @@
                             Foreground="{StaticResource StoryButtonForeroundColor}"
                             FontSize="{StaticResource DefaultFontSize}"
                             FontFamily="{StaticResource VazirFont}"/>
-                    <!--<Grid Grid.Column="1" Width="60" />-->
-                    <Grid Grid.Column="2"
-                          Visibility="Collapsed">
-                        <!--<Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>-->
-                        <!--<Button x:Name="DownloadButton"
-                        Content=""
-                        Click="DownloadButtonClick"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Height="42"
-                        Width="52"
-                        Grid.Column="3"
-                        Grid.Row="1"
-                        Margin="5 5"
-                        Background="#DA1B1B1B"
-                            ToolTipService.ToolTip="Download current story"
-                        FontSize="{StaticResource BigBigFontSize}"
-                        FontFamily="{StaticResource MaterialSymbolFont}" />-->
-                    </Grid>
                     <Button x:Name="MoreOptionsButton"
                             Content=""
                             Click="MoreOptionsButtonClick"
@@ -493,14 +371,7 @@
                             FontFamily="{StaticResource MaterialSymbolFont}" />
                 </Grid>
             </Grid>
-
-
-
+            
         </Grid>
-        <uc:MainStoryViewerUc x:Name="MainStoryViewerUc" Height="420"
-                              x:FieldModifier="public"
-                              Grid.Row="1"
-                              HorizontalAlignment="Stretch"
-                              Visibility="Collapsed"/>
     </Grid>
-</Page>
+</UserControl>
