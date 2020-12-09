@@ -105,7 +105,8 @@
     <Grid Background="{StaticResource DefaultBackgroundColor}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid Width="200" MaxWidth="260" HorizontalAlignment="Center">
@@ -123,12 +124,18 @@
 
             <TextBlock Text="{Binding Media.LikesCount, Converter={StaticResource LikersConverter}}"
                        Grid.Column="1"
-                       Margin="10 0 15 0"
+                       Margin="10 0"
                        VerticalAlignment="Center"
                        FontFamily="{StaticResource VazirFont}"
                        FontSize="{StaticResource DefaultFontSize}" />
         </Grid>
-        <Grid Grid.Row="1">
+        <Rectangle
+                    Grid.Row="1"
+                    Height="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Fill="{StaticResource SeperatorColor}" />
+        <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
@@ -165,7 +172,7 @@
         </Grid>
         <Button x:Name="RefreshButton"
                     Background="{x:Null}"
-                    Grid.RowSpan="2"
+                    Grid.RowSpan="3"
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="Left"
                     Margin="12 0 0 50"
