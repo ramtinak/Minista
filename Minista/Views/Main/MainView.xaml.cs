@@ -2,6 +2,7 @@
 using InstagramApiSharp.Helpers;
 using Minista.Helpers;
 using Minista.Models.Main;
+using Minista.Views.Stories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -419,7 +420,7 @@ namespace Minista.Views.Main
                                 index = list.IndexOf(first);
                             else
                                 index = LVStories.Items.IndexOf(storyWithLiveSupportModel);
-                            Helpers.NavigationService.Navigate(typeof(StoryView), new object[] { list, index });
+                            Helpers.NavigationService.Navigate(typeof(StoryViewX), new object[] { list, index });
                         }
                         else if (storyWithLiveSupportModel.Type == StoryType.Broadcast)
                         {

@@ -8,7 +8,9 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
+    <Grid Background="{StaticResource DefaultBackgroundColor}">
+        <ContentControl x:Name="Contents">
+            
+        </ContentControl>
     </Grid>
 </Page>

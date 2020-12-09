@@ -1,4 +1,5 @@
 ﻿using InstagramApiSharp.Classes.Models;
+using InstagramApiSharp.Enums;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Minista.ContentDialogs;
 using Minista.Controls;
@@ -17,6 +18,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -43,7 +45,7 @@ namespace Minista.Views.Stories
                 SetValue(StoryItemProperty, value);
                 DataContext = value;
                 OnPropertyChanged("StoryItem");
-                SetStory();
+                SetImageOrVideo();
             }
         }
         public static readonly DependencyProperty StoryItemProperty =
@@ -51,14 +53,34 @@ namespace Minista.Views.Stories
                 typeof(InstaStoryItem),
                 typeof(StoryItemUc),
                 new PropertyMetadata(null));
+        public int Index { get; set; } = -1;
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string memberName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
         public bool IsMediaLoaded { get; private set; } = false;
+        readonly InstaReelFeed StoryFeed;
+        readonly UserStoryUc UserStoryUc;
+
+        public StoryItemUc(UserStoryUc userStoryUc) : this()
+        {
+            UserStoryUc = userStoryUc;
+            StoryFeed = userStoryUc.StoryFeed;
+        }
         public StoryItemUc()
         {
             InitializeComponent();
             DataContextChanged += StoryItemUcDataContextChanged;
             Unloaded += StoryItemUcUnloaded;
+            Loaded += StoryItemUcLoaded;
+        }
+
+        private void StoryItemUcLoaded(object sender, RoutedEventArgs e)
+        {
+            try 
+            {
+                if(!IsMediaLoaded)
+                    SetImageOrVideo();
+            }
+            catch { }
         }
 
         private void StoryItemUcUnloaded(object sender, RoutedEventArgs e)
@@ -66,33 +88,77 @@ namespace Minista.Views.Stories
             StopRefreshAnimation();
         }
 
-        public void SetStory()
-        {
-            try
-            {
-                SetImageOrVideo();
-                var anim = BackgroundImage.Blur(17);
-                anim.SetDurationForAll(0);
-                anim.SetDelay(0);
-                anim.Start();
-            }
-            catch { }
-        }
+        //public void SetStory()
+        //{
+        //    try
+        //    {
+        //        SetImageOrVideo();
+        //        var anim = BackgroundImage.Blur(17);
+        //        anim.SetDurationForAll(0);
+        //        anim.SetDelay(0);
+        //        anim.Start();
+        //    }
+        //    catch { }
+        //}
         void SetImageOrVideo()
         {
             try
             {
                 if (StoryItem.Images?.Count > 0)
                     BackgroundImage.Source = StoryItem.Images.LastOrDefault().Uri.GetBitmap();
+                var anim = BackgroundImage.Blur(17);
+                anim.SetDurationForAll(0);
+                anim.SetDelay(0);
+                anim.Start();
+            }
+            catch (Exception ex)
+            {
+                ex.PrintException("SetImageOrVideo1");
+            }
+            try
+            {
                 if (StoryItem.MediaType == InstaMediaType.Image)
                     Image.Source = StoryItem.Images[0].Uri.GetBitmap();
                 else
                     MediaElement.Source = new Uri(StoryItem.Videos[0].Uri);
 
             }
-            catch { }
+            catch (Exception ex)
+            {
+                ex.PrintException("SetImageOrVideo2");
+            }
         }
-
+        bool OpenVideo = false;
+        public void PlayVideo(int index)
+        {
+            try
+            {
+                MediaElement.CurrentState.PrintDebug();
+                if (StoryItem.MediaType == InstaMediaType.Video)
+                {
+                    if (OpenVideo || index > 0)
+                        MediaElement.Play();
+                    else
+                        OpenVideo = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.PrintException("PlayVideo");
+            }
+        }
+        public void PauseVideo()
+        {
+            try
+            {
+                if (StoryItem.MediaType == InstaMediaType.Video)
+                    MediaElement.Pause();
+            }
+            catch (Exception ex)
+            {
+                ex.PrintException("PauseVideo");
+            }
+        }
         private void StoryItemUcDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
             //try
@@ -108,6 +174,7 @@ namespace Minista.Views.Stories
 
         private void OnMediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
+            "OnMediaOpened".PrintDebug();
             IsMediaLoaded = false;
             ShowRefreshButton();
             //if (!IsMediaLoaded)
@@ -122,8 +189,10 @@ namespace Minista.Views.Stories
 
         private void OnMediaOpened(object sender, RoutedEventArgs e)
         {
+            "OnMediaOpened".PrintDebug();
+            if (OpenVideo)
+                MediaElement.Play();
             IsMediaLoaded = true;
-            MediaElement.Play();
             SetStuff();
             StopRefreshAnimation();
         }
@@ -491,7 +560,7 @@ namespace Minista.Views.Stories
                             {
                                 if (item.Name == rect.Tag.ToString())
                                 {
-                                    IsHolding = true;
+                                    //IsHolding = true;
                                     IsStoryInnerShowing = true;
                                         await item.Animation(FrameworkLayer.Xaml)
                                               .Scale(1, 0, Easing.QuadraticEaseInOut)
@@ -563,18 +632,171 @@ namespace Minista.Views.Stories
         {
             RefreshButton.IsEnabled = false;
             SetImageOrVideo();
-            StartRefreshAnimation();
+            StartRefreshAnimation(); 
         }
-        private void FontIconCon_Loaded(object sender, RoutedEventArgs e)
+
+        private void LeftGridTapped(object sender, TappedRoutedEventArgs e)
+        {
+            //if (IsHolding) return;
+            //SkipPrevious();
+        }
+
+        private void RightGridTapped(object sender, TappedRoutedEventArgs e)
+        {
+            //if (IsHolding) return;
+            //SkipNext();
+        }
+
+        private void MainGridKTapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+        private void FontIconConLoaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (sender is FontIcon fontIcon)
                     RefreshFontIcon = fontIcon;
             }
+            catch (Exception ex)
+            {
+                ex.PrintException("FontIconConLoaded");
+            }
+        }
+
+        private void SeeMoreButtonClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (StoryItem.StoryCTA?.Count > 0)
+                {
+                    var url = StoryItem.StoryCTA.FirstOrDefault().WebUri;
+
+                    if (url.Contains("l.instagram.com/"))
+                    {
+                        var u = url.Substring(url.IndexOf("?u=") + "?u=".Length);
+                        u = u.Substring(0, u.IndexOf("&"));
+                        if (u.Contains("instagram.com/"))
+                            UriHelper.HandleUri(System.Net.WebUtility.HtmlDecode(System.Net.WebUtility.UrlDecode(u)));
+                        else
+                            url.OpenUrl();
+                    }
+                    else
+                        url.OpenUrl();
+                }
+            }
+            catch { }
+        }
+        private void ReactionGVItemClick(object sender, ItemClickEventArgs e)
+        { }
+        private async void ReplyButtonClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    try
+                    {
+                        //Items[StoryIndex].StoryItem, StoryFeed
+                        var type = InstaSharingType.Photo;
+                        if (StoryItem.MediaType == InstaMediaType.Video)
+                            type = InstaSharingType.Video;
+                        //IsHolding = false;
+                        var reply = await Helper.InstaApi.StoryProcessor.ReplyToStoryAsync(StoryItem.Id, StoryItem.User.Pk,
+                            ReplyText.Text, type);
+
+                        if (reply.Succeeded)
+                        {
+                            ReplyText.Text = string.Empty;
+                            Helper.ShowNotify($"Reply sent.");
+                        }
+
+                        //if (Items[StoryIndex]?.StoryItem.MediaType == InstaMediaType.Video)
+                        //{
+                        //    IsHolding = false;
+                        //    Items[StoryIndex].MediaElement.Play();
+                        //}
+                    }
+                    catch { }
+                });
+
+            }
+            catch { }
+        }
+        private void ReplyTextGotFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //IsHolding = true;
+                ReactionGV.Visibility = Visibility.Visible;
+            }
             catch { }
         }
 
+        private void ReplyTextLostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //IsHolding = false;
+                ReactionGV.Visibility = Visibility.Collapsed;
+            }
+            catch { }
+        }
+        private void ReplyTextTextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(ReplyText.Text))
+                {
+                    ReplyButton.Visibility = Visibility.Collapsed;
+                    ShareButton.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    ReplyButton.Visibility = Visibility.Visible;
+                    ShareButton.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch { }
+        }
+        private void SeenByButtonClick(object sender, RoutedEventArgs e)
+        {
+            //if (Items.Count > StoryIndex)
+            //{
+            //    IsHolding = true;
+            //    StorySuffItems.Visibility = Visibility.Collapsed;
+            //    MainStoryViewerUc.SetStoryItem(Items[StoryIndex].StoryItem);
+            //}
+        }
+        private async void ShareButtonClick(object sender, RoutedEventArgs e)
+        {
+            //if (MainStoryViewerUc.Visibility == Visibility.Visible) return;
+            try
+            {
+                //IsHolding = true;
+                await new UsersDialog(StoryItem, StoryFeed).ShowAsync();
+            }
+            catch { }
+            //IsHolding = false;
+            try
+            {
+                if (StoryItem.MediaType == InstaMediaType.Video)
+                MediaElement.Play();
+             
+            }
+            catch { }
+        }
+        private async void MoreOptionsButtonClick(object sender, RoutedEventArgs e)
+        {
+            //IsHolding = true;
+            try
+            {
+                await new StoryMenuDialog(StoryFeed, StoryItem, UserStoryUc).ShowAsync();
+            }
+            catch { }
+            //IsHolding = false;
+
+        }
         void StartRefreshAnimation()
         {
             try
@@ -595,7 +817,10 @@ namespace Minista.Views.Stories
                     StoryboardX.Begin();
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                ex.PrintException("StartRefreshAnimation");
+            }
         }
         void StopRefreshAnimation()
         {
@@ -604,7 +829,10 @@ namespace Minista.Views.Stories
                 HideRefreshButton();
                 StoryboardX.Stop();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                ex.PrintException("StopRefreshAnimation");
+            }
         }
         void ShowRefreshButton()
         {

@@ -1209,7 +1209,7 @@ namespace Minista.Views.Direct
                 Height = 19,
                 Margin = new Thickness(2),
                 DataContext = reaction,
-                Fill = reaction.User.ProfilePicture.GetImageBrush()
+                Fill = reaction?.User?.ProfilePicture?.GetImageBrush()
             };
         }
 

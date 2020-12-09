@@ -8,13 +8,31 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:converters="using:Minista.Converters"
+    xmlns:converters="using:Minista.Converters" d:DataContext="{d:DesignInstance Type=local:UserStoryUc}"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:MediaImageVisibilityConverter x:Key="MediaImageVisibilityConverter" />
+            <converters:MediaVideoVisibilityConverter x:Key="MediaVideoVisibilityConverter" />
+            <converters:PostNameConverter x:Key="PostNameConverter" />
+            <converters:PostLocationConverter x:Key="PostLocationConverter" />
+            <converters:PostPictureConverter x:Key="PostPictureConverter" />
+            <converters:DateTimeConverter x:Key="DateTimeConverter" />
 
+            <converters:StoryItemProfilePictureConverter x:Key="StoryItemProfilePictureConverter" />
+            <converters:StoryItemUsernameConverter x:Key="StoryItemUsernameConverter" />
+            <converters:StoryItemHashtagVisibilityConverter x:Key="StoryItemHashtagVisibilityConverter" />
+
+            <DataTemplate x:Key="StoryItemTemplate">
+                <local:StoryItemUc StoryItem="{Binding Mode=TwoWay}" 
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Background="{StaticResource DefaultBackgroundColor}">
-
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -30,32 +48,17 @@
                   Grid.RowSpan="4">
                 <!--Content inja gharar migire-->
             </Grid>
-            <FlipView x:Name="Flips" Background="{StaticResource DefaultBackgroundColor}">
+            <!--ItemsSource="{Binding Items, Mode=OneWay}"-->
+            <FlipView x:Name="FlipView" Background="{StaticResource DefaultBackgroundColor}"
+                  Grid.RowSpan="4"
+                      Padding="0"
+                      Margin="0"
+                      SelectionChanged="FlipViewSelectionChanged">
                 
             </FlipView>
             <Grid x:Name="ProgressGrid">
             </Grid>
-            <Grid Background="Cyan"
-                  Grid.RowSpan="4"
-                  Opacity="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="120" />
-                </Grid.ColumnDefinitions>
-                <Grid VerticalAlignment="Stretch"
-                      HorizontalAlignment="Stretch"
-                      Background="Red"
-                      Tapped="LeftGridTapped" />
-                <Grid Grid.Column="2"
-                      VerticalAlignment="Stretch"
-                      HorizontalAlignment="Stretch"
-                      Background="Red"
-                      Tapped="RightGridTapped" />
-            </Grid>
-            <Grid x:Name="MainGridK"
-                  Grid.RowSpan="6"
-                  Tapped="MainGridKTapped" />
+
             <Grid x:Name="UserGrid"
                   Grid.Row="1">
                 <Button Background="{x:Null}"
@@ -168,210 +171,6 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <Grid x:Name="TitleGrid"
-                  Visibility="Collapsed"
-                  Opacity="0"
-                  Grid.RowSpan="5">
-
-                <Image x:Name="TitleCover"
-                       Opacity=".850" />
-                <Grid Background="Red"  />
-                <TextBlock x:Name="TitleText"
-                           Text="{Binding Converter={StaticResource StoryItemUsernameConverter}}"
-                           FontFamily="{StaticResource VazirFont}"
-                           FontSize="{StaticResource BigFontSize}"
-                           Margin="5"
-                           Foreground="{StaticResource DefaultForegroundColor}"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           TextAlignment="Center" />
-            </Grid>
-            <Grid x:Name="ReactionGrid"
-                  VerticalAlignment="Bottom"
-                  Visibility="Collapsed"
-                  Grid.RowSpan="4"
-                  Background="Transparent"
-                  RenderTransformOrigin="0.5,0.5">
-                <Grid.RenderTransform>
-                    <CompositeTransform x:Name="ReactionCompositeTransform"
-                                        TranslateY="150" />
-                </Grid.RenderTransform>
-
-            </Grid>
-            <Grid x:Name="BottomStuffGrid"
-                  Grid.Row="3"
-                  FlowDirection="LeftToRight"
-                  Width="400"
-                  Margin="5"
-                  HorizontalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Button x:Name="SeeMoreButton"
-                        Click="SeeMoreButtonClick"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Margin="5 5"
-                        Width="110"
-                        Background="Transparent"
-                        Visibility="Collapsed"
-                        FontSize="{StaticResource BigFontSize}">
-                    <Grid>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <controls:DropShadowPanel BlurRadius="6.0"
-                                                      ShadowOpacity="0.95"
-                                                      OffsetX="3.5"
-                                                      OffsetY="5.5"
-                                                      OffsetZ="0.5"
-                                                      Color="Black"
-                                                      Margin="5"
-                                                      Foreground="White"
-                                                      HorizontalAlignment="Center">
-                                <TextBlock Text=""
-                                           FontSize="{StaticResource BigFontSize}"
-                                           FontFamily="{StaticResource MaterialSymbolFont}"
-                                           Foreground="White" />
-                            </controls:DropShadowPanel>
-                            <controls:DropShadowPanel BlurRadius="6.0"
-                                                      ShadowOpacity="0.95"
-                                                      OffsetX="3.5"
-                                                      OffsetY="5.5"
-                                                      OffsetZ="0.5"
-                                                      Grid.Row="1"
-                                                      Color="Black"
-                                                      Margin="5"
-                                                      Foreground="White">
-                                <TextBlock Text="See More"
-                                           FontSize="{StaticResource DefaultFontSize}"
-                                           FontFamily="{StaticResource VazirFont}"
-                                           Foreground="White" />
-                            </controls:DropShadowPanel>
-                        </Grid>
-
-                    </Grid>
-                </Button>
-                <GridView x:Name="ReactionGV"
-                          Grid.Row="1"
-                          Visibility="Collapsed"
-                          SelectionMode="None"
-                          IsItemClickEnabled="True"
-                          HorizontalAlignment="Center"
-                          ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
-                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                          ScrollViewer.VerticalScrollMode="Disabled"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                          ScrollViewer.HorizontalScrollMode="Disabled"
-                          ItemClick="ReactionGVItemClick">
-                    <GridView.ItemContainerTransitions>
-                        <TransitionCollection>
-                            <EntranceThemeTransition />
-                        </TransitionCollection>
-                    </GridView.ItemContainerTransitions>
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock Text="{Binding}"
-                                           FontFamily="{StaticResource VazirFont}"
-                                           FontSize="{StaticResource BigFontSize}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           TextAlignment="Center"
-                                           Margin="5" />
-                            </Grid>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="ReplyText"
-                             Foreground="{StaticResource DefaultForegroundColor}"
-                             Background="{StaticResource StoryReplyTextBackgroundColor}"
-                             BorderThickness="0"
-                             Visibility="Collapsed"
-                             Margin="5 5"
-                             FontFamily="{StaticResource VazirFont}"
-                             AcceptsReturn="True"
-                             PlaceholderText="Send message..."
-                             IsSpellCheckEnabled="False"
-                             FontSize="{StaticResource DefaultFontSize}"
-                             TextWrapping="Wrap"
-                             Style="{StaticResource TextBoxCenterWithBackgroundChange}"
-                             TextAlignment="DetectFromContent"
-                             VerticalAlignment="Center"
-                             MaxHeight="100"
-                             GotFocus="ReplyTextGotFocus"
-                             LostFocus="ReplyTextLostFocus"
-                             TextChanged="ReplyTextTextChanged" />
-                    <Button x:Name="SeenByButton"
-                            Content="Seen by "
-                            Click="SeenByButtonClick"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Height="42"
-                            Margin="5 5"
-                            Background="{StaticResource StoryButtonBackoundColor}"
-                            Foreground="{StaticResource StoryButtonForeroundColor}"
-                            ToolTipService.ToolTip="Story viewers"
-                            FontSize="{StaticResource TinyFontSize}"
-                            FontFamily="{StaticResource VazirFont}"
-                            Visibility="Collapsed" />
-                    <Button x:Name="ShareButton"
-                            Content=""
-                            Click="ShareButtonClick"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Height="42"
-                            Width="60"
-                            Grid.Column="2"
-                            Margin="5 5"
-                            Background="{StaticResource StoryButtonBackoundColor}"
-                            Foreground="{StaticResource StoryButtonForeroundColor}"
-                            ToolTipService.ToolTip="Share current story"
-                            FontSize="{StaticResource BigBigFontSize}"
-                            FontFamily="{StaticResource MaterialSymbolFont}" />
-                    <Button x:Name="ReplyButton"
-                            Content="Send"
-                            Click="ReplyButtonClick"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Visibility="Collapsed"
-                            Height="42"
-                            Width="60"
-                            Grid.Column="2"
-                            Margin="5"
-                            Background="{StaticResource StoryButtonBackoundColor}"
-                            Foreground="{StaticResource StoryButtonForeroundColor}"
-                            FontSize="{StaticResource DefaultFontSize}"
-                            FontFamily="{StaticResource VazirFont}"/>
-                    <Button x:Name="MoreOptionsButton"
-                            Content=""
-                            Click="MoreOptionsButtonClick"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Bottom"
-                            Height="42"
-                            Width="60"
-                            Grid.Column="3"
-                            Grid.Row="1"
-                            Margin="5 5"
-                            Background="{StaticResource StoryButtonBackoundColor}"
-                            Foreground="{StaticResource StoryButtonForeroundColor}"
-                            ToolTipService.ToolTip="More story options"
-                            FontSize="{StaticResource BigFontSize}"
-                            FontFamily="{StaticResource MaterialSymbolFont}" />
-                </Grid>
-            </Grid>
-            
         </Grid>
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InstagramApiSharp.Classes.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,24 @@ namespace Minista.Views.Stories
         public StoryViewX()
         {
             this.InitializeComponent();
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if(e.Parameter is object[] objArr)
+            {
+                if (objArr.Length == 2)
+                {
+                    //var list = new List<InstaReelFeed>();
+                    if (objArr[0] is List<InstaReelFeed> reels)
+                    {
+                        //FeedList = reels;
+                        var index = (int)objArr[1];
+
+                        Contents.Content = new UserStoryUc { StoryFeed = reels[index] };
+                    }
+                }
+            }
         }
     }
 }

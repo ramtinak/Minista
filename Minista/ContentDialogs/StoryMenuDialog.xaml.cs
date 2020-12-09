@@ -29,12 +29,19 @@ namespace Minista.ContentDialogs
         public InstaStoryItem StoryItem { get; set; }
         public InstaReelFeed ReelFeed { get; set; }
         public Views.Main.StoryView View { get; set; }
-
-        public StoryMenuDialog(InstaReelFeed reelFeed, InstaStoryItem storyItem , Views.Main.StoryView view)
+        public Views.Stories.UserStoryUc View2 { get; set; }
+        public StoryMenuDialog(InstaReelFeed reelFeed, InstaStoryItem storyItem , Views.Main.StoryView view) : this(reelFeed, storyItem)
+        {
+            View = view;
+        }
+        public StoryMenuDialog(InstaReelFeed reelFeed, InstaStoryItem storyItem, Views.Stories.UserStoryUc view2) : this(reelFeed, storyItem)
+        {
+            View2 = view2;
+        }
+        public StoryMenuDialog(InstaReelFeed reelFeed, InstaStoryItem storyItem)
         {
             StoryItem = storyItem;
             ReelFeed = reelFeed;
-            View = view;
             InitializeComponent();
             LVMenu.Items.Add(new StoryMenu { Text = "Download", Command = StoryMenuCommand.Download });
             LVMenu.Items.Add(new StoryMenu { Text = "Share Link", Command = StoryMenuCommand.ShareLink });
@@ -67,14 +74,17 @@ namespace Minista.ContentDialogs
                                 {
                                     try
                                     {
-                                        //View.FeedList[View.FeedListIndex].Items.Clear();
-                                        //FeedList[FeedListIndex].Items.AddRange(storiesAfter.FirstOrDefault().Items);
-                                        var yek = View.FeedList[View.FeedListIndex].Items.SingleOrDefault(ss => ss.Id.ToLower() == StoryItem.Id.ToLower());
-                                        if (yek != null)
+                                        if (View != null)
                                         {
-                                            View.SkipNext();
-                                            View.FeedList[View.FeedListIndex].Items.Remove(yek);
+                                            var yek = View.FeedList[View.FeedListIndex].Items.SingleOrDefault(ss => ss.Id.ToLower() == StoryItem.Id.ToLower());
+                                            if (yek != null)
+                                            {
+                                                View.SkipNext();
+                                                View.FeedList[View.FeedListIndex].Items.Remove(yek);
+                                            }
                                         }
+                                        else if (View2 != null)
+                                            View2.RemoveItem(StoryItem);
                                         if (Views.Main.MainView.Current?.MainVM?.Stories?.Count > 0)
                                         {
                                             try
