@@ -44,10 +44,10 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid x:Name="ChildGrid"
+            <!--Content inja gharar migire-->
+            <!--<Grid x:Name="ChildGrid"
                   Grid.RowSpan="4">
-                <!--Content inja gharar migire-->
-            </Grid>
+            </Grid>-->
             <!--ItemsSource="{Binding Items, Mode=OneWay}"-->
             <FlipView x:Name="FlipView" Background="{StaticResource DefaultBackgroundColor}"
                   Grid.RowSpan="4"

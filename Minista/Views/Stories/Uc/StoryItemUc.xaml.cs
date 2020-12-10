@@ -13,12 +13,14 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using UICompositionAnimations.Enums;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,6 +36,13 @@ namespace Minista.Views.Stories
 {
     public sealed partial class StoryItemUc : UserControl, INotifyPropertyChanged
     {
+        public event EventHandler LeftTap;
+        public event EventHandler RightTap;
+        public event EventHandler HoldingStarted;
+        public event EventHandler HoldingStopped;
+        public event EventHandler<StoryItemUc> MediaOpened;
+        public event EventHandler<StoryItemUc> MediaEnded;
+        public event EventHandler<StoryItemUc> MediaFailed; 
         public InstaStoryItem StoryItem
         {
             get
@@ -56,10 +65,12 @@ namespace Minista.Views.Stories
         public int Index { get; set; } = -1;
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string memberName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+        private bool IsHoldingStarted = false;
         public bool IsMediaLoaded { get; private set; } = false;
+        readonly GestureRecognizer GestureRecognizer = new GestureRecognizer();
         readonly InstaReelFeed StoryFeed;
         readonly UserStoryUc UserStoryUc;
-
+        readonly GestureHelper GestureHelper;
         public StoryItemUc(UserStoryUc userStoryUc) : this()
         {
             UserStoryUc = userStoryUc;
@@ -68,16 +79,27 @@ namespace Minista.Views.Stories
         public StoryItemUc()
         {
             InitializeComponent();
-            DataContextChanged += StoryItemUcDataContextChanged;
+            GestureHelper = new GestureHelper(this, GestureMode.UpDown);
+            GestureHelper.UpSwipe += GestureHelperUpSwipe;
+            GestureHelper.DownSwipe += GestureHelperDownSwipe;
+            GestureRecognizer.GestureSettings = GestureSettings.HoldWithMouse;
+
+            PointerPressed += GridPointerPressed;
+            PointerMoved += GridPointerMoved;
+            PointerReleased += GridPointerReleased;
+            Tapped += GridTapped;
+
             Unloaded += StoryItemUcUnloaded;
             Loaded += StoryItemUcLoaded;
         }
 
+        #region Control loading events
         private void StoryItemUcLoaded(object sender, RoutedEventArgs e)
         {
-            try 
+            GestureRecognizer.Holding += OnGestureRecognizerHolding;
+            try
             {
-                if(!IsMediaLoaded)
+                if (!IsMediaLoaded)
                     SetImageOrVideo();
             }
             catch { }
@@ -85,8 +107,10 @@ namespace Minista.Views.Stories
 
         private void StoryItemUcUnloaded(object sender, RoutedEventArgs e)
         {
+            GestureRecognizer.Holding -= OnGestureRecognizerHolding;
             StopRefreshAnimation();
         }
+        #endregion
 
         //public void SetStory()
         //{
@@ -159,45 +183,31 @@ namespace Minista.Views.Stories
                 ex.PrintException("PauseVideo");
             }
         }
-        private void StoryItemUcDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
-        {
-            //try
-            //{
-            //    if (args.NewValue is InstaStoryItem item && item != null)
-            //    {
-            //        if (item.MediaType == InstaMediaType.Video)
-            //            MediaElement.Source = new Uri(item.Videos[0].Uri);
-            //    }
-            //}
-            //catch { }
-        }
-
         private void OnMediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            "OnMediaOpened".PrintDebug();
+            MediaFailed?.Invoke(this, this);
+            //"OnMediaOpened".PrintDebug();
             IsMediaLoaded = false;
             ShowRefreshButton();
-            //if (!IsMediaLoaded)
-            //{
-            //    try
-            //    {
-            //        MediaElement.Play();
-            //    }
-            //    catch { }
-            //}
         }
 
         private void OnMediaOpened(object sender, RoutedEventArgs e)
         {
-            "OnMediaOpened".PrintDebug();
+            MediaOpened?.Invoke(this, this);
+            //"OnMediaOpened".PrintDebug();
             if (OpenVideo)
                 MediaElement.Play();
             IsMediaLoaded = true;
             SetStuff();
             StopRefreshAnimation();
         }
+        private void OnMediaEnded(object sender, RoutedEventArgs e)
+        {
+            MediaEnded?.Invoke(this, this);
+        }
         private void OnImageExFailed(object sender, Microsoft.Toolkit.Uwp.UI.Controls.ImageExFailedEventArgs e)
         {
+            MediaFailed?.Invoke(this, this);
             IsMediaLoaded = false;
             ShowRefreshButton();
         }
@@ -207,6 +217,7 @@ namespace Minista.Views.Stories
             IsMediaLoaded = true;
             StopRefreshAnimation();
             SetStuff();
+            MediaOpened?.Invoke(this, this);
         }
 
 
@@ -635,17 +646,9 @@ namespace Minista.Views.Stories
             StartRefreshAnimation(); 
         }
 
-        private void LeftGridTapped(object sender, TappedRoutedEventArgs e)
-        {
-            //if (IsHolding) return;
-            //SkipPrevious();
-        }
+        private void LeftGridTapped(object sender, TappedRoutedEventArgs e) => LeftTap?.Invoke(this, null);
 
-        private void RightGridTapped(object sender, TappedRoutedEventArgs e)
-        {
-            //if (IsHolding) return;
-            //SkipNext();
-        }
+        private void RightGridTapped(object sender, TappedRoutedEventArgs e) => RightTap?.Invoke(this, null);
 
         private void MainGridKTapped(object sender, TappedRoutedEventArgs e)
         {
@@ -795,8 +798,120 @@ namespace Minista.Views.Stories
             }
             catch { }
             //IsHolding = false;
-
         }
+        void ControlPanels(bool hide = false)
+        {
+            try
+            {
+                StorySuffItems.Visibility = BottomStuffGrid.Visibility = hide ? Visibility.Collapsed : Visibility.Visible;
+
+                ReactionGrid.Visibility = Visibility.Collapsed;
+                if (!string.IsNullOrEmpty(StoryFeed.Title))
+                    TitleGrid.Visibility = hide ? Visibility.Collapsed : Visibility.Visible;
+                else
+                    TitleGrid.Visibility = Visibility.Collapsed;
+            }
+            catch { }
+        }
+        private void GridTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (IsHoldingStarted) return;
+
+            "GridTapped".PrintDebug();
+            new Action(() =>
+            {
+                if (StoryItem.MediaType == InstaMediaType.Video)
+                {
+                    if (MediaElement.Volume == 0)
+                        MediaElement.Volume = 1;
+                    else
+                        MediaElement.Volume = 0;
+                }
+            }).UseTryCatch("StoryItemUc.GridTapped");
+        }
+        #region Gestures
+
+
+        void HoldingIsStarted()
+        {
+            IsHoldingStarted = true;
+            ControlPanels(true);
+            HoldingStarted?.Invoke(this, null);
+            new Action(() =>
+            {
+                if (StoryItem.MediaType == InstaMediaType.Video)
+                    MediaElement.Pause();
+            }).UseTryCatch("StoryItemUc.HoldingIsStarted");
+        }
+        async void HoldingIsStopped()
+        {
+            if (!IsHoldingStarted) return;
+            ControlPanels();
+            HoldingStopped?.Invoke(this, null);
+            await Task.Delay(250);
+            IsHoldingStarted = false;
+            new Action(() =>
+            {
+                if (StoryItem.MediaType == InstaMediaType.Video)
+                    MediaElement.Play();
+            }).UseTryCatch("StoryItemUc.HoldingIsStopped");
+        }
+
+        private void GridPointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            try
+            {
+                var ps = e.GetIntermediatePoints(null);
+                if (ps != null && ps.Count > 0)
+                {
+                    GestureRecognizer.ProcessDownEvent(ps[0]);
+                    e.Handled = true;
+                }
+            }
+            catch { }
+        }
+        private void GridPointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            try
+            {
+                GestureRecognizer.ProcessMoveEvents(e.GetIntermediatePoints(null));
+                e.Handled = true;
+            }
+            catch { }
+        }
+        private void OnGestureRecognizerHolding(GestureRecognizer sender, HoldingEventArgs args)
+        {
+            try
+            {
+                if (args.HoldingState == HoldingState.Started)
+                    HoldingIsStarted();
+            }
+            catch { }
+        }
+        private void GridPointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            try
+            {
+                var ps = e.GetIntermediatePoints(null);
+                if (ps != null && ps.Count > 0)
+                {
+                    GestureRecognizer.ProcessUpEvent(ps[0]);
+                    e.Handled = true;
+                    GestureRecognizer.CompleteGesture();
+                    HoldingIsStopped();
+                }
+            }
+            catch { }
+        }
+
+
+        #region Gesture Helpers
+        private void GestureHelperDownSwipe(object sender, EventArgs e) => NavigationService.GoBack();
+        private void GestureHelperUpSwipe(object sender, EventArgs e) => SeeMoreButtonClick(null, null);
+        #endregion Gestures Helpers
+        #endregion Gesture events
+
+
         void StartRefreshAnimation()
         {
             try
@@ -840,5 +955,6 @@ namespace Minista.Views.Stories
             RefreshButton.Visibility = Visibility.Visible;
         }
         void HideRefreshButton() => RefreshButton.Visibility = Visibility.Collapsed;
+
     }
 }

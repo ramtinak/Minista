@@ -165,17 +165,18 @@
                           AutoPlay="False" 
                           PosterSource="{Binding Images[0].Uri,Mode=OneWay}"
                           MediaFailed="OnMediaFailed"
-                          MediaOpened="OnMediaOpened"/>
+                          MediaOpened="OnMediaOpened"
+                          MediaEnded="OnMediaEnded"/>
         </controls:DropShadowPanel>
 
         <Grid Background="Cyan"
                   Grid.RowSpan="4"
-                  Opacity="1"
-                  Visibility="Collapsed">
+                  Opacity="0"
+                  Visibility="Visible">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
             <Grid VerticalAlignment="Stretch"
                       HorizontalAlignment="Stretch"

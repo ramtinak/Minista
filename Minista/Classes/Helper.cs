@@ -585,6 +585,14 @@ static class Helper
         catch { }
     }
 
+    public static void UseTryCatch(this Action action, string funcName= null)
+    {
+        try
+        {
+            action?.Invoke();
+        }
+        catch (Exception ex) { ex.PrintException(funcName ?? "Use"); }
+    }
     public async static void DeleteCachedFolder()
     {
         try

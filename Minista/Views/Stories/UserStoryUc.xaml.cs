@@ -28,9 +28,10 @@ namespace Minista.Views.Stories
         const double ProgressChangeValue = 0.1;
         double MaximumLength = MaxIntervalForImage;
         public ObservableCollection<StoryItemUc> Items { get; set; } = new ObservableCollection<StoryItemUc>();
+        public StoryItemUc StoryItemUc;
         public DispatcherTimer Timer = new DispatcherTimer(), ProgressTimer = new DispatcherTimer();
         readonly List<ProgressBar> ProgressBarList = new List<ProgressBar>();
-        readonly GestureRecognizer GestureRecognizer = new GestureRecognizer();
+        public event EventHandler ItemChanged;
         int CurrentFlipViewIndex = -1;
         public int StoryIndex { get; set; } = 0;
         bool IsHighlight { get; set; } = false;
@@ -98,7 +99,13 @@ namespace Minista.Views.Stories
                 items.ForEach(x =>
                 {
                     ProgressGrid.ColumnDefinitions.Add(GenerateColumn());
-                    Items.Add(new StoryItemUc(this) { StoryItem = x , Index = 0});
+                    var uc = new StoryItemUc(this) { StoryItem = x, Index = 0 };
+                    uc.MediaEnded += OnMediaEnded;
+                    uc.MediaFailed += OnMediaFailed;
+                    uc.MediaOpened += OnMediaOpened;
+                    uc.HoldingStarted += OnUcHoldingStarted;
+                    uc.HoldingStopped += OnUcHoldingStopped;
+                    Items.Add(uc);
                     ProgressBar p = GenerateProgress(margin);
                     if (x.MediaType == InstaMediaType.Video)
                         p.Maximum = x.VideoDuration;
@@ -113,7 +120,80 @@ namespace Minista.Views.Stories
             }
             FlipView.ItemsSource = Items;
         }
+        void ControlPanels(bool hide = false)
+        {
+            try
+            {
+                ProgressGrid.Visibility = UserGrid.Visibility = hide ? Visibility.Collapsed : Visibility.Visible;
+            }
+            catch { }
+        }
+        private void OnUcHoldingStarted(object sender, EventArgs e)
+        {
+            "OnUcHoldingStarted".PrintDebug();
+            ControlPanels(true);
+        }
 
+        private void OnUcHoldingStopped(object sender, EventArgs e)
+        {
+            "OnUcHoldingStopped".PrintDebug();
+            ControlPanels();
+        }
+
+        private void OnMediaOpened(object sender, StoryItemUc e)
+        {
+            ("OnMediaOpened:  " + e.StoryItem.Id).PrintDebug();
+        }
+
+        private void OnMediaFailed(object sender, StoryItemUc e)
+        {
+            ("OnMediaFailed:  " + e.StoryItem.Id).PrintDebug();
+            Timer.Stop();
+        }
+
+        private void OnMediaEnded(object sender, StoryItemUc e)
+        {
+            ("OnMediaEnded:  " + e.StoryItem.Id).PrintDebug();
+            PlayNext();
+        }
+        public void PlayNext()
+        {
+            try
+            {
+                TimerIndex = 0;
+                if (Items.Count > 1)
+                {
+                    var index = (CurrentFlipViewIndex + 1) % Items.Count;
+                    if (index != 0)
+                        FlipView.SelectedIndex = index;
+                }
+                else
+                {
+                    "Go Next Person".PrintDebug();
+                }
+            }
+            catch { }
+        }
+        public void PlayPrevious()
+        {
+            try
+            {
+                TimerIndex = 0;
+                if (Items.Count > 1)
+                {
+                    var index = (CurrentFlipViewIndex - 1) % Items.Count;
+                    if (index >= 0)
+                        FlipView.SelectedIndex = index;
+                    else
+                        "Go Previous Person".PrintDebug();
+                }
+                else
+                {
+                    "Go Previous Person".PrintDebug();
+                }
+            }
+            catch { }
+        }
         private void FlipViewSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -123,8 +203,32 @@ namespace Minista.Views.Stories
                 {
                     index.PrintDebug();
                     if (CurrentFlipViewIndex != -1 && CurrentFlipViewIndex != index)
+                    {
+                        try
+                        {
+                            if (CurrentProgress != null)
+                                CurrentProgress.Value = 0;
+                        }
+                        catch { }
                         Items[CurrentFlipViewIndex].PauseVideo();
+                    }
                     Items[index].PlayVideo(index);
+                    StoryItemUc = Items[index];
+                    ItemChanged?.Invoke(this, null);
+                    if (StoryItemUc.IsMediaLoaded)
+                    {
+                        TimerIndex = 0;
+                        Timer.Start();
+                    }
+
+                    CurrentProgress = ProgressBarList[index];
+                    try
+                    {
+                        if (CurrentProgress != null)
+                            CurrentProgress.Value = 100;
+                    }
+                    catch { }
+                    //StartProgressTimer();
                 }
                 CurrentFlipViewIndex = index;
             }
@@ -159,11 +263,33 @@ namespace Minista.Views.Stories
             }
             catch { }
         }
-        
+
+
+        #region Timers
+        int TimerIndex = 0;
         private void TimerTick(object sender, object e)
         {
-
+            try
+            {
+                if (StoryItemUc != null)
+                {
+                    if (StoryItemUc.StoryItem.MediaType == InstaMediaType.Image)
+                    {
+                        if(TimerIndex > MaxIntervalForImage)
+                        {
+                            PlayNext();
+                            return;
+                        }
+                        TimerIndex++;
+                    }
+                }
+            }
+            catch { }
         }
+
+
+
+
         void StartProgressTimer()
         {
             try
@@ -211,6 +337,7 @@ namespace Minista.Views.Stories
                 ex.PrintException("ProgressTimerTick");
             }
         }
+        #endregion Timers
 
         #region UI generators
         ColumnDefinition GenerateColumn()

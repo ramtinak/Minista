@@ -10,9 +10,11 @@ using Windows.UI.Xaml.Input;
 
 namespace Minista.Helpers
 {
-    public class GestureHelper
+    public class GestureHelper: IDisposable
     {
         #region Properties
+        const double MAX = 15;
+        const double MAX_SWIPE_DISTANCE = 50;
         private bool _isSwiped;
         private Point _manipulationStarted;
         public UIElement Element { get; private set; }
@@ -55,6 +57,7 @@ namespace Minista.Helpers
             Element.ManipulationDelta += UiManipulationDelta;
             Element.ManipulationCompleted += UiManipulationCompleted;
         }
+        ~GestureHelper() => Dispose();
 
         private void UiManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
         {
@@ -66,15 +69,15 @@ namespace Minista.Helpers
 
             if (GestureMode == GestureMode.All)
             {
-                if (_manipulationStarted.X + 15 <= current.X && Math.Abs(current.Y) > 0 ||
-                    _manipulationStarted.X - 15 <= current.X && Math.Abs(current.Y) > 0)
+                if (_manipulationStarted.X + MAX <= current.X && Math.Abs(current.Y) > 0 ||
+                    _manipulationStarted.X - MAX <= current.X && Math.Abs(current.Y) > 0)
                 {
                     CalculateUpDown(current, e.IsInertial);
 
                     return;
                 }
-                if (_manipulationStarted.Y + 15 <= current.Y && Math.Abs(current.X) > 0 ||
-                    _manipulationStarted.Y - 15 <= current.Y && Math.Abs(current.X) > 0)
+                if (_manipulationStarted.Y + MAX <= current.Y && Math.Abs(current.X) > 0 ||
+                    _manipulationStarted.Y - MAX <= current.Y && Math.Abs(current.X) > 0)
                 {
                     CalculateLeftRight(current, e.IsInertial);
                 }
@@ -94,7 +97,7 @@ namespace Minista.Helpers
             if (isInertial && !_isSwiped)
             {
                 var swipedDistance = current.X;
-                if (Math.Abs(swipedDistance) <= 2) return;
+                if (Math.Abs(swipedDistance) <= MAX_SWIPE_DISTANCE) return;
 
                 if (swipedDistance > 0)
                     RightSwipe?.Invoke(this, EventArgs.Empty);
@@ -108,7 +111,7 @@ namespace Minista.Helpers
             if (isInertial && !_isSwiped)
             {
                 var swipedDistance = current.Y;
-                if (Math.Abs(swipedDistance) <= 2) return;
+                if (Math.Abs(swipedDistance) <= MAX_SWIPE_DISTANCE) return;
 
                 if (swipedDistance > 0)
                     DownSwipe?.Invoke(this, EventArgs.Empty);
@@ -116,6 +119,11 @@ namespace Minista.Helpers
                     UpSwipe?.Invoke(this, EventArgs.Empty);
                 _isSwiped = true;
             }
+        }
+
+        public void Dispose()
+        {
+            Element = null;
         }
     }
     public enum GestureMode
