@@ -433,7 +433,7 @@ namespace Minista.Helpers
 
 
 
-        static public bool CheckType(Type t)
+        static public bool IsThisType(this Type t)
         {
             return Frame.Content != null && Frame.Content.GetType() == t;
         }

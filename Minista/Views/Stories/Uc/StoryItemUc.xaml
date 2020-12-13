@@ -117,6 +117,29 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <!--<Storyboard x:Name="ShowTitleStoryboard"
+                        Completed="ShowTitleCompleted">
+                <DoubleAnimation Duration="0:0:0.750"
+                                 To="1"
+                                 Storyboard.TargetProperty="Opacity"
+                                 Storyboard.TargetName="TitleGrid" />
+            </Storyboard>
+            <Storyboard x:Name="HideTitleStoryboard"
+                        Completed="HideTitleCompleted">
+                <DoubleAnimation Duration="0:0:0.750"
+                                 To="0"
+                                 Storyboard.TargetProperty="Opacity"
+                                 Storyboard.TargetName="TitleGrid" />
+            </Storyboard>-->
+            <Storyboard x:Name="ShowReactionStoryboard"
+                        Completed="ShowReactionStoryboardCompleted">
+                <DoubleAnimation Duration="0:0:4.50"
+                                 From="0"
+                                 To="-850"
+                                 Storyboard.TargetProperty="TranslateY"
+                                 Storyboard.TargetName="ReactionCompositeTransform" />
+            </Storyboard>
+
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Background="{StaticResource DefaultBackgroundColor}">
@@ -182,15 +205,18 @@
                       HorizontalAlignment="Stretch"
                       Background="Red"
                       Tapped="LeftGridTapped" />
+
+            <Grid x:Name="MainGrid"
+                  Grid.Column="1"
+                  Tapped="GridTapped"
+                      Background="Red" />
             <Grid Grid.Column="2"
                       VerticalAlignment="Stretch"
                       HorizontalAlignment="Stretch"
                       Background="Red"
                       Tapped="RightGridTapped" />
         </Grid>
-        <Grid x:Name="MainGridK"
-                  Grid.RowSpan="6"
-                  Tapped="MainGridKTapped" />
+        <Grid Grid.RowSpan="6"/>
         <Grid x:Name="StorySuffItems" x:FieldModifier="public"
                   Grid.RowSpan="6" />
         <Grid x:Name="TitleGrid"

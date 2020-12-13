@@ -488,7 +488,7 @@ namespace Minista.Views.Main
                         var index = LatestInnerStoriesLV.Items.IndexOf(reelFeed);
                         var list = LatestInnerStoriesLV.ItemsSource as ObservableCollection<InstaReelFeed>;
 
-                        Helpers.NavigationService.Navigate(typeof(StoryView), new object[] { list.ToList(), index });
+                        Helpers.NavigationService.Navigate(typeof(StoryViewX), new object[] { list.ToList(), index });
                     }
                 }
                 "InnerStoriesItemGridTapped".PrintDebug();

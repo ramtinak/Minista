@@ -1,5 +1,6 @@
 ﻿using InstagramApiSharp.Classes.Models;
 using InstagramApiSharp.Enums;
+using InstagramApiSharp.Helpers;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using Minista.ContentDialogs;
 using Minista.Controls;
@@ -36,13 +37,19 @@ namespace Minista.Views.Stories
 {
     public sealed partial class StoryItemUc : UserControl, INotifyPropertyChanged
     {
+        #region Events
         public event EventHandler LeftTap;
         public event EventHandler RightTap;
         public event EventHandler HoldingStarted;
         public event EventHandler HoldingStopped;
+        public event EventHandler StartTimer;
+        public event EventHandler StopTimer;
         public event EventHandler<StoryItemUc> MediaOpened;
         public event EventHandler<StoryItemUc> MediaEnded;
-        public event EventHandler<StoryItemUc> MediaFailed; 
+        public event EventHandler<StoryItemUc> MediaFailed;
+        #endregion
+
+        #region Properties and fields
         public InstaStoryItem StoryItem
         {
             get
@@ -71,6 +78,13 @@ namespace Minista.Views.Stories
         readonly InstaReelFeed StoryFeed;
         readonly UserStoryUc UserStoryUc;
         readonly GestureHelper GestureHelper;
+        readonly Storyboard StoryboardX = new Storyboard();
+        bool IsStoryInnerShowing = false;
+        bool OpenVideo = false;
+        FontIcon RefreshFontIcon;
+        #endregion
+
+        #region ctor
         public StoryItemUc(UserStoryUc userStoryUc) : this()
         {
             UserStoryUc = userStoryUc;
@@ -87,11 +101,11 @@ namespace Minista.Views.Stories
             PointerPressed += GridPointerPressed;
             PointerMoved += GridPointerMoved;
             PointerReleased += GridPointerReleased;
-            Tapped += GridTapped;
 
             Unloaded += StoryItemUcUnloaded;
             Loaded += StoryItemUcLoaded;
         }
+        #endregion
 
         #region Control loading events
         private void StoryItemUcLoaded(object sender, RoutedEventArgs e)
@@ -112,18 +126,7 @@ namespace Minista.Views.Stories
         }
         #endregion
 
-        //public void SetStory()
-        //{
-        //    try
-        //    {
-        //        SetImageOrVideo();
-        //        var anim = BackgroundImage.Blur(17);
-        //        anim.SetDurationForAll(0);
-        //        anim.SetDelay(0);
-        //        anim.Start();
-        //    }
-        //    catch { }
-        //}
+        #region Set data
         void SetImageOrVideo()
         {
             try
@@ -152,7 +155,9 @@ namespace Minista.Views.Stories
                 ex.PrintException("SetImageOrVideo2");
             }
         }
-        bool OpenVideo = false;
+        #endregion
+
+        #region Media controls and events
         public void PlayVideo(int index)
         {
             try
@@ -186,15 +191,12 @@ namespace Minista.Views.Stories
         private void OnMediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
             MediaFailed?.Invoke(this, this);
-            //"OnMediaOpened".PrintDebug();
             IsMediaLoaded = false;
             ShowRefreshButton();
         }
-
         private void OnMediaOpened(object sender, RoutedEventArgs e)
         {
             MediaOpened?.Invoke(this, this);
-            //"OnMediaOpened".PrintDebug();
             if (OpenVideo)
                 MediaElement.Play();
             IsMediaLoaded = true;
@@ -219,13 +221,43 @@ namespace Minista.Views.Stories
             SetStuff();
             MediaOpened?.Invoke(this, this);
         }
+        #endregion
 
-
+        #region Set inner controls and events
         void SetStuff()
         {
             try
             {
-                //IsStoryInnerShowing = false;
+
+                SeeMoreButton.Visibility = StoryItem.StoryCTA?.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+                try
+                {
+                    ReplyText.Text = string.Empty;
+                    if (StoryFeed != null && StoryFeed?.User?.Pk == Helper.CurrentUser?.Pk)
+                    {
+                        ReplyText.Visibility = ReplyButton.Visibility = ReactionGV.Visibility = Visibility.Collapsed;
+                        if ((int)StoryItem.ViewerCount > 0)
+                        {
+                            SeenByButton.Content = "Seen by " + (int)StoryItem.ViewerCount;
+                            SeenByButton.Visibility = Visibility.Visible;
+                        }
+                        else
+                            SeenByButton.Visibility = Visibility.Collapsed;
+                        var dateNow = DateTime.UtcNow.ToUnixTime();
+                        var expiringAt = StoryItem.ExpiringAt.ToUnixTime();
+                        if (dateNow > expiringAt)
+                        {
+                            SeenByButton.Content = "Viewers";
+                            SeenByButton.Visibility = Visibility.Visible;
+                        }
+                    }
+                    else
+                    {
+                        SeenByButton.Visibility = Visibility.Collapsed;
+                        ReplyText.Visibility = StoryItem.CanReply ? Visibility.Visible : Visibility.Collapsed;
+                    }
+                }
+                catch { }
                 StorySuffItems.Children.Clear();
                 StorySuffItems.Visibility = Visibility.Visible;
                 var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
@@ -556,7 +588,6 @@ namespace Minista.Views.Stories
             catch (Exception ex) { ex.PrintException("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"); }
         }
 
-        bool IsStoryInnerShowing = false;
         private async void ShowPanel(object sender, TappedRoutedEventArgs e)
         {
             if (sender is Rectangle rect)
@@ -612,61 +643,153 @@ namespace Minista.Views.Stories
             catch { }
             //IsHolding = false;
         }
+        #endregion
 
-        void HideStoryInnerPanels()
+        #region Visibility control
+        void ControlPanels(bool hide = false)
         {
             try
             {
-                if (IsStoryInnerShowing)
+                StorySuffItems.Visibility = BottomStuffGrid.Visibility = hide ? Visibility.Collapsed : Visibility.Visible;
+
+                ReactionGrid.Visibility = Visibility.Collapsed;
+                if (!string.IsNullOrEmpty(StoryFeed.Title))
+                    TitleGrid.Visibility = hide ? Visibility.Collapsed : Visibility.Visible;
+                else
+                    TitleGrid.Visibility = Visibility.Collapsed;
+            }
+            catch { }
+        }
+        #endregion 
+
+        #region Tap events
+        private void GridTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (IsHoldingStarted) return;
+
+            "GridTapped".PrintDebug();
+            new Action(() =>
+            {
+                if (StoryItem.MediaType == InstaMediaType.Video)
                 {
-                    if (StorySuffItems.Children.Count > 0)
+                    if (MediaElement.CurrentState == MediaElementState.Playing)
                     {
-                        for (int i = 0; i < StorySuffItems.Children.Count; i++)
-                        {
-                            if (StorySuffItems.Children[i] is StoryInnerUc item)
-                            {
-                                item.Visibility = Visibility.Collapsed;
-                                item.Opacity = 0;
-                            }
-                        }
-                        //IsHolding = false;
-                        IsStoryInnerShowing = false;
+                        if (MediaElement.Volume == 0)
+                            MediaElement.Volume = 1;
+                        else
+                            MediaElement.Volume = 0;
                     }
+                    else if (MediaElement.CurrentState == MediaElementState.Paused)
+                    {
+                        StopTimer?.Invoke(this, null);
+                        MediaElement.Play();
+                    }
+
+                }
+            }).UseTryCatch("StoryItemUc.GridTapped");
+        }
+        private void LeftGridTapped(object sender, TappedRoutedEventArgs e) => LeftTap?.Invoke(this, null);
+        private void RightGridTapped(object sender, TappedRoutedEventArgs e) => RightTap?.Invoke(this, null);
+        #endregion
+
+        #region Bottom UI
+        #region Reaction
+        private async void ReactionGVItemClick(object sender, ItemClickEventArgs e)
+        {
+            try
+            {
+                if (e.ClickedItem is string str && !string.IsNullOrEmpty(str))
+                {
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        try
+                        {
+                            var user = StoryItem.User.UserName;
+                            ShowReaction(str);
+                            var result = await Helper.InstaApi.StoryProcessor
+                            .SendReactionToStoryAsync(StoryItem.User.Pk, StoryItem.Id, str);
+                            if (result.Succeeded)
+                                Helper.ShowNotify($"Reaction sent to {user}");
+                        }
+                        catch { }
+                    });
                 }
             }
             catch { }
-
         }
-        readonly Storyboard StoryboardX = new Storyboard();
-        FontIcon RefreshFontIcon;
-        private void RefreshButtonClick(object sender, RoutedEventArgs e)
-        {
-            RefreshButton.IsEnabled = false;
-            SetImageOrVideo();
-            StartRefreshAnimation(); 
-        }
-
-        private void LeftGridTapped(object sender, TappedRoutedEventArgs e) => LeftTap?.Invoke(this, null);
-
-        private void RightGridTapped(object sender, TappedRoutedEventArgs e) => RightTap?.Invoke(this, null);
-
-        private void MainGridKTapped(object sender, TappedRoutedEventArgs e)
-        {
-
-        }
-        private void FontIconConLoaded(object sender, RoutedEventArgs e)
+        void ShowReaction(string emoji)
         {
             try
             {
-                if (sender is FontIcon fontIcon)
-                    RefreshFontIcon = fontIcon;
+                ReactionGrid.Children.Clear();
+                var rnd = new Random();
+                //ReactionGrid.Height = rnd.Next(150, 200);
+                ReactionCompositeTransform.TranslateY = 0;
+                ReactionGrid.RowDefinitions.Clear();
+                ReactionGrid.ColumnDefinitions.Clear();
+                ReactionGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                ReactionGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                ReactionGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                for (int i = 0; i < 9; i++)
+                {
+                    var text = new TextBlock
+                    {
+                        Text = emoji,
+                        FontSize = rnd.Next(15, 20),
+                        Margin = new Thickness(rnd.Next(5, 15), rnd.Next(5, 15), rnd.Next(7, 13), rnd.Next(7, 15))
+                    };
+                    ReactionGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
+                    Grid.SetColumn(text, (ReactionGrid.ColumnDefinitions.Count - 1));
+                    ReactionGrid.Children.Add(text);
+                }
+                for (int i = 0; i < 9; i++)
+                {
+                    var text = new TextBlock
+                    {
+                        Text = emoji,
+                        FontSize = rnd.Next(18, 28),
+                        Margin = new Thickness(rnd.Next(5, 9), rnd.Next(10, 18), rnd.Next(5, 14), rnd.Next(8, 16))
+                    };
+                    Grid.SetColumn(text, i);
+                    Grid.SetRow(text, 1);
+                    ReactionGrid.Children.Add(text);
+                }
+                for (int i = 0; i < 9; i++)
+                {
+                    var text = new TextBlock
+                    {
+                        Text = emoji,
+                        FontSize = rnd.Next(18, 28),
+                        Margin = new Thickness(rnd.Next(6, 10), rnd.Next(10, 18), rnd.Next(6, 12), rnd.Next(10, 18))
+                    };
+                    Grid.SetColumn(text, i);
+                    Grid.SetRow(text, 2);
+                    ReactionGrid.Children.Add(text);
+                }
+                ReactionGrid.Visibility = Visibility.Visible;
+                ShowReactionStoryboard.Begin();
+                //CreateStoryBoardAnimation();
             }
-            catch (Exception ex)
-            {
-                ex.PrintException("FontIconConLoaded");
-            }
+            catch { }
         }
-
+        private async void ShowReactionStoryboardCompleted(object sender, object e)
+        {
+            try
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    await Task.Delay(750);
+                    try
+                    {
+                        ReactionGrid.Visibility = Visibility.Collapsed;
+                        ReactionCompositeTransform.TranslateY = 150;
+                    }
+                    catch { }
+                });
+            }
+            catch { }
+        }
+        #endregion
         private void SeeMoreButtonClick(object sender, RoutedEventArgs e)
         {
             try
@@ -690,8 +813,7 @@ namespace Minista.Views.Stories
             }
             catch { }
         }
-        private void ReactionGVItemClick(object sender, ItemClickEventArgs e)
-        { }
+
         private async void ReplyButtonClick(object sender, RoutedEventArgs e)
         {
             try
@@ -700,11 +822,11 @@ namespace Minista.Views.Stories
                 {
                     try
                     {
-                        //Items[StoryIndex].StoryItem, StoryFeed
-                        var type = InstaSharingType.Photo;
+
                         if (StoryItem.MediaType == InstaMediaType.Video)
-                            type = InstaSharingType.Video;
-                        //IsHolding = false;
+                            MediaElement.Pause();
+                        StopTimer?.Invoke(this, null);
+                        var type = StoryItem.MediaType == InstaMediaType.Video ? InstaSharingType.Video : InstaSharingType.Photo;
                         var reply = await Helper.InstaApi.StoryProcessor.ReplyToStoryAsync(StoryItem.Id, StoryItem.User.Pk,
                             ReplyText.Text, type);
 
@@ -714,11 +836,9 @@ namespace Minista.Views.Stories
                             Helper.ShowNotify($"Reply sent.");
                         }
 
-                        //if (Items[StoryIndex]?.StoryItem.MediaType == InstaMediaType.Video)
-                        //{
-                        //    IsHolding = false;
-                        //    Items[StoryIndex].MediaElement.Play();
-                        //}
+                        if (StoryItem.MediaType == InstaMediaType.Video)
+                            MediaElement.Play();
+                        StartTimer?.Invoke(this, null);
                     }
                     catch { }
                 });
@@ -730,7 +850,10 @@ namespace Minista.Views.Stories
         {
             try
             {
-                //IsHolding = true;
+                "ReplyTextGotFocus".PrintDebug();
+                if (StoryItem.MediaType == InstaMediaType.Video)
+                    MediaElement.Pause();
+                StopTimer?.Invoke(this, null);
                 ReactionGV.Visibility = Visibility.Visible;
             }
             catch { }
@@ -740,6 +863,10 @@ namespace Minista.Views.Stories
         {
             try
             {
+                "ReplyTextLostFocus".PrintDebug();
+                if (StoryItem.MediaType == InstaMediaType.Video)
+                    MediaElement.Play();
+                StartTimer?.Invoke(this, null);
                 //IsHolding = false;
                 ReactionGV.Visibility = Visibility.Collapsed;
             }
@@ -751,11 +878,15 @@ namespace Minista.Views.Stories
             {
                 if (string.IsNullOrEmpty(ReplyText.Text))
                 {
+                    //StartTimer?.Invoke(this, null);
+                    //HoldingIsStopped();
                     ReplyButton.Visibility = Visibility.Collapsed;
                     ShareButton.Visibility = Visibility.Visible;
                 }
                 else
                 {
+                    //StopTimer?.Invoke(this, null);
+                    //HoldingIsStarted();
                     ReplyButton.Visibility = Visibility.Visible;
                     ShareButton.Visibility = Visibility.Collapsed;
                 }
@@ -773,6 +904,7 @@ namespace Minista.Views.Stories
         }
         private async void ShareButtonClick(object sender, RoutedEventArgs e)
         {
+            HoldingIsStarted();
             //if (MainStoryViewerUc.Visibility == Visibility.Visible) return;
             try
             {
@@ -780,58 +912,31 @@ namespace Minista.Views.Stories
                 await new UsersDialog(StoryItem, StoryFeed).ShowAsync();
             }
             catch { }
+            HoldingIsStopped();
             //IsHolding = false;
-            try
-            {
-                if (StoryItem.MediaType == InstaMediaType.Video)
-                MediaElement.Play();
-             
-            }
-            catch { }
+            //try
+            //{
+            //    if (StoryItem.MediaType == InstaMediaType.Video)
+            //    MediaElement.Play();
+
+            //}
+            //catch { }
         }
         private async void MoreOptionsButtonClick(object sender, RoutedEventArgs e)
         {
+            HoldingIsStarted();
             //IsHolding = true;
             try
             {
                 await new StoryMenuDialog(StoryFeed, StoryItem, UserStoryUc).ShowAsync();
             }
             catch { }
+            HoldingIsStopped();
             //IsHolding = false;
         }
-        void ControlPanels(bool hide = false)
-        {
-            try
-            {
-                StorySuffItems.Visibility = BottomStuffGrid.Visibility = hide ? Visibility.Collapsed : Visibility.Visible;
+        #endregion
 
-                ReactionGrid.Visibility = Visibility.Collapsed;
-                if (!string.IsNullOrEmpty(StoryFeed.Title))
-                    TitleGrid.Visibility = hide ? Visibility.Collapsed : Visibility.Visible;
-                else
-                    TitleGrid.Visibility = Visibility.Collapsed;
-            }
-            catch { }
-        }
-        private void GridTapped(object sender, TappedRoutedEventArgs e)
-        {
-            if (IsHoldingStarted) return;
-
-            "GridTapped".PrintDebug();
-            new Action(() =>
-            {
-                if (StoryItem.MediaType == InstaMediaType.Video)
-                {
-                    if (MediaElement.Volume == 0)
-                        MediaElement.Volume = 1;
-                    else
-                        MediaElement.Volume = 0;
-                }
-            }).UseTryCatch("StoryItemUc.GridTapped");
-        }
         #region Gestures
-
-
         void HoldingIsStarted()
         {
             IsHoldingStarted = true;
@@ -911,7 +1016,25 @@ namespace Minista.Views.Stories
         #endregion Gestures Helpers
         #endregion Gesture events
 
-
+        #region Refresh Button
+        private void RefreshButtonClick(object sender, RoutedEventArgs e)
+        {
+            RefreshButton.IsEnabled = false;
+            SetImageOrVideo();
+            StartRefreshAnimation();
+        }
+        private void FontIconConLoaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is FontIcon fontIcon)
+                    RefreshFontIcon = fontIcon;
+            }
+            catch (Exception ex)
+            {
+                ex.PrintException("FontIconConLoaded");
+            }
+        }
         void StartRefreshAnimation()
         {
             try
@@ -955,6 +1078,6 @@ namespace Minista.Views.Stories
             RefreshButton.Visibility = Visibility.Visible;
         }
         void HideRefreshButton() => RefreshButton.Visibility = Visibility.Collapsed;
-
+        #endregion
     }
 }

@@ -23,6 +23,7 @@ namespace Minista.Views.Stories
 {
     public sealed partial class UserStoryUc : UserControl, INotifyPropertyChanged
     {
+        #region Properties and fields
         const int MaxIntervalForImage = 6;
         ProgressBar CurrentProgress;
         const double ProgressChangeValue = 0.1;
@@ -54,6 +55,9 @@ namespace Minista.Views.Stories
                 new PropertyMetadata(null));
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string memberName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+        #endregion
+
+        #region ctor
         public UserStoryUc()
         {
             InitializeComponent();
@@ -62,6 +66,7 @@ namespace Minista.Views.Stories
             ProgressTimer.Interval = TimeSpan.FromMilliseconds(80);
             ProgressTimer.Tick += ProgressTimerTick;
         }
+        #endregion
 
         async void SetStoryItems()
         {
@@ -70,7 +75,7 @@ namespace Minista.Views.Stories
                 var stories = await InstaApi.StoryProcessor.GetUsersStoriesAsHighlightsAsync(StoryFeed.User.Pk.ToString());
                 if (stories.Succeeded)
                 {
-                    if (stories.Value.Items?.Count > 0 && stories.Value.Items[0] != null)
+                    if (stories.Value?.Items?.Count > 0 && stories.Value?.Items[0] != null)
                     {
                         var item = stories.Value.Items[0];
                         StoryFeed.Items.Clear();
@@ -105,6 +110,10 @@ namespace Minista.Views.Stories
                     uc.MediaOpened += OnMediaOpened;
                     uc.HoldingStarted += OnUcHoldingStarted;
                     uc.HoldingStopped += OnUcHoldingStopped;
+                    uc.LeftTap += OnUcLeftTap;
+                    uc.RightTap += OnUcRightTap;
+                    uc.StartTimer += OnUcStartTimer;
+                    uc.StopTimer += OnUcStopTimer;
                     Items.Add(uc);
                     ProgressBar p = GenerateProgress(margin);
                     if (x.MediaType == InstaMediaType.Video)
@@ -120,6 +129,17 @@ namespace Minista.Views.Stories
             }
             FlipView.ItemsSource = Items;
         }
+
+        private void OnUcStopTimer(object sender, EventArgs e)
+        {
+            Timer.Stop();
+        }
+
+        private void OnUcStartTimer(object sender, EventArgs e)
+        {
+            Timer.Start();
+        }
+
         void ControlPanels(bool hide = false)
         {
             try
@@ -131,6 +151,7 @@ namespace Minista.Views.Stories
         private void OnUcHoldingStarted(object sender, EventArgs e)
         {
             "OnUcHoldingStarted".PrintDebug();
+            Timer.Stop();
             ControlPanels(true);
         }
 
@@ -138,6 +159,7 @@ namespace Minista.Views.Stories
         {
             "OnUcHoldingStopped".PrintDebug();
             ControlPanels();
+            Timer.Start();
         }
 
         private void OnMediaOpened(object sender, StoryItemUc e)
@@ -156,6 +178,16 @@ namespace Minista.Views.Stories
             ("OnMediaEnded:  " + e.StoryItem.Id).PrintDebug();
             PlayNext();
         }
+        private void OnUcRightTap(object sender, EventArgs e)
+        {
+            PlayNext();
+        }
+
+        private void OnUcLeftTap(object sender, EventArgs e)
+        {
+            PlayPrevious();
+        }
+
         public void PlayNext()
         {
             try
@@ -166,10 +198,12 @@ namespace Minista.Views.Stories
                     var index = (CurrentFlipViewIndex + 1) % Items.Count;
                     if (index != 0)
                         FlipView.SelectedIndex = index;
+                    else
+                        "Go Next Person 1".PrintDebug();
                 }
                 else
                 {
-                    "Go Next Person".PrintDebug();
+                    "Go Next Person 2".PrintDebug();
                 }
             }
             catch { }
@@ -228,6 +262,11 @@ namespace Minista.Views.Stories
                             CurrentProgress.Value = 100;
                     }
                     catch { }
+                    try
+                    {
+                        DateText.Text = Convert.ToString(new Converters.DateTimeConverter().Convert(StoryItemUc.StoryItem.TakenAt, null, null, null));
+                    }
+                    catch { }
                     //StartProgressTimer();
                 }
                 CurrentFlipViewIndex = index;
@@ -271,6 +310,7 @@ namespace Minista.Views.Stories
         {
             try
             {
+                if (ProgressGrid.Visibility == Visibility.Collapsed) return;
                 if (StoryItemUc != null)
                 {
                     if (StoryItemUc.StoryItem.MediaType == InstaMediaType.Image)

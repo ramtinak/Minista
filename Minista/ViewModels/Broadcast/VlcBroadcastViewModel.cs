@@ -3,6 +3,7 @@ using LibVLCSharp.Platforms.UWP;
 using LibVLCSharp.Shared;
 using System;
 using System.Threading.Tasks;
+using Windows.Storage;
 using static Helper;
 
 namespace Minista.ViewModels.Broadcast
@@ -40,11 +41,17 @@ namespace Minista.ViewModels.Broadcast
         {
             try
             {
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, /*async*/() =>
                 {
                     Show();
                     Media media = new Media(LibVLC, Broadcast.DashPlaybackUrl, FromType.FromLocation);
+                    //var file = await ApplicationData.Current.LocalFolder.CreateFileAsync("record.mp4", CreationCollisionOption.GenerateUniqueName);
+                    //string faToken = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
+                    //("faToken: " + faToken).PrintDebug();
+                    //media.AddOption(":sout=#file{dst=" + file.Path + "}");
                     media.AddOption(":sout = #transcode{vcodec=x264,vb=800,scale=0.25,acodec=none}:display :no-sout-rtp-sap :no-sout-standard-sap :ttl=1 :sout-keep :rtsp-mcast");
+                    //media.AddOption(":sout-keep");
+
                     MediaPlayer.Play(media);
                     MediaPlayer.Fullscreen = true;
                 });

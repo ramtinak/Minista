@@ -1,4 +1,5 @@
 ﻿using InstagramApiSharp.Classes.Models;
+using Minista.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,10 +28,26 @@ namespace Minista.Views.Stories
         {
             this.InitializeComponent();
         }
+        private bool WasItBackButtonShown = false;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if(e.Parameter is object[] objArr)
+            MainPage.Current?.HideHeaders();
+            Helper.HideStatusBar();
+
+            if (e.NavigationMode == NavigationMode.New)
+                GetType().RemovePageFromBackStack();
+
+            if (MainPage.Current != null)
+            {
+                if (MainPage.Current.BackButton.Visibility == Visibility.Visible)
+                {
+                    WasItBackButtonShown = true;
+                    NavigationService.HideBackButton();
+                }
+                NavigationService.ShowSystemBackButton();
+            }
+            if (e.Parameter is object[] objArr)
             {
                 if (objArr.Length == 2)
                 {
@@ -44,6 +61,23 @@ namespace Minista.Views.Stories
                     }
                 }
             }
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            MainPage.Current?.ShowHeaders();
+            Helper.ShowStatusBar();
+
+            NavigationService.HideSystemBackButton();
+            if (MainPage.Current != null && WasItBackButtonShown)
+                NavigationService.ShowBackButton();
+            WasItBackButtonShown = false;
+            //try
+            //{
+            //    FeedListStatic = FeedList;
+            //    StopEverything();
+            //}
+            //catch { }
         }
     }
 }
