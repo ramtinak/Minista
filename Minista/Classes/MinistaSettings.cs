@@ -28,6 +28,8 @@ namespace Minista.Classes
         public AppTheme AppTheme { get; set; } = AppTheme.Dark;
 
         public DownloadQuality DownloadQuality { get; set; } = DownloadQuality.HighestQuality;
+
+        public StoryViewType StoryViewType { get; set; } = StoryViewType.NewOne;
     } 
     public enum HeaderPosition
     {
@@ -49,5 +51,10 @@ namespace Minista.Classes
     {
         HighestQuality,
         LowestQuality
+    }
+    public enum StoryViewType
+    {
+        NewOne,
+        OldOne
     }
 }

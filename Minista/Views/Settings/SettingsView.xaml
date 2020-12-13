@@ -120,7 +120,7 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock TextWrapping="Wrap"
-                                       Text="Menu position"
+                                       Text="Download quality"
                                        Margin="6 4"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"
@@ -146,6 +146,54 @@
                             </Grid>
                             <TextBlock TextWrapping="Wrap"
                                        Text="This option only works if multiple qualities exist."
+                                       Margin="8 2 4 2"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       FontSize="{StaticResource TinyFontSize}"
+                                       FontFamily="{StaticResource VazirFont}"
+                                       Foreground="{StaticResource DefaultInnerForegroundColor}" />
+                        </StackPanel>
+                        <Rectangle Fill="{StaticResource SeperatorColor}"
+                                   Height="1"
+                                   Margin="15 2.5"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" />
+
+
+
+                        <StackPanel>
+                            <Grid Margin="0 5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock TextWrapping="Wrap"
+                                       Text="Story view"
+                                       Margin="6 4"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       FontSize="{StaticResource DefaultFontSize}"
+                                       FontFamily="{StaticResource VazirFont}" />
+                                <ComboBox x:Name="comboStoryView"
+                                      Margin="4"
+                                      Grid.Column="1"
+                                      Width="160"
+                                      BorderThickness=".8"
+                                      Background="Transparent"
+                                      FontSize="{StaticResource DefaultFontSize}"
+                                      FontFamily="{StaticResource VazirFont}"
+                                      SelectionChanged="ComboStoryViewSelectionChanged">
+                                    <ComboBoxItem Content="New page"
+                                              FontSize="{StaticResource DefaultFontSize}"
+                                              FontFamily="{StaticResource VazirFont}" />
+
+                                    <ComboBoxItem Content="Old page"
+                                              FontSize="{StaticResource DefaultFontSize}"
+                                              FontFamily="{StaticResource VazirFont}" />
+                                </ComboBox>
+                            </Grid>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="Stories will open on the new or old page. The new page is far faster than the old one and does not have old page problems."
                                        Margin="8 2 4 2"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"

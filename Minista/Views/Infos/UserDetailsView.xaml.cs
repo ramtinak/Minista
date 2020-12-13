@@ -1071,7 +1071,7 @@ namespace Minista.Views.Infos
                         foreach (var item in UserDetailsVM.Highlights)
                             list.Add(item.ToReelFeed());
 
-                        Helpers.NavigationService.Navigate(typeof(Main.StoryView), new object[] { list, index });
+                        Helpers.NavigationService.Navigate(SettingsHelper.GetStoryView(), new object[] { list, index });
                     }
                 }
             }
@@ -1133,7 +1133,7 @@ namespace Minista.Views.Infos
             Helpers.NavigationService.Navigate(typeof(ImageVideoView), UserDetailsVM.User);
 
         private void MenuOpenStoryClick(object sender, RoutedEventArgs e) =>
-            Helpers.NavigationService.Navigate(typeof(Main.StoryView), new object[] { UserDetailsVM.Stories.ToList(), 0 });
+            Helpers.NavigationService.Navigate(SettingsHelper.GetStoryView(), new object[] { UserDetailsVM.Stories.ToList(), 0 });
 
         private void RefreshButtonClick(object sender, RoutedEventArgs e)
         {

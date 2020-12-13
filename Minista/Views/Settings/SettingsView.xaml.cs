@@ -59,6 +59,7 @@ namespace Minista.Views.Settings
                 ShowSavedLocationFolder();
                 CalculateCacheSize();
                 comboDownloadQuality.SelectedIndex = (int)SettingsHelper.Settings.DownloadQuality;
+                comboStoryView.SelectedIndex = (int)SettingsHelper.Settings.StoryViewType;
                 comboAppTheme.SelectedIndex = (int)SettingsHelper.Settings.AppTheme;
             }
             catch { }
@@ -204,6 +205,16 @@ namespace Minista.Views.Settings
             {
                 if (comboDownloadQuality.SelectedIndex == -1) return;
                 SettingsHelper.Settings.DownloadQuality = (DownloadQuality)comboDownloadQuality.SelectedIndex;
+            }
+            catch { }
+        }
+        private void ComboStoryViewSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!CanDoThings) return;
+            try
+            {
+                if (comboStoryView.SelectedIndex == -1) return;
+                SettingsHelper.Settings.StoryViewType = (StoryViewType)comboStoryView.SelectedIndex;
             }
             catch { }
         }
@@ -640,6 +651,5 @@ namespace Minista.Views.Settings
             }
             catch { }
         }
-
     }
 }

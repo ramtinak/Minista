@@ -104,18 +104,11 @@ namespace Minista.Views.Main
             ToggleGoUpButtonAnimation(false);
             if (Scroll == null)
             {
-                Scroll = /*ScrollView*/LVPosts.FindScrollViewer();
+                Scroll = LVPosts.FindScrollViewer();
                 if (Scroll != null)
-                {
                     Scroll.ViewChanging += ScrollViewViewChanging;
-                    Scroll.ViewChanged += ScrollViewViewChanged;
-                }
-                //var pncm = Windows.Networking.PushNotifications.PushNotificationChannelManager.GetDefault();
-                //var cc = await pncm.CreatePushNotificationChannelForApplicationAsync();
-                //await Helper.InstaApi.PushProcessor.RegisterPush2Async(cc.Uri);
-                MainVM.PostsGenerator.SetLV(Scroll/*ScrollView*/);
+                MainVM.PostsGenerator.SetLV(Scroll);
                 TryToRefresh(true);
-
             }
 
             try
@@ -127,14 +120,6 @@ namespace Minista.Views.Main
             RefreshControl.RefreshRequested += RefreshControlRefreshRequested;
             if (RefreshControl.Visualizer != null)
                 RefreshControl.Visualizer.RefreshStateChanged += RefreshControlRefreshStateChanged;
-            ////DotNetty.Transport.Bootstrapping.Bootstrap.DoResolveAndConnectAsync
-            //Helper.InstaApi.PushClient.MessageReceived += PushClient_MessageReceived;
-            //await Helper.InstaApi.PushClient.Start();
-
-            //foreach(var item in Helper.InstaApiList)
-            //{
-            //    (item.GetLoggedUser().UserName + "  " + item.PushClient.IsShutdown).PrintDebug();
-            //}
             InitTheme();
         }
         async void InitTheme()
@@ -239,7 +224,6 @@ namespace Minista.Views.Main
             {
                 var scrollViewer = sender as ScrollViewer;
 
-                //$"VerticalOffset: {scrollViewer.VerticalOffset}".PrintDebug();
                 if ((scrollViewer.VerticalOffset - _lastVerticalOffset) > 5 && !_isHideTitleGrid)
                 {
                     _isHideTitleGrid = true;
@@ -259,49 +243,6 @@ namespace Minista.Views.Main
             }
             catch { }
         }
-
-
-
-        private void ScrollViewViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            try
-            {
-                //var top = LVPosts.TransformToVisual(LVPosts).TransformPoint(new Point());
-                //var controlBounds = new Rect(top, LVPosts.DesiredSize);
-
-                //var viewBounds = new Rect(new Point(Scroll.HorizontalOffset, Scroll.VerticalOffset), new Size(Scroll.ViewportWidth, Scroll.ViewportHeight));
-
-                //if (RectIntersects(viewBounds, controlBounds))
-                //{
-                //    $"OUT OF VIEW".PrintDebug();
-                //}
-
-            }
-            catch { }
-        }
-        private static bool RectIntersects(Rect a, Rect b)
-        {
-            return !(b.Left > a.Right
-                || b.Right < a.Left
-                || b.Top > a.Bottom
-                || b.Bottom < a.Top);
-        }
-        //private bool IsUserVisible(FrameworkElement element, FrameworkElement container)
-        //{
-        //    //if (!element.IsVisible)
-        //    //    return false;
-
-        //    Rect bounds = element.TransformToVisual(container).TransformBounds(new Rect(0.0, 0.0, element.ActualWidth, element.ActualHeight));
-        //    Rect rect = new Rect(0.0, 0.0, container.ActualWidth, container.ActualHeight);
-        //    return rect.Contains(bounds.) || rect.Contains(bounds.BottomRight);
-        //}
-        //// Returns true only if element is partly visible in the current viewport
-        //private bool IsInViewport(ScrollContentPresenter scp, DependencyObject element)
-        //{
-        //    Rect viewPortRect = KeyboardNavigation.GetRectangle(scp);
-        //    Rect elementRect = KeyboardNavigation.GetRectangle(element);
-        //    return viewPortRect.IntersectsWith(elementRect);
-        //}
         private void ToggleGoUpButtonAnimation(bool show)
         {
 
@@ -317,11 +258,7 @@ namespace Minista.Views.Main
         private void GoUpButtonClick(object sender, RoutedEventArgs e)
         {
             Scroll.ScrollToElement(0);
-            //LVStories.ScrollIntoView()
         }
-
-
-
         public UserControls.Main.MediaMainUc MediaMainUc;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -420,7 +357,7 @@ namespace Minista.Views.Main
                                 index = list.IndexOf(first);
                             else
                                 index = LVStories.Items.IndexOf(storyWithLiveSupportModel);
-                            Helpers.NavigationService.Navigate(typeof(StoryViewX), new object[] { list, index });
+                            NavigationService.Navigate(SettingsHelper.GetStoryView(), new object[] { list, index });
                         }
                         else if (storyWithLiveSupportModel.Type == StoryType.Broadcast)
                         {
@@ -488,7 +425,7 @@ namespace Minista.Views.Main
                         var index = LatestInnerStoriesLV.Items.IndexOf(reelFeed);
                         var list = LatestInnerStoriesLV.ItemsSource as ObservableCollection<InstaReelFeed>;
 
-                        Helpers.NavigationService.Navigate(typeof(StoryViewX), new object[] { list.ToList(), index });
+                        NavigationService.Navigate(SettingsHelper.GetStoryView(), new object[] { list.ToList(), index });
                     }
                 }
                 "InnerStoriesItemGridTapped".PrintDebug();

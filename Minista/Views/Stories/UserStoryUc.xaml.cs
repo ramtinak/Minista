@@ -1,4 +1,5 @@
 ﻿using InstagramApiSharp.Classes.Models;
+using InstagramApiSharp.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -188,6 +189,45 @@ namespace Minista.Views.Stories
             PlayPrevious();
         }
 
+        public async void FirstInit(string selectedStoryId = null, int index = -1)
+        {
+            try
+            {
+                if (Items?.Count > 0)
+                {
+                    await Task.Delay(250);
+                    if (index == -1)
+                    {
+                        for (int i = 0; i < Items.Count; i++)
+                        {
+                            if (string.IsNullOrEmpty(selectedStoryId))
+                            {
+                                if (Items[i].StoryItem.TakenAt.ToUnixTime() == StoryFeed.Seen)
+                                {
+                                    index = i /*+ 1*/;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                if (Items[i].StoryItem.Id == selectedStoryId ||
+                                Items[i].StoryItem.Pk.ToString() == selectedStoryId)
+                                {
+                                    index = i;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (index != -1)
+                            FlipView.SelectedIndex = index;
+                    }
+                    else
+                        FlipView.SelectedIndex = index;
+                }
+            }
+            catch (Exception ex) { ex.PrintException("UserStoryUc.FirstInit"); }
+        }
         public void PlayNext()
         {
             try

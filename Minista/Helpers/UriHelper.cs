@@ -42,6 +42,8 @@ namespace Minista.Helpers
                     }
                     else if (url.ToLower().Contains(IgStories))
                     {
+                        var storyView = SettingsHelper.GetStoryView();
+
                         // https://instagram.com/stories/almenara.s/2088060456748019118?igshid=l6akfmgft718
                         var u = url.Substring(url.IndexOf(IgStories) + IgStories.Length);
                         var user = u.Substring(0, u.IndexOf("/")).Replace("/", "");
@@ -63,7 +65,7 @@ namespace Minista.Helpers
                                 if (friendshipResult.Value.IsPrivate)
                                 {
                                     if (friendshipResult.Value.Following || userResult.Value.Pk == Helper.CurrentUser.Pk)
-                                        NavigationService.Navigate(typeof(Views.Stories.StoryViewX), new object[] { userResult.Value, storyId, url, url, url });
+                                        NavigationService.Navigate(storyView, new object[] { userResult.Value, storyId, url, url, url });
                                     else
                                     {
                                         Helper.ShowNotify($"You can't see @{user}'s stories becuase it's a private account.\r\nFollow this account to see their stories.", 4000);
@@ -71,13 +73,13 @@ namespace Minista.Helpers
                                     }
                                 }
                                 else
-                                    NavigationService.Navigate(typeof(Views.Stories.StoryViewX), new object[] { userResult.Value, storyId, url, url, url });
+                                    NavigationService.Navigate(storyView, new object[] { userResult.Value, storyId, url, url, url });
                             }
                             else
-                                NavigationService.Navigate(typeof(Views.Stories.StoryViewX), new object[] { userResult.Value, storyId, url, url, url });
+                                NavigationService.Navigate(storyView, new object[] { userResult.Value, storyId, url, url, url });
                         }
                         else
-                            NavigationService.Navigate(typeof(Views.Stories.StoryViewX), new object[] { user, storyId, url });
+                            NavigationService.Navigate(storyView, new object[] { user, storyId, url });
                     }
                     else
                         Helper.OpenProfile(n);

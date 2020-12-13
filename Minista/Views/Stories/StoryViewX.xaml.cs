@@ -29,7 +29,7 @@ namespace Minista.Views.Stories
             this.InitializeComponent();
         }
         private bool WasItBackButtonShown = false;
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             MainPage.Current?.HideHeaders();
@@ -51,16 +51,77 @@ namespace Minista.Views.Stories
             {
                 if (objArr.Length == 2)
                 {
-                    //var list = new List<InstaReelFeed>();
                     if (objArr[0] is List<InstaReelFeed> reels)
-                    {
-                        //FeedList = reels;
-                        var index = (int)objArr[1];
+                        Init(reels, (int)objArr[1]);
+                }
+                else if (objArr.Length == 3)
+                {
+                    var user = objArr[0] as string;
+                    var storyId = objArr[1] as string;
+                    ////var url = objArr[3] as string; // in dekorie ke faghat lengthemon beshe 3ta
+                    user = user.Trim();
+                    //SelectedStoryId = storyId.Trim();
+                    var userResult = await Helper.InstaApi.UserProcessor.GetUserInfoByUsernameAsync(user);
+                    if (userResult.Succeeded)
+                        InitAsync(userResult.Value.Pk.ToString(), storyId.Trim());
+                }
+                else if (objArr.Length == 5)
+                {
+                    var user = objArr[0] as InstaUserInfo;
+                    var storyId = objArr[1] as string;
+                    ////var url = objArr[3] as string; // in dekorie ke faghat lengthemon beshe 3ta
+                    //SelectedStoryId = storyId.Trim();
 
-                        Contents.Content = new UserStoryUc { StoryFeed = reels[index] };
-                    }
+                    InitAsync(user.Pk.ToString(), storyId.Trim());
+                }
+                else if (objArr.Length == 4)
+                {
+                    var userId = (long)objArr[0];
+                    var storyId = objArr[1] as string;
+                    //SelectedStoryId = storyId.Trim();
+                    InitAsync(userId.ToString(), storyId.Trim());
                 }
             }
+            else if (e.Parameter is InstaReelFeed reel && reel != null)
+                Init(new List<InstaReelFeed> { reel }, 0);
+            else
+            {
+                long pk = -1;
+                if (e.Parameter is InstaUserShort userShort)
+                    pk = userShort.Pk;
+                else if (e.Parameter is long userId)
+                    pk = userId;
+                if (pk != -1)
+                    InitAsync(pk.ToString());
+            }
+        }
+        async void InitAsync(string pk, string selectedStoryId = null)
+        {
+            try 
+            {
+                var stories = await Helper.InstaApi.StoryProcessor.GetUsersStoriesAsHighlightsAsync(pk);
+                if (stories.Succeeded)
+                {
+                    Init(stories.Value.Items,0, selectedStoryId);
+                    //FeedList = stories.Value.Items;
+                    //FeedListIndex = 0;
+                    //PlayFeedUser();
+                }
+            }
+            catch(Exception ex) { ex.PrintException("InitAsync"); }
+        }
+        void Init(List<InstaReelFeed> reels, int index, string selectedStoryId = null)
+        {
+            try
+            {
+                if (reels == null || reels?.Count == 0)
+                    return;
+
+                var uc = new UserStoryUc { StoryFeed = reels[index] };
+                Contents.Content = uc;
+                uc.FirstInit(selectedStoryId);
+            }
+            catch { }
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {

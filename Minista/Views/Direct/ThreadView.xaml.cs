@@ -843,7 +843,7 @@ namespace Minista.Views.Direct
                     };
                     reel.Items.Add(data.ReelShareMedia.Media);
 
-                    NavigationService.Navigate(typeof(Main.StoryView), reel);
+                    NavigationService.Navigate(SettingsHelper.GetStoryView(), reel);
                 }
             }
             catch { }
@@ -1012,7 +1012,7 @@ namespace Minista.Views.Direct
                 if (sender is Grid item && item.DataContext is InstaDirectInboxItem data && data != null &&
                 data.ItemType == InstaDirectThreadItemType.StoryShare && data.StoryShare != null && data.StoryShare.Media != null)
                 {
-                    NavigationService.Navigate(typeof(Main.StoryView), 
+                    NavigationService.Navigate(SettingsHelper.GetStoryView(), 
                         new object[] { data.StoryShare.Media.User.Pk, data.StoryShare.Media.Pk.ToString(),
                             data.StoryShare.Media.Pk.ToString(), data.StoryShare.Media.Pk.ToString(), });
                 }

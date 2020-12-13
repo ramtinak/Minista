@@ -14,6 +14,7 @@ namespace Minista
 {
     internal static class SettingsHelper
     {
+        public static Type GetStoryView() => Settings.StoryViewType == StoryViewType.NewOne ? typeof(Views.Stories.StoryViewX) : typeof(Views.Main.StoryView);
         //public static bool IsSomethingChanged { get; set; } = false;
         public static MinistaSettings Settings { get; set; } = new MinistaSettings();
 
