@@ -1070,7 +1070,7 @@ namespace Minista.Views.Main
             {
                 Height = 1.6,
                 Margin = margin.Value,
-                Background = /*"#41FFFFFF"*/"#74FFFFFF".GetColorBrush(),
+                Background = "#74FFFFFF".GetColorBrush(),
                 Foreground = new SolidColorBrush(Colors.White),
                 LargeChange = .01,
                 SmallChange = .01

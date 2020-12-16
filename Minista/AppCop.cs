@@ -113,8 +113,7 @@ namespace Minista
                 }
                 else
                 {
-                    NotificationActivationHelper.HandleActivation(Helper.InstaApi, Helper.InstaApiList,
-                        args.Argument, args.UserInput, false, OpenProfile, OpenLive, OpenPendingThreadRequest, OpenPost, OpenTV);
+                    HandleActivation(args, false);
                     MainPage.Current?.HandleUriProtocol();
                 }
 
@@ -126,10 +125,15 @@ namespace Minista
                 if (wait)
                 {
                     await Task.Delay(3500);
-                    NotificationActivationHelper.HandleActivation(Helper.InstaApi, Helper.InstaApiList, args.Argument,
-                    args.UserInput, true, OpenProfile, OpenLive, OpenPendingThreadRequest, OpenPost, OpenTV);
+                    HandleActivation(args, true);
                 }
             }
+        }
+
+        void HandleActivation(ToastNotificationActivatedEventArgs args, bool wait)
+        {
+            NotificationActivationHelper.HandleActivation(Helper.InstaApi, Helper.InstaApiList, args.Argument,
+            args.UserInput, wait, OpenProfile, OpenLive, OpenPendingThreadRequest, OpenPost, OpenTV);
         }
 
 

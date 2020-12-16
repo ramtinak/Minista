@@ -1,6 +1,6 @@
 ﻿//using Microsoft.Services.Store.Engagement;
 using InstagramApiSharp.Classes.Models;
-using Microsoft.Services.Store.Engagement;
+//using Microsoft.Services.Store.Engagement;
 using Minista.Helpers;
 using MinistaHelper.Push;
 using Newtonsoft.Json;
@@ -101,18 +101,18 @@ namespace Minista
                     FocusVisualKind = FocusVisualKind.Reveal;
             }
             catch { }
-            try
-            {
-                await Helper.RunInBackground(async () =>
-                {
-                    StoreServicesEngagementManager engagementManager = StoreServicesEngagementManager.GetDefault();
+            //try
+            //{
+            //    await Helper.RunInBackground(async () =>
+            //    {
+            //        StoreServicesEngagementManager engagementManager = StoreServicesEngagementManager.GetDefault();
 
-                    await engagementManager.RegisterNotificationChannelAsync();
-                });
-            }
-            catch
-            {
-            }
+            //        await engagementManager.RegisterNotificationChannelAsync();
+            //    });
+            //}
+            //catch
+            //{
+            //}
         }
         private void TryEnablePrelaunch() => Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
         public Frame CreateRootFrame()

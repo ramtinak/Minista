@@ -309,7 +309,7 @@
     <Compile Include="Views\Stories\StoryViewX.xaml.cs">
       <DependentUpon>StoryViewX.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Stories\UserStoryUc.xaml.cs">
+    <Compile Include="Views\Stories\Uc\UserStoryUc.xaml.cs">
       <DependentUpon>UserStoryUc.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Studio\Drawings\CropUI.cs" />
@@ -1216,9 +1216,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Stories\UserStoryUc.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\Stories\Uc\UserStoryUc.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Studio\StudioView.xaml">
       <SubType>Designer</SubType>
@@ -1436,9 +1436,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="Microsoft.Services.Store.Engagement, Version=10.0">
-      <Name>Microsoft Engagement Framework</Name>
-    </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.18362.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>

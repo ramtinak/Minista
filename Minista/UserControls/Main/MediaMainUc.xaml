@@ -44,6 +44,7 @@
             <converters:DateTimeFullConverter x:Key="DateTimeFullConverter" />
 
             <converters:UserTagCarouselItemVisibilityConverter x:Key="UserTagCarouselItemVisibilityConverter" />
+            <converters:StringToUriConverter x:Key="StringToUriConverter"/>
 
             <selector:MediaCarouselTemplateSelector
                 x:Key="CarouselTemplateSelector"
@@ -53,7 +54,7 @@
                 <Grid>
                     <controls:ImageEx x:Name="ImageExTemplate" Stretch="Uniform">
                         <controls:ImageEx.Source>
-                            <BitmapImage UriSource="{Binding Images[0].Uri, Mode=OneWay}" />
+                            <BitmapImage UriSource="{Binding Images[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}" />
                         </controls:ImageEx.Source>
                     </controls:ImageEx>
                     <Grid
@@ -110,8 +111,8 @@
                         CurrentStateChanged="MediaElementCurrentStateChanged"
                         DoubleTapped="OnItemDoubleTapped"
                         MediaEnded="MediaElementMediaEnded"
-                        PosterSource="{Binding Images[0].Uri, Mode=OneWay}"
-                        Source="{Binding Videos[0].Uri, Mode=OneWay}"
+                        PosterSource="{Binding Images[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}"
+                        Source="{Binding Videos[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}"
                         Tapped="MediaElementTapped">
                         <MediaElement.TransportControls>
                             <MediaTransportControls
@@ -335,7 +336,7 @@
                 MinHeight="110"
                 Stretch="Uniform">
                 <controls:ImageEx.Source>
-                    <BitmapImage UriSource="{Binding Images[0].Uri, Mode=OneWay}" />
+                    <BitmapImage UriSource="{Binding Images[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}" />
                 </controls:ImageEx.Source>
             </controls:ImageEx>
             <Grid
@@ -401,8 +402,8 @@
                 AutoPlay="False"
                 CurrentStateChanged="MediaElementCurrentStateChanged"
                 DoubleTapped="OnItemDoubleTapped"
-                PosterSource="{Binding Images[0].Uri, Mode=OneWay}"
-                Source="{Binding Videos[0].Uri, Mode=OneWay}"
+                PosterSource="{Binding Images[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}"
+                Source="{Binding Videos[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}"
                 Tapped="MediaElementTapped">
                 <MediaElement.TransportControls>
                     <MediaTransportControls

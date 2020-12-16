@@ -30,7 +30,7 @@ namespace Minista.Classes
         public DownloadQuality DownloadQuality { get; set; } = DownloadQuality.HighestQuality;
 
         public StoryViewType StoryViewType { get; set; } = StoryViewType.NewOne;
-    } 
+    }
     public enum HeaderPosition
     {
         Top,

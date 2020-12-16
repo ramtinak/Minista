@@ -79,7 +79,6 @@ namespace Minista.Views.Stories
         readonly UserStoryUc UserStoryUc;
         readonly GestureHelper GestureHelper;
         readonly Storyboard StoryboardX = new Storyboard();
-        bool IsStoryInnerShowing = false;
         bool OpenVideo = false;
         FontIcon RefreshFontIcon;
         #endregion
@@ -228,7 +227,6 @@ namespace Minista.Views.Stories
         {
             try
             {
-
                 SeeMoreButton.Visibility = StoryItem.StoryCTA?.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
                 try
                 {
@@ -603,7 +601,7 @@ namespace Minista.Views.Stories
                                 if (item.Name == rect.Tag.ToString())
                                 {
                                     //IsHolding = true;
-                                    IsStoryInnerShowing = true;
+                                    //IsStoryInnerShowing = true;
                                         await item.Animation(FrameworkLayer.Xaml)
                                               .Scale(1, 0, Easing.QuadraticEaseInOut)
                                               .Duration(0)
@@ -653,10 +651,10 @@ namespace Minista.Views.Stories
                 StorySuffItems.Visibility = BottomStuffGrid.Visibility = hide ? Visibility.Collapsed : Visibility.Visible;
 
                 ReactionGrid.Visibility = Visibility.Collapsed;
-                if (!string.IsNullOrEmpty(StoryFeed.Title))
-                    TitleGrid.Visibility = hide ? Visibility.Collapsed : Visibility.Visible;
-                else
-                    TitleGrid.Visibility = Visibility.Collapsed;
+                //if (!string.IsNullOrEmpty(StoryFeed.Title))
+                //    TitleGrid.Visibility = hide ? Visibility.Collapsed : Visibility.Visible;
+                //else
+                //    TitleGrid.Visibility = Visibility.Collapsed;
             }
             catch { }
         }
@@ -898,8 +896,9 @@ namespace Minista.Views.Stories
             //if (Items.Count > StoryIndex)
             //{
             //    IsHolding = true;
-            //    StorySuffItems.Visibility = Visibility.Collapsed;
-            //    MainStoryViewerUc.SetStoryItem(Items[StoryIndex].StoryItem);
+            StorySuffItems.Visibility = Visibility.Collapsed;
+            MainStoryViewerUc.SetStoryItem(StoryItem);
+            MainStoryViewerUc.SetStoryItemUc(this, UserStoryUc);
             //}
         }
         private async void ShareButtonClick(object sender, RoutedEventArgs e)

@@ -72,7 +72,7 @@ namespace Base
                 return new string(device.Split(' ')[1].ToCharArray().Reverse().ToArray()).ToUpper();
             return new string(device.ToCharArray().Reverse().ToArray()).ToUpper();
         }
-        private protected Guid GetPhoneGuid(Guid guid)
+        protected Guid GetPhoneGuid(Guid guid)
         {
             var builder = new List<string>();
             var spl = guid.ToString().Split('-');
@@ -80,7 +80,7 @@ namespace Base
                 builder.Add(new string(item.ToCharArray().Reverse().ToArray()));
             return new Guid(string.Join("-", builder));
         }
-        private protected Guid GetFamilyDeviceGuid(Guid guid)
+        protected Guid GetFamilyDeviceGuid(Guid guid)
         {
             var builder = new List<string>();
             var spl = guid.ToString().Split('-');
@@ -98,7 +98,7 @@ namespace Base
             builder[4] = builder[4].Substring(6) + builder[4].Substring(0, 6);
             return new Guid(string.Join("-", builder));
         }
-        private protected Guid GetPushDeviceGuid(Guid guid)
+        protected Guid GetPushDeviceGuid(Guid guid)
         {
             var builder = new List<string>();
             var spl = guid.ToString().Split('-');
@@ -116,7 +116,7 @@ namespace Base
                 builder[4].Substring(6, 2) + builder[4].Substring(1, 2) + builder[4].Substring(4, 2);
             return new Guid(string.Join("-", builder));
         }
-        private protected Guid GetPigeonSessionId(Guid guid)
+        protected Guid GetPigeonSessionId(Guid guid)
         {
             var builder = new List<string>();
             var spl = guid.ToString().Split('-');

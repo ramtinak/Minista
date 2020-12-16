@@ -14,23 +14,34 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using Minista.Helpers;
+using Minista.Views.Stories;
 
 namespace Minista.UserControls.Story.StoryViews
 {
     public sealed partial class MainStoryViewerUc : UserControl
     {
+        private StoryItemUc StoryItemUc;
+        private UserStoryUc UserStoryUc;
         public MainStoryViewerUc()
         {
             this.InitializeComponent();
         }
         void GoBack()
         {
-            if (Helpers.NavigationService.Frame.Content is Views.Main.StoryView view && view != null)
+            if (NavigationService.Frame.Content is Views.Main.StoryView view && view != null)
             {
                 Visibility = Visibility.Collapsed;
                 view.StorySuffItems.Visibility = Visibility.Visible;
                 view.IsHolding = false;
+            }
+            else if (typeof(StoryViewX).IsThisType())
+            {
+                Visibility = Visibility.Collapsed;
+                if (StoryItemUc != null)
+                    StoryItemUc.StorySuffItems.Visibility = Visibility.Visible;
+                if (UserStoryUc != null)
+                    UserStoryUc.ControlPanels(false);
             }
         }
         public async void SetStoryItem(InstaStoryItem storyItem)
@@ -46,6 +57,16 @@ namespace Minista.UserControls.Story.StoryViews
                 StoryInsightUc.SetItem(storyItem);
             }
         }
+        public void SetStoryItemUc(StoryItemUc storyItemUc, UserStoryUc userStoryUc)
+        {
+            StoryItemUc = storyItemUc;
+            UserStoryUc = userStoryUc;
+
+            if (storyItemUc != null)
+                StoryItemUc.StorySuffItems.Visibility = Visibility.Collapsed;
+            UserStoryUc?.ControlPanels(true);
+        }
+
         private void GridLoaded(object sender, RoutedEventArgs e)
         {
         }

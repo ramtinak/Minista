@@ -121,8 +121,8 @@
                         CurrentStateChanged="MediaElementCurrentStateChanged"
                         DoubleTapped="OnItemDoubleTapped"
                         MediaEnded="MediaElementMediaEnded"
-                        PosterSource="{Binding Images[0].Uri, Mode=OneWay}"
-                        Source="{Binding Videos[0].Uri, Mode=OneWay}"
+                        PosterSource="{Binding Images[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}"
+                        Source="{Binding Videos[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}"
                         Tapped="MediaElementTapped">
                         <MediaElement.TransportControls>
                             <MediaTransportControls
@@ -443,8 +443,8 @@
                 AutoPlay="False"
                 CurrentStateChanged="MediaElementCurrentStateChanged"
                 DoubleTapped="OnItemDoubleTapped"
-                PosterSource="{Binding Images[0].Uri, Mode=OneWay}"
-                Source="{Binding Videos[0].Uri, Mode=OneWay}"
+                PosterSource="{Binding Images[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}"
+                Source="{Binding Videos[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}"
                 Tapped="MediaElementTapped">
                 <MediaElement.TransportControls>
                     <MediaTransportControls

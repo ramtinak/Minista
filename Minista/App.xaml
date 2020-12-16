@@ -17,7 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
             <!--<XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />-->
 
-            <!--White-->
+            <!--  White  -->
             <!--<SolidColorBrush x:Key="DefaultBackgroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultItemBackgroundColor">#FFF0E3E4</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultForegroundColor">#FF000000</SolidColorBrush>
@@ -84,10 +84,10 @@
             <SolidColorBrush x:Key="TextBoxBackgroundColor">#FFA10018</SolidColorBrush>
             <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush">#FF2C42FF</SolidColorBrush>
             <SolidColorBrush x:Key="LoadingForegroundColor">#FFE8585B</SolidColorBrush>
-            
+
             <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush">#FFA10018</SolidColorBrush>
             <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush">#FFA10018</SolidColorBrush>
-            <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush">#FFA10018</SolidColorBrush> 
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush">#FFA10018</SolidColorBrush>
 
 
             <SolidColorBrush x:Key="DirectItemBorderBrushColor">#FFA60019</SolidColorBrush>
@@ -113,8 +113,8 @@
             <SolidColorBrush x:Key="DirectVoiceRecoderTimeForegroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="DirectVoiceRecordForegroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="DirectHeartButtonForegroundColor">#FF8A0015</SolidColorBrush>-->
-            
-            
+
+
             <SolidColorBrush x:Key="DefaultBackgroundColor">#FF151515</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultItemBackgroundColor">#FF232323</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultForegroundColor">#FFB4B4B4</SolidColorBrush>
@@ -135,10 +135,10 @@
             <SolidColorBrush x:Key="TextBoxBackgroundColor">#BF292828</SolidColorBrush>
             <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush">#FF5278FF</SolidColorBrush>
             <SolidColorBrush x:Key="LoadingForegroundColor">#FF2C42FF</SolidColorBrush>
-            
-            
+
+
             <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush">#FF252525</SolidColorBrush>
-            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush">#FF252525</SolidColorBrush> 
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush">#FF252525</SolidColorBrush>
             <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush">#FF252525</SolidColorBrush>
 
 
@@ -147,9 +147,9 @@
             <SolidColorBrush x:Key="DirectItemTimeForegroundColor">#FF858585</SolidColorBrush>
             <SolidColorBrush x:Key="DirectItemSelfBackgroundColor">#FF373737</SolidColorBrush>
             <SolidColorBrush x:Key="DirectItemPeopleBackgroundColor">#FF1D1C1C</SolidColorBrush>
-            
-            
-            
+
+
+
             <SolidColorBrush x:Key="DirectBlockAllForegroundColor">#FFFF6C6C</SolidColorBrush>
             <SolidColorBrush x:Key="DirectBlockPeopleForegroundColor">#FFFF2727</SolidColorBrush>
             <SolidColorBrush x:Key="DirectAcceptForegroundColor">#FF34C08B</SolidColorBrush>
@@ -165,7 +165,7 @@
             <SolidColorBrush x:Key="DirectVoiceRecordForegroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="DirectHeartButtonForegroundColor">#FF0068FF</SolidColorBrush>
             <SolidColorBrush x:Key="DirectItemText2ForegroundColor">#FFCDCDCD</SolidColorBrush>
-            <!--#FF1A1A1A-->
+            <!--  #FF1A1A1A  -->
             <SolidColorBrush x:Key="DirectVoicePlayerBackgroundColor">#FFEDEDED</SolidColorBrush>
 
 
@@ -184,9 +184,8 @@
 
             <!--
             <SolidColorBrush x:Key="SeperatorColor">#FF666666</SolidColorBrush>
-            
-            <SolidColorBrush x:Key="RefreshGoUpButtonForegroundColor">#FFFFFFFF</SolidColorBrush>
--->
+
+            <SolidColorBrush x:Key="RefreshGoUpButtonForegroundColor">#FFFFFFFF</SolidColorBrush>            -->
 
 
             <Thickness x:Key="PivotPortraitThemePadding">0</Thickness>
@@ -214,15 +213,19 @@
                         <ControlTemplate TargetType="Button">
                             <Grid x:Name="RootGrid">
                                 <Grid>
-                                    <Ellipse x:Name="RootEllipse" Width="45"
-                                             Height="45"
-                                             HorizontalAlignment="Center"
-                                             VerticalAlignment="Center"
-                                             Fill="{StaticResource RefreshGoUpButtonBackgroundColor}" />
-                                    <FontIcon x:Name="FontIconCon" FontFamily="{StaticResource SymbolFont}"
-                                              FontSize="{StaticResource HeaderFontSize}"
-                                              Foreground="{StaticResource DefaultForegroundColor}"
-                                              Glyph="" />  
+                                    <Ellipse
+                                        x:Name="RootEllipse"
+                                        Width="45"
+                                        Height="45"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Fill="{StaticResource RefreshGoUpButtonBackgroundColor}" />
+                                    <FontIcon
+                                        x:Name="FontIconCon"
+                                        FontFamily="{StaticResource SymbolFont}"
+                                        FontSize="{StaticResource HeaderFontSize}"
+                                        Foreground="{StaticResource DefaultForegroundColor}"
+                                        Glyph="" />
                                     <Grid Background="Black" Opacity="0" />
                                 </Grid>
                                 <VisualStateManager.VisualStateGroups>
@@ -284,15 +287,19 @@
                         <ControlTemplate TargetType="Button">
                             <Grid x:Name="RootGrid">
                                 <Grid>
-                                    <Ellipse x:Name="RootEllipse" Width="45"
-                                             Height="45"
-                                             HorizontalAlignment="Center"
-                                             VerticalAlignment="Center"
-                                             Fill="{StaticResource RefreshGoUpButtonBackgroundColor}" />
-                                    <FontIcon x:Name="FontIconCon" FontFamily="{StaticResource SymbolFont}"
-                                              FontSize="{StaticResource HeaderFontSize}"
-                                              Foreground="{StaticResource DefaultForegroundColor}"
-                                              Glyph="" />
+                                    <Ellipse
+                                        x:Name="RootEllipse"
+                                        Width="45"
+                                        Height="45"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Fill="{StaticResource RefreshGoUpButtonBackgroundColor}" />
+                                    <FontIcon
+                                        x:Name="FontIconCon"
+                                        FontFamily="{StaticResource SymbolFont}"
+                                        FontSize="{StaticResource HeaderFontSize}"
+                                        Foreground="{StaticResource DefaultForegroundColor}"
+                                        Glyph="" />
                                     <Grid Background="Black" Opacity="0" />
                                 </Grid>
                                 <VisualStateManager.VisualStateGroups>
@@ -354,15 +361,19 @@
                         <ControlTemplate TargetType="Button">
                             <Grid x:Name="RootGrid">
                                 <Grid>
-                                    <Ellipse x:Name="RootEllipse" Width="45"
-                                             Height="45"
-                                             HorizontalAlignment="Center"
-                                             VerticalAlignment="Center"
-                                             Fill="{StaticResource RefreshGoUpButtonBackgroundColor}" />
-                                    <FontIcon x:Name="FontIconCon" FontFamily="{StaticResource MaterialSymbolFont}"
-                                              FontSize="{StaticResource HeaderFontSize}"
-                                              Foreground="{StaticResource DefaultForegroundColor}"
-                                              Glyph="" />
+                                    <Ellipse
+                                        x:Name="RootEllipse"
+                                        Width="45"
+                                        Height="45"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Fill="{StaticResource RefreshGoUpButtonBackgroundColor}" />
+                                    <FontIcon
+                                        x:Name="FontIconCon"
+                                        FontFamily="{StaticResource MaterialSymbolFont}"
+                                        FontSize="{StaticResource HeaderFontSize}"
+                                        Foreground="{StaticResource DefaultForegroundColor}"
+                                        Glyph="" />
                                     <Grid Background="Black" Opacity="0" />
                                 </Grid>
                                 <VisualStateManager.VisualStateGroups>

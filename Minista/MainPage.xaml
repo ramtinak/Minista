@@ -672,7 +672,7 @@
 
         <ucOther:MediaUploadingUc
             x:Name="MediaUploadingUc"
-            Margin="8,5,0,58"
+            Margin="8,5,0,18"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
             x:FieldModifier="public"

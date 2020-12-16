@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -25,6 +26,9 @@ namespace Minista.Views.Stories
     public sealed partial class UserStoryUc : UserControl, INotifyPropertyChanged
     {
         #region Properties and fields
+        public event EventHandler PlayNextItem;
+        public event EventHandler PlayPreviousItem;
+
         const int MaxIntervalForImage = 6;
         ProgressBar CurrentProgress;
         const double ProgressChangeValue = 0.1;
@@ -59,6 +63,12 @@ namespace Minista.Views.Stories
         #endregion
 
         #region ctor
+        StoryViewX View;
+        public UserStoryUc(StoryViewX view) : this()
+        {
+            View = view;
+            view.Navigation += OnViewNavigation;
+        }
         public UserStoryUc()
         {
             InitializeComponent();
@@ -66,8 +76,20 @@ namespace Minista.Views.Stories
             Timer.Tick += TimerTick;
             ProgressTimer.Interval = TimeSpan.FromMilliseconds(80);
             ProgressTimer.Tick += ProgressTimerTick;
+            Unloaded += UserStoryUc_Unloaded;
+        }
+
+        private void UserStoryUc_Unloaded(object sender, RoutedEventArgs e)
+        {
+            "UserStoryUc_Unloaded".PrintDebug();
         }
         #endregion
+
+
+        private void OnViewNavigation(object sender, EventArgs e)
+        {
+            "OnViewNavigation".PrintDebug();
+        }
 
         async void SetStoryItems()
         {
@@ -79,8 +101,8 @@ namespace Minista.Views.Stories
                     if (stories.Value?.Items?.Count > 0 && stories.Value?.Items[0] != null)
                     {
                         var item = stories.Value.Items[0];
-                        StoryFeed.Items.Clear();
-                        StoryFeed.Items.AddRange(item.Items);
+                        //StoryFeed.Items.Clear();
+                        //StoryFeed.Items.AddRange(item.Items);
                         SetStoryItems(item.Items);
                     }
                 }
@@ -141,18 +163,21 @@ namespace Minista.Views.Stories
             Timer.Start();
         }
 
-        void ControlPanels(bool hide = false)
+        public void ControlPanels(bool hide = false)
         {
             try
             {
                 ProgressGrid.Visibility = UserGrid.Visibility = hide ? Visibility.Collapsed : Visibility.Visible;
+                if(hide)
+                    Timer.Stop();
+                else
+                    Timer.Start();
             }
             catch { }
         }
         private void OnUcHoldingStarted(object sender, EventArgs e)
         {
             "OnUcHoldingStarted".PrintDebug();
-            Timer.Stop();
             ControlPanels(true);
         }
 
@@ -160,7 +185,6 @@ namespace Minista.Views.Stories
         {
             "OnUcHoldingStopped".PrintDebug();
             ControlPanels();
-            Timer.Start();
         }
 
         private void OnMediaOpened(object sender, StoryItemUc e)
@@ -193,6 +217,13 @@ namespace Minista.Views.Stories
         {
             try
             {
+                if (!string.IsNullOrEmpty(StoryFeed.Title))
+                {
+                    TitleText.Text = StoryFeed.Title;
+                    TitleCover.Source = StoryFeed.HighlightCoverMedia.CroppedImage.Uri.GetBitmap();
+                    ShowTitle();
+                    await Task.Delay(2000);
+                }
                 if (Items?.Count > 0)
                 {
                     await Task.Delay(250);
@@ -239,11 +270,15 @@ namespace Minista.Views.Stories
                     if (index != 0)
                         FlipView.SelectedIndex = index;
                     else
+                    {
                         "Go Next Person 1".PrintDebug();
+                        PlayNextItem?.Invoke(this, null);
+                    }
                 }
                 else
                 {
                     "Go Next Person 2".PrintDebug();
+                    PlayNextItem?.Invoke(this, null);
                 }
             }
             catch { }
@@ -259,11 +294,15 @@ namespace Minista.Views.Stories
                     if (index >= 0)
                         FlipView.SelectedIndex = index;
                     else
+                    {
                         "Go Previous Person".PrintDebug();
+                        PlayPreviousItem?.Invoke(this, null);
+                    }
                 }
                 else
                 {
                     "Go Previous Person".PrintDebug();
+                    PlayPreviousItem?.Invoke(this, null);
                 }
             }
             catch { }
@@ -343,7 +382,43 @@ namespace Minista.Views.Stories
             catch { }
         }
 
+        #region Title
+        void ShowTitle()
+        {
+            try
+            {
+                TitleGrid.Visibility = Visibility.Visible;
+                ShowTitleStoryboard.Begin();
+            }
+            catch { }
+        }
 
+        private async void ShowTitleCompleted(object sender, object e)
+        {
+            try
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    await Task.Delay(2000);
+                    HideTitle();
+                });
+            }
+            catch { }
+        }
+        void HideTitle()
+        {
+            try
+            {
+                HideTitleStoryboard.Begin();
+            }
+            catch { }
+        }
+
+        private void HideTitleCompleted(object sender, object e)
+        {
+            TitleGrid.Visibility = Visibility.Collapsed;
+        }
+        #endregion
         #region Timers
         int TimerIndex = 0;
         private void TimerTick(object sender, object e)

@@ -24,6 +24,7 @@ namespace Minista.Views.Stories
     /// </summary>
     public sealed partial class StoryViewX : Page
     {
+        public event EventHandler Navigation;
         public StoryViewX()
         {
             this.InitializeComponent();
@@ -95,6 +96,11 @@ namespace Minista.Views.Stories
                     InitAsync(pk.ToString());
             }
         }
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            Navigation?.Invoke(this, null);
+        }
         async void InitAsync(string pk, string selectedStoryId = null)
         {
             try 
@@ -102,7 +108,7 @@ namespace Minista.Views.Stories
                 var stories = await Helper.InstaApi.StoryProcessor.GetUsersStoriesAsHighlightsAsync(pk);
                 if (stories.Succeeded)
                 {
-                    Init(stories.Value.Items,0, selectedStoryId);
+                    Init(stories.Value.Items, 0, selectedStoryId);
                     //FeedList = stories.Value.Items;
                     //FeedListIndex = 0;
                     //PlayFeedUser();
@@ -110,16 +116,93 @@ namespace Minista.Views.Stories
             }
             catch(Exception ex) { ex.PrintException("InitAsync"); }
         }
+        List<UserStoryUc> UserStories = new List<UserStoryUc>();
+        List<InstaReelFeed> Stories = new List<InstaReelFeed>();
+        int CurrentSelectedIndex = 0;
         void Init(List<InstaReelFeed> reels, int index, string selectedStoryId = null)
         {
             try
             {
                 if (reels == null || reels?.Count == 0)
                     return;
+                CurrentSelectedIndex = index;
+                //var reel = reels[index];
+                //if (reel.Items.Count == 0)
+                //{
+                //    InitAsync(reel.User.Pk.ToString());
+                //    return;
+                //}
+                UserStories.Clear();
+                //reels.ForEach(x =>
+                //{
+                //    var uc = new UserStoryUc { StoryFeed = x };
+                //    uc.PlayNextItem += OnUcPlayNextItem;
+                //    uc.PlayPreviousItem += OnUcPlayPreviousItem;
+                //    UserStories.Add(uc);
+                //});
+                Stories.Clear();
+                Stories.AddRange(reels);
 
-                var uc = new UserStoryUc { StoryFeed = reels[index] };
+                var uc = new UserStoryUc { StoryFeed = Stories[index] };
+                uc.PlayNextItem += OnUcPlayNextItem;
+                uc.PlayPreviousItem += OnUcPlayPreviousItem;
                 Contents.Content = uc;
                 uc.FirstInit(selectedStoryId);
+
+
+                //Contents.Content = UserStories[index];
+                //UserStories[index].FirstInit(selectedStoryId);
+            }
+            catch { }
+        }
+
+        private void OnUcPlayNextItem(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Stories.Count > 1)
+                {
+                    CurrentSelectedIndex = (CurrentSelectedIndex + 1) % Stories.Count;
+                    if (CurrentSelectedIndex != 0)
+                        Play(CurrentSelectedIndex);
+                    else
+                        NavigationService.GoBack();
+                }
+                else
+                    NavigationService.GoBack();
+            }
+            catch { }
+        }
+
+
+        private void OnUcPlayPreviousItem(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Stories.Count > 1)
+                {
+                    CurrentSelectedIndex = (CurrentSelectedIndex - 1) % Stories.Count;
+                    if (CurrentSelectedIndex >= 0)
+                        Play(CurrentSelectedIndex);
+                    else
+                        NavigationService.GoBack();
+                }
+                else
+                    NavigationService.GoBack();
+            }
+            catch { }
+        }
+        void Play(int index)
+        {
+            try
+            {
+                var uc = new UserStoryUc { StoryFeed = Stories[index] };
+                uc.PlayNextItem += OnUcPlayNextItem;
+                uc.PlayPreviousItem += OnUcPlayPreviousItem;
+                Contents.Content = uc;
+                uc.FirstInit();
+                //Contents.Content = UserStories[index];
+                //UserStories[index].FirstInit();
             }
             catch { }
         }

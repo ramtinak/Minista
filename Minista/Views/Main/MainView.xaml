@@ -28,6 +28,7 @@
             <converters:StoryItemUsernameConverter x:Key="StoryItemUsernameConverter" />
             <converters:StoryItemHashtagVisibilityConverter x:Key="StoryItemHashtagVisibilityConverter" />
             <converters:SeenColorConverter x:Key="SeenColorConverter" />
+            <converters:StringToUriConverter x:Key="StringToUriConverter"/>
             <selector:MediaMainTemplateSelector x:Key="MainMediaSelector"
                                                 HashtagTemplate="{StaticResource HashtagTemplate}"
                                                 MediaTemplate="{StaticResource MediaTemplate}"
@@ -86,7 +87,7 @@
                                     <Grid.Background>
                                         <ImageBrush>
                                             <ImageBrush.ImageSource>
-                                                <BitmapImage UriSource="{Binding Items[0].Images[0].Uri, Mode=OneWay}" />
+                                                <BitmapImage UriSource="{Binding Items[0].Images[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}" />
                                             </ImageBrush.ImageSource>
                                         </ImageBrush>
                                     </Grid.Background>
@@ -186,7 +187,7 @@
                                     <Grid.Background>
                                         <ImageBrush>
                                             <ImageBrush.ImageSource>
-                                                <BitmapImage UriSource="{Binding MediaInfos[0].Images.Candidates[0].Uri, Mode=OneWay}" />
+                                                <BitmapImage UriSource="{Binding MediaInfos[0].Images.Candidates[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}" />
                                             </ImageBrush.ImageSource>
                                         </ImageBrush>
                                     </Grid.Background>
@@ -200,7 +201,7 @@
                                         <Ellipse.Fill>
                                             <ImageBrush>
                                                 <ImageBrush.ImageSource>
-                                                    <BitmapImage UriSource="{Binding Hashtag.ProfilePictureUri, Mode=OneWay}" />
+                                                    <BitmapImage UriSource="{Binding Hashtag.ProfilePictureUri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}" />
                                                 </ImageBrush.ImageSource>
                                             </ImageBrush>
                                         </Ellipse.Fill>
@@ -283,7 +284,7 @@
                                         <Ellipse.Fill>
                                             <ImageBrush>
                                                 <ImageBrush.ImageSource>
-                                                    <BitmapImage UriSource="{Binding User.ProfilePicture, Mode=OneWay}" />
+                                                    <BitmapImage UriSource="{Binding User.ProfilePicture,Converter={StaticResource StringToUriConverter}, Mode=OneWay}" />
                                                 </ImageBrush.ImageSource>
                                             </ImageBrush>
                                         </Ellipse.Fill>
@@ -437,7 +438,11 @@
                                                     </LinearGradientBrush>
                                                 </Ellipse.Stroke>
                                                 <Ellipse.Fill>
-                                                    <ImageBrush ImageSource="{Binding User.ProfilePicture}" />
+                                                    <ImageBrush>
+                                                        <ImageBrush.ImageSource>
+                                                            <BitmapImage UriSource="{Binding User.ProfilePicture,Converter={StaticResource StringToUriConverter}}" />
+                                                        </ImageBrush.ImageSource>
+                                                    </ImageBrush>
                                                 </Ellipse.Fill>
                                             </Ellipse>
                                             <Grid Grid.Row="1"
@@ -500,7 +505,7 @@
                                                         <controls:ImageEx.Background>
                                                             <ImageBrush Stretch="Fill">
                                                                 <ImageBrush.ImageSource>
-                                                                    <BitmapImage UriSource="{Binding Images[0].Uri, Mode=OneWay}" />
+                                                                    <BitmapImage UriSource="{Binding Images[0].Uri,Converter={StaticResource StringToUriConverter}, Mode=OneWay}" />
                                                                 </ImageBrush.ImageSource>
                                                             </ImageBrush>
                                                         </controls:ImageEx.Background>
