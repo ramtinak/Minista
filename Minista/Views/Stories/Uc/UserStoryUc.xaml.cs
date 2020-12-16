@@ -82,6 +82,11 @@ namespace Minista.Views.Stories
         private void UserStoryUc_Unloaded(object sender, RoutedEventArgs e)
         {
             "UserStoryUc_Unloaded".PrintDebug();
+            try
+            {
+                Timer.Stop();
+            }
+            catch { }
         }
         #endregion
 
