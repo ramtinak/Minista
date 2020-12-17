@@ -278,8 +278,8 @@
             <Style TargetType="FlipView">
                 <Setter Property="Background" Value="{ThemeResource FlipViewBackground}" />
                 <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="TabNavigation" Value="Local" />
-                <Setter Property="IsTabStop" Value="True" />
+                <Setter Property="TabNavigation" Value="Once" />
+                <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
                 <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
                 <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="False" />
@@ -288,7 +288,7 @@
                 <Setter Property="ScrollViewer.IsVerticalScrollChainingEnabled" Value="True" />
                 <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
                 <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True" />
-                <Setter Property="UseSystemFocusVisuals" Value="False" />
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
                 <Setter Property="ItemsPanel">
                     <Setter.Value>
                         <ItemsPanelTemplate>
@@ -583,7 +583,7 @@
                   Grid.RowSpan="4">
             </Grid>-->
             <!--ItemsSource="{Binding Items, Mode=OneWay}"-->
-            <FlipView x:Name="FlipView" Background="{StaticResource DefaultBackgroundColor}"
+            <FlipView x:Name="StoriesFlipView" Background="{StaticResource DefaultBackgroundColor}"
                   Grid.RowSpan="4"
                       Padding="0"
                       Margin="0"

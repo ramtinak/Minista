@@ -225,7 +225,7 @@ namespace Minista.ViewModels.Main
                         if (stories.Info.ResponseType == ResponseType.ChallengeRequired ||
                         stories.Info.ResponseType == ResponseType.ChallengeRequiredV2)
                         {
-                            InstaApi.SetChallengeInfo(stories.Info.Challenge);
+                            InstaApi.ChallengeLoginInfo = stories.Info.Challenge;
 
                             MainPage.Current.InAppChallenge.StartChallengeV2(stories.Info.Challenge);
                             return;

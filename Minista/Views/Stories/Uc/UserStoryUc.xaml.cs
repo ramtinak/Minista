@@ -60,6 +60,7 @@ namespace Minista.Views.Stories
                 new PropertyMetadata(null));
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string memberName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+
         #endregion
 
         #region ctor
@@ -155,7 +156,7 @@ namespace Minista.Views.Stories
                     ix++;
                 });
             }
-            FlipView.ItemsSource = Items;
+            StoriesFlipView.ItemsSource = Items;
         }
 
         private void OnUcStopTimer(object sender, EventArgs e)
@@ -217,6 +218,15 @@ namespace Minista.Views.Stories
         {
             PlayPrevious();
         }
+        async void SetSelectedIndex(int index)
+        {
+            try
+            {
+                await Task.Delay(150);
+                StoriesFlipView.SelectedIndex = index;
+            }
+            catch { }
+        }
 
         public async void FirstInit(string selectedStoryId = null, int index = -1)
         {
@@ -256,10 +266,10 @@ namespace Minista.Views.Stories
                         }
 
                         if (index != -1)
-                            FlipView.SelectedIndex = index;
+                            SetSelectedIndex(index);
                     }
                     else
-                        FlipView.SelectedIndex = index;
+                        SetSelectedIndex(index);
                 }
             }
             catch (Exception ex) { ex.PrintException("UserStoryUc.FirstInit"); }
@@ -273,7 +283,7 @@ namespace Minista.Views.Stories
                 {
                     var index = (CurrentFlipViewIndex + 1) % Items.Count;
                     if (index != 0)
-                        FlipView.SelectedIndex = index;
+                        SetSelectedIndex(index);
                     else
                     {
                         "Go Next Person 1".PrintDebug();
@@ -297,7 +307,7 @@ namespace Minista.Views.Stories
                 {
                     var index = (CurrentFlipViewIndex - 1) % Items.Count;
                     if (index >= 0)
-                        FlipView.SelectedIndex = index;
+                        SetSelectedIndex(index);
                     else
                     {
                         "Go Previous Person".PrintDebug();
@@ -316,7 +326,8 @@ namespace Minista.Views.Stories
         {
             try
             {
-                var index = FlipView.SelectedIndex;
+                (StoriesFlipView.SelectedIndex + "   " + StoriesFlipView.SelectedIndex).PrintDebug();
+                var index = StoriesFlipView.SelectedIndex;
                 if (index != -1)
                 {
                     index.PrintDebug();
