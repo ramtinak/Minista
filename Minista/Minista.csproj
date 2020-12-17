@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <!--<PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{8E409A1C-75D5-4FAB-B389-5D8F22AE0032}</ProjectGuid>
@@ -31,7 +31,7 @@
     <PackageCertificateThumbprint>97C36B75EB7B8B59359E1927BB450A504A467BB2</PackageCertificateThumbprint>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-  </PropertyGroup>-->
+  </PropertyGroup>
   <!--Condition="'$(Platform)' == 'ARM'"-->
 
   <PropertyGroup Condition="'$(Platform)' == 'ARM'">

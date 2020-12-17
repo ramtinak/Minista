@@ -21,20 +21,21 @@ namespace Base
     {
         public UniversalDevice()
         {
-            var Rnd = new Random();
+            var rnd = new Random();
             EasClientDeviceInformation deviceInfo = new EasClientDeviceInformation();
             var deviceGuid = deviceInfo.Id;
+            AndroidVer = AndroidVersion.GetAndroid9();
             DeviceGuid = deviceGuid;
             DeviceId = ApiRequestMessage.GenerateDeviceIdFromGuid(deviceGuid);
             PhoneGuid = GetPhoneGuid(deviceGuid);
             FamilyDeviceGuid = GetFamilyDeviceGuid(deviceGuid);
             PushDeviceGuid = GetPushDeviceGuid(deviceGuid);
             PigeonSessionId = GetPigeonSessionId(deviceGuid);
-            IGBandwidthSpeedKbps = $"{Rnd.Next(1233, 1567).ToString(CultureInfo.InvariantCulture)}.{Rnd.Next(100, 999).ToString(CultureInfo.InvariantCulture)}";
-            IGBandwidthTotalTimeMS = Rnd.Next(781, 999).ToString(CultureInfo.InvariantCulture);
+            IGBandwidthSpeedKbps = $"{rnd.Next(1233, 1567).ToString(CultureInfo.InvariantCulture)}.{rnd.Next(100, 999).ToString(CultureInfo.InvariantCulture)}";
+            IGBandwidthTotalTimeMS = rnd.Next(781, 999).ToString(CultureInfo.InvariantCulture);
             try
             {
-                IGBandwidthTotalBytesB = ((int)((double.Parse(IGBandwidthSpeedKbps, CultureInfo.InvariantCulture) * double.Parse(IGBandwidthTotalTimeMS, CultureInfo.InvariantCulture)) + Rnd.Next(100, 999))).ToString();
+                IGBandwidthTotalBytesB = ((int)((double.Parse(IGBandwidthSpeedKbps, CultureInfo.InvariantCulture) * double.Parse(IGBandwidthTotalTimeMS, CultureInfo.InvariantCulture)) + rnd.Next(100, 999))).ToString();
             }
             catch { }
             var deviceModel = GetDeviceModelIfPossible(deviceInfo.SystemProductName);
