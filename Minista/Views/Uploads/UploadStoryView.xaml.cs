@@ -67,7 +67,7 @@ namespace Minista.Views.Uploads
                 if (file == null) return;
                 await UploadStoryUc.SetFileAsync(file);
             }
-            catch (Exception ex) { ex.PrintException("ImportButtonClick"); }
+            catch (Exception ex) { ex.PrintException("ImportButtonClick"); Helper.ShowErr("ImportButtonClick", ex); }
 
         }
 

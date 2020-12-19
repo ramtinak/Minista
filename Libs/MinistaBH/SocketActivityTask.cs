@@ -123,18 +123,14 @@ namespace MinistaBH
                 sessionData = new UserSessionData { UserName = username, Password = password };
 
             DebugLogger = new DebugLogger(LogLevel.All);
-            //var delay = RequestDelay.FromSeconds(2, 4);
             var api = InstaApiBuilder.CreateBuilder()
                       .SetUser(sessionData)
-                      .SetDevice(new UniversalDevice())
+                      //.SetDevice(new UniversalDevice())
 #if DEBUG
                   .UseLogger(DebugLogger)
 #endif
 
                       .Build();
-            api.SetTimeout(TimeSpan.FromMinutes(2));
-
-            //InstaApi = api;
             return api;
         }
         public static readonly StorageFolder LocalFolder = ApplicationData.Current.LocalFolder;

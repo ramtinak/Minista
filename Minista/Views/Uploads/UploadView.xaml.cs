@@ -176,7 +176,7 @@ namespace Minista.Views.Uploads
                 var files = await openPicker.PickMultipleFilesAsync();
                 ImportFiles(files, appendFiles);
             }
-            catch (Exception ex) { ex.PrintException("ImportButtonClick"); }
+            catch (Exception ex) { ex.PrintException("ImportButtonClick"); Helper.ShowErr("ImportButtonClick", ex); }
 
         }
         private async void ImportFiles(IReadOnlyList<StorageFile> files, bool appendFiles = false)
