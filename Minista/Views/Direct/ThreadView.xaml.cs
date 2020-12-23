@@ -270,6 +270,7 @@ namespace Minista.Views.Direct
         {
             try
             {
+                Helper.DontUseTimersAndOtherStuff = true;
                 var filePicker = new FileOpenPicker
                 {
                     ViewMode = PickerViewMode.Thumbnail,
@@ -283,12 +284,16 @@ namespace Minista.Views.Direct
                 //filePicker.FileTypeFilter.Add(".mov");
 
                 var file = await filePicker.PickSingleFileAsync();
+                Helper.DontUseTimersAndOtherStuff = false;
 
                 if (file == null)
                     return;
                 UploadFile(file);
             }
-            catch { }
+            catch
+            {
+                Helper.DontUseTimersAndOtherStuff = false;
+            }
         }
         public async void UploadFile(StorageFile file)
         {

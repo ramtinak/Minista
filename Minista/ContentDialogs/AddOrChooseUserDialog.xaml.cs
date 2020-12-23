@@ -94,6 +94,7 @@ namespace Minista.ContentDialogs
         {
             try
             {
+                Helper.DontUseTimersAndOtherStuff = true;
                 if (sender is AppBarButton btn && btn.DataContext is UserChoose user && user != null)
                 {
                     var savePicker = new FileSavePicker
@@ -104,6 +105,7 @@ namespace Minista.ContentDialogs
                     savePicker.FileTypeChoices.Add("Minista Session File", new List<string> { Helper.SessionFileType });
 
                     var file = await savePicker.PickSaveFileAsync();
+                    Helper.DontUseTimersAndOtherStuff = false;
                     if (file != null)
                     {
                         var state = await user.InstaApi.GetStateDataAsStringAsync();
@@ -128,6 +130,7 @@ namespace Minista.ContentDialogs
                     savePicker.FileTypeChoices.Add("Minista Session File", new List<string> { Helper.SessionFileType });
 
                     var file = await savePicker.PickSaveFileAsync();
+                    Helper.DontUseTimersAndOtherStuff = false;
                     if (file != null)
                     {
                         var state = await Helper.InstaApi.GetStateDataAsStringAsync();
@@ -143,7 +146,10 @@ namespace Minista.ContentDialogs
                     }
                 }
             }
-            catch { }
+            catch
+            {
+                Helper.DontUseTimersAndOtherStuff = false;
+            }
         }
 
         class UserChoose

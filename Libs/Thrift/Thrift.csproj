@@ -19,7 +19,7 @@
   -->
 
   <PropertyGroup>
-    <TargetFrameworks>uap10.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;uap10.0</TargetFrameworks>
     <!--netstandard2.1;-->
     <!--<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>-->
 
@@ -53,8 +53,7 @@
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform " Version="6.2.11" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.8" />
     <!--<PackageReference Include="System.Memory" Version="4.5.3" />-->
   </ItemGroup>
   <ItemGroup>
@@ -76,14 +75,12 @@
     <Compile Remove="Transport\Client\TNamedPipeTransport.cs" />
     <Compile Remove="Transport\Client\TSocketTransport.cs" />
     <Compile Remove="Transport\Client\TTlsSocketTransport.cs" />
+    <Compile Remove="Transport\TTransportFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.8" />
-  </ItemGroup>
-
   <!--<ItemGroup>
     <PackageReference Update="NETStandard.Library" Version="2.0.0" />
   </ItemGroup>-->

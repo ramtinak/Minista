@@ -30,15 +30,15 @@ namespace Minista
             {
                 var cur = MainPage.Current;
                 var api = Helper.InstaApi;
-                await MainPage.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-                {
+                //await MainPage.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                //{
                     var banyan = await Helper.InstaApi.GetBanyanSuggestionsAsync();
                     if (banyan.Succeeded)
                     {
                         if (banyan.Value?.Threads?.Count > 0 || banyan.Value?.Users?.Count > 0)
                             BanyanSuggestions = banyan.Value;
                     }
-                });
+                //});
             }
             catch (Exception ex){ ex.PrintException("EEEXX"); }
         }
@@ -62,8 +62,8 @@ namespace Minista
         {
             try
             {
-                await MainPage.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-                {
+                //await MainPage.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                //{
                     var canSave = SessionHelper.DontSaveSettings;
                     var user = await Helper.InstaApi.UserProcessor.GetUserInfoByIdAsync(Helper.InstaApi.GetLoggedUser().LoggedInUser.Pk);
                     if (user.Succeeded)
@@ -76,7 +76,7 @@ namespace Minista
                             SessionHelper.SaveCurrentSession();
                         }
                     }
-                });
+                //});
             }
             catch { }
         }

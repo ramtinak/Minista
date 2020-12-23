@@ -43,8 +43,8 @@ namespace Minista.ViewModels.Main
             {
                 try
                 {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                    {
+                    //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    //{
                         if (InboxViewModel.Instance.SeqId <= 0)
                             await InboxViewModel.Instance.RunLoadMoreAsync(refresh);
                         if (MainPage.Current.RealtimeClient == null)
@@ -56,18 +56,20 @@ namespace Minista.ViewModels.Main
                         client.TypingChanged += InboxViewModel.Instance.RealtimeClientClientTypingChanged;
                         client.BroadcastChanged += RealtimeClientBroadcastChanged;
 
-                    });
+                    //});
                 }
                 catch { }
             }
             //MainView.Current?.MainViewInboxUc?.InboxVM?.RunLoadMore(refresh);
-            ActivitiesViewModel.Instance?.RunLoadMore(refresh);
+            if (InboxViewModel.Instance?.SeqId <= 0)
+                ActivitiesViewModel.Instance?.RunLoadMore(refresh);
         }
 
         private void RealtimeClientBroadcastChanged(object sender, InstagramApiSharp.API.RealTime.Handlers.InstaBroadcastEventArgs e)
         {
             try
             {
+                if (Helper.DontUseTimersAndOtherStuff) return;
                 var type = (InstaBroadcastStatusType)Enum.Parse(typeof(InstaBroadcastStatusType), e.BroadcastStatus?.Replace("_", ""), true);
                 if (type == InstaBroadcastStatusType.Active)
                 {
@@ -117,8 +119,8 @@ namespace Minista.ViewModels.Main
         {
             try
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                {
+                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                //{
                     var stories = await InstaApi.StoryProcessor.GetStoryFeedWithPostMethodAsync(refresh);
                     if (stories.Succeeded)
                     {
@@ -245,7 +247,7 @@ namespace Minista.ViewModels.Main
                             MainView.Current?.TryToRefresh(true);
                         }
                     }
-                });
+                //});
             }
             catch(Exception ex) { ex.PrintException("MainViewModel.RefreshStories"); }
             refresh = false;

@@ -1,27 +1,28 @@
-﻿<Page x:Class="Minista.Views.Infos.UserDetailsView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:local="using:Minista"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-      xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
-      xmlns:behaviorsX="using:Minista.Behaviors"
-      xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-      xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-      xmlns:vm="using:Minista.ViewModels.Infos"
-      xmlns:selector="using:Minista.Selectors"
-      xmlns:converters="using:Minista.Converters"
-      xmlns:loading="using:Minista.UserControls"
-      mc:Ignorable="d"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-      xmlns:winui="using:Microsoft.UI.Xaml.Controls"
-      xmlns:pr="using:Minista.Controls"
-      xmlns:minicontrol="using:Minista.Controls"
-      xmlns:posts="using:Minista.Views.Posts"
-      NavigationCacheMode="Enabled"
-      x:Name="PageName">
+﻿<Page
+    x:Class="Minista.Views.Infos.UserDetailsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
+    xmlns:behaviorsX="using:Minista.Behaviors"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Minista.Converters"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:loading="using:Minista.UserControls"
+    xmlns:local="using:Minista"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:minicontrol="using:Minista.Controls"
+    xmlns:posts="using:Minista.Views.Posts"
+    xmlns:pr="using:Minista.Controls"
+    xmlns:selector="using:Minista.Selectors"
+    xmlns:vm="using:Minista.ViewModels.Infos"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    x:Name="PageName"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
             <converters:CountConverter x:Key="CountConverter" />
@@ -40,103 +41,95 @@
             <converters:TVSelfChannelToImageConverter x:Key="TVSelfChannelToImageConverter" />
             <converters:IGTVIconToVisibilityConverter x:Key="IGTVIconToVisibilityConverter" />
             <converters:DurationConverter x:Key="DurationConverter" />
-            
+
 
             <DataTemplate x:Key="TVTemplate">
-                <Grid CornerRadius="5"
-                      MinHeight="240"
-                      MinWidth="160">
-                    <!--Background="#FFD92E2E"-->
-                    <controls:ImageEx VerticalAlignment="Center"
-                                      HorizontalAlignment="Center"
-                                      Stretch="UniformToFill"
-                                      MinHeight="120"
-                                      MinWidth="120">
+                <Grid
+                    MinWidth="160"
+                    MinHeight="240"
+                    CornerRadius="5">
+                    <!--  Background="#FFD92E2E"  -->
+                    <controls:ImageEx
+                        MinWidth="120"
+                        MinHeight="120"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Stretch="UniformToFill">
                         <controls:ImageEx.Source>
                             <BitmapImage UriSource="{Binding Images[1].Uri, Mode=OneWay}" />
                         </controls:ImageEx.Source>
                     </controls:ImageEx>
                     <Grid>
-                        <controls:DropShadowPanel BlurRadius="4.5"
-                                                  ShadowOpacity="0.80"
-                                                  OffsetX="7.0"
-                                                  OffsetY="6.0"
-                                                  Color="#FF051538"
-                                                  HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top"
-                                                  Margin="5">
-                            <TextBlock Margin="5"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontWeight="Normal"
-                                       FontSize="13.5"
-                                       TextWrapping="Wrap"
-                                       Text="{Binding VideoDuration, Converter={StaticResource DurationConverter}}"
-                                       Foreground="White" />
+                        <controls:DropShadowPanel
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            BlurRadius="4.5"
+                            OffsetX="7.0"
+                            OffsetY="6.0"
+                            ShadowOpacity="0.80"
+                            Color="#FF051538">
+                            <TextBlock
+                                Margin="5"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="13.5"
+                                FontWeight="Normal"
+                                Foreground="White"
+                                Text="{Binding VideoDuration, Converter={StaticResource DurationConverter}}"
+                                TextWrapping="Wrap" />
                         </controls:DropShadowPanel>
-                        <Grid MinHeight="50"
-                              MaxHeight="150"
-                              VerticalAlignment="Bottom">
+                        <Grid
+                            MinHeight="50"
+                            MaxHeight="150"
+                            VerticalAlignment="Bottom">
                             <Grid.Background>
-                                <LinearGradientBrush EndPoint="0.5,1"
-                                                     StartPoint="0.5,0">
-                                    <GradientStop Color="#E51F1F1F"
-                                                  Offset="0.008" />
-                                    <GradientStop Color="Transparent"
-                                                  Offset="1" />
-                                    <GradientStop Color="#D4545454"
-                                                  Offset="0.323" />
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Offset="0.008" Color="#E51F1F1F" />
+                                    <GradientStop Offset="1" Color="Transparent" />
+                                    <GradientStop Offset="0.323" Color="#D4545454" />
                                 </LinearGradientBrush>
                             </Grid.Background>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Foreground="{ThemeResource ApplicationForegroundThemeBrush}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontWeight="Normal"
-                                       FontSize="11.5"
-                                       Text="{Binding User.UserName}"
-                                       Margin="5 0 0 0"
-                                       VerticalAlignment="Center" />
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="11.5"
+                                FontWeight="Normal"
+                                Foreground="{ThemeResource ApplicationForegroundThemeBrush}"
+                                Text="{Binding User.UserName}" />
 
-                            <TextBlock Foreground="{ThemeResource ApplicationForegroundThemeBrush}"
-                                       FontFamily="{StaticResource VazirFont}"
-                                       FontWeight="Normal"
-                                       Grid.Row="1"
-                                       FontSize="11.5"
-                                       Margin="5 0 0 5"
-                                       VerticalAlignment="Center">
-                        <Run Text="{Binding ViewCount, Converter={StaticResource CountConverter}}" /> views
-                            </TextBlock>
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="5,0,0,5"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="11.5"
+                                FontWeight="Normal"
+                                Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+                                <Run Text="{Binding ViewCount, Converter={StaticResource CountConverter}}" />
+                                views</TextBlock>
                         </Grid>
                     </Grid>
                 </Grid>
             </DataTemplate>
 
-            <Style x:Key="GridViewItemContainerStyle"
-                   TargetType="GridViewItem">
-                <Setter Property="HorizontalContentAlignment"
-                        Value="Stretch" />
-                <Setter Property="HorizontalAlignment"
-                        Value="Stretch" />
-                <Setter Property="VerticalContentAlignment"
-                        Value="Stretch" />
-                <Setter Property="VerticalAlignment"
-                        Value="Stretch" />
-                <Setter Property="Margin"
-                        Value="1.5" />
-                <Setter Property="Padding"
-                        Value="0" />
+            <Style x:Key="GridViewItemContainerStyle" TargetType="GridViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="1.5" />
+                <Setter Property="Padding" Value="0" />
             </Style>
             <Style TargetType="Pivot">
-                <Setter Property="Margin"
-                        Value="0" />
-                <Setter Property="Padding"
-                        Value="0" />
-                <Setter Property="Background"
-                        Value="{ThemeResource PivotBackground}" />
-                <Setter Property="IsTabStop"
-                        Value="False" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Background" Value="{ThemeResource PivotBackground}" />
+                <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="ItemsPanel">
                     <Setter.Value>
                         <ItemsPanelTemplate>
@@ -147,31 +140,33 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Pivot">
-                            <Grid x:Name="RootElement"
-                                  HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                  VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                                  Background="{TemplateBinding Background}">
+                            <Grid
+                                x:Name="RootElement"
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                Background="{TemplateBinding Background}">
                                 <Grid.Resources>
-                                    <Style x:Key="BaseContentControlStyle"
-                                           TargetType="ContentControl">
+                                    <Style x:Key="BaseContentControlStyle" TargetType="ContentControl">
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ContentControl">
-                                                    <ContentPresenter Content="{TemplateBinding Content}"
-                                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                                      Margin="0"
-                                                                      Padding="0"
-                                                                      ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                                      OpticalMarginAlignment="TrimSideBearings" />
+                                                    <ContentPresenter
+                                                        Margin="0"
+                                                        Padding="0"
+                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                        Content="{TemplateBinding Content}"
+                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                        ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                        OpticalMarginAlignment="TrimSideBearings" />
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
                                     </Style>
-                                    <Style x:Key="TitleContentControlStyle"
-                                           TargetType="ContentControl"
-                                           BasedOn="{StaticResource BaseContentControlStyle}">
+                                    <Style
+                                        x:Key="TitleContentControlStyle"
+                                        BasedOn="{StaticResource BaseContentControlStyle}"
+                                        TargetType="ContentControl">
                                         <!--<Setter Property="FontFamily"
                                                 Value="{ThemeResource PivotTitleFontFamily}" />
                                         <Setter Property="FontWeight"
@@ -180,6 +175,115 @@
                                                 Value="{ThemeResource PivotTitleFontSize}" />-->
                                     </Style>
                                 </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <ContentControl
+                                    x:Name="TitleContentControl"
+                                    Margin="{StaticResource PivotPortraitThemePadding}"
+                                    Content="{TemplateBinding Title}"
+                                    ContentTemplate="{TemplateBinding TitleTemplate}"
+                                    IsTabStop="False"
+                                    Style="{StaticResource TitleContentControlStyle}"
+                                    Visibility="Collapsed" />
+                                <Grid Grid.Row="1">
+                                    <ScrollViewer
+                                        x:Name="ScrollViewer"
+                                        Margin="0"
+                                        Padding="0"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        BringIntoViewOnFocusChange="False"
+                                        HorizontalScrollBarVisibility="Disabled"
+                                        HorizontalScrollMode="Disabled"
+                                        HorizontalSnapPointsType="None"
+                                        Template="{StaticResource ScrollViewerScrollBarlessTemplate}"
+                                        VerticalScrollBarVisibility="Disabled"
+                                        VerticalScrollMode="Disabled"
+                                        VerticalSnapPointsType="None"
+                                        Visibility="Collapsed"
+                                        ZoomMode="Disabled" />
+                                    <PivotPanel
+                                        x:Name="Panel"
+                                        Margin="0"
+                                        VerticalAlignment="Stretch">
+                                        <Grid
+                                            x:Name="PivotLayoutElement"
+                                            Margin="0"
+                                            Padding="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid>
+                                                <Grid.RenderTransform>
+                                                    <CompositeTransform x:Name="PivotLayoutElementTranslateTransform" />
+                                                </Grid.RenderTransform>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.RenderTransform>
+                                                    <TransformGroup>
+                                                        <TranslateTransform x:Name="ItemsPresenterTranslateTransform" />
+                                                        <CompositeTransform x:Name="ItemsPresenterCompositeTransform" />
+                                                    </TransformGroup>
+                                                </Grid.RenderTransform>
+                                            </Grid>
+                                            <Grid Margin="0" Padding="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid>
+                                                    <Grid.Clip>
+                                                        <RectangleGeometry x:Name="HeaderClipperGeometry" />
+                                                    </Grid.Clip>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.RenderTransform>
+                                                        <CompositeTransform x:Name="StaticHeaderTranslateTransform" />
+                                                    </Grid.RenderTransform>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.RenderTransform>
+                                                        <CompositeTransform x:Name="HeaderTranslateTransform" />
+                                                    </Grid.RenderTransform>
+                                                </Grid>
+
+                                                <ContentControl
+                                                    x:Name="HeaderClipper"
+                                                    Grid.Column="1"
+                                                    HorizontalContentAlignment="Stretch"
+                                                    UseSystemFocusVisuals="True">
+
+                                                    <Grid Background="{ThemeResource PivotHeaderBackground}">
+                                                        <Grid.RenderTransform>
+                                                            <CompositeTransform x:Name="HeaderOffsetTranslateTransform" />
+                                                        </Grid.RenderTransform>
+                                                        <PivotHeaderPanel x:Name="StaticHeader" Visibility="Collapsed" />
+                                                        <PivotHeaderPanel x:Name="Header" />
+                                                    </Grid>
+                                                </ContentControl>
+
+
+                                            </Grid>
+                                            <ItemsPresenter
+                                                x:Name="PivotItemPresenter"
+                                                Grid.Row="1"
+                                                Grid.ColumnSpan="3"
+                                                Margin="0"
+                                                Padding="0">
+                                                <!--<ItemsPresenter.RenderTransform>
+                                                        <TransformGroup>
+                                                            <TranslateTransform x:Name="ItemsPresenterTranslateTransform" />
+                                                            <CompositeTransform x:Name="ItemsPresenterCompositeTransform" />
+                                                        </TransformGroup>
+                                                    </ItemsPresenter.RenderTransform>-->
+                                            </ItemsPresenter>
+                                        </Grid>
+                                    </PivotPanel>
+                                </Grid>
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="Orientation">
                                         <VisualState x:Name="Portrait">
@@ -204,147 +308,29 @@
                                     <VisualStateGroup x:Name="NavigationButtonsVisibility">
                                         <VisualState x:Name="NavigationButtonsHidden" />
                                         <VisualState x:Name="NavigationButtonsVisible">
-                                            <Storyboard>
-
-                                            </Storyboard>
+                                            <Storyboard />
                                         </VisualState>
                                         <VisualState x:Name="PreviousButtonVisible">
-                                            <Storyboard>
-
-                                            </Storyboard>
+                                            <Storyboard />
                                         </VisualState>
                                         <VisualState x:Name="NextButtonVisible">
-                                            <Storyboard>
-
-                                            </Storyboard>
+                                            <Storyboard />
                                         </VisualState>
                                     </VisualStateGroup>
                                     <VisualStateGroup x:Name="HeaderStates">
                                         <VisualState x:Name="HeaderDynamic" />
                                         <VisualState x:Name="HeaderStatic">
                                             <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Header"
-                                                                               Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0"
-                                                                            Value="Collapsed" />
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Header" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
                                                 </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StaticHeader"
-                                                                               Storyboard.TargetProperty="Visibility">
-                                                    <DiscreteObjectKeyFrame KeyTime="0"
-                                                                            Value="Visible" />
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StaticHeader" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <ContentControl x:Name="TitleContentControl"
-                                                IsTabStop="False"
-                                                Margin="{StaticResource PivotPortraitThemePadding}"
-                                                Style="{StaticResource TitleContentControlStyle}"
-                                                Visibility="Collapsed"
-                                                Content="{TemplateBinding Title}"
-                                                ContentTemplate="{TemplateBinding TitleTemplate}" />
-                                <Grid Grid.Row="1">
-                                    <ScrollViewer x:Name="ScrollViewer"
-                                                  Margin="0"
-                                                  Padding="0"
-                                                  HorizontalSnapPointsType="None"
-                                                  HorizontalScrollBarVisibility="Disabled"
-                                                  HorizontalContentAlignment="Stretch"
-                                                  HorizontalScrollMode="Disabled"
-                                                  VerticalScrollMode="Disabled"
-                                                  VerticalScrollBarVisibility="Disabled"
-                                                  VerticalSnapPointsType="None"
-                                                  VerticalContentAlignment="Stretch"
-                                                  ZoomMode="Disabled"
-                                                  Template="{StaticResource ScrollViewerScrollBarlessTemplate}"
-                                                  BringIntoViewOnFocusChange="False"
-                                                  Visibility="Collapsed"></ScrollViewer>
-                                    <PivotPanel x:Name="Panel"
-                                                VerticalAlignment="Stretch"
-                                                Margin="0">
-                                        <Grid x:Name="PivotLayoutElement"
-                                              Margin="0"
-                                              Padding="0">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="*" />
-                                            </Grid.RowDefinitions>
-                                            <Grid>
-                                                <Grid.RenderTransform>
-                                                    <CompositeTransform x:Name="PivotLayoutElementTranslateTransform" />
-                                                </Grid.RenderTransform>
-                                            </Grid>
-                                            <Grid>
-                                                <Grid.RenderTransform>
-                                                    <TransformGroup>
-                                                        <TranslateTransform x:Name="ItemsPresenterTranslateTransform" />
-                                                        <CompositeTransform x:Name="ItemsPresenterCompositeTransform" />
-                                                    </TransformGroup>
-                                                </Grid.RenderTransform>
-                                            </Grid>
-                                            <Grid 
-                                                  Margin="0"
-                                                  Padding="0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid>
-                                                    <Grid.Clip>
-                                                        <RectangleGeometry x:Name="HeaderClipperGeometry" />
-                                                    </Grid.Clip>
-                                                </Grid>
-                                                <Grid>
-                                                    <Grid.RenderTransform>
-                                                        <CompositeTransform x:Name="StaticHeaderTranslateTransform" />
-                                                    </Grid.RenderTransform>
-                                                </Grid>
-                                                <Grid>
-                                                    <Grid.RenderTransform>
-                                                        <CompositeTransform x:Name="HeaderTranslateTransform" />
-                                                    </Grid.RenderTransform>
-                                                </Grid>
-
-                                                <ContentControl x:Name="HeaderClipper"
-                                                                Grid.Column="1"
-                                                                UseSystemFocusVisuals="True"
-                                                                HorizontalContentAlignment="Stretch">
-
-                                                    <Grid Background="{ThemeResource PivotHeaderBackground}">
-                                                        <Grid.RenderTransform>
-                                                            <CompositeTransform x:Name="HeaderOffsetTranslateTransform" />
-                                                        </Grid.RenderTransform>
-                                                        <PivotHeaderPanel x:Name="StaticHeader"
-                                                                          Visibility="Collapsed">
-                                                        </PivotHeaderPanel>
-                                                        <PivotHeaderPanel x:Name="Header">
-                                                        </PivotHeaderPanel>
-                                                    </Grid>
-                                                </ContentControl>
-
-
-                                            </Grid>
-                                            <ItemsPresenter x:Name="PivotItemPresenter"
-                                                            Grid.Row="1"
-                                                            Grid.ColumnSpan="3"
-                                                            Margin="0"
-                                                            Padding="0">
-                                                <!--<ItemsPresenter.RenderTransform>
-                                                        <TransformGroup>
-                                                            <TranslateTransform x:Name="ItemsPresenterTranslateTransform" />
-                                                            <CompositeTransform x:Name="ItemsPresenterCompositeTransform" />
-                                                        </TransformGroup>
-                                                    </ItemsPresenter.RenderTransform>-->
-                                            </ItemsPresenter>
-                                        </Grid>
-                                    </PivotPanel>
-                                </Grid>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
@@ -352,9 +338,10 @@
             </Style>
 
             <DataTemplate x:Key="ImageTemplate">
-                <Grid CornerRadius="5"
-                      MinHeight="70"
-                      MinWidth="70">
+                <Grid
+                    MinWidth="70"
+                    MinHeight="70"
+                    CornerRadius="5">
                     <!--<Grid.Background>
                         <ImageBrush>
                             <ImageBrush.ImageSource>
@@ -363,11 +350,12 @@
                         </ImageBrush>
                     </Grid.Background>-->
 
-                    <minicontrol:CachedImageItem DataContext="{Binding}"
-                                             MinHeight="65"
-                                             MinWidth="65"
-                                             VerticalAlignment="Center"
-                                             HorizontalAlignment="Center" />
+                    <minicontrol:CachedImageItem
+                        MinWidth="65"
+                        MinHeight="65"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        DataContext="{Binding}" />
                     <!--<controls:ImageEx VerticalAlignment="Center"
                                       HorizontalAlignment="Center"
                                       Stretch="UniformToFill"
@@ -378,47 +366,52 @@
                         </controls:ImageEx.Source>
                     </controls:ImageEx>-->
 
-                    <controls:DropShadowPanel BlurRadius="4.0"
-                                              ShadowOpacity="0.80"
-                                              OffsetX="7.0"
-                                              OffsetY="7.0"
-                                              Color="Black"
-                                              HorizontalAlignment="Right"
-                                              VerticalAlignment="Top"
-                                              Margin="10"
-                                              Visibility="{Binding Mode=OneWay,Converter={StaticResource MediaTypeToVisibiltyConverter}}">
-                        <!--MediaType-->
-                        <TextBlock Text="{Binding Mode=OneWay,Converter={StaticResource MediaTypeToIconConverter}}"
-                                   FontFamily="{StaticResource SymbolFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   Margin="5"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   TextWrapping="NoWrap"
-                                   TextAlignment="Center" />
+                    <controls:DropShadowPanel
+                        Margin="10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        BlurRadius="4.0"
+                        OffsetX="7.0"
+                        OffsetY="7.0"
+                        ShadowOpacity="0.80"
+                        Visibility="{Binding Mode=OneWay, Converter={StaticResource MediaTypeToVisibiltyConverter}}"
+                        Color="Black">
+                        <!--  MediaType  -->
+                        <TextBlock
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource SymbolFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            Text="{Binding Mode=OneWay, Converter={StaticResource MediaTypeToIconConverter}}"
+                            TextAlignment="Center"
+                            TextWrapping="NoWrap" />
                     </controls:DropShadowPanel>
-                    <controls:DropShadowPanel BlurRadius="4.0"
-                                              ShadowOpacity="0.80"
-                                              OffsetX="7.0"
-                                              OffsetY="7.0"
-                                              Color="Black"
-                                              HorizontalAlignment="Right"
-                                              VerticalAlignment="Top"
-                                              Margin="10"
-                                              Visibility="{Binding Mode=OneWay, Converter={StaticResource IGTVIconToVisibilityConverter}}">
-                        <FontIcon FontSize="{StaticResource BigFontSize}"
-                                  FontFamily="{StaticResource MaterialSymbolFont}"
-                                  Foreground="White"
-                                  Glyph="" />
-                        <!--Glyph=""-->
+                    <controls:DropShadowPanel
+                        Margin="10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        BlurRadius="4.0"
+                        OffsetX="7.0"
+                        OffsetY="7.0"
+                        ShadowOpacity="0.80"
+                        Visibility="{Binding Mode=OneWay, Converter={StaticResource IGTVIconToVisibilityConverter}}"
+                        Color="Black">
+                        <FontIcon
+                            FontFamily="{StaticResource MaterialSymbolFont}"
+                            FontSize="{StaticResource BigFontSize}"
+                            Foreground="White"
+                            Glyph="" />
+                        <!--  Glyph=""  -->
                     </controls:DropShadowPanel>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="CarouselTemplate">
-                <Grid CornerRadius="5"
-                      MinHeight="70"
-                      MinWidth="70">
+                <Grid
+                    MinWidth="70"
+                    MinHeight="70"
+                    CornerRadius="5">
                     <!--<Grid.Background>
                         <ImageBrush>
                             <ImageBrush.ImageSource>
@@ -427,11 +420,12 @@
                         </ImageBrush>
                     </Grid.Background>-->
 
-                    <minicontrol:CachedImageItem DataContext="{Binding}"
-                                             MinHeight="65"
-                                             MinWidth="65"
-                                             VerticalAlignment="Center"
-                                             HorizontalAlignment="Center" />
+                    <minicontrol:CachedImageItem
+                        MinWidth="65"
+                        MinHeight="65"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        DataContext="{Binding}" />
                     <!--<controls:ImageEx VerticalAlignment="Center"
                                       HorizontalAlignment="Center"
                                       Stretch="UniformToFill"
@@ -441,50 +435,55 @@
                             <BitmapImage UriSource="{Binding Carousel[0].Images[0].Uri, Mode=OneWay}" />
                         </controls:ImageEx.Source>
                     </controls:ImageEx>-->
-                    <controls:DropShadowPanel BlurRadius="4.0"
-                                              ShadowOpacity="0.80"
-                                              OffsetX="7.0"
-                                              OffsetY="7.0"
-                                              Color="Black"
-                                              HorizontalAlignment="Right"
-                                              VerticalAlignment="Top"
-                                              Margin="10"
-                                              Visibility="{Binding MediaType, Mode=OneWay,Converter={StaticResource MediaTypeToVisibiltyConverter}}">
-                        <TextBlock Text="{Binding MediaType, Mode=OneWay,Converter={StaticResource MediaTypeToIconConverter}}"
-                                   FontFamily="{StaticResource SymbolFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   Margin="5"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   TextWrapping="NoWrap"
-                                   TextAlignment="Center" />
+                    <controls:DropShadowPanel
+                        Margin="10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        BlurRadius="4.0"
+                        OffsetX="7.0"
+                        OffsetY="7.0"
+                        ShadowOpacity="0.80"
+                        Visibility="{Binding MediaType, Mode=OneWay, Converter={StaticResource MediaTypeToVisibiltyConverter}}"
+                        Color="Black">
+                        <TextBlock
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource SymbolFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            Text="{Binding MediaType, Mode=OneWay, Converter={StaticResource MediaTypeToIconConverter}}"
+                            TextAlignment="Center"
+                            TextWrapping="NoWrap" />
                     </controls:DropShadowPanel>
 
                 </Grid>
             </DataTemplate>
-            <selector:MediaUserInfoTemplateSelector x:Key="MediaUserInfoTemplateSelector"
-                                                    ImageTemplate="{StaticResource ImageTemplate}"
-                                                    CarouselTemplate="{StaticResource CarouselTemplate}" />
+            <selector:MediaUserInfoTemplateSelector
+                x:Key="MediaUserInfoTemplateSelector"
+                CarouselTemplate="{StaticResource CarouselTemplate}"
+                ImageTemplate="{StaticResource ImageTemplate}" />
             <Storyboard x:Name="AnimationStory">
-                <DoubleAnimation From="1"
-                                                         To="1.15"
-                                                         Duration="0:0:0.750"
-                                                         Storyboard.TargetName="UserImage"
-                                                         AutoReverse="True"
-                                                         RepeatBehavior="Forever"
-                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
+                <DoubleAnimation
+                    AutoReverse="True"
+                    RepeatBehavior="Forever"
+                    Storyboard.TargetName="UserImage"
+                    Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)"
+                    From="1"
+                    To="1.15"
+                    Duration="0:0:0.750">
                     <DoubleAnimation.EasingFunction>
                         <CircleEase EasingMode="EaseInOut" />
                     </DoubleAnimation.EasingFunction>
                 </DoubleAnimation>
-                <DoubleAnimation From="1"
-                                                         To="1.15"
-                                                         Duration="0:0:0.750"
-                                                         AutoReverse="True"
-                                                         RepeatBehavior="Forever"
-                                                         Storyboard.TargetName="UserImage"
-                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)">
+                <DoubleAnimation
+                    AutoReverse="True"
+                    RepeatBehavior="Forever"
+                    Storyboard.TargetName="UserImage"
+                    Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)"
+                    From="1"
+                    To="1.15"
+                    Duration="0:0:0.750">
                     <DoubleAnimation.EasingFunction>
                         <CircleEase EasingMode="EaseInOut" />
                     </DoubleAnimation.EasingFunction>
@@ -494,7 +493,7 @@
         </ResourceDictionary>
     </Page.Resources>
     <Page.DataContext>
-        <vm:UserDetailsViewModel x:Name="UserDetailsVM" x:FieldModifier="public"/>
+        <vm:UserDetailsViewModel x:Name="UserDetailsVM" x:FieldModifier="public" />
     </Page.DataContext>
     <Grid Background="{StaticResource DefaultBackgroundColor}">
         <Grid.RowDefinitions>
@@ -502,19 +501,21 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <loading:LoadingUc x:Name="TopLoading"
-                           Visibility="Collapsed"
-                           VerticalAlignment="Top" />
+        <loading:LoadingUc
+            x:Name="TopLoading"
+            VerticalAlignment="Top"
+            Visibility="Collapsed" />
         <Grid Grid.Row="1">
             <winui:RefreshContainer x:Name="RefreshControl">
-                <ScrollViewer  x:Name="SCMain"
-                               ViewChanging="ScrollViewViewChanging"
-                               ViewChanged="ScrollViewViewChanged">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+                <ScrollViewer
+                    x:Name="SCMain"
+                    ViewChanged="ScrollViewViewChanged"
+                    ViewChanging="ScrollViewViewChanging">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
                         <Grid x:Name="GridMainScrollViewer">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -535,47 +536,48 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <Grid Height="95"
-                                          Width="95"     
-                                          Tapped="UserImageTapped">
+                                    <Grid
+                                        Width="95"
+                                        Height="95"
+                                        Tapped="UserImageTapped">
                                         <FlyoutBase.AttachedFlyout>
-                                            <MenuFlyout x:Name="UserImageFlyout">
-
-                                            </MenuFlyout>
+                                            <MenuFlyout x:Name="UserImageFlyout" />
                                         </FlyoutBase.AttachedFlyout>
-                                        <Ellipse x:Name="UserImage"
-                                             Height="80"
-                                             Width="80"
-                                             RenderTransformOrigin="0.5,0.5"
-                                             StrokeThickness="{Binding StoryStrokeThickness, Mode=TwoWay}">
+                                        <Ellipse
+                                            x:Name="UserImage"
+                                            Width="80"
+                                            Height="80"
+                                            RenderTransformOrigin="0.5,0.5"
+                                            StrokeThickness="{Binding StoryStrokeThickness, Mode=TwoWay}">
                                             <Ellipse.RenderTransform>
-                                                <CompositeTransform ScaleX="1"
-                                                        ScaleY="1" />
+                                                <CompositeTransform ScaleX="1" ScaleY="1" />
                                             </Ellipse.RenderTransform>
-                                            <!--Stroke="#FF3C2866"-->
+                                            <!--  Stroke="#FF3C2866"  -->
                                             <Ellipse.Stroke>
-                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                    <GradientStop Color="#FF90CDFB" Offset="1"/>
+                                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                    <GradientStop Offset="1" Color="#FF90CDFB" />
                                                     <GradientStop Color="#FF187CF5" />
                                                 </LinearGradientBrush>
                                             </Ellipse.Stroke>
                                         </Ellipse>
                                         <Grid Visibility="{Binding BroadcastVisibility, Mode=TwoWay}">
-                                            <Ellipse Height="95"
-                                                 Width="95"
-                                                 Stroke="#FF187CF5"
-                                                 StrokeThickness="2">
-                                            </Ellipse>
-                                            <Border VerticalAlignment="Bottom"
+                                            <Ellipse
+                                                Width="95"
+                                                Height="95"
+                                                Stroke="#FF187CF5"
+                                                StrokeThickness="2" />
+                                            <Border
                                                 HorizontalAlignment="Center"
+                                                VerticalAlignment="Bottom"
                                                 Background="{Binding Broadcast, Mode=TwoWay, Converter={StaticResource SeenColorConverter}}"
                                                 CornerRadius="5">
-                                                <TextBlock Text="LIVE"
-                                                Margin="2"
-                                                FontFamily="{StaticResource VazirFont}"
-                                                FontSize="{StaticResource TinyTinyFontSize}"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Margin="2"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource TinyTinyFontSize}"
+                                                    Text="LIVE" />
                                             </Border>
                                         </Grid>
                                     </Grid>
@@ -589,98 +591,106 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
-                                        <Button Background="Transparent"
-                                                Margin="5 0 0 0">
-                                            <Grid VerticalAlignment="Center"
-                                                  HorizontalAlignment="Stretch">
+                                        <Button Margin="5,0,0,0" Background="Transparent">
+                                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto" />
                                                     <RowDefinition Height="Auto" />
                                                 </Grid.RowDefinitions>
-                                                <TextBlock Text="{Binding User.MediaCount, Mode=OneWay, Converter={StaticResource CountConverter}}"
-                                                           FontFamily="{StaticResource VazirFont}"
-                                                           Foreground="{StaticResource DefaultForegroundColor}"
-                                                           FontSize="{StaticResource DefaultFontSize}"
-                                                           HorizontalAlignment="Center" />
-                                                <TextBlock Text="Posts"
-                                                           FontFamily="{StaticResource VazirFont}"
-                                                           FontSize="{StaticResource TinyFontSize}"
-                                                           Grid.Row="1"
-                                                           HorizontalAlignment="Center"
-                                                           Foreground="{StaticResource DefaultInnerForegroundColor}" />
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource DefaultFontSize}"
+                                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                                    Text="{Binding User.MediaCount, Mode=OneWay, Converter={StaticResource CountConverter}}" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource TinyFontSize}"
+                                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                                    Text="Posts" />
                                             </Grid>
                                         </Button>
-                                        <Button Grid.Column="1"
-                                                Background="Transparent"
-                                                Click="FollowersButtonClick">
-                                            <Grid  Margin="5 0 0 0">
+                                        <Button
+                                            Grid.Column="1"
+                                            Background="Transparent"
+                                            Click="FollowersButtonClick">
+                                            <Grid Margin="5,0,0,0">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto" />
                                                     <RowDefinition Height="Auto" />
                                                 </Grid.RowDefinitions>
-                                                <TextBlock Text="{Binding User.FollowerCount, Mode=OneWay, Converter={StaticResource CountConverter}}"
-                                                           FontFamily="{StaticResource VazirFont}"
-                                                           Foreground="{StaticResource DefaultForegroundColor}"
-                                                           FontSize="{StaticResource DefaultFontSize}"
-                                                           HorizontalAlignment="Center" />
-                                                <TextBlock Text="Followers"
-                                                           FontFamily="{StaticResource VazirFont}"
-                                                           FontSize="{StaticResource TinyFontSize}"
-                                                           Grid.Row="1"
-                                                           HorizontalAlignment="Center"
-                                                           Foreground="{StaticResource DefaultInnerForegroundColor}" />
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource DefaultFontSize}"
+                                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                                    Text="{Binding User.FollowerCount, Mode=OneWay, Converter={StaticResource CountConverter}}" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource TinyFontSize}"
+                                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                                    Text="Followers" />
 
                                             </Grid>
                                         </Button>
 
-                                        <Button Grid.Column="2"
-                                                Background="Transparent"
-                                                Click="FollowingButtonClick">
-                                            <Grid  VerticalAlignment="Center"
-                                                   Margin="5 0 0 0">
+                                        <Button
+                                            Grid.Column="2"
+                                            Background="Transparent"
+                                            Click="FollowingButtonClick">
+                                            <Grid Margin="5,0,0,0" VerticalAlignment="Center">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto" />
                                                     <RowDefinition Height="Auto" />
                                                 </Grid.RowDefinitions>
-                                                <TextBlock Text="{Binding User.FollowingCount, Mode=OneWay, Converter={StaticResource CountConverter}}"
-                                                           FontFamily="{StaticResource VazirFont}"
-                                                           Foreground="{StaticResource DefaultForegroundColor}"
-                                                           FontSize="{StaticResource DefaultFontSize}"
-                                                           HorizontalAlignment="Center" />
-                                                <TextBlock Text="Followings"
-                                                           FontFamily="{StaticResource VazirFont}"
-                                                           FontSize="{StaticResource TinyFontSize}"
-                                                           Grid.Row="1"
-                                                           HorizontalAlignment="Center"
-                                                           Foreground="{StaticResource DefaultInnerForegroundColor}" />
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource DefaultFontSize}"
+                                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                                    Text="{Binding User.FollowingCount, Mode=OneWay, Converter={StaticResource CountConverter}}" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource TinyFontSize}"
+                                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                                    Text="Followings" />
 
                                             </Grid>
 
                                         </Button>
 
-                                        <Grid Grid.ColumnSpan="3"
-                                              Grid.Row="1"
-                                              Margin="5">
+                                        <Grid
+                                            Grid.Row="1"
+                                            Grid.ColumnSpan="3"
+                                            Margin="5">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <Button Content="{Binding FriendshipStatus,Mode=TwoWay, Converter={StaticResource FollowingConverter}}"
-                            Background="{StaticResource DefaultItemBackgroundColor}"
-                            Foreground="{StaticResource DefaultForegroundColor}"
-                                                    Visibility="{Binding FriendshipStatus, Mode=TwoWay, Converter={StaticResource FollowingVisibilityConverter}}"
-                                                    Margin="2"
-                                                    HorizontalAlignment="Stretch"
-                                                    Click="FollowUnFollowMainButtonClick" />
-                                            <Button x:Name="MoreButton"
-                                                    Grid.Column="1"
-                                                    Margin="2"
-                                                    ToolTipService.ToolTip="Settings"
-                                                    Foreground="{StaticResource DefaultForegroundColor}"
-                                                    Content=""
-                                                    FontFamily="{StaticResource MaterialSymbolFont}"
-                                                    FontSize="22.5"
-                                                    Click="MoreButtonClick">
+                                            <Button
+                                                Margin="2"
+                                                HorizontalAlignment="Stretch"
+                                                Background="{StaticResource DefaultItemBackgroundColor}"
+                                                Click="FollowUnFollowMainButtonClick"
+                                                Content="{Binding FriendshipStatus, Mode=TwoWay, Converter={StaticResource FollowingConverter}}"
+                                                Foreground="{StaticResource DefaultForegroundColor}"
+                                                Visibility="{Binding FriendshipStatus, Mode=TwoWay, Converter={StaticResource FollowingVisibilityConverter}}" />
+                                            <Button
+                                                x:Name="MoreButton"
+                                                Grid.Column="1"
+                                                Margin="2"
+                                                Click="MoreButtonClick"
+                                                Content=""
+                                                FontFamily="{StaticResource MaterialSymbolFont}"
+                                                FontSize="22.5"
+                                                Foreground="{StaticResource DefaultForegroundColor}"
+                                                ToolTipService.ToolTip="Settings">
                                                 <interactivity:Interaction.Behaviors>
                                                     <behaviorsX:PointersEvent />
                                                 </interactivity:Interaction.Behaviors>
@@ -691,19 +701,21 @@
 
 
                                 </Grid>
-                                <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1"
-                                           MinWidth="250"
-                                           MaxWidth="290"
-                                           Grid.Row="1"
-                                           Margin="5"
-                                           HorizontalAlignment="Stretch"
-                                           VerticalAlignment="Stretch" />
+                                <Rectangle
+                                    Grid.Row="1"
+                                    Height="1"
+                                    MinWidth="250"
+                                    MaxWidth="290"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Fill="{StaticResource SeperatorColor}" />
 
-                                <Grid Grid.Row="2"
-                                      HorizontalAlignment="Center"
-                                      MinWidth="320"
-                                      MaxWidth="420">
+                                <Grid
+                                    Grid.Row="2"
+                                    MinWidth="320"
+                                    MaxWidth="420"
+                                    HorizontalAlignment="Center">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
@@ -713,151 +725,153 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <Grid x:Name="UsernameGrid"
-                                          Tapped="UsernameGridTapped"
-                                          HorizontalAlignment="Left"
-                                          Margin="5 10 0 7">
+                                    <Grid
+                                        x:Name="UsernameGrid"
+                                        Margin="5,10,0,7"
+                                        HorizontalAlignment="Left"
+                                        Tapped="UsernameGridTapped">
                                         <FlyoutBase.AttachedFlyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem Text="Copy username"
-                                                                Click="CopyUsernameMenuFlyoutItemClick" />
-                                                <MenuFlyoutItem Text="Copy username address"
-                                                                Click="CopyUsernameAddressMenuFlyoutItemClick" />
+                                                <MenuFlyoutItem Click="CopyUsernameMenuFlyoutItemClick" Text="Copy username" />
+                                                <MenuFlyoutItem Click="CopyUsernameAddressMenuFlyoutItemClick" Text="Copy username address" />
                                             </MenuFlyout>
                                         </FlyoutBase.AttachedFlyout>
                                         <Grid.ContextFlyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem Text="Copy username"
-                                                                Click="CopyUsernameMenuFlyoutItemClick" />
-                                                <MenuFlyoutItem Text="Copy username address"
-                                                                Click="CopyUsernameAddressMenuFlyoutItemClick" />
+                                                <MenuFlyoutItem Click="CopyUsernameMenuFlyoutItemClick" Text="Copy username" />
+                                                <MenuFlyoutItem Click="CopyUsernameAddressMenuFlyoutItemClick" Text="Copy username address" />
                                             </MenuFlyout>
                                         </Grid.ContextFlyout>
-                                        <TextBlock Text="{Binding User.UserName, Mode=OneWay, Converter={StaticResource AddAtToStringConverter}}"
-                                                   FontFamily="{StaticResource VazirFont}"
-                                                   FontSize="{StaticResource TinyFontSize}"
-                                                           Foreground="{StaticResource DefaultForegroundColor}"
-                                                   HorizontalAlignment="Left" />
+                                        <TextBlock
+                                            HorizontalAlignment="Left"
+                                            FontFamily="{StaticResource VazirFont}"
+                                            FontSize="{StaticResource TinyFontSize}"
+                                            Foreground="{StaticResource DefaultForegroundColor}"
+                                            Text="{Binding User.UserName, Mode=OneWay, Converter={StaticResource AddAtToStringConverter}}" />
                                     </Grid>
 
-                                    <TextBlock Text="{Binding User.FullName, Mode=OneWay}"
-                                               Grid.Row="1"
-                                                           Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource DefaultFontSize}"
-                                               HorizontalAlignment="Left"
-                                               Margin="5 0" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Margin="5,0"
+                                        HorizontalAlignment="Left"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource DefaultFontSize}"
+                                        Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                        Text="{Binding User.FullName, Mode=OneWay}" />
 
-                                    <TextBlock Text="{Binding User.Category, Mode=OneWay}"
-                                               Grid.Row="2"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource TinyTinyFontSize}"
-                                               Visibility="{Binding User.Category, Mode=TwoWay, Converter={StaticResource StringToVisibiltyConverter}}"
-                                               HorizontalAlignment="Left"
-                                               Margin="8 0"
-                                               Foreground="{StaticResource CategoryColor}" />
+                                    <TextBlock
+                                        Grid.Row="2"
+                                        Margin="8,0"
+                                        HorizontalAlignment="Left"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource TinyTinyFontSize}"
+                                        Foreground="{StaticResource CategoryColor}"
+                                        Text="{Binding User.Category, Mode=OneWay}"
+                                        Visibility="{Binding User.Category, Mode=TwoWay, Converter={StaticResource StringToVisibiltyConverter}}" />
 
 
-                                    <Grid x:Name="BiographyGrid"
-                                          Grid.Row="3"
-                                          Tapped="BiographyGridTapped">
+                                    <Grid
+                                        x:Name="BiographyGrid"
+                                        Grid.Row="3"
+                                        Tapped="BiographyGridTapped">
                                         <FlyoutBase.AttachedFlyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem Text="Copy biography"
-                                                                Click="CopyBiographyMenuFlyoutItemClick" />
+                                                <MenuFlyoutItem Click="CopyBiographyMenuFlyoutItemClick" Text="Copy biography" />
                                             </MenuFlyout>
                                         </FlyoutBase.AttachedFlyout>
                                         <Grid.ContextFlyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem Text="Copy biography"
-                                                                Click="CopyBiographyMenuFlyoutItemClick" />
+                                                <MenuFlyoutItem Click="CopyBiographyMenuFlyoutItemClick" Text="Copy biography" />
                                             </MenuFlyout>
                                         </Grid.ContextFlyout>
 
-                                        <RichTextBlock x:Name="BiographyText"
-                                                       HorizontalAlignment="Stretch"
-                                                       Foreground="{StaticResource DefaultForegroundColor}"
-                                                       FontFamily="{StaticResource VazirFont}"
-                                                       IsTextSelectionEnabled="False"
-                                                       TextWrapping="Wrap"
-                                                       Margin="5"
-                                                       FontSize="{StaticResource DefaultFontSize}" />
+                                        <RichTextBlock
+                                            x:Name="BiographyText"
+                                            Margin="5"
+                                            HorizontalAlignment="Stretch"
+                                            FontFamily="{StaticResource VazirFont}"
+                                            FontSize="{StaticResource DefaultFontSize}"
+                                            Foreground="{StaticResource DefaultForegroundColor}"
+                                            IsTextSelectionEnabled="False"
+                                            TextWrapping="Wrap" />
                                     </Grid>
 
-                                    <TextBlock Text="{Binding User.ProfileContext, Mode=OneWay}"
-                                               Grid.Row="4"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource TinyFontSize}"
-                                               Visibility="{Binding User.ProfileContext, Mode=TwoWay, Converter={StaticResource StringToVisibiltyConverter}}"
-                                               HorizontalAlignment="Left"
-                                               TextWrapping="Wrap"
-                                               Margin="8 0"
-                                               Foreground="{StaticResource CategoryColor}" />
-                                    <Grid Grid.Row="5"
-                                          HorizontalAlignment="Left"
-                                          Margin="5 0">
+                                    <TextBlock
+                                        Grid.Row="4"
+                                        Margin="8,0"
+                                        HorizontalAlignment="Left"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource TinyFontSize}"
+                                        Foreground="{StaticResource CategoryColor}"
+                                        Text="{Binding User.ProfileContext, Mode=OneWay}"
+                                        TextWrapping="Wrap"
+                                        Visibility="{Binding User.ProfileContext, Mode=TwoWay, Converter={StaticResource StringToVisibiltyConverter}}" />
+                                    <Grid
+                                        Grid.Row="5"
+                                        Margin="5,0"
+                                        HorizontalAlignment="Left">
                                         <FlyoutBase.AttachedFlyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem Text="Copy url"
-                                                                Click="CopyExternalUrlMenuFlyoutItemClick" />
+                                                <MenuFlyoutItem Click="CopyExternalUrlMenuFlyoutItemClick" Text="Copy url" />
                                             </MenuFlyout>
                                         </FlyoutBase.AttachedFlyout>
                                         <Grid.ContextFlyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem Text="Copy url"
-                                                                Click="CopyExternalUrlMenuFlyoutItemClick" />
+                                                <MenuFlyoutItem Click="CopyExternalUrlMenuFlyoutItemClick" Text="Copy url" />
                                             </MenuFlyout>
                                         </Grid.ContextFlyout>
-                                        <HyperlinkButton Visibility="{Binding User.ExternalUrl, Mode=TwoWay, Converter={StaticResource StringToVisibiltyConverter}}"
-                                                         HorizontalAlignment="Left"
-                                                         Click="HyperlinkButtonClick">
-                                            <TextBlock Text="{Binding User.ExternalUrl, Mode=OneWay}"
-                                                       FontFamily="{StaticResource VazirFont}"
-                                                       FontSize="{StaticResource TinyFontSize}"
-                                                       HorizontalAlignment="Left"
-                                                       Margin="5"
-                                                       Foreground="#FF00AEAE" />
+                                        <HyperlinkButton
+                                            HorizontalAlignment="Left"
+                                            Click="HyperlinkButtonClick"
+                                            Visibility="{Binding User.ExternalUrl, Mode=TwoWay, Converter={StaticResource StringToVisibiltyConverter}}">
+                                            <TextBlock
+                                                Margin="5"
+                                                HorizontalAlignment="Left"
+                                                FontFamily="{StaticResource VazirFont}"
+                                                FontSize="{StaticResource TinyFontSize}"
+                                                Foreground="#FF00AEAE"
+                                                Text="{Binding User.ExternalUrl, Mode=OneWay}" />
                                         </HyperlinkButton>
                                     </Grid>
 
                                 </Grid>
                             </Grid>
-                            <Grid Grid.Row="1"
-                                  MaxWidth="{Binding MaxWidth,ElementName=PageName}"
-                                  Visibility="{Binding HighlightsVisibility, Mode=TwoWay}">
+                            <Grid
+                                Grid.Row="1"
+                                MaxWidth="{Binding MaxWidth, ElementName=PageName}"
+                                Visibility="{Binding HighlightsVisibility, Mode=TwoWay}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1"
-                                           MinWidth="250"
-                                           MaxWidth="290"
-                                           Grid.Row="0"
-                                           Margin="5"
-                                           HorizontalAlignment="Stretch"
-                                           VerticalAlignment="Stretch" />
-                                <ListView x:Name="LVHighlights"
-                                          SelectionMode="None"
-                                          Foreground="White"
-                                          Grid.Row="1"
-                                          Margin="14 0"
-                                          HorizontalAlignment="Center"
-                                          ItemsSource="{Binding Highlights, Mode=OneWay}"
-                                          ScrollViewer.HorizontalScrollMode="Enabled"
-                                          ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                          ScrollViewer.VerticalScrollMode="Disabled"
-                                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                          IsItemClickEnabled="True"
-                                          ItemClick="LVHighlightsItemClick">
+                                <Rectangle
+                                    Grid.Row="0"
+                                    Height="1"
+                                    MinWidth="250"
+                                    MaxWidth="290"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Fill="{StaticResource SeperatorColor}" />
+                                <ListView
+                                    x:Name="LVHighlights"
+                                    Grid.Row="1"
+                                    Margin="14,0"
+                                    HorizontalAlignment="Center"
+                                    Foreground="White"
+                                    IsItemClickEnabled="True"
+                                    ItemClick="LVHighlightsItemClick"
+                                    ItemsSource="{Binding Highlights, Mode=OneWay}"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                    ScrollViewer.HorizontalScrollMode="Enabled"
+                                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                    ScrollViewer.VerticalScrollMode="Disabled"
+                                    SelectionMode="None">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalContentAlignment"
-                                                    Value="Center" />
-                                            <Setter Property="Margin"
-                                                    Value="0" />
-                                            <Setter Property="Padding"
-                                                    Value="0 5 5 5" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            <Setter Property="Margin" Value="0" />
+                                            <Setter Property="Padding" Value="0,5,5,5" />
                                         </Style>
                                     </ListView.ItemContainerStyle>
                                     <ListView.ItemsPanel>
@@ -873,10 +887,11 @@
                                                     <RowDefinition Height="Auto" />
                                                 </Grid.RowDefinitions>
                                                 <Grid>
-                                                    <Ellipse Height="70"
-                                                             Width="70"
-                                                             Stroke="{Binding Seen, Mode=OneWay, Converter={StaticResource SeenColorConverter}}"
-                                                             StrokeThickness="2">
+                                                    <Ellipse
+                                                        Width="70"
+                                                        Height="70"
+                                                        Stroke="{Binding Seen, Mode=OneWay, Converter={StaticResource SeenColorConverter}}"
+                                                        StrokeThickness="2">
                                                         <Ellipse.Fill>
                                                             <ImageBrush>
                                                                 <ImageBrush.ImageSource>
@@ -887,22 +902,24 @@
                                                     </Ellipse>
                                                 </Grid>
 
-                                                <TextBlock Text="{Binding Title}"
-                                                           FontFamily="{StaticResource VazirFont}"
-                                                           Margin="5"
-                                                           Grid.Row="1"
-                                                           Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           TextAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Margin="5"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                                    Text="{Binding Title}"
+                                                    TextAlignment="Center" />
                                             </Grid>
 
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.Header>
-                                        <ListViewItem Visibility="{Binding IGTVVisibility, Mode=TwoWay}"
-                                                      Width="100"
-                                                      Tapped="IGTVVListViewItemTapped">
+                                        <ListViewItem
+                                            Width="100"
+                                            Tapped="IGTVVListViewItemTapped"
+                                            Visibility="{Binding IGTVVisibility, Mode=TwoWay}">
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition />
@@ -913,9 +930,10 @@
                                                     <ColumnDefinition Width="15" />
                                                 </Grid.ColumnDefinitions>
                                                 <Grid>
-                                                    <Ellipse Height="70"
-                                                             Width="70"
-                                                             StrokeThickness="2">
+                                                    <Ellipse
+                                                        Width="70"
+                                                        Height="70"
+                                                        StrokeThickness="2">
                                                         <Ellipse.Fill>
                                                             <ImageBrush>
                                                                 <ImageBrush.ImageSource>
@@ -926,21 +944,23 @@
                                                     </Ellipse>
                                                 </Grid>
 
-                                                <TextBlock Text="IGTV"
-                                                           FontFamily="{StaticResource VazirFont}"
-                                                           FontSize="{StaticResource TinyFontSize}"
-                                                           Margin="5"
-                                                           Grid.Row="1"
-                                                           Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           TextAlignment="Center" />
-                                                <Rectangle Width="1"
-                                                           Height="25"
-                                                           Fill="{StaticResource SeperatorColor}"
-                                                           VerticalAlignment="Center"
-                                                           Grid.Column="1"
-                                                           Grid.RowSpan="2" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Margin="5"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource TinyFontSize}"
+                                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                                    Text="IGTV"
+                                                    TextAlignment="Center" />
+                                                <Rectangle
+                                                    Grid.RowSpan="2"
+                                                    Grid.Column="1"
+                                                    Width="1"
+                                                    Height="25"
+                                                    VerticalAlignment="Center"
+                                                    Fill="{StaticResource SeperatorColor}" />
                                             </Grid>
 
                                         </ListViewItem>
@@ -952,12 +972,13 @@
 
 
 
-                            <Grid x:Name="PrivateGrid"
-                                  Visibility="{Binding PrivateVisibility, Mode=TwoWay}"
-                                  Grid.Row="2"
-                                  HorizontalAlignment="Center"
-                                  MaxWidth="350"
-                                  Height="110">
+                            <Grid
+                                x:Name="PrivateGrid"
+                                Grid.Row="2"
+                                Height="110"
+                                MaxWidth="350"
+                                HorizontalAlignment="Center"
+                                Visibility="{Binding PrivateVisibility, Mode=TwoWay}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition />
@@ -966,103 +987,110 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1"
-                                           Margin="5"
-                                           MinWidth="250"
-                                           MaxWidth="290"
-                                           Grid.ColumnSpan="2"
-                                           HorizontalAlignment="Stretch"
-                                           VerticalAlignment="Stretch" />
+                                <Rectangle
+                                    Grid.ColumnSpan="2"
+                                    Height="1"
+                                    MinWidth="250"
+                                    MaxWidth="290"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Fill="{StaticResource SeperatorColor}" />
 
                                 <Grid Grid.Row="1">
-                                    <Ellipse Width="32"
-                                             Height="32"
-                                             HorizontalAlignment="Center"
-                                             VerticalAlignment="Center"
-                                             Fill="#E9171717" />
-                                    <FontIcon FontSize="{StaticResource DefaultFontSize}"
-                                              FontFamily="{StaticResource MaterialSymbolFont}"
-                                              Foreground="{StaticResource DefaultForegroundColor}"
-                                              Glyph="" />
+                                    <Ellipse
+                                        Width="32"
+                                        Height="32"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Fill="#E9171717" />
+                                    <FontIcon
+                                        FontFamily="{StaticResource MaterialSymbolFont}"
+                                        FontSize="{StaticResource DefaultFontSize}"
+                                        Foreground="{StaticResource DefaultForegroundColor}"
+                                        Glyph="" />
                                 </Grid>
-                                <TextBlock FontFamily="{StaticResource VazirFont}"
-                                           Grid.Row="1"
-                                           Grid.Column="1"
-                                           FontSize="{StaticResource TinyFontSize}"
-                                           Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                           Margin="5"
-                                           TextWrapping="Wrap"
-                                           TextAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center">
-                        <Run Text="This account is Private!"
-                                    FontWeight="Bold" />
-                        <LineBreak />
-                        <Run Text="Follow this account to see their photos and videos." />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource VazirFont}"
+                                    FontSize="{StaticResource TinyFontSize}"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap">
+                                    <Run FontWeight="Bold" Text="This account is Private!" />
+                                    <LineBreak />
+                                    <Run Text="Follow this account to see their photos and videos." />
                                 </TextBlock>
                             </Grid>
-                            <Grid Visibility="{Binding NoPostsVisibility, Mode=TwoWay}"
-                                  Grid.Row="2"
-                                  HorizontalAlignment="Center"
-                                  MaxWidth="350"
-                                  Height="110">
+                            <Grid
+                                Grid.Row="2"
+                                Height="110"
+                                MaxWidth="350"
+                                HorizontalAlignment="Center"
+                                Visibility="{Binding NoPostsVisibility, Mode=TwoWay}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <Rectangle Fill="{StaticResource SeperatorColor}"
-                                           Height="1"
-                                           Margin="5"
-                                           MinWidth="250"
-                                           MaxWidth="290"
-                                           Grid.ColumnSpan="2"
-                                           HorizontalAlignment="Stretch"
-                                           VerticalAlignment="Stretch" />
+                                <Rectangle
+                                    Grid.ColumnSpan="2"
+                                    Height="1"
+                                    MinWidth="250"
+                                    MaxWidth="290"
+                                    Margin="5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Fill="{StaticResource SeperatorColor}" />
 
-                                <StackPanel Grid.Row="1"
-                                            Grid.ColumnSpan="2"
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+                                    <Grid Grid.Row="1" Margin="10">
+                                        <Ellipse
+                                            Width="32"
+                                            Height="32"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            Orientation="Horizontal">
-                                    <Grid Grid.Row="1"
-                                          Margin="10">
-                                        <Ellipse Width="32"
-                                                 Height="32"
-                                                 HorizontalAlignment="Center"
-                                                 VerticalAlignment="Center"
-                                                 Fill="#E9171717" />
-                                        <FontIcon FontSize="{StaticResource DefaultFontSize}"
-                                                  FontFamily="{StaticResource SymbolFont}"
-                                                  Foreground="{StaticResource DefaultForegroundColor}"
-                                                  Glyph="" />
+                                            Fill="#E9171717" />
+                                        <FontIcon
+                                            FontFamily="{StaticResource SymbolFont}"
+                                            FontSize="{StaticResource DefaultFontSize}"
+                                            Foreground="{StaticResource DefaultForegroundColor}"
+                                            Glyph="" />
                                     </Grid>
-                                    <TextBlock FontFamily="{StaticResource VazirFont}"
-                                               Grid.Column="1"
-                                               Grid.Row="1"
-                                               FontSize="{StaticResource TinyFontSize}"
-                                               Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                               Margin="5"
-                                               TextWrapping="Wrap"
-                                               TextAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center">
-                        <Run Text="No Posts yet"
-                                        FontWeight="Bold" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="5"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource TinyFontSize}"
+                                        Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap">
+                                        <Run FontWeight="Bold" Text="No Posts yet" />
                                     </TextBlock>
                                 </StackPanel>
 
                             </Grid>
-                            <Grid Grid.Row="4"
-                                  Visibility="{Binding ChainingVisibility, Mode=TwoWay}"
-                                  MaxWidth="420">
+                            <Grid
+                                Grid.Row="4"
+                                MaxWidth="420"
+                                Visibility="{Binding ChainingVisibility, Mode=TwoWay}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <Grid MinWidth="350"
-                                      MaxWidth="500">
+                                <Grid MinWidth="350" MaxWidth="500">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
@@ -1071,48 +1099,50 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <Rectangle Fill="{StaticResource SeperatorColor}"
-                                               Height="1"
-                                               MinWidth="250"
-                                               MaxWidth="290"
-                                               Margin="5"
-                                               Grid.ColumnSpan="2"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Stretch" />
-                                    <TextBlock Text="Suggested"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource DefaultFontSize}"
-                                               Margin="10 2"
-                                               Grid.Row="1"
-                                               Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                               HorizontalAlignment="Left"
-                                               VerticalAlignment="Center"
-                                               TextAlignment="Center" />
-                                    <Button x:Name="SeeAllButton"
-                                            Background="Transparent"
-                                            Grid.Row="1"
-                                            Grid.Column="1"
-                                            FontFamily="{StaticResource VazirFont}"
-                                            FontSize="{StaticResource DefaultFontSize}"
-                                            Content="See all"
-                                            Click="SeeAllButtonClick" />
+                                    <Rectangle
+                                        Grid.ColumnSpan="2"
+                                        Height="1"
+                                        MinWidth="250"
+                                        MaxWidth="290"
+                                        Margin="5"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Stretch"
+                                        Fill="{StaticResource SeperatorColor}" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Margin="10,2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource DefaultFontSize}"
+                                        Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                        Text="Suggested"
+                                        TextAlignment="Center" />
+                                    <Button
+                                        x:Name="SeeAllButton"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Background="Transparent"
+                                        Click="SeeAllButtonClick"
+                                        Content="See all"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource DefaultFontSize}" />
                                 </Grid>
-                                <ListView SelectionMode="None"
-                                          Foreground="{StaticResource DefaultForegroundColor}"
-                                          Grid.Row="1"
-                                          Grid.ColumnSpan="2"
-                                          Margin="5"
-                                          ItemsSource="{Binding ChainingSuggestions, Mode=OneWay}"
-                                          ScrollViewer.HorizontalScrollMode="Enabled"
-                                          ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                          ScrollViewer.VerticalScrollMode="Disabled"
-                                          ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <ListView
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    Margin="5"
+                                    Foreground="{StaticResource DefaultForegroundColor}"
+                                    ItemsSource="{Binding ChainingSuggestions, Mode=OneWay}"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                    ScrollViewer.HorizontalScrollMode="Enabled"
+                                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                    ScrollViewer.VerticalScrollMode="Disabled"
+                                    SelectionMode="None">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="ListViewItem">
-                                            <Setter Property="Margin"
-                                                    Value="0" />
-                                            <Setter Property="Padding"
-                                                    Value="0 5 5 5" />
+                                            <Setter Property="Margin" Value="0" />
+                                            <Setter Property="Padding" Value="0,5,5,5" />
                                         </Style>
                                     </ListView.ItemContainerStyle>
                                     <ListView.ItemsPanel>
@@ -1122,10 +1152,11 @@
                                     </ListView.ItemsPanel>
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Grid Width="130"
-                                                  Height="205"
-                                                  CornerRadius="5"
-                                                  Background="{StaticResource UserSuggestionsCardBackgroundColor}">
+                                            <Grid
+                                                Width="130"
+                                                Height="205"
+                                                Background="{StaticResource UserSuggestionsCardBackgroundColor}"
+                                                CornerRadius="5">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition />
                                                     <RowDefinition Height="Auto" />
@@ -1133,13 +1164,14 @@
                                                     <RowDefinition Height="Auto" />
                                                     <RowDefinition Height="20" />
                                                 </Grid.RowDefinitions>
-                                                <Ellipse Height="70"
-                                                         Margin="15"
-                                                         Width="70"
-                                                         Stroke="#FF3C2866"
-                                                         StrokeThickness="2"
-                                                         HorizontalAlignment="Center"
-                                                         VerticalAlignment="Center">
+                                                <Ellipse
+                                                    Width="70"
+                                                    Height="70"
+                                                    Margin="15"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Stroke="#FF3C2866"
+                                                    StrokeThickness="2">
                                                     <Ellipse.Fill>
                                                         <ImageBrush>
                                                             <ImageBrush.ImageSource>
@@ -1148,37 +1180,41 @@
                                                         </ImageBrush>
                                                     </Ellipse.Fill>
                                                 </Ellipse>
-                                                <TextBlock Text="{Binding UserName, Mode=OneWay,Converter={StaticResource TrimTextConverter}}"
-                                                           FontFamily="{StaticResource VazirFont}"
-                                                           FontSize="{StaticResource DefaultFontSize}"
-                                                           Margin="5"
-                                                           Grid.Row="1"
-                                                           Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           TextWrapping="NoWrap"
-                                                           TextAlignment="Center" />
-                                                <TextBlock Text="{Binding SocialContext, Mode=OneWay}"
-                                                           FontFamily="{StaticResource VazirFont}"
-                                                           FontSize="{StaticResource TinyFontSize}"
-                                                           Grid.Row="2"
-                                                           Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           TextWrapping="Wrap"
-                                                           TextAlignment="Center"
-                                                           Margin="5 -2 5 10" />
-                                                <Grid Background="AliceBlue"
-                                                      Opacity="0"
-                                                      Grid.RowSpan="4"
-                                                      Tapped="ChainingItemTapped" />
-                                                <Button Content="{Binding FollowText, Mode=TwoWay}"
-                                                        Grid.Row="3"
-                                                        Foreground="{StaticResource DefaultInnerForegroundColor}"
-                                                        FontSize="{StaticResource DefaultFontSize}"
-                                                        VerticalAlignment="Center"
-                                                        HorizontalAlignment="Center"
-                                                        Click="FollowUnfollowButtonClick" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Margin="5"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource DefaultFontSize}"
+                                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                                    Text="{Binding UserName, Mode=OneWay, Converter={StaticResource TrimTextConverter}}"
+                                                    TextAlignment="Center"
+                                                    TextWrapping="NoWrap" />
+                                                <TextBlock
+                                                    Grid.Row="2"
+                                                    Margin="5,-2,5,10"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontFamily="{StaticResource VazirFont}"
+                                                    FontSize="{StaticResource TinyFontSize}"
+                                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                                    Text="{Binding SocialContext, Mode=OneWay}"
+                                                    TextAlignment="Center"
+                                                    TextWrapping="Wrap" />
+                                                <Grid
+                                                    Grid.RowSpan="4"
+                                                    Background="AliceBlue"
+                                                    Opacity="0"
+                                                    Tapped="ChainingItemTapped" />
+                                                <Button
+                                                    Grid.Row="3"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Click="FollowUnfollowButtonClick"
+                                                    Content="{Binding FollowText, Mode=TwoWay}"
+                                                    FontSize="{StaticResource DefaultFontSize}"
+                                                    Foreground="{StaticResource DefaultInnerForegroundColor}" />
 
                                             </Grid>
 
@@ -1187,44 +1223,50 @@
 
                                 </ListView>
                             </Grid>
-                            <Rectangle Fill="{StaticResource SeperatorColor}"
-                                       Height="1"
-                                       MinWidth="250"
-                                       MaxWidth="290"
-                                       Grid.Row="5"
-                                       Margin="5"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch" />
+                            <Rectangle
+                                Grid.Row="5"
+                                Height="1"
+                                MinWidth="250"
+                                MaxWidth="290"
+                                Margin="5"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Fill="{StaticResource SeperatorColor}" />
                         </Grid>
-                        <Pivot x:Name="MPivot" Grid.Row="1" SelectionChanged="MPivotSelectionChanged">
-                            <PivotItem Padding="0"
-                                       Margin="0">
+                        <Pivot
+                            x:Name="MPivot"
+                            Grid.Row="1"
+                            SelectionChanged="MPivotSelectionChanged">
+                            <PivotItem Margin="0" Padding="0">
                                 <PivotItem.Header>
-                                    <Grid MinWidth="90"
-                                          HorizontalAlignment="Stretch">
-                                        <FontIcon FontFamily="{StaticResource MaterialSymbolFont}"
-                                                  FontSize="{StaticResource ExtraBigFontSize}"
-                                                  Foreground="{StaticResource DefaultForegroundColor}"
-                                                  Glyph="" />
+                                    <Grid MinWidth="90" HorizontalAlignment="Stretch">
+                                        <FontIcon
+                                            FontFamily="{StaticResource MaterialSymbolFont}"
+                                            FontSize="{StaticResource ExtraBigFontSize}"
+                                            Foreground="{StaticResource DefaultForegroundColor}"
+                                            Glyph="" />
                                     </Grid>
                                 </PivotItem.Header>
 
-                                <local:AdaptiveGridViewOriginal x:Name="LV"
-                                                                SelectionMode="None"
-                                                        ItemClick="LVItemClick"
-                                                        IsItemClickEnabled="True"
-                                                        Loaded="GvMediaGeneratrorLoaded"
-                                                        ItemTemplateSelector="{StaticResource MediaUserInfoTemplateSelector}"
-                                                        ItemsSource="{Binding MediaGeneratror.Items, Mode=OneWay}"
-                                                        ContainerContentChanging="LVContainerContentChanging"
-                                                        ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
-                                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                                                ScrollViewer.VerticalScrollMode="Disabled">
+                                <local:AdaptiveGridViewOriginal
+                                    x:Name="LV"
+                                    ContainerContentChanging="LVContainerContentChanging"
+                                    DesiredWidth="130"
+                                    IsItemClickEnabled="True"
+                                    ItemClick="LVItemClick"
+                                    ItemContainerStyle="{StaticResource GridViewItemContainerStyle}"
+                                    ItemHeight="130"
+                                    ItemTemplateSelector="{StaticResource MediaUserInfoTemplateSelector}"
+                                    ItemsSource="{Binding MediaGeneratror.Items, Mode=OneWay}"
+                                    Loaded="GvMediaGeneratrorLoaded"
+                                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                    ScrollViewer.VerticalScrollMode="Disabled"
+                                    SelectionMode="None">
                                     <!--<local:AdaptiveGridView.Header>
                         </local:AdaptiveGridView.Header>-->
                                     <!--<GridView.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <ItemsWrapGrid 
+                                            <ItemsWrapGrid
                                                            MaximumRowsOrColumns="3"
                                                            Orientation="Horizontal" />
                                         </ItemsPanelTemplate>
@@ -1235,7 +1277,7 @@
                                         </TransitionCollection>
                                     </local:AdaptiveGridViewOriginal.ItemContainerTransitions>
                                 </local:AdaptiveGridViewOriginal>
-                                
+
                             </PivotItem>
                         </Pivot>
 
@@ -1246,46 +1288,52 @@
 
 
             </winui:RefreshContainer>
-            <Button x:Name="GoUpButton"
-                    Background="{x:Null}"
-                    Grid.RowSpan="2"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Right"
-                    Margin="0 0 12 50"
-                    Click="GoUpButtonClick"
-                    Style="{StaticResource GoUpButtonStyle}"/>
-            <Button x:Name="RefreshButton"
-                    Background="{x:Null}"
-                    Grid.RowSpan="2"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Left"
-                    Margin="12 0 0 50"
-                    Click="RefreshButtonClick"
-                    Style="{StaticResource RefreshButtonStyle}"/>
+            <Button
+                x:Name="GoUpButton"
+                Grid.RowSpan="2"
+                Margin="0,0,12,50"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Background="{x:Null}"
+                Click="GoUpButtonClick"
+                Style="{StaticResource GoUpButtonStyle}" />
+            <Button
+                x:Name="RefreshButton"
+                Grid.RowSpan="2"
+                Margin="12,0,0,50"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Background="{x:Null}"
+                Click="RefreshButtonClick"
+                Style="{StaticResource RefreshButtonStyle}" />
         </Grid>
-        <loading:LoadingUc x:Name="BottomLoading"
-                           Visibility="Collapsed"
-                           VerticalAlignment="Bottom"
-                           Grid.Row="2" />
+        <loading:LoadingUc
+            x:Name="BottomLoading"
+            Grid.Row="2"
+            VerticalAlignment="Bottom"
+            Visibility="Collapsed" />
 
-        <posts:ScrollableUserPostUc x:Name="ScrollableUserPostUc"
-                                       x:FieldModifier="public"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       Grid.RowSpan="4"
-                                       Visibility="Collapsed" />
-        <posts:ScrollableUserTaggedPostUc x:Name="ScrollableUserTaggedPostUc"
-                                    x:FieldModifier="public"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    Grid.RowSpan="4"
-                                          Visibility="Collapsed" />
-        <posts:ScrollableUserShopPostUc x:Name="ScrollableUserShopPostUc"
-                                          x:FieldModifier="public"
-                                          HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"
-                                          Grid.RowSpan="4"
-                                          Visibility="Collapsed" />
+        <posts:ScrollableUserPostUc
+            x:Name="ScrollableUserPostUc"
+            Grid.RowSpan="4"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            x:FieldModifier="public"
+            Visibility="Collapsed" />
+        <posts:ScrollableUserTaggedPostUc
+            x:Name="ScrollableUserTaggedPostUc"
+            Grid.RowSpan="4"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            x:FieldModifier="public"
+            Visibility="Collapsed" />
+        <posts:ScrollableUserShopPostUc
+            x:Name="ScrollableUserShopPostUc"
+            Grid.RowSpan="4"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            x:FieldModifier="public"
+            Visibility="Collapsed" />
         <!--<VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>

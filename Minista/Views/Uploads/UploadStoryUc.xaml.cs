@@ -434,9 +434,6 @@ namespace Minista.Views.Uploads
                     Helper.ShowNotify("Please wait a few more seconds....");
                     return;
                 }
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
                 if (IsVideo)
                 {
                     using (var fileStream = await ThumbnailFile.OpenAsync(FileAccessMode.ReadWrite, StorageOpenOptions.None))

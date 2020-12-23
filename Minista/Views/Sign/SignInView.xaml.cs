@@ -308,6 +308,7 @@ namespace Minista.Views.Sign
         {
             try
             {
+                Helper.DontUseTimersAndOtherStuff = true;
                 var filePicker = new FileOpenPicker
                 {
                     ViewMode = PickerViewMode.Thumbnail,
@@ -317,6 +318,7 @@ namespace Minista.Views.Sign
 
                 var file = await filePicker.PickSingleFileAsync();
 
+                Helper.DontUseTimersAndOtherStuff = false;
                 if (file == null)
                     return;
                 try
@@ -366,7 +368,10 @@ namespace Minista.Views.Sign
                     ShowError();
                 }
             }
-            catch { }
+            catch
+            {
+                Helper.DontUseTimersAndOtherStuff = false;
+            }
         }
 
         void ShowError()

@@ -33,10 +33,10 @@ namespace Thrift.Processor
         private readonly Dictionary<string, ITAsyncProcessor> _serviceProcessorMap =
             new Dictionary<string, ITAsyncProcessor>();
 
-        public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot)
-        {
-            return await ProcessAsync(iprot, oprot, CancellationToken.None);
-        }
+        //public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot)
+        //{
+        //    return await ProcessAsync(iprot, oprot, CancellationToken.None);
+        //}
 
         public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
         {

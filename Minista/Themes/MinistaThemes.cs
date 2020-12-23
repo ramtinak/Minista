@@ -14,7 +14,7 @@ namespace Minista.Themes
         // Default value of MinistaTheme is for Dark theme, so no need to change anything in it. 
     }
 
-    public class MinistaWhiteTheme : MinistaTheme 
+    public class MinistaWhiteTheme : MinistaTheme
     {
         public MinistaWhiteTheme()
         {

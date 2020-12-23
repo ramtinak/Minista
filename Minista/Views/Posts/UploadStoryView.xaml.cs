@@ -39,8 +39,6 @@ namespace Minista.Views.Posts
 
             if (e.NavigationMode == NavigationMode.New)
                 GetType().RemovePageFromBackStack();
-            Helper.CreateCachedFolder();
-
             try
             {
                 if (e.Parameter != null && e.Parameter is StorageFile file && file != null)
@@ -53,9 +51,7 @@ namespace Minista.Views.Posts
         {
             try
             {
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
+                Helper.DontUseTimersAndOtherStuff = true;
                 FileOpenPicker openPicker = new FileOpenPicker
                 {
                     ViewMode = PickerViewMode.Thumbnail,
@@ -66,10 +62,14 @@ namespace Minista.Views.Posts
                 openPicker.FileTypeFilter.Add(".bmp");
                 openPicker.FileTypeFilter.Add(".png");
                 var file = await openPicker.PickSingleFileAsync();
+                Helper.DontUseTimersAndOtherStuff = false;
                 if (file == null) return;
                 ImportFile(file);
             }
-            catch { }
+            catch
+            {
+                Helper.DontUseTimersAndOtherStuff = false;
+            }
         }
         async void ImportFile(StorageFile file)
         {

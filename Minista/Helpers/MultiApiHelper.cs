@@ -81,6 +81,7 @@ namespace Minista.Helpers
 
         private static void P_FbnsTokenChanged(object sender, object e)
         {
+            if (Helper.DontUseTimersAndOtherStuff) return;
             SessionHelper.SaveCurrentSession();
         }
 

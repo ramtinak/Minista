@@ -239,6 +239,9 @@ namespace Minista.Views.Uploads
                 Editing = true;
                 CanCrop = false;
                 LoadingUc.Start();
+                await Helper.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+
                 if (file.IsVideo())
                 {
                     VideoButton.Visibility = Visibility.Visible;
@@ -319,7 +322,8 @@ namespace Minista.Views.Uploads
                     //await Task.Delay(1500);
                     CanCrop = true;
                     LoadingUc.Stop();
-                }
+                    }
+                });
             }
             catch { }
         }
@@ -457,9 +461,6 @@ namespace Minista.Views.Uploads
                     Helper.ShowNotify("Please wait a few more seconds....");
                     return;
                 }
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
                 if (IsVideo)
                 {
                     using (var fileStream = await ThumbnailFile.OpenAsync(FileAccessMode.ReadWrite, StorageOpenOptions.None))

@@ -208,7 +208,8 @@ namespace Minista.ContentDialogs
         public ProfileUploader Uploader = new ProfileUploader();
         private async void SelectFromGalleryButtonClick(object sender, RoutedEventArgs e)
         {
-           
+            Helper.DontUseTimersAndOtherStuff = true;
+
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.Thumbnail;
             openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
@@ -217,12 +218,9 @@ namespace Minista.ContentDialogs
             //openPicker.FileTypeFilter.Add(".gif");
             openPicker.FileTypeFilter.Add(".png");
             StorageFile imgFile = await openPicker.PickSingleFileAsync();
+            Helper.DontUseTimersAndOtherStuff = false;
             if (imgFile != null)
             {
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
                 ShowEditor();
                 ImageCropper.AspectRatio = 1d;
                 ImageCropper.CropShape = UI.Controls.CropShape.Circular;
@@ -237,10 +235,6 @@ namespace Minista.ContentDialogs
             try
             {
                 ShowLoading();
-
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
                 var cacheFolder = await SessionHelper.LocalFolder.GetFolderAsync("Cache");
                 var file = await cacheFolder.CreateFileAsync(15.GenerateRandomStringStatic() + ".jpg");
                 using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite, StorageOpenOptions.None))

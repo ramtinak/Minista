@@ -37,6 +37,7 @@ namespace Minista
             Suspending += OnSuspending;
             Resuming += OnResuming;
             EnteredBackground += OnEnteredBackground;
+            LeavingBackground += OnLeavingBackground;
             UnhandledException += App_UnhandledException;
         }
 
@@ -45,7 +46,7 @@ namespace Minista
             e.Exception.PrintException("App_UnhandledException");
             e.Handled = true;
         }
-        protected async override void OnLaunched(LaunchActivatedEventArgs e)
+        protected /*async*/ override void OnLaunched(LaunchActivatedEventArgs e)
         {
             PushHelperX.Register();
             bool canEnablePrelaunch = Windows.Foundation.Metadata.ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch");
@@ -170,13 +171,36 @@ namespace Minista
             {
                 exception.PrintException();
             }
+
+            try
+            {
+                if (MainPage.Current?.RealtimeClient != null)
+                {
+                    MainPage.Current.RealtimeClient.AppIsInBackground = true;
+                    MainPage.Current.RealtimeClient.Shutdown();
+                    await Task.Delay(500);
+                }
+            }
+            catch { }
             finally
             {
                 deferral.Complete();
             }
         }
-        private /*async*/ void OnResuming(object sender, object e)
+        private async void OnResuming(object sender, object e)
         {
+            try
+            {
+                if (MainPage.Current?.RealtimeClient != null)
+                {
+                    MainPage.Current.RealtimeClient.AppIsInBackground = false;
+                    await MainPage.Current.RealtimeClient.StartFresh();
+                }
+            }
+            catch (Exception exception)
+            {
+                exception.PrintException("OnResuming::MainPage.Current.RealtimeClient.AppIsInBackground");
+            }
             try
             {
                 //if (Helper.InstaApi?.PushClient is PushClient push && push != null)
@@ -198,24 +222,61 @@ namespace Minista
                 exception.PrintException();
             }
         }
-        private void OnEnteredBackground(object sender, EnteredBackgroundEventArgs e)
+        private async void OnEnteredBackground(object sender, EnteredBackgroundEventArgs e)
         {
+            var deferral = e.GetDeferral();
+            try
+            {
+                if (MainPage.Current?.RealtimeClient != null)
+                {
+                    MainPage.Current.RealtimeClient.AppIsInBackground = true;
+                    MainPage.Current.RealtimeClient.Shutdown();
+
+                    await Task.Delay(1000);
+                }
+            }
+            catch { }
+            finally
+            {
+                deferral.Complete();
+            }
+        }
+
+        private async void OnLeavingBackground(object sender, LeavingBackgroundEventArgs e)
+        {
+            var deferral = e.GetDeferral();
+            try
+            {
+                if (MainPage.Current?.RealtimeClient != null)
+                {
+                    MainPage.Current.RealtimeClient.AppIsInBackground = false;
+                    await MainPage.Current.RealtimeClient.StartFresh();
+                }
+            }
+            catch (Exception exception)
+            {
+                exception.PrintException("OnLeavingBackground");
+            }
+            finally
+            {
+                deferral.Complete();
+            }
         }
         protected override void OnBackgroundActivated(BackgroundActivatedEventArgs e)
         {
-            base.OnBackgroundActivated(e);
-            ("ONBGAC:     " + e.TaskInstance.TriggerDetails.GetType()).PrintDebug();
+            //base.OnBackgroundActivated(e);
+            //("ONBGAC:     " + e.TaskInstance.TriggerDetails.GetType()).PrintDebug();
 
-            var args = e.TaskInstance.TriggerDetails as ToastNotificationActionTriggerDetail;
+            //var args = e.TaskInstance.TriggerDetails as ToastNotificationActionTriggerDetail;
 
-            args.PrintDebug();
-            Debug.WriteLine("--------------------+OnActivated+------------------");
-            Debug.WriteLine(args.Argument);
-            Debug.WriteLine("UserInput: ");
-            if (args?.UserInput?.Count > 0)
-                foreach (var val in args.UserInput)
-                    Debug.WriteLine(val.Key + " : " + JsonConvert.SerializeObject(val.Value));
-            Debug.WriteLine("--------------------+------------------");
+            //args.PrintDebug();
+            //Debug.WriteLine("--------------------+OnActivated+------------------");
+            //Debug.WriteLine(args.Argument);
+            //Debug.WriteLine("UserInput: ");
+            //if (args?.UserInput?.Count > 0)
+            //    foreach (var val in args.UserInput)
+            //        Debug.WriteLine(val.Key + " : " + JsonConvert.SerializeObject(val.Value));
+            //Debug.WriteLine("--------------------+------------------");
 
         }   
     }

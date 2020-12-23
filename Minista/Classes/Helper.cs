@@ -207,6 +207,7 @@ static class Helper
     public static Uri NoProfilePictureUri => "ms-appx:///Assets/Images/no-profile.jpg".ToUri();
     public static InstaUserInfo CurrentUser { get; set; }
 
+    public static bool DontUseTimersAndOtherStuff { get; set; } = false;
     public static string GetUserName(this IReadOnlyCollection<IInstaApi> apis, string u)
     { 
         var user = apis.FirstOrDefault(x => x.GetLoggedUser().LoggedInUser.Pk == long.Parse(u));
@@ -372,19 +373,19 @@ static class Helper
     }
     public static void SetAnimation(StorageFile file)
     {
-        try
-        {
-            if (NavigationService.Frame.Content is Minista.Views.Main.MainView view && view != null)
-            {
-                view.SetAnimation(file);
-            }
-        }
-        catch { }
+        //try
+        //{
+        //    if (NavigationService.Frame.Content is Minista.Views.Main.MainView view && view != null)
+        //    {
+        //        view.SetAnimation(file);
+        //    }
+        //}
+        //catch { }
     }
 
     internal static void PurchaseMessage()
     {
-        ("This feature is not for you since you are using a free version of Minista, upgrade to a premium version").ShowMsg("Warning");
+        //("This feature is not for you since you are using a free version of Minista, upgrade to a premium version").ShowMsg("Warning");
     }
 
     public static void MuteRequested(long userPk)

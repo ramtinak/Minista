@@ -149,7 +149,6 @@ namespace Minista
         }
     }
 
-
     public class GenerateLikersItems : BaseModel
     {
         public ObservableCollection<InstaUserShortTV> Items { get; set; }
@@ -401,7 +400,6 @@ namespace Minista
             }
         }
     }
-
 
     public class GenerateChannelItems : BaseModel
     {

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Why this class has a lot of TRY...CATCH?
+// BECAUSE in windows 10 mobiles anything related to this class is unstable, I don't know why, but I just put anything in TRY...CATCH
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -63,10 +66,11 @@ namespace InstagramApiSharp.API.RealTime
         private int SeqId;
         private DateTime SnapshotAt;
         public bool KeepConnectionAlive { get; set; } = true;
+        public bool AppIsInBackground { get; set; } = false;
         public RealtimeClient(IInstaApi api)
         {
             _instaApi = api ?? throw new ArgumentException("Api can't be null", nameof(api));
-
+            AppIsInBackground = false;
             NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
         }
 
@@ -88,87 +92,96 @@ namespace InstagramApiSharp.API.RealTime
             var internetProfile = NetworkInformation.GetInternetConnectionProfile();
             return internetProfile != null;
         }
-        private async void OnNetworkStatusChanged(object sender)
+        async void Retry()
         {
-            await Task.Delay(TimeSpan.FromSeconds(2));
-            if (!InternetAvailable() || Running) return;
-            await StartFresh();
+            if (AppIsInBackground) return;
+            try
+            {
+                await Task.Delay(TimeSpan.FromSeconds(2.5));
+                if (!InternetAvailable() || Running) return;
+                await StartFresh();
+            }
+            catch
+            {
+                await Task.Delay(TimeSpan.FromSeconds(10));
+                try
+                {
+                    Retry();
+                }
+                catch { }
+            }
+        }
+        private void OnNetworkStatusChanged(object sender)
+        {
+            Retry();
         }
    
         public async Task Start(int seqId, DateTime snapshotAt)
         {
-            if (!_instaApi.IsUserAuthenticated || Running) return;
-
-            if (seqId == 0)
+            if (AppIsInBackground) return;
+            try
             {
-                var inbox = await _instaApi.MessagingProcessor.GetDirectInboxAsync(PaginationParameters.MaxPagesToLoad(1));
-                if (inbox.Succeeded)
+                if (!_instaApi.IsUserAuthenticated || Running) return;
+
+                if (seqId == 0)
                 {
-                    SeqId = inbox.Value.SeqId;
-                    SnapshotAt = inbox.Value.SnapshotAt;
+                    var inbox = await _instaApi.MessagingProcessor.GetDirectInboxAsync(PaginationParameters.MaxPagesToLoad(1));
+                    if (inbox.Succeeded)
+                    {
+                        seqId = inbox.Value.SeqId;
+                        snapshotAt = inbox.Value.SnapshotAt;
+                    }
+                    else
+                        return;
                 }
-                else
-                    return;
+                SeqId = seqId;
+                SnapshotAt = snapshotAt;
+                try
+                {
+                    await StartFresh().ConfigureAwait(false);
+                }
+                catch (Exception)
+                {
+                    await StartFresh().ConfigureAwait(false);
+                }
             }
-            SeqId = seqId;
-            SnapshotAt = snapshotAt;
-            try
-            {
-                await StartFresh().ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                await StartFresh().ConfigureAwait(false);
-            }
+            catch { }
         }
-
-        public void StartWithExistingSocket(StreamSocket socket)
-        {
-            try
-            {
-                this.Log("Starting with existing socket");
-                if (Running) throw new Exception("Push client is already running");
-                Socket = socket;
-                _inboundReader = new DataReader(socket.InputStream);
-                _outboundWriter = new DataWriter(socket.OutputStream);
-                _inboundReader.ByteOrder = ByteOrder.BigEndian;
-                _inboundReader.InputStreamOptions = InputStreamOptions.Partial;
-                _outboundWriter.ByteOrder = ByteOrder.BigEndian;
-                _runningTokenSource = new CancellationTokenSource();
-
-                StartPollingLoop();
-            }
-            catch (Exception e)
-            {
-                DebugLogger.LogExceptionX(e);
-            }
-        }
-
         public async Task StartFresh()
         {
-            this.Log("Starting fresh");
+            Log("Starting fresh");
             if (!InternetAvailable())
             {
-                this.Log("Internet not available. Exiting.");
+                Log("Internet not available. Exiting.");
                 return;
             }
 
             if (Running)
             {
-                Debug.WriteLine("realtime client is already running");
+                Log("realtime client is already running");
                 return;
             }
-            var connectPacket = new FbnsConnectPacket
-            {
-                Payload = await RealtimePayload.BuildPayload(_instaApi)
-            };
 
-            Socket = new StreamSocket();
-            Socket.Control.KeepAlive = true;
-            Socket.Control.NoDelay = true;
-            Socket.Control.OutboundBufferSizeInBytes = 20 * 1024 * 1024;
+            if (AppIsInBackground)
+            {
+                Log("Application is in background");
+                return;
+            }
+            if (Socket != null)
+            {
+                Shutdown();
+                await Task.Delay(350);
+            }
             try
             {
+                var connectPacket = new FbnsConnectPacket
+                {
+                    Payload = await RealtimePayload.BuildPayload(_instaApi)
+                };
+                Socket = new StreamSocket();
+                Socket.Control.KeepAlive = true;
+                Socket.Control.NoDelay = true;
+                Socket.Control.OutboundBufferSizeInBytes = 20 * 1024 * 1024;
                 await Socket.ConnectAsync(new HostName(DEFAULT_HOST), "443", SocketProtectionLevel.Tls12);
                 _inboundReader = new DataReader(Socket.InputStream);
                 _outboundWriter = new DataWriter(Socket.OutputStream);
@@ -230,7 +243,6 @@ namespace InstagramApiSharp.API.RealTime
             await FbnsPacketEncoder.EncodePacket(publishPacket, _outboundWriter);
         }
 
-
         async Task PubSub()
         {
             var user = _instaApi.GetLoggedUser().LoggedInUser;
@@ -262,7 +274,6 @@ namespace InstagramApiSharp.API.RealTime
             await FbnsPacketEncoder.EncodePacket(publishPacket, _outboundWriter);
         }
 
-
         async Task IrisSub()
         {
             var dic = new Dictionary<string, object>
@@ -290,30 +301,36 @@ namespace InstagramApiSharp.API.RealTime
         }
         public void Shutdown()
         {
-            this.Log("Stopping realtime server");
-            NetworkInformation.NetworkStatusChanged -= OnNetworkStatusChanged;
-            _runningTokenSource?.Cancel();
+            Log("Stopping realtime server");
+            try
+            {
+                NetworkInformation.NetworkStatusChanged -= OnNetworkStatusChanged;
+            }
+            catch { }
+            try
+            {
+                _runningTokenSource?.Cancel();
+            }
+            catch { }
             try
             {
                 _inboundReader?.Dispose();
                 _outboundWriter?.DetachStream();
                 _outboundWriter?.Dispose();
+            }
+            catch { }
+            try
+            {
+                Socket.Dispose();
             }
             catch { }
         }
 
         private async void Restart()
         {
-            this.Log("Restarting realtime server");
-            NetworkInformation.NetworkStatusChanged -= OnNetworkStatusChanged;
-            _runningTokenSource?.Cancel();
-            try
-            {
-                _inboundReader?.Dispose();
-                _outboundWriter?.DetachStream();
-                _outboundWriter?.Dispose();
-            }
-            catch { }
+            Log("Restarting realtime server");
+            Shutdown();
+            if (AppIsInBackground) return;
             await Task.Delay(TimeSpan.FromSeconds(3));
             if (Running) return;
             try
@@ -326,32 +343,40 @@ namespace InstagramApiSharp.API.RealTime
                 }
             }
             catch { }
-            await StartFresh();
-            NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
+            try
+            {
+                await StartFresh();
+                NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
+            }
+            catch { }
         }
 
         private async void StartPollingLoop()
         {
-            while (Running)
+            try
             {
-                var reader = _inboundReader;
-                try
+                while (Running && !AppIsInBackground)
                 {
-                    await reader.LoadAsync(PacketDecoder.PACKET_HEADER_LENGTH);
-                    var packet = await PacketDecoder.DecodePacket(reader);
-                    await OnPacketReceived(packet);
-                }
-                catch (Exception e)
-                {
-                    if (Running)
+                    try
                     {
-                        DebugLogger.LogExceptionX(e);
-                        OnDisconnect?.Invoke(this, true);
-                        Restart();
+                        var reader = _inboundReader;
+                        await reader.LoadAsync(PacketDecoder.PACKET_HEADER_LENGTH);
+                        var packet = await PacketDecoder.DecodePacket(reader);
+                        await OnPacketReceived(packet);
                     }
-                    return;
+                    catch (Exception e)
+                    {
+                        if (Running && !AppIsInBackground)
+                        {
+                            DebugLogger.LogExceptionX(e);
+                            OnDisconnect?.Invoke(this, true);
+                            Restart();
+                        }
+                        return;
+                    }
                 }
             }
+            catch { }
         }
         public enum TopicIds
         {
@@ -364,9 +389,10 @@ namespace InstagramApiSharp.API.RealTime
         private async Task OnPacketReceived(Packet msg)
         {
             if (!Running) return;
-            var writer = _outboundWriter;
+            if (AppIsInBackground) return;
             try
             {
+                var writer = _outboundWriter;
                 switch (msg.PacketType)
                 {
                     case PacketType.CONNACK:
@@ -578,7 +604,7 @@ namespace InstagramApiSharp.API.RealTime
             if (_runningTokenSource == null) return;
             try
             {
-                while (!_runningTokenSource.IsCancellationRequested)
+                while (!_runningTokenSource.IsCancellationRequested && !AppIsInBackground)
                 {
                     await Task.Delay(TimeSpan.FromMinutes(2), _runningTokenSource.Token);
                     try
@@ -600,11 +626,11 @@ namespace InstagramApiSharp.API.RealTime
                 if (_outboundWriter == null) return;
                 var packet = PingReqPacket.Instance;
                 await FbnsPacketEncoder.EncodePacket(packet, _outboundWriter);
-                Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Pinging realtime server");
+                Log($"[{_instaApi?.GetLoggedUser()?.UserName}] " + "Pinging realtime server");
             }
             catch (Exception)
             {
-                Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Failed to ping realtime server. Shutting down.");
+                Log($"[{_instaApi?.GetLoggedUser()?.UserName}] " + "Failed to ping realtime server. Shutting down.");
                 Shutdown();
                 await Task.Delay(5000);
                 Restart();
@@ -626,20 +652,36 @@ namespace InstagramApiSharp.API.RealTime
         void Log(object message)
         {
             Debug.WriteLine($"[{DateTime.Now.ToString(CultureInfo.CurrentCulture)} ]: {message}");
-            LogReceived?.Invoke(this, message);
+            try
+            {
+                LogReceived?.Invoke(this, message);
+            }
+            catch { }
         }
 
         internal void OnPresenceChanged(PresenceEventEventArgs args)
         {
-            PresenceChanged?.Invoke(this, args);
+            try
+            {
+                PresenceChanged?.Invoke(this, args);
+            }
+            catch { }
         }
         internal void OnTypingChanged(List<InstaRealtimeTypingEventArgs> args)
         {
-            TypingChanged?.Invoke(this, args);
+            try
+            {
+                TypingChanged?.Invoke(this, args);
+            }
+            catch { }
         }
         internal void OnDirectItemChanged(List<InstaDirectInboxItem> args)
         {
-            DirectItemChanged?.Invoke(this, args);
+            try
+            {
+                DirectItemChanged?.Invoke(this, args);
+            }
+            catch { }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using InstagramApiSharp.Classes.Models;
+﻿using InstagramApiSharp.Classes;
+using InstagramApiSharp.Classes.Models;
 using InstagramApiSharp.Enums;
 using InstagramApiSharp.Helpers;
 using Microsoft.Toolkit.Uwp.UI.Animations;
@@ -7,6 +8,7 @@ using Minista.Controls;
 using Minista.Helpers;
 using Minista.UserControls.Main;
 using Minista.UserControls.Story;
+using Minista.Views.Main;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -1077,6 +1079,54 @@ namespace Minista.Views.Stories
             RefreshButton.Visibility = Visibility.Visible;
         }
         void HideRefreshButton() => RefreshButton.Visibility = Visibility.Collapsed;
+        #endregion
+
+        #region Seen story or hashtag
+
+        public async void SeenStory()
+        {
+            try
+            {
+                if (!SettingsHelper.Settings.GhostMode)
+                {
+                    try
+                    {
+                        if (StoryFeed.Seen == StoryItem.TakenAtUnix)
+                            return;
+                    }
+                    catch { return; }
+                    if (StoryFeed.IsElection)
+                    {
+                        var dic = new List<InstaStoryElectionKeyValue>
+                        {
+                           new InstaStoryElectionKeyValue
+                           {
+                               StoryId =StoryFeed.Id,
+                               StoryItemId = StoryItem.Id,
+                               TakenAtUnix = StoryItem.TakenAtUnix.ToString()
+                           }
+                        };
+                        var seen = await Helper.InstaApi.StoryProcessor.MarkMultipleStoriesAsSeen2Async(dic);
+                        UserStoryUc.StoryFeed.Seen = StoryItem.TakenAtUnix;
+                        MainView.Current?.SetSeens(StoryFeed.Id, StoryItem.TakenAtUnix);
+                    }
+                    else
+                    {
+                        var dic = new Dictionary<string, long>
+                        {
+                            {StoryItem.Id, StoryItem.TakenAtUnix}
+                        };
+                        var seen = await Helper.InstaApi.StoryProcessor.MarkMultipleStoriesAsSeenAsync(dic);
+                        UserStoryUc.StoryFeed.Seen = StoryItem.TakenAtUnix;
+                        MainView.Current?.SetSeens(StoryFeed.Id, StoryItem.TakenAtUnix);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.PrintException("SeenStory");
+            }
+        }
         #endregion
     }
 }

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Composition;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -42,6 +43,34 @@ namespace Minista.Views.Main
         //ListView LatestStoriesLV = null;
 
         public static MainView Current;
+        async void OPEN()
+        {
+            try
+            {
+                Helper.DontUseTimersAndOtherStuff = true;
+                FileOpenPicker openPicker = new FileOpenPicker
+                {
+                    ViewMode = PickerViewMode.Thumbnail,
+                    SuggestedStartLocation = PickerLocationId.PicturesLibrary
+                };
+                openPicker.FileTypeFilter.Add(".jpg");
+                openPicker.FileTypeFilter.Add(".jpeg");
+                openPicker.FileTypeFilter.Add(".bmp");
+                //openPicker.FileTypeFilter.Add(".gif");
+                openPicker.FileTypeFilter.Add(".png");
+                openPicker.FileTypeFilter.Add(".mp4");
+                //openPicker.FileTypeFilter.Add(".mkv");
+                var files = await openPicker.PickMultipleFilesAsync();
+                Helper.DontUseTimersAndOtherStuff = false;
+                Helper.ShowMsg("FILES SUCCESSFULLY OPEN");
+            }
+            catch (Exception ex)
+            {
+                ex.PrintException("ImportButtonClick");
+                Helper.ShowErr("ImportButtonClick", ex);
+                Helper.DontUseTimersAndOtherStuff = false;
+            }
+        }
         public MainView()
         {
             this.InitializeComponent();
@@ -60,36 +89,12 @@ namespace Minista.Views.Main
             //try
             //{
             //    if (Current != null)
-
             //        await Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             //        {
             //            Current.TXT.Text += e.ToString() + Environment.NewLine;
             //        });
             //}
             //catch { }
-        }
-        public /*async*/ void SetAnimation(StorageFile file)
-        {
-            try
-            {
-                //return;
-                //LottieAnimationViewGrid.Visibility = Visibility.Visible;
-                ////LottieAnimationView.FileName = fileName;
-
-                //using (var stream = await file.OpenStreamForReadAsync())
-                //{
-                //    await LottieAnimationView.SetAnimationAsync(new JsonReader(new StreamReader(stream, Encoding.UTF8)), file.Name);
-                //}
-                //LottieAnimationView.FrameRate = 30;
-                ////await LottieAnimationView.SetAnimationAsync(fileName);
-                //LottieAnimationView.PlayAnimation();
-                //await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-                //{
-                //    await Task.Delay(10000);
-                //    LottieAnimationViewGrid.Visibility = Visibility.Collapsed;
-                //});
-            }
-            catch { }
         }
 
         private void MainView_Loaded(object sender, RoutedEventArgs e)
@@ -126,7 +131,7 @@ namespace Minista.Views.Main
         {
             try
             {
-                await Task.Delay(30000);
+                await Task.Delay(10000);
                 ThemeHelper.InitTheme(SettingsHelper.Settings.CurrentTheme);
             }
             catch { }
@@ -173,8 +178,8 @@ namespace Minista.Views.Main
             {
                 if (sender is Button btn && btn != null && btn.DataContext is InstaSuggestionItem user)
                 {
-                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-                    {
+                    //await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                    //{
                         if (user.FollowText == "Follow")
                         {
                             var result = await Helper.InstaApi.UserProcessor.FollowUserAsync(user.User.Pk);
@@ -193,7 +198,7 @@ namespace Minista.Views.Main
                                 user.FollowText = "Follow";
                         }
                         btn.DataContext = user;
-                    });
+                    //});
                   
                 }
             }
@@ -271,8 +276,8 @@ namespace Minista.Views.Main
                     {
                         MainVM.Stories.Clear();
                         MainVM.PostsGenerator.Items.Clear();
-                        if (Helpers.NavigationService.Frame.BackStack.Count > 0)
-                            Helpers.NavigationService.Frame.BackStack.Clear();
+                        if (NavigationService.Frame.BackStack.Count > 0)
+                            NavigationService.Frame.BackStack.Clear();
                         Helper.UserChanged = false;
                         MainPage.Current?.HideBackButton();
                         MainVM.FirstRun(true);
@@ -325,11 +330,11 @@ namespace Minista.Views.Main
         {
             try
             {
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-                {
+                //await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                //{
                     await Task.Delay(100);
                     MediaMainUc = null;
-                });
+                //});
             }
             catch { }
         }

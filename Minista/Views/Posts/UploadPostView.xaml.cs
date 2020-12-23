@@ -63,7 +63,6 @@ namespace Minista.Views.Posts
 
             if (e.NavigationMode == NavigationMode.New)
                 GetType().RemovePageFromBackStack();
-            Helper.CreateCachedFolder();
             try
             {
                 if (e.Parameter != null && e.Parameter is StorageFile file && file != null)
@@ -74,11 +73,9 @@ namespace Minista.Views.Posts
 
         private async void ImportButtonClick(object sender, RoutedEventArgs e)
         {
-            //try
+            try
             {
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
+                Helper.DontUseTimersAndOtherStuff = true;
                 FileOpenPicker openPicker = new FileOpenPicker
                 {
                     ViewMode = PickerViewMode.Thumbnail,
@@ -92,10 +89,14 @@ namespace Minista.Views.Posts
                 openPicker.FileTypeFilter.Add(".mp4");
                 openPicker.FileTypeFilter.Add(".mkv");
                 var file = await openPicker.PickSingleFileAsync();
+                Helper.DontUseTimersAndOtherStuff = false;
                 if (file == null) return;
                 ImportFile(file);
             }
-            //catch { }
+            catch
+            {
+                Helper.DontUseTimersAndOtherStuff = false;
+            }
         }
 
         BitmapDecoder VideoBitmapDecoder;
@@ -364,9 +365,6 @@ namespace Minista.Views.Posts
         {
             try
             {
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
                 if (IsVideo)
                 {
                     using (var fileStream = await ThumbnailFile.OpenAsync(FileAccessMode.ReadWrite, StorageOpenOptions.None))

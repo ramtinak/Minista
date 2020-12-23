@@ -54,10 +54,10 @@ namespace Minista.ItemsGenerators
         }
         public async Task RunLoadMoreAsync(bool refresh = false)
         {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            {
+            //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            //{
                 await LoadMoreItemsAsync(refresh);
-            });
+            //});
         }
         async Task LoadMoreItemsAsync(bool refresh = false)
         {
@@ -129,8 +129,8 @@ namespace Minista.ItemsGenerators
 
                     try
                     {
-                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async() =>
-                        {
+                        //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async() =>
+                        //{
                             //foreach (var item in Items)
                             for(int i = 0; i< Items.Count;i++)
                             {
@@ -173,7 +173,7 @@ namespace Minista.ItemsGenerators
                                     }
                                 }
                             }
-                        });
+                        //});
                     }
                     catch { }
 
@@ -230,12 +230,12 @@ namespace Minista.ItemsGenerators
             }
             catch (Exception ex) { ex.PrintException("Scroll_ViewChanging"); }
         }
-        public async void MuteRequested(long userPk)
+        public /*async*/ void MuteRequested(long userPk)
         {
             try
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
+                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                //{
                     if (Items.Count > 0)
                         foreach (var item in Items.ToList())
                         {
@@ -245,16 +245,16 @@ namespace Minista.ItemsGenerators
                                     Items.Remove(item);
                             }
                         }
-                });
+                //});
             }
             catch { }
         }
-        public async void MuteHashtagRequested(string tagName)
+        public /*async*/ void MuteHashtagRequested(string tagName)
         {
             try
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
+                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                //{
                     if (Items.Count > 0)
                         foreach (var item in Items.ToList())
                         {
@@ -267,16 +267,16 @@ namespace Minista.ItemsGenerators
                                 }
                             }
                         }
-                });
+                //});
             }
             catch { }
         }
-        public async void RemoveItemRequested(string mediaId)
+        public /*async*/ void RemoveItemRequested(string mediaId)
         {
             try
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
+                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                //{
                     if (Items.Count > 0)
                         foreach (var item in Items.ToList())
                         {
@@ -286,16 +286,16 @@ namespace Minista.ItemsGenerators
                                 return;
                             }
                         }
-                });
+                //});
             }
             catch { }
         }
-        public async void DontShowThisItemRequested(string mediaId)
+        public /*async*/ void DontShowThisItemRequested(string mediaId)
         {
             try
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
+                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                //{
                     if (Items.Count > 0)
                         foreach (var item in Items.ToList())
                         {
@@ -305,7 +305,7 @@ namespace Minista.ItemsGenerators
                                 return;
                             }
                         }
-                });
+                //});
             }
             catch { }
         }

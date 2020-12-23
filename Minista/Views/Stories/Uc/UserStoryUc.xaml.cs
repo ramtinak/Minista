@@ -248,7 +248,7 @@ namespace Minista.Views.Stories
                         {
                             if (string.IsNullOrEmpty(selectedStoryId))
                             {
-                                if (Items[i].StoryItem.TakenAt.ToUnixTime() == StoryFeed.Seen)
+                                if (Items[i].StoryItem.TakenAtUnix == StoryFeed.Seen)
                                 {
                                     index = i /*+ 1*/;
                                     break;
@@ -362,6 +362,7 @@ namespace Minista.Views.Stories
                         DateText.Text = Convert.ToString(new Converters.DateTimeConverter().Convert(StoryItemUc.StoryItem.TakenAt, null, null, null));
                     }
                     catch { }
+                    StoryItemUc.SeenStory();
                     //StartProgressTimer();
                 }
                 CurrentFlipViewIndex = index;
@@ -435,6 +436,7 @@ namespace Minista.Views.Stories
             TitleGrid.Visibility = Visibility.Collapsed;
         }
         #endregion
+
         #region Timers
         int TimerIndex = 0;
         private void TimerTick(object sender, object e)

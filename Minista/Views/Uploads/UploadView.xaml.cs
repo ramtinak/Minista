@@ -49,13 +49,6 @@ namespace Minista.Views.Uploads
         {
             try
             {
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-            }
-            catch { }
-            try
-            {
                 UserImage.Fill = Helper.CurrentUser.ProfilePicture.GetImageBrush();
             }
             catch { }
@@ -161,6 +154,7 @@ namespace Minista.Views.Uploads
         {
             try
             {
+                Helper.DontUseTimersAndOtherStuff = true;
                 FileOpenPicker openPicker = new FileOpenPicker
                 {
                     ViewMode = PickerViewMode.Thumbnail,
@@ -174,9 +168,15 @@ namespace Minista.Views.Uploads
                 openPicker.FileTypeFilter.Add(".mp4");
                 //openPicker.FileTypeFilter.Add(".mkv");
                 var files = await openPicker.PickMultipleFilesAsync();
+                Helper.DontUseTimersAndOtherStuff = false;
                 ImportFiles(files, appendFiles);
             }
-            catch (Exception ex) { ex.PrintException("ImportButtonClick"); Helper.ShowErr("ImportButtonClick", ex); }
+            catch (Exception ex)
+            {
+                ex.PrintException("ImportButtonClick");
+                Helper.ShowErr("ImportButtonClick", ex);
+                Helper.DontUseTimersAndOtherStuff = false;
+            }
 
         }
         private async void ImportFiles(IReadOnlyList<StorageFile> files, bool appendFiles = false)

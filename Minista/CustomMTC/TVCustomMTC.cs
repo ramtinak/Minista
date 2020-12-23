@@ -199,14 +199,14 @@ namespace Minista
         {
             try
             {
-               await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-               {
+               //await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+               //{
                    "UpGrid_Tapped".PrintDebug();
                    CanHideControls = false;
                    await Task.Delay(300);
                    CanHideControls = true;
 
-               });
+               //});
             }
             catch { }
         }
@@ -215,14 +215,14 @@ namespace Minista
         {
             try
             {
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-                {
+                //await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                //{
                     "BottomGrid_Tapped".PrintDebug();
                     CanHideControls = false;
                     await Task.Delay(300);
                     CanHideControls = true;
 
-                });
+                //});
             }
             catch { }
         }

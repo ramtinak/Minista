@@ -162,6 +162,7 @@ namespace Minista.ViewModels.Direct
             }
             try
             {
+                if (Helper.DontUseTimersAndOtherStuff) return;
                 if (refresh)
                 {
                     Pagination = PaginationParameters.MaxPagesToLoad(1);
@@ -277,8 +278,9 @@ namespace Minista.ViewModels.Direct
         {
             try
             {
+                if (Helper.DontUseTimersAndOtherStuff) return;
                 //return;
-                if(!SettingsHelper.Settings.GhostMode)
+                if (!SettingsHelper.Settings.GhostMode)
                 if (Items.Count > 0)
                 {
                     var l = Items.ToList();
@@ -323,6 +325,7 @@ namespace Minista.ViewModels.Direct
             try
             {
                 if (GiphsItems.Count > 0) return;
+                if (Helper.DontUseTimersAndOtherStuff) return;
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     var giffy = await InstaApi.GetGiphyTrendingAsync();
@@ -365,6 +368,7 @@ namespace Minista.ViewModels.Direct
         {
             try
             {
+                if (Helper.DontUseTimersAndOtherStuff) return;
                 if (InboxViewModel.Instance.Items?.Count > 0)
                 {
                     DirectInboxUc uc = null;
@@ -465,7 +469,7 @@ namespace Minista.ViewModels.Direct
 
 
         #region Refresh Mode
-        readonly DispatcherTimer RefreshTimer = new DispatcherTimer();
+        public readonly DispatcherTimer RefreshTimer = new DispatcherTimer();
         async void RunTimer()
         {
             try
@@ -498,6 +502,7 @@ namespace Minista.ViewModels.Direct
         {
             try
             {
+                if (Helper.DontUseTimersAndOtherStuff) return;
                 if (CanRefreshTimer)
                 {
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>

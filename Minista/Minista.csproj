@@ -33,7 +33,7 @@
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
   <!--Condition="'$(Platform)' == 'ARM'"-->
-  <!--<PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)' == 'ARM'">
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">ARM</Platform>
     <ProjectGuid>{8E409A1C-75D5-4FAB-B389-5D8F22AE0032}</ProjectGuid>
@@ -59,10 +59,11 @@
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>90A8B6EF46ACA45F0367B7B6AB75ED8A7B603D25</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>
+    </PackageCertificateThumbprint>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-  </PropertyGroup>-->
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
@@ -96,6 +97,8 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <OutputPath>bin\ARM\Release\</OutputPath>
@@ -108,6 +111,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
     <DebugSymbols>true</DebugSymbols>

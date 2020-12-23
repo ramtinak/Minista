@@ -38,13 +38,6 @@ namespace Minista.Views.Uploads
 
         private void UploadView_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-            }
-            catch { }
         }
 
         private void ImportButtonClick(object sender, RoutedEventArgs e) => ImportFile();
@@ -53,6 +46,7 @@ namespace Minista.Views.Uploads
         {
             try
             {
+                Helper.DontUseTimersAndOtherStuff = true;
                 FileOpenPicker openPicker = new FileOpenPicker
                 {
                     ViewMode = PickerViewMode.Thumbnail,
@@ -66,8 +60,14 @@ namespace Minista.Views.Uploads
                 var file = await openPicker.PickSingleFileAsync();
                 if (file == null) return;
                 await UploadStoryUc.SetFileAsync(file);
+                Helper.DontUseTimersAndOtherStuff = false;
             }
-            catch (Exception ex) { ex.PrintException("ImportButtonClick"); Helper.ShowErr("ImportButtonClick", ex); }
+            catch (Exception ex)
+            {
+                ex.PrintException("ImportButtonClick");
+                Helper.ShowErr("ImportButtonClick", ex);
+                Helper.DontUseTimersAndOtherStuff = false;
+            }
 
         }
 

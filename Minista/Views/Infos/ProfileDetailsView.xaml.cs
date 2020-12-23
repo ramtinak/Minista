@@ -123,7 +123,6 @@ namespace Minista.Views.Infos
             RefreshControl.RefreshRequested += RefreshControlRefreshRequested;
             if (RefreshControl.Visualizer != null)
                 RefreshControl.Visualizer.RefreshStateChanged += RefreshControlRefreshStateChanged;
-            Helper.CreateCachedFolder();
             ToggleGoUpButtonAnimation(false);
             ToggleRefreshButtonAnimation(false);
             if(NavigationMode == NavigationMode.New)

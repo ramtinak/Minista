@@ -53,7 +53,7 @@ namespace Minista.Views.Direct
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
+            ("OnNavigatedTo:   :   :   :   :   :   :   :   :   :   " + e.NavigationMode).PrintDebug();
             KeyDown += OnKeyDownHandler;
             if (e.NavigationMode == NavigationMode.New)
                 GetType().RemovePageFromBackStack();
@@ -127,6 +127,7 @@ namespace Minista.Views.Direct
 
         private void TimerTick(object sender, object e)
         {
+            if (Helper.DontUseTimersAndOtherStuff) return;
             try
             {
                 InboxVM.GetUserPresense();

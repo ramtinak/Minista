@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 using Minista.Helpers;
-using static Helper;
 using Windows.ApplicationModel.Core;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
@@ -39,6 +38,7 @@ using MinistaHelper.Push;
 using Minista.Views.Main;
 using InstagramApiSharp.API;
 using Newtonsoft.Json;
+using static Helper;
 
 namespace Minista
 {
@@ -48,9 +48,8 @@ namespace Minista
         public static MainPage Current;
         public MediaElement ME => mediaElement;
 
-        Windows.System.Display.DisplayRequest ScreenOnRequest;
+        //Windows.System.Display.DisplayRequest ScreenOnRequest;
         public RealtimeClient RealtimeClient { get;  set; }
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -80,7 +79,62 @@ namespace Minista
             }
             catch { }
         }
+        
+        private async void MainPageLoaded(object sender, RoutedEventArgs e)
+        {
+            ThemeHelper.InitTheme(SettingsHelper.Settings.CurrentTheme);
+            CreateConfig();
+            try
+            {
+                Focus(FocusState.Pointer);
+            }
+            catch { }
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+            coreTitleBar.LayoutMetricsChanged += CoreTitleBarLayoutMetricsChanged;
+            UpdateTitleBarLayout(coreTitleBar);
+            Window.Current.SetTitleBar(AppTitleBarORG);
+            if (InstaApi == null || InstaApi != null && !InstaApi.IsUserAuthenticated)
+            {
+                SetStackPanelTitleVisibility(Visibility.Collapsed);
+                NavigationService.Navigate(typeof(Views.Sign.SignInView));
+            }
+            else
+                NavigateToMainView();
 
+            if (!SettingsHelper.Settings.AskedAboutPosition)
+            {
+                SettingsGrid.Visibility = Visibility.Visible;
+            }
+            //if (App.ScreenOnRequest != null)
+            //    App.ScreenOnRequest.RequestActive();
+            CheckLicense();
+            try
+            {
+                if (Passcode.IsEnabled)
+                {
+                    PassCodeView.Visibility = Visibility.Visible;
+                    LockControl.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    PassCodeView.Visibility = Visibility.Collapsed;
+                    LockControl.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch { }
+            try
+            {
+                await BackgroundExecutionManager.RequestAccessAsync();
+            }
+            catch { }
+            try
+            {
+                UserNotificationListener listener = UserNotificationListener.Current;
+                await listener.RequestAccessAsync();
+            }
+            catch { }
+        }
         private void OnDragOver(object sender, DragEventArgs e)
         {
             e.AcceptedOperation = DataPackageOperation.Copy;
@@ -269,12 +323,12 @@ namespace Minista
             }
             catch { }
         }
-        async void NavigateToMainViewAsync()
+        /*async*/ void NavigateToMainViewAsync()
         {
             try
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, /*async*/ () =>
-                {
+                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, /*async*/ () =>
+                //{
                     if (Views.Direct.InboxView.Current != null)
                     {
                         Views.Direct.InboxView.Current.ResetPageCache();
@@ -404,66 +458,11 @@ namespace Minista
                     }
                     catch { }
                     SessionHelper.DontSaveSettings = false;
-                });
+                //});
             }
             catch { }
         }
 
-        private async void MainPageLoaded(object sender, RoutedEventArgs e)
-        {
-            ThemeHelper.InitTheme(SettingsHelper.Settings.CurrentTheme);
-            CreateConfig();
-            try
-            {
-                Focus(FocusState.Pointer);
-            }
-            catch { }
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            coreTitleBar.LayoutMetricsChanged += CoreTitleBarLayoutMetricsChanged;
-            UpdateTitleBarLayout(coreTitleBar);
-            Window.Current.SetTitleBar(AppTitleBarORG);
-            if (InstaApi == null || InstaApi != null && !InstaApi.IsUserAuthenticated)
-            {
-                SetStackPanelTitleVisibility(Visibility.Collapsed);
-                NavigationService.Navigate(typeof(Views.Sign.SignInView));
-            }
-            else
-                NavigateToMainView();
-
-            if (!SettingsHelper.Settings.AskedAboutPosition)
-            {
-                SettingsGrid.Visibility = Visibility.Visible;
-            }
-            if (ScreenOnRequest != null)
-                ScreenOnRequest.RequestActive();
-            CheckLicense();
-            try
-            {
-                if (Passcode.IsEnabled)
-                {
-                    PassCodeView.Visibility = Visibility.Visible;
-                    LockControl.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    PassCodeView.Visibility = Visibility.Collapsed;
-                    LockControl.Visibility = Visibility.Collapsed;
-                }
-            }
-            catch { }
-            try
-            {
-                await BackgroundExecutionManager.RequestAccessAsync();
-            }
-            catch { }
-            try
-            {
-                UserNotificationListener listener = UserNotificationListener.Current;
-                await listener.RequestAccessAsync();
-            }
-            catch { }
-        }
 
         private void CoreTitleBarLayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
         {
@@ -519,11 +518,11 @@ namespace Minista
             ChangeTileBarTheme();
             CreateCachedFilesFolder();
             NavigationService.StartService();
-            ScreenOnRequest = new Windows.System.Display.DisplayRequest();
+            //App.ScreenOnRequest = new Windows.System.Display.DisplayRequest();
             if (!DeviceHelper.IsThisMinista())
             {
-                await new MessageDialog("Oops, It seems you changed my app package to crack it.\r\n\r\n" +
-                    "You can work with Minista!!!").ShowAsync();
+                //await new MessageDialog("Oops, It seems you changed my app package to crack it.\r\n\r\n" +
+                //    "You can work with Minista!!!").ShowAsync();
                 //try
                 //{
                 //    CoreApplication.Exit();
@@ -556,8 +555,8 @@ namespace Minista
             NavigationService.StopService();
             try
             {
-                if (ScreenOnRequest != null)
-                    ScreenOnRequest.RequestRelease();
+                if (App.ScreenOnRequest != null)
+                    App.ScreenOnRequest.RequestRelease();
             }
             catch { }
             try
