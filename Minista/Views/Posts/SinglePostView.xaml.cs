@@ -77,16 +77,7 @@ namespace Minista.Views.Posts
             }
             if (!CanLoadFirstPopUp)
             {
-                Media = null;
-                if (!string.IsNullOrEmpty(MediaIdOrLINKPrivate))
-                {
-                    MediaIdOrLINK = MediaIdOrLINKPrivate;
-                    HandleLinkOrMediaId(MediaIdOrLINK);
-                }
-                else if (MediaPrivate != null)
-                {
-                    Media = MediaPrivate;
-                }
+                Handle();
                 CanLoadFirstPopUp = true;
             }
         }
@@ -110,6 +101,42 @@ namespace Minista.Views.Posts
                     MediaIdOrLINKPrivate = mediaIdOrLink;
                     MediaPrivate = null;
                     //HandleLinkOrMediaId(mediaIdOrLink);
+                }
+            }
+            catch { }
+        }
+        public void HandleUri(object obj)
+        {
+            try
+            {
+                if (obj is InstaMedia media)
+                {
+                    MediaPrivate = media;
+                    MediaIdOrLINKPrivate = null;
+                    Handle();
+                }
+                else if (obj is string mediaIdOrLink)
+                {
+                    MediaIdOrLINKPrivate = mediaIdOrLink;
+                    MediaPrivate = null;
+                    Handle();
+                }
+            }
+            catch { }
+        }
+        void Handle()
+        {
+            try
+            {
+                Media = null;
+                if (!string.IsNullOrEmpty(MediaIdOrLINKPrivate))
+                {
+                    MediaIdOrLINK = MediaIdOrLINKPrivate;
+                    HandleLinkOrMediaId(MediaIdOrLINK);
+                }
+                else if (MediaPrivate != null)
+                {
+                    Media = MediaPrivate;
                 }
             }
             catch { }

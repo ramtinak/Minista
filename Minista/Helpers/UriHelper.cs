@@ -38,7 +38,10 @@ namespace Minista.Helpers
                     {
                         if (url.Contains("/reel/"))
                             url = url.Replace("/reel/", "/p/");
-                        NavigationService.Navigate(typeof(Views.Posts.SinglePostView), url);
+                        if (NavigationService.Frame.Content is Views.Posts.SinglePostView spw)
+                            spw.HandleUri(url);
+                        else
+                            NavigationService.Navigate(typeof(Views.Posts.SinglePostView), url);
                     }
                     else if (url.ToLower().Contains(IgStories))
                     {
