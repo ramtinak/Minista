@@ -18,6 +18,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Thrift.Protocol;
 
@@ -27,6 +28,7 @@ namespace Thrift.Collections
 
     public static class ToStringExtensions
     {
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public static void ToString(this object self, StringBuilder sb, bool first = true)
         {
             if (!first)

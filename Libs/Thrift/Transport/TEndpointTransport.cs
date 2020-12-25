@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Thrift.Transport
@@ -26,6 +27,7 @@ namespace Thrift.Transport
         /// <summary>
         /// Resets RemainingMessageSize to the configured maximum 
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         protected void ResetConsumedMessageSize(long newSize = -1)
         {
             // full reset 
@@ -50,6 +52,7 @@ namespace Thrift.Transport
         /// Will throw if we already consumed too many bytes or if the new size is larger than allowed.
         /// </summary>
         /// <param name="size"></param>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override void UpdateKnownMessageSize(long size)
         {
             var consumed = KnownMessageSize - RemainingMessageSize;
@@ -71,6 +74,7 @@ namespace Thrift.Transport
         /// Consumes numBytes from the RemainingMessageSize.
         /// </summary>
         /// <param name="numBytes"></param>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         protected void CountConsumedMessageBytes(long numBytes)
         {
             if (RemainingMessageSize >= numBytes)

@@ -37,6 +37,7 @@ using Windows.System.Profile;
 using InstagramApiSharp.Helpers;
 using InstagramApiSharp.API.RealTime.Handlers;
 using Windows.Security.Cryptography.Certificates;
+using System.Runtime.CompilerServices;
 
 namespace MinistaHelper.Push
 {
@@ -79,6 +80,7 @@ namespace MinistaHelper.Push
             ApiList = apis;
             _instaApi = api ?? throw new ArgumentException("Api can't be null", nameof(api));
         }
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public void ValidateData()
         {
             ConnectionData = _instaApi.ConnectionData ?? new FbnsConnectionData();
@@ -91,6 +93,7 @@ namespace MinistaHelper.Push
             if (string.IsNullOrEmpty(ConnectionData.UserAgent))
                 ConnectionData.UserAgent = FbnsUserAgent.BuildFbUserAgent(_instaApi);
         }
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public void OpenNow()
         {
             NetworkInformation.NetworkStatusChanged += async sender =>
@@ -124,6 +127,7 @@ namespace MinistaHelper.Push
         }
 
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task<bool> RequestBackgroundAccess()
         {
             if (DontTransferSocket || IsRunningFromBackground) return false;
@@ -168,6 +172,7 @@ namespace MinistaHelper.Push
         /// Transfer socket as well as necessary context for background push notification client. 
         /// Transfer only happens if user is logged in.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public async Task TransferPushSocket()
         {
             //return;
@@ -203,6 +208,7 @@ namespace MinistaHelper.Push
                 return true;
         }
         public static bool IsMobile => AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile";
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public async void Start()
         {
             if (!_instaApi.IsUserAuthenticated) return;
@@ -237,6 +243,7 @@ namespace MinistaHelper.Push
                 await StartFresh().ConfigureAwait(false);
             }
         }
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public async Task StartWithExistingSocket(StreamSocket socket)
         {
             try
@@ -265,7 +272,9 @@ namespace MinistaHelper.Push
                 Shutdown();
             }
         }
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public async Task StartFresh() => await StartFresh(false);
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public async Task StartFresh(bool withBG)
         {
             try
@@ -334,8 +343,9 @@ namespace MinistaHelper.Push
                     await StartFresh(true);
                 }
             }
-            
+
         }
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public void Shutdown()
         {
             _runningTokenSource?.Cancel();
@@ -346,6 +356,7 @@ namespace MinistaHelper.Push
             Log($"[{_instaApi.GetLoggedUser().UserName}] " + "Stopped pinging push server");
             Retry();
         }
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async void Retry()
         {
             if (IsRunningFromBackground) return;
@@ -363,6 +374,7 @@ namespace MinistaHelper.Push
                 IsRetrying = false;
             }
         }
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async void StartPollingLoop()
         {
             int tried = 0;
@@ -403,6 +415,7 @@ namespace MinistaHelper.Push
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public async Task SendPing()
         {
             try
@@ -425,6 +438,7 @@ namespace MinistaHelper.Push
             RegReq = 79,    // "/fbns_reg_req"
             RegResp = 80    // "/fbns_reg_resp"
         }
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task OnPacketReceived(Packet msg)
         {
             try
@@ -517,6 +531,7 @@ namespace MinistaHelper.Push
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         internal async Task RegisterClient(string token)
         {
             if (string.IsNullOrEmpty(token)) throw new ArgumentNullException(nameof(token));
@@ -568,6 +583,7 @@ namespace MinistaHelper.Push
         ///     The server will then return a token for registering over Instagram API side.
         /// </summary>
         /// <param name="ctx"></param>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task RegisterMqttClient()
         {
             var message = new Dictionary<string, string>
@@ -605,6 +621,7 @@ namespace MinistaHelper.Push
             WaitForPubAck();
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async void WaitForPubAck()
         {
             _waitingForPubAck = true;
@@ -619,6 +636,7 @@ namespace MinistaHelper.Push
             catch { }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async void StartKeepAliveLoop()
         {
             if (_runningTokenSource == null) return;
@@ -636,6 +654,7 @@ namespace MinistaHelper.Push
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private byte[] DecompressPayload(IBuffer payload)
         {
             var compressedStream = payload.AsStream();

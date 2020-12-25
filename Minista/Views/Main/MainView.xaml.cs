@@ -43,34 +43,6 @@ namespace Minista.Views.Main
         //ListView LatestStoriesLV = null;
 
         public static MainView Current;
-        async void OPEN()
-        {
-            try
-            {
-                Helper.DontUseTimersAndOtherStuff = true;
-                FileOpenPicker openPicker = new FileOpenPicker
-                {
-                    ViewMode = PickerViewMode.Thumbnail,
-                    SuggestedStartLocation = PickerLocationId.PicturesLibrary
-                };
-                openPicker.FileTypeFilter.Add(".jpg");
-                openPicker.FileTypeFilter.Add(".jpeg");
-                openPicker.FileTypeFilter.Add(".bmp");
-                //openPicker.FileTypeFilter.Add(".gif");
-                openPicker.FileTypeFilter.Add(".png");
-                openPicker.FileTypeFilter.Add(".mp4");
-                //openPicker.FileTypeFilter.Add(".mkv");
-                var files = await openPicker.PickMultipleFilesAsync();
-                Helper.DontUseTimersAndOtherStuff = false;
-                Helper.ShowMsg("FILES SUCCESSFULLY OPEN");
-            }
-            catch (Exception ex)
-            {
-                ex.PrintException("ImportButtonClick");
-                Helper.ShowErr("ImportButtonClick", ex);
-                Helper.DontUseTimersAndOtherStuff = false;
-            }
-        }
         public MainView()
         {
             this.InitializeComponent();
@@ -162,7 +134,10 @@ namespace Minista.Views.Main
         {
             if (all) 
             {
-                await UserHelper.GetBanyanAsync();
+                if (Helper.CurrentUser != null)
+                    await UserHelper.GetBanyanAsync().ConfigureAwait(false);
+                else
+                    await UserHelper.GetBanyanAsync();
                 UserHelper.GetSelfUser();
             }
             MainVM.FirstRun(true);

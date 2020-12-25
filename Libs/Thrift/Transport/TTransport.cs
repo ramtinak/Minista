@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -41,6 +42,7 @@ namespace Thrift.Transport
             GC.SuppressFinalize(this);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public async ValueTask<bool> PeekAsync(CancellationToken cancellationToken)
         {
             //If we already have a byte read but not consumed, do nothing.
@@ -106,6 +108,7 @@ namespace Thrift.Transport
 
         public abstract ValueTask<int> ReadAsync(byte[] buffer, int offset, int length, CancellationToken cancellationToken);
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public virtual async ValueTask<int> ReadAllAsync(byte[] buffer, int offset, int length, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();

@@ -55,7 +55,7 @@ namespace Minista
             if (e.Kind == ActivationKind.Protocol)
             {
                 var uriArgs = e as ProtocolActivatedEventArgs;
-                System.Diagnostics.Debug.WriteLine("URI>>>>>> " + uriArgs.Uri.ToString());
+                Debug.WriteLine("URI>>>>>> " + uriArgs.Uri.ToString());
                 MainPage.NavigationUriProtocol = uriArgs.Uri.ToString();
 
                 // Ensure the current window is active

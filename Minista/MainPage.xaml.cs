@@ -919,7 +919,7 @@ namespace Minista
             var ab = new MinistaWhiteTheme();
 
             await Task.Delay(1500);
-            var json2 = Newtonsoft.Json.JsonConvert.SerializeObject(ab);
+            var json2 = JsonConvert.SerializeObject(ab);
             json2.PrintDebug();
             FileOpenPicker openPicker = new FileOpenPicker
             {

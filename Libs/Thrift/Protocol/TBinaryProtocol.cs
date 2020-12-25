@@ -27,6 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thrift.Protocol.Entities;
 using Thrift.Transport;
+using System.Runtime.CompilerServices;
 
 namespace Thrift.Protocol
 {
@@ -55,6 +56,7 @@ namespace Thrift.Protocol
             StrictWrite = strictWrite;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteMessageBeginAsync(TMessage message, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -74,24 +76,28 @@ namespace Thrift.Protocol
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task WriteMessageEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task WriteStructBeginAsync(TStruct @struct, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task WriteStructEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteFieldBeginAsync(TField field, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -99,12 +105,14 @@ namespace Thrift.Protocol
             await WriteI16Async(field.ID, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task WriteFieldEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteFieldStopAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -112,6 +120,7 @@ namespace Thrift.Protocol
             await WriteByteAsync((sbyte) TType.Stop, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteMapBeginAsync(TMap map, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -123,12 +132,14 @@ namespace Thrift.Protocol
             await WriteI32Async(map.Count, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task WriteMapEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteListBeginAsync(TList list, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -136,12 +147,14 @@ namespace Thrift.Protocol
             await WriteI32Async(list.Count, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task WriteListEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteSetBeginAsync(TSet set, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -149,18 +162,21 @@ namespace Thrift.Protocol
             await WriteI32Async(set.Count, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task WriteSetEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteBoolAsync(bool b, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             await WriteByteAsync(b ? (sbyte) 1 : (sbyte) 0, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteByteAsync(sbyte b, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -169,6 +185,7 @@ namespace Thrift.Protocol
 
             await Trans.WriteAsync(PreAllocatedBuffer, 0, 1, cancellationToken);
         }
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteI16Async(short i16, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -179,6 +196,7 @@ namespace Thrift.Protocol
             await Trans.WriteAsync(PreAllocatedBuffer, 0, 2, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteI32Async(int i32, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -189,7 +207,8 @@ namespace Thrift.Protocol
             await Trans.WriteAsync(PreAllocatedBuffer, 0, 4, cancellationToken);
         }
 
-      
+
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteI64Async(long i64, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -200,6 +219,7 @@ namespace Thrift.Protocol
             await Trans.WriteAsync(PreAllocatedBuffer, 0, 8, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteDoubleAsync(double d, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -208,6 +228,7 @@ namespace Thrift.Protocol
         }
 
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteBinaryAsync(byte[] bytes, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -216,6 +237,7 @@ namespace Thrift.Protocol
             await Trans.WriteAsync(bytes, 0, bytes.Length, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<TMessage> ReadMessageBeginAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -248,24 +270,28 @@ namespace Thrift.Protocol
             return message;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task ReadMessageEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override ValueTask<TStruct> ReadStructBeginAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return new ValueTask<TStruct>(AnonymousStruct);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task ReadStructEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<TField> ReadFieldBeginAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -282,12 +308,14 @@ namespace Thrift.Protocol
             };
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task ReadFieldEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<TMap> ReadMapBeginAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -302,12 +330,14 @@ namespace Thrift.Protocol
             return map;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task ReadMapEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<TList> ReadListBeginAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -321,12 +351,14 @@ namespace Thrift.Protocol
             return list;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task ReadListEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<TSet> ReadSetBeginAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -340,12 +372,14 @@ namespace Thrift.Protocol
             return set;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task ReadSetEndAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<bool> ReadBoolAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -353,6 +387,7 @@ namespace Thrift.Protocol
             return await ReadByteAsync(cancellationToken) == 1;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<sbyte> ReadByteAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -361,6 +396,7 @@ namespace Thrift.Protocol
             return (sbyte)PreAllocatedBuffer[0];
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<short> ReadI16Async(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -371,6 +407,7 @@ namespace Thrift.Protocol
             return result;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<int> ReadI32Async(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -383,6 +420,7 @@ namespace Thrift.Protocol
             return result;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<long> ReadI64Async(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -392,6 +430,7 @@ namespace Thrift.Protocol
             //return BinaryPrimitives.ReadInt64BigEndian(PreAllocatedBuffer);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<double> ReadDoubleAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -400,6 +439,7 @@ namespace Thrift.Protocol
             return BitConverter.Int64BitsToDouble(d);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<byte[]> ReadBinaryAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -411,6 +451,7 @@ namespace Thrift.Protocol
             return buf;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<string> ReadStringAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -419,6 +460,7 @@ namespace Thrift.Protocol
             return size > 0 ? await ReadStringBodyAsync(size, cancellationToken) : string.Empty;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async ValueTask<string> ReadStringBodyAsync(int size, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -436,6 +478,7 @@ namespace Thrift.Protocol
         }
 
         // Return the minimum number of bytes a type will consume on the wire
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override int GetMinSerializedSize(TType type)
         {
             switch (type)

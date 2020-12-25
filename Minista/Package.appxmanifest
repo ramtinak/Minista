@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:desktop4="http://schemas.microsoft.com/appx/manifest/desktop/windows10/4" IgnorableNamespaces="uap mp uap2 uap3 desktop4">
-  <Identity Name="64775ParseDevInc.Minista" Publisher="CN=Ramtin" Version="2.9.30.0" />
-  <mp:PhoneIdentity PhoneProductId="0e2a0dcc-b1e3-48ba-b846-a4e8eb023e04" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="64775ParseDevInc.Minista" Publisher="CN=ACB1F19A-470F-487C-A7C7-D50D6F38E651" Version="3.0.3.0" />
+  <mp:PhoneIdentity PhoneProductId="44247c96-68cf-4c5e-a37f-38bbd538067b" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Minista - Better Experience with Instagram in Windows 10 Devices</DisplayName>
     <PublisherDisplayName>Ramtin</PublisherDisplayName>
@@ -9,6 +9,9 @@
   </Properties>
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+    <PackageDependency Name="Microsoft.NET.Native.Framework.1.7" MinVersion="1.7.27413.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
+    <!--<PackageDependency Name="Microsoft.NET.Native.Framework.1.6" MinVersion="1.6.24903.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />-->
+    <!--<PackageDependency Name="Microsoft.NET.Native.Runtime.1.7" MinVersion="1.7.25304.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />-->
   </Dependencies>
   <Resources>
     <Resource Language="x-generate" />

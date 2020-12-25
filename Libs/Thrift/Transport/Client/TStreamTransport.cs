@@ -16,6 +16,7 @@
 // under the License.
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -72,6 +73,7 @@ namespace Thrift.Transport.Client
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<int> ReadAsync(byte[] buffer, int offset, int length, CancellationToken cancellationToken)
         {
             if (InputStream == null)
@@ -87,6 +89,7 @@ namespace Thrift.Transport.Client
 #endif
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteAsync(byte[] buffer, int offset, int length, CancellationToken cancellationToken)
         {
             if (OutputStream == null)
@@ -98,6 +101,7 @@ namespace Thrift.Transport.Client
             await OutputStream.WriteAsync(buffer, offset, length, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task FlushAsync(CancellationToken cancellationToken)
         {
             await OutputStream.FlushAsync(cancellationToken);

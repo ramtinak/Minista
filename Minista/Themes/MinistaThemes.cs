@@ -18,9 +18,8 @@ namespace Minista.Themes
     {
         public MinistaWhiteTheme()
         {
-
             DefaultBackgroundColor = "#FFFFFFFF";
-            DefaultItemBackgroundColor = "#FFF0E3E4";
+            DefaultItemBackgroundColor = "#FFF0E9EE";  /*FFF0E3E4*/
             DefaultForegroundColor = "#FF000000";
             DefaultInnerForegroundColor = "#FF171717";
             SeperatorColor = "#FF363636";
@@ -67,6 +66,4 @@ namespace Minista.Themes
 
         }
     }
-
-
 }

@@ -15,6 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Thrift.Protocol.Entities;
@@ -74,6 +75,7 @@ namespace Thrift.Protocol
             _serviceName = serviceName;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteMessageBeginAsync(TMessage message, CancellationToken cancellationToken)
         {
             switch (message.Type)

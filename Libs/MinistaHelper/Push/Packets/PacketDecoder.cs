@@ -6,6 +6,7 @@ using MinistaHelper.Mqtt;
 using MinistaHelper.Mqtt.Packets;
 using InstagramApiSharp.Logger;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace MinistaHelper.Push.Packets
 {
@@ -39,6 +40,7 @@ namespace MinistaHelper.Push.Packets
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public static async Task<Packet> DecodePacket(DataReader reader)
         {
             int signature = reader.ReadByte();
@@ -58,6 +60,7 @@ namespace MinistaHelper.Push.Packets
             return packet;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private static Packet DecodePacketInternal(DataReader reader, int packetSignature, ref uint remainingLength)
         {
             if (Signatures.IsPublish(packetSignature))
@@ -115,6 +118,7 @@ namespace MinistaHelper.Push.Packets
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void DecodeSubscribePayload(DataReader reader, SubscribePacket packet, ref uint remainingLength)
         {
             var subscribeTopics = new List<SubscriptionRequest>();
@@ -141,6 +145,7 @@ namespace MinistaHelper.Push.Packets
             packet.Requests = subscribeTopics;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void DecodeSubAckPayload(DataReader reader, SubAckPacket packet, ref uint remainingLength)
         {
             var returnCodes = new QualityOfService[remainingLength];
@@ -158,6 +163,7 @@ namespace MinistaHelper.Push.Packets
             remainingLength = 0;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void DecodeUnsubscribePayload(DataReader reader, UnsubscribePacket packet, ref uint remainingLength)
         {
             var unsubscribeTopics = new List<string>();
@@ -178,6 +184,7 @@ namespace MinistaHelper.Push.Packets
             remainingLength = 0;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void DecodeConnectPacket(DataReader reader, FbnsConnectPacket packet, ref uint remainingLength)
         {
             string protocolName = DecodeString(reader, ref remainingLength);
@@ -256,6 +263,7 @@ namespace MinistaHelper.Push.Packets
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void DecodeConnAckPacket(DataReader reader, FbnsConnAckPacket packet, ref uint remainingLength)
         {
             packet.ConnAckFlags = reader.ReadByte();
@@ -272,6 +280,7 @@ namespace MinistaHelper.Push.Packets
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void DecodePublishPacket(DataReader reader, PublishPacket packet, ref uint remainingLength)
         {
             string topicName = DecodeString(reader, ref remainingLength);
@@ -302,6 +311,7 @@ namespace MinistaHelper.Push.Packets
             packet.Payload = payload;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private static async Task<uint> DecodeRemainingLength(DataReader reader)
         {
             uint multiplier = 1 << 7;
@@ -334,16 +344,20 @@ namespace MinistaHelper.Push.Packets
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static ushort DecodeUnsignedShort(DataReader reader, ref uint remainingLength)
         {
             DecreaseRemainingLength(ref remainingLength, 2);
             return reader.ReadUInt16();
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static string DecodeString(DataReader reader, ref uint remainingLength) => DecodeString(reader, ref remainingLength, 0, uint.MaxValue);
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static string DecodeString(DataReader reader, ref uint remainingLength, uint minBytes) => DecodeString(reader, ref remainingLength, minBytes, uint.MaxValue);
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static string DecodeString(DataReader reader, ref uint remainingLength, uint minBytes, uint maxBytes)
         {
             ushort size = DecodeUnsignedShort(reader, ref remainingLength);

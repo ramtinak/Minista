@@ -16,6 +16,7 @@
 // under the License.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,6 +53,7 @@ namespace Thrift.Protocol
             Dispose(true);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public void IncrementRecursionDepth()
         {
             if (RecursionDepth < RecursionLimit)
@@ -64,6 +66,7 @@ namespace Thrift.Protocol
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public void DecrementRecursionDepth()
         {
             --RecursionDepth;
@@ -82,16 +85,19 @@ namespace Thrift.Protocol
         }
 
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         protected void CheckReadBytesAvailable(TSet set)
         {
             Transport.CheckReadBytesAvailable(set.Count * GetMinSerializedSize(set.ElementType));
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         protected void CheckReadBytesAvailable(TList list)
         {
             Transport.CheckReadBytesAvailable(list.Count * GetMinSerializedSize(list.ElementType));
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         protected void CheckReadBytesAvailable(TMap map)
         {
             var elmSize = GetMinSerializedSize(map.KeyType) + GetMinSerializedSize(map.ValueType);

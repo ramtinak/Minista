@@ -114,7 +114,7 @@
             <SolidColorBrush x:Key="DirectVoiceRecordForegroundColor">#FFFFFFFF</SolidColorBrush>
             <SolidColorBrush x:Key="DirectHeartButtonForegroundColor">#FF8A0015</SolidColorBrush>-->
 
-
+            <!--FFF0E3E4-->
             <SolidColorBrush x:Key="DefaultBackgroundColor">#FF151515</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultItemBackgroundColor">#FF232323</SolidColorBrush>
             <SolidColorBrush x:Key="DefaultForegroundColor">#FFB4B4B4</SolidColorBrush>

@@ -15,6 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
+using System.Runtime.CompilerServices;
 using Thrift.Protocol.Entities;
 
 namespace Thrift.Protocol.Utilities
@@ -22,6 +23,7 @@ namespace Thrift.Protocol.Utilities
     // ReSharper disable once InconsistentNaming
     public static class TJSONProtocolHelper
     {
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public static byte[] GetTypeNameForTypeId(TType typeId)
         {
             switch (typeId)
@@ -53,6 +55,7 @@ namespace Thrift.Protocol.Utilities
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public static TType GetTypeIdForTypeName(byte[] name)
         {
             var result = TType.Stop;
@@ -114,6 +117,7 @@ namespace Thrift.Protocol.Utilities
         /// <summary>
         ///     Return true if the given byte could be a valid part of a JSON number.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public static bool IsJsonNumeric(byte b)
         {
             switch (b)
@@ -143,6 +147,7 @@ namespace Thrift.Protocol.Utilities
         ///     Convert a byte containing a hex char ('0'-'9' or 'a'-'f') into its
         ///     corresponding hex value
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public static byte ToHexVal(byte ch)
         {
             if (ch >= '0' && ch <= '9')
@@ -162,6 +167,7 @@ namespace Thrift.Protocol.Utilities
         /// <summary>
         ///     Convert a byte containing a hex value to its corresponding hex character
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public static byte ToHexChar(byte val)
         {
             val &= 0x0F;

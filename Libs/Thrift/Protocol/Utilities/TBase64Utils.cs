@@ -16,6 +16,7 @@
 // under the License.
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Thrift.Protocol.Utilities
 {
@@ -48,6 +49,7 @@ namespace Thrift.Protocol.Utilities
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
         };
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         internal static void Encode(byte[] src, int srcOff, int len, byte[] dst, int dstOff)
         {
             if (src == null)
@@ -75,6 +77,7 @@ namespace Thrift.Protocol.Utilities
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         internal static void Decode(byte[] src, int srcOff, int len, byte[] dst, int dstOff)
         {
             if (src == null)

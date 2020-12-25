@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Thrift.Protocol;
@@ -38,6 +39,7 @@ namespace Thrift.Processor
         //    return await ProcessAsync(iprot, oprot, CancellationToken.None);
         //}
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -92,6 +94,7 @@ namespace Thrift.Processor
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public void RegisterProcessor(string serviceName, ITAsyncProcessor processor)
         {
             if (_serviceProcessorMap.ContainsKey(serviceName))
@@ -103,6 +106,7 @@ namespace Thrift.Processor
             _serviceProcessorMap.Add(serviceName, processor);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task FailAsync(TProtocol oprot, TMessage message, TApplicationException.ExceptionType extype,
             string etxt, CancellationToken cancellationToken)
         {
@@ -126,6 +130,7 @@ namespace Thrift.Processor
                 _msgBegin = messageBegin;
             }
 
+            [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
             public override ValueTask<TMessage> ReadMessageBeginAsync(CancellationToken cancellationToken)
             {
                 cancellationToken.ThrowIfCancellationRequested();

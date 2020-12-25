@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,6 +70,7 @@ namespace Thrift.Protocol
         /// <summary>
         ///     Push a new JSON context onto the stack.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         protected void PushContext(JSONBaseContext c)
         {
             ContextStack.Push(Context);
@@ -78,6 +80,7 @@ namespace Thrift.Protocol
         /// <summary>
         ///     Pop the last JSON context off the stack
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         protected void PopContext()
         {
             Context = ContextStack.Pop();
@@ -88,6 +91,7 @@ namespace Thrift.Protocol
         ///    even in cases where the protocol instance was in an undefined state due to
         ///    dangling/stale/obsolete contexts
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private void resetContext()
         {
             ContextStack.Clear();
@@ -98,6 +102,7 @@ namespace Thrift.Protocol
         ///     Marked protected to avoid synthetic accessor in JSONListContext.Read
         ///     and JSONPairContext.Read
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         protected async Task ReadJsonSyntaxCharAsync(byte[] bytes, CancellationToken cancellationToken)
         {
             var ch = await Reader.ReadAsync(cancellationToken);
@@ -110,6 +115,7 @@ namespace Thrift.Protocol
         /// <summary>
         ///     Write the bytes in array buf as a JSON characters, escaping as needed
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task WriteJsonStringAsync(byte[] bytes, CancellationToken cancellationToken)
         {
             await Context.WriteConditionalDelimiterAsync(cancellationToken);
@@ -158,6 +164,7 @@ namespace Thrift.Protocol
         ///     Write out number as a JSON value. If the context dictates so, it will be
         ///     wrapped in quotes to output as a JSON string.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task WriteJsonIntegerAsync(long num, CancellationToken cancellationToken)
         {
             await Context.WriteConditionalDelimiterAsync(cancellationToken);
@@ -182,6 +189,7 @@ namespace Thrift.Protocol
         ///     Write out a double as a JSON value. If it is NaN or infinity or if the
         ///     context dictates escaping, Write out as JSON string.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task WriteJsonDoubleAsync(double num, CancellationToken cancellationToken)
         {
             await Context.WriteConditionalDelimiterAsync(cancellationToken);
@@ -222,6 +230,7 @@ namespace Thrift.Protocol
         ///     Write out contents of byte array b as a JSON string with base-64 encoded
         ///     data
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task WriteJsonBase64Async(byte[] bytes, CancellationToken cancellationToken)
         {
             await Context.WriteConditionalDelimiterAsync(cancellationToken);
@@ -249,6 +258,7 @@ namespace Thrift.Protocol
             await Trans.WriteAsync(TJSONProtocolConstants.Quote, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task WriteJsonObjectStartAsync(CancellationToken cancellationToken)
         {
             await Context.WriteConditionalDelimiterAsync(cancellationToken);
@@ -256,12 +266,14 @@ namespace Thrift.Protocol
             PushContext(new JSONPairContext(this));
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task WriteJsonObjectEndAsync(CancellationToken cancellationToken)
         {
             PopContext();
             await Trans.WriteAsync(TJSONProtocolConstants.RightBrace, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task WriteJsonArrayStartAsync(CancellationToken cancellationToken)
         {
             await Context.WriteConditionalDelimiterAsync(cancellationToken);
@@ -269,12 +281,14 @@ namespace Thrift.Protocol
             PushContext(new JSONListContext(this));
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task WriteJsonArrayEndAsync(CancellationToken cancellationToken)
         {
             PopContext();
             await Trans.WriteAsync(TJSONProtocolConstants.RightBracket, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteMessageBeginAsync(TMessage message, CancellationToken cancellationToken)
         {
             resetContext();
@@ -288,21 +302,25 @@ namespace Thrift.Protocol
             await WriteJsonIntegerAsync(message.SeqID, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteMessageEndAsync(CancellationToken cancellationToken)
         {
             await WriteJsonArrayEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteStructBeginAsync(TStruct @struct, CancellationToken cancellationToken)
         {
             await WriteJsonObjectStartAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteStructEndAsync(CancellationToken cancellationToken)
         {
             await WriteJsonObjectEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteFieldBeginAsync(TField field, CancellationToken cancellationToken)
         {
             await WriteJsonIntegerAsync(field.ID, cancellationToken);
@@ -310,17 +328,20 @@ namespace Thrift.Protocol
             await WriteJsonStringAsync(TJSONProtocolHelper.GetTypeNameForTypeId(field.Type), cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteFieldEndAsync(CancellationToken cancellationToken)
         {
             await WriteJsonObjectEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task WriteFieldStopAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteMapBeginAsync(TMap map, CancellationToken cancellationToken)
         {
             await WriteJsonArrayStartAsync(cancellationToken);
@@ -330,12 +351,14 @@ namespace Thrift.Protocol
             await WriteJsonObjectStartAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteMapEndAsync(CancellationToken cancellationToken)
         {
             await WriteJsonObjectEndAsync(cancellationToken);
             await WriteJsonArrayEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteListBeginAsync(TList list, CancellationToken cancellationToken)
         {
             await WriteJsonArrayStartAsync(cancellationToken);
@@ -343,11 +366,13 @@ namespace Thrift.Protocol
             await WriteJsonIntegerAsync(list.Count, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteListEndAsync(CancellationToken cancellationToken)
         {
             await WriteJsonArrayEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteSetBeginAsync(TSet set, CancellationToken cancellationToken)
         {
             await WriteJsonArrayStartAsync(cancellationToken);
@@ -355,47 +380,56 @@ namespace Thrift.Protocol
             await WriteJsonIntegerAsync(set.Count, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteSetEndAsync(CancellationToken cancellationToken)
         {
             await WriteJsonArrayEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteBoolAsync(bool b, CancellationToken cancellationToken)
         {
             await WriteJsonIntegerAsync(b ? 1 : 0, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteByteAsync(sbyte b, CancellationToken cancellationToken)
         {
             await WriteJsonIntegerAsync(b, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteI16Async(short i16, CancellationToken cancellationToken)
         {
             await WriteJsonIntegerAsync(i16, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteI32Async(int i32, CancellationToken cancellationToken)
         {
             await WriteJsonIntegerAsync(i32, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteI64Async(long i64, CancellationToken cancellationToken)
         {
             await WriteJsonIntegerAsync(i64, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteDoubleAsync(double d, CancellationToken cancellationToken)
         {
             await WriteJsonDoubleAsync(d, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteStringAsync(string s, CancellationToken cancellationToken)
         {
             var b = Utf8Encoding.GetBytes(s);
             await WriteJsonStringAsync(b, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task WriteBinaryAsync(byte[] bytes, CancellationToken cancellationToken)
         {
             await WriteJsonBase64Async(bytes, cancellationToken);
@@ -405,6 +439,7 @@ namespace Thrift.Protocol
         ///     Read in a JSON string, unescaping as appropriate.. Skip Reading from the
         ///     context if skipContext is true.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async ValueTask<byte[]> ReadJsonStringAsync(bool skipContext, CancellationToken cancellationToken)
         {
             using (var buffer = new MemoryStream())
@@ -496,6 +531,7 @@ namespace Thrift.Protocol
         ///     Read in a sequence of characters that are all valid in JSON numbers. Does
         ///     not do a complete regex check to validate that this is actually a number.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async ValueTask<string> ReadJsonNumericCharsAsync(CancellationToken cancellationToken)
         {
             var strbld = new StringBuilder();
@@ -523,6 +559,7 @@ namespace Thrift.Protocol
         /// <summary>
         ///     Read in a JSON number. If the context dictates, Read in enclosing quotes.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async ValueTask<long> ReadJsonIntegerAsync(CancellationToken cancellationToken)
         {
             await Context.ReadConditionalDelimiterAsync(cancellationToken);
@@ -551,6 +588,7 @@ namespace Thrift.Protocol
         ///     Read in a JSON double value. Throw if the value is not wrapped in quotes
         ///     when expected or if wrapped in quotes when not expected.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async ValueTask<double> ReadJsonDoubleAsync(CancellationToken cancellationToken)
         {
             await Context.ReadConditionalDelimiterAsync(cancellationToken);
@@ -587,6 +625,7 @@ namespace Thrift.Protocol
         /// <summary>
         ///     Read in a JSON string containing base-64 encoded data and decode it.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async ValueTask<byte[]> ReadJsonBase64Async(CancellationToken cancellationToken)
         {
             var b = await ReadJsonStringAsync(false, cancellationToken);
@@ -625,6 +664,7 @@ namespace Thrift.Protocol
             return result;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task ReadJsonObjectStartAsync(CancellationToken cancellationToken)
         {
             await Context.ReadConditionalDelimiterAsync(cancellationToken);
@@ -632,12 +672,14 @@ namespace Thrift.Protocol
             PushContext(new JSONPairContext(this));
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task ReadJsonObjectEndAsync(CancellationToken cancellationToken)
         {
             await ReadJsonSyntaxCharAsync(TJSONProtocolConstants.RightBrace, cancellationToken);
             PopContext();
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task ReadJsonArrayStartAsync(CancellationToken cancellationToken)
         {
             await Context.ReadConditionalDelimiterAsync(cancellationToken);
@@ -645,12 +687,14 @@ namespace Thrift.Protocol
             PushContext(new JSONListContext(this));
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private async Task ReadJsonArrayEndAsync(CancellationToken cancellationToken)
         {
             await ReadJsonSyntaxCharAsync(TJSONProtocolConstants.RightBracket, cancellationToken);
             PopContext();
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<TMessage> ReadMessageBeginAsync(CancellationToken cancellationToken)
         {
             var message = new TMessage();
@@ -669,11 +713,13 @@ namespace Thrift.Protocol
             return message;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task ReadMessageEndAsync(CancellationToken cancellationToken)
         {
             await ReadJsonArrayEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<TStruct> ReadStructBeginAsync(CancellationToken cancellationToken)
         {
             await ReadJsonObjectStartAsync(cancellationToken);
@@ -681,11 +727,13 @@ namespace Thrift.Protocol
             return AnonymousStruct;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task ReadStructEndAsync(CancellationToken cancellationToken)
         {
             await ReadJsonObjectEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<TField> ReadFieldBeginAsync(CancellationToken cancellationToken)
         {
             var ch = await Reader.PeekAsync(cancellationToken);
@@ -704,11 +752,13 @@ namespace Thrift.Protocol
             return field;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task ReadFieldEndAsync(CancellationToken cancellationToken)
         {
             await ReadJsonObjectEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<TMap> ReadMapBeginAsync(CancellationToken cancellationToken)
         {
             var map = new TMap();
@@ -721,12 +771,14 @@ namespace Thrift.Protocol
             return map;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task ReadMapEndAsync(CancellationToken cancellationToken)
         {
             await ReadJsonObjectEndAsync(cancellationToken);
             await ReadJsonArrayEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<TList> ReadListBeginAsync(CancellationToken cancellationToken)
         {
             var list = new TList();
@@ -737,11 +789,13 @@ namespace Thrift.Protocol
             return list;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task ReadListEndAsync(CancellationToken cancellationToken)
         {
             await ReadJsonArrayEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<TSet> ReadSetBeginAsync(CancellationToken cancellationToken)
         {
             var set = new TSet();
@@ -752,53 +806,63 @@ namespace Thrift.Protocol
             return set;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async Task ReadSetEndAsync(CancellationToken cancellationToken)
         {
             await ReadJsonArrayEndAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<bool> ReadBoolAsync(CancellationToken cancellationToken)
         {
             return await ReadJsonIntegerAsync(cancellationToken) != 0;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<sbyte> ReadByteAsync(CancellationToken cancellationToken)
         {
             return (sbyte) await ReadJsonIntegerAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<short> ReadI16Async(CancellationToken cancellationToken)
         {
             return (short) await ReadJsonIntegerAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<int> ReadI32Async(CancellationToken cancellationToken)
         {
             return (int) await ReadJsonIntegerAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<long> ReadI64Async(CancellationToken cancellationToken)
         {
             return await ReadJsonIntegerAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<double> ReadDoubleAsync(CancellationToken cancellationToken)
         {
             return await ReadJsonDoubleAsync(cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<string> ReadStringAsync(CancellationToken cancellationToken)
         {
             var buf = await ReadJsonStringAsync(false, cancellationToken);
             return Utf8Encoding.GetString(buf, 0, buf.Length);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override async ValueTask<byte[]> ReadBinaryAsync(CancellationToken cancellationToken)
         {
             return await ReadJsonBase64Async(cancellationToken);
         }
 
         // Return the minimum number of bytes a type will consume on the wire
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override int GetMinSerializedSize(TType type)
         {
             switch (type)
@@ -876,6 +940,7 @@ namespace Thrift.Protocol
             {
             }
 
+            [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
             public override async Task WriteConditionalDelimiterAsync(CancellationToken cancellationToken)
             {
                 if (_first)
@@ -888,6 +953,7 @@ namespace Thrift.Protocol
                 }
             }
 
+            [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
             public override async Task ReadConditionalDelimiterAsync(CancellationToken cancellationToken)
             {
                 if (_first)
@@ -919,6 +985,7 @@ namespace Thrift.Protocol
             {
             }
 
+            [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
             public override async Task WriteConditionalDelimiterAsync(CancellationToken cancellationToken)
             {
                 if (_first)
@@ -933,6 +1000,7 @@ namespace Thrift.Protocol
                 }
             }
 
+            [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
             public override async Task ReadConditionalDelimiterAsync(CancellationToken cancellationToken)
             {
                 if (_first)
@@ -947,6 +1015,7 @@ namespace Thrift.Protocol
                 }
             }
 
+            [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
             public override bool EscapeNumbers()
             {
                 return _colon;
@@ -972,6 +1041,7 @@ namespace Thrift.Protocol
             ///     Return and consume the next byte to be Read, either taking it from the
             ///     data buffer if present or getting it from the transport otherwise.
             /// </summary>
+            [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
             public async ValueTask<byte> ReadAsync(CancellationToken cancellationToken)
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -992,6 +1062,7 @@ namespace Thrift.Protocol
             ///     Return the next byte to be Read without consuming, filling the data
             ///     buffer if it has not been filled alReady.
             /// </summary>
+            [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
             public async ValueTask<byte> PeekAsync(CancellationToken cancellationToken)
             {
                 cancellationToken.ThrowIfCancellationRequested();

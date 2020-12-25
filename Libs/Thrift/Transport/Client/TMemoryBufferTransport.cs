@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -73,6 +74,7 @@ namespace Thrift.Transport.Client
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public void SetLength(int value)
         {
             Length = value;
@@ -92,6 +94,7 @@ namespace Thrift.Transport.Client
             /** do nothing **/
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public void Seek(int delta, SeekOrigin origin)
         {
             int newPos;
@@ -118,6 +121,7 @@ namespace Thrift.Transport.Client
             CountConsumedMessageBytes(Position);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override ValueTask<int> ReadAsync(byte[] buffer, int offset, int length, CancellationToken cancellationToken)
         {
             var count = Math.Min(Length - Position, length);
@@ -127,11 +131,13 @@ namespace Thrift.Transport.Client
             return new ValueTask<int>(count);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task WriteAsync(byte[] buffer, CancellationToken cancellationToken)
         {
             return WriteAsync(buffer, 0, buffer.Length, cancellationToken);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             var free = Length - Position;
@@ -141,6 +147,7 @@ namespace Thrift.Transport.Client
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public override Task FlushAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -148,6 +155,7 @@ namespace Thrift.Transport.Client
             return Task.CompletedTask;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public byte[] GetBuffer()
         {
             var retval = new byte[Length];
@@ -155,6 +163,7 @@ namespace Thrift.Transport.Client
             return retval;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         internal bool TryGetBuffer(out ArraySegment<byte> bufSegment)
         {
             bufSegment = new ArraySegment<byte>(Bytes, 0, _bytesUsed);

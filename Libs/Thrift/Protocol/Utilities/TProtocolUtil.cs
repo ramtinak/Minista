@@ -15,6 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Thrift.Protocol.Entities;
@@ -24,6 +25,7 @@ namespace Thrift.Protocol.Utilities
     // ReSharper disable once InconsistentNaming
     public static class TProtocolUtil
     {
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public static async Task SkipAsync(TProtocol protocol, TType type, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();

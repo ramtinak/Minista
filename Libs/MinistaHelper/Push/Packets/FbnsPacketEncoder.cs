@@ -6,6 +6,7 @@ using MinistaHelper.Mqtt;
 using InstagramApiSharp.Logger;
 using MinistaHelper.Mqtt.Packets;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace MinistaHelper.Push.Packets
 {
@@ -15,6 +16,7 @@ namespace MinistaHelper.Push.Packets
         const uint STRING_SIZE_LENGTH = 2;
         // const uint MAX_VARIABLE_LENGTH = 4;
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public static async Task EncodePacket(Packet packet, DataWriter writer)
         {
             DebugLogger.Log(nameof(FbnsPacketEncoder), $"Encoding {packet.PacketType}");
@@ -62,6 +64,8 @@ namespace MinistaHelper.Push.Packets
             await writer.StoreAsync();
             await writer.FlushAsync();
         }
+
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void EncodeSubscribeMessage(SubscribePacket packet, DataWriter writer)
         {
             uint VariableHeaderSize = (int)PACKET_ID_LENGTH;
@@ -94,6 +98,7 @@ namespace MinistaHelper.Push.Packets
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void EncodeSubAckMessage(SubAckPacket message, DataWriter writer)
         {
             uint payloadBufferSize = (uint)message.ReturnCodes.Count;
@@ -107,6 +112,7 @@ namespace MinistaHelper.Push.Packets
                 writer.WriteByte((byte)qos);
             }
         }
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void EncodeUnsubscribeMessage(UnsubscribePacket packet, DataWriter writer)
         {
             const uint VariableHeaderSize = 2;
@@ -137,6 +143,7 @@ namespace MinistaHelper.Push.Packets
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void EncodeConnectMessage(ConnectPacket packet, DataWriter writer)
         {
             uint payloadwriterferSize = 0;
@@ -228,6 +235,7 @@ namespace MinistaHelper.Push.Packets
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private static void EncodeFbnsConnectPacket(FbnsConnectPacket packet, DataWriter writer)
         {
             var payload = packet.Payload;
@@ -255,6 +263,7 @@ namespace MinistaHelper.Push.Packets
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private static void EncodePublishPacket(PublishPacket packet, DataWriter writer)
         {
             var payload = packet.Payload;
@@ -282,6 +291,7 @@ namespace MinistaHelper.Push.Packets
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void EncodePacketWithIdOnly(PacketWithId packet, DataWriter writer)
         {
             var msgId = packet.PacketId;
@@ -293,6 +303,7 @@ namespace MinistaHelper.Push.Packets
             writer.WriteUInt16(msgId);
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void EncodePacketWithFixedHeaderOnly(Packet packet, DataWriter writer)
         {
             try
@@ -303,6 +314,7 @@ namespace MinistaHelper.Push.Packets
             catch { }
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static byte CalculateFirstByteOfFixedHeader(Packet packet)
         {
             int ret = 0;
@@ -319,6 +331,7 @@ namespace MinistaHelper.Push.Packets
             return (byte) ret;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         static void WriteVariableLengthInt(DataWriter writer, uint value)
         {
             do

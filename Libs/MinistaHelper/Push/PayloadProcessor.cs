@@ -12,6 +12,7 @@ using CompressionMode = Ionic.Zlib.CompressionMode;
 using Thrift;
 using System.Threading;
 using InstagramApiSharp.API;
+using System.Runtime.CompilerServices;
 
 namespace MinistaHelper.Push
 {
@@ -51,6 +52,7 @@ namespace MinistaHelper.Push
         /// Make a complete payload from <see cref="FbnsConnectionData"/> using Thrift.
         /// </summary>
         /// <returns>Payload</returns>
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         public static async Task<IBuffer> BuildPayload(FbnsConnectionData data)
         {
             _memoryBufferTransport = new TMemoryBufferTransport(new TConfiguration());
@@ -70,6 +72,7 @@ namespace MinistaHelper.Push
             return compressed;
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
         private static async Task<byte[]> ToThrift()
         {
             await WriteString(CLIENT_ID, _payloadData.ClientId);

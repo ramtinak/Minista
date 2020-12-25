@@ -9,7 +9,7 @@ namespace BinaryEncoding
     {
         private class BigEndianCodec : EndianCodec
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(ushort value, List<byte> bytes)
             {
                 bytes[0] = (byte)(value >> 8);
@@ -18,10 +18,10 @@ namespace BinaryEncoding
                 return 2;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(ushort value, byte[] bytes, int offset = 0) => Set(value, bytes.Skip(offset).ToArray());
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(short value, List<byte> bytes)
             {
                 bytes[0] = (byte)(value >> 8);
@@ -30,10 +30,10 @@ namespace BinaryEncoding
                 return 2;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(short value, byte[] bytes, int offset = 0) => Set(value, bytes.Skip(offset).ToArray());
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(uint value, List<byte> bytes)
             {
                 bytes[0] = (byte)(value >> 24);
@@ -44,10 +44,10 @@ namespace BinaryEncoding
                 return 4;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(uint value, byte[] bytes, int offset = 0) => Set(value, bytes.Skip(offset).ToArray());
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(int value, List<byte> bytes)
             {
                 bytes[0] = (byte)(value >> 24);
@@ -58,10 +58,10 @@ namespace BinaryEncoding
                 return 4;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(int value, byte[] bytes, int offset = 0) => Set(value, bytes.Skip(offset).ToArray());
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(ulong value, List<byte> bytes)
             {
                 bytes[0] = (byte)(value >> 56);
@@ -76,10 +76,10 @@ namespace BinaryEncoding
                 return 8;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(ulong value, byte[] bytes, int offset = 0) => Set(value, bytes.Skip(offset).ToArray());
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(long value, List<byte> bytes)
             {
                 bytes[0] = (byte)(value >> 56);
@@ -94,42 +94,42 @@ namespace BinaryEncoding
                 return 8;
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int Set(long value, byte[] bytes, int offset = 0) => Set(value, bytes.Skip(offset).ToArray());
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override short GetInt16(IReadOnlyList<byte> bytes) => (short)(bytes[1] | bytes[0] << 8);
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override short GetInt16(byte[] bytes, int offset = 0) => GetInt16(bytes.Skip(offset).ToArray());
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override ushort GetUInt16(IReadOnlyList<byte> bytes) => (ushort) (bytes[1] | bytes[0] << 8);
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override ushort GetUInt16(byte[] bytes, int offset = 0) => GetUInt16(bytes.Skip(offset).ToArray());
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int GetInt32(IReadOnlyList<byte> bytes) =>
                 bytes[3] |
                 bytes[2] << 8 |
                 bytes[1] << 16 |
                 bytes[0] << 24;
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override int GetInt32(byte[] bytes, int offset = 0) => GetInt32(bytes.Skip(offset).ToArray());
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override uint GetUInt32(IReadOnlyList<byte> bytes) =>
                 (uint)bytes[3] |
                 (uint)bytes[2] << 8 |
                 (uint)bytes[1] << 16 |
                 (uint)bytes[0] << 24;
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override uint GetUInt32(byte[] bytes, int offset = 0) => GetUInt32(bytes.Skip(offset).ToArray());
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override long GetInt64(IReadOnlyList<byte> bytes) =>
                 (long)bytes[7] |
                 (long)bytes[6] << 8 |
@@ -140,7 +140,7 @@ namespace BinaryEncoding
                 (long)bytes[1] << 48 |
                 (long)bytes[0] << 56;
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override long GetInt64(byte[] bytes, int offset = 0) => GetInt64(bytes.Skip(offset).ToArray());
 
             public override ulong GetUInt64(IReadOnlyList<byte> bytes) =>
@@ -153,7 +153,7 @@ namespace BinaryEncoding
                 (ulong)bytes[1] << 48 |
                 (ulong)bytes[0] << 56;
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
             public override ulong GetUInt64(byte[] bytes, int offset = 0) => GetUInt64(bytes.Skip(offset).ToArray());
         }
     }
