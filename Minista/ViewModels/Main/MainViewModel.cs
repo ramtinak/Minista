@@ -35,7 +35,6 @@ namespace Minista.ViewModels.Main
         public Visibility StoreisVisibility { get { return _storeisVisibility; } set { _storeisVisibility = value; OnPropertyChanged("StoreisVisibility"); } }
         public async void FirstRun(bool refresh = false)
         {
-         
             RefreshStories(refresh);
             PostsGenerator.RunLoadMore(refresh);
             InboxViewModel.ResetInstance();
@@ -43,8 +42,8 @@ namespace Minista.ViewModels.Main
             {
                 try
                 {
-                    //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                    //{
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
                         if (InboxViewModel.Instance.SeqId <= 0)
                             await InboxViewModel.Instance.RunLoadMoreAsync(refresh);
                         if (MainPage.Current.RealtimeClient == null)
@@ -56,7 +55,7 @@ namespace Minista.ViewModels.Main
                         client.TypingChanged += InboxViewModel.Instance.RealtimeClientClientTypingChanged;
                         client.BroadcastChanged += RealtimeClientBroadcastChanged;
 
-                    //});
+                    });
                 }
                 catch { }
             }
@@ -119,8 +118,8 @@ namespace Minista.ViewModels.Main
         {
             try
             {
-                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                //{
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
                     var stories = await InstaApi.StoryProcessor.GetStoryFeedWithPostMethodAsync(refresh);
                     if (stories.Succeeded)
                     {
@@ -247,7 +246,7 @@ namespace Minista.ViewModels.Main
                             MainView.Current?.TryToRefresh(true);
                         }
                     }
-                //});
+                });
             }
             catch(Exception ex) { ex.PrintException("MainViewModel.RefreshStories"); }
             refresh = false;

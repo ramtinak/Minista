@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-using FFmpegInterop;
+//using FFmpegInterop;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using InstagramApiSharp;
@@ -23,6 +23,7 @@ using InstagramApiSharp.Classes.Models;
 using InstagramApiSharp.Helpers;
 using InstagramApiSharp.Enums;
 using System.Threading.Tasks;
+using static Helper;
 
 namespace Minista.Views
 {
@@ -169,13 +170,13 @@ namespace Minista.Views
             if (file == null) return;
 
             var stream = await file.OpenAsync(FileAccessMode.Read);
-            var grabber = await FrameGrabber.CreateFromStreamAsync(stream);
-            var frame = await grabber
-                .ExtractVideoFrameAsync(TimeSpan.FromSeconds(4.5), false);
+            //var grabber = await FrameGrabber.CreateFromStreamAsync(stream);
+            //var frame = await grabber
+            //    .ExtractVideoFrameAsync(TimeSpan.FromSeconds(4.5), false);
             int ix = 1;
             var savedFile = await KnownFolders.MusicLibrary.CreateFileAsync(ix + ".jpg", CreationCollisionOption.GenerateUniqueName);
             var oStream = await savedFile.OpenAsync(FileAccessMode.ReadWrite);
-            await frame.EncodeAsJpegAsync(oStream);
+            //await frame.EncodeAsJpegAsync(oStream);
             oStream.Dispose();
 
             for (int i = 0; i < 100; i++)
@@ -220,8 +221,50 @@ namespace Minista.Views
         //    LatestItemIndex = args.ItemIndex;
         //}
     }
-    static class PESSSSSSS
+    /*static*/ class PESSSSSSS
     {
-        
+        public async void AAAAA()
+        {
+            var userResult = await InstaApi.UserProcessor.GetUserAsync("instagram");
+
+            if (userResult.Succeeded)
+            {
+                var stories = await InstaApi.StoryProcessor.GetUserStoryAsync(userResult.Value.Pk); // getting user's stories
+                if (stories.Succeeded && stories.Value?.Items?.Count > 0)
+                {
+                    var reelStory = stories.Value; // reel story contains all stories of someone
+                    var storyItem1 = reelStory.Items[0]; // choose a story
+
+                    // Mark a story as seen>
+                    // Since there are 3 different API for seen a story, you have to checks them first
+
+                    if (reelStory.IsElection)// checks for election story
+                    {
+                        var dic = new List<InstaStoryElectionKeyValue>
+                        {
+                           new InstaStoryElectionKeyValue
+                           {
+                               StoryId = reelStory.Id,
+                               StoryItemId = storyItem1.Id,
+                               TakenAtUnix = storyItem1.TakenAt.ToUnixTime().ToString()
+                           }
+                        };
+                        var seen = await InstaApi.StoryProcessor.MarkMultipleElectionStoriesAsSeenAsync(dic);
+                    }
+                    else // otherwise is normal story or hashtag story
+                    {
+                        var dic = new Dictionary<string, long>
+                        {
+                            {storyItem1.Id, storyItem1.TakenAt.ToUnixTime()},
+                            // you can mark multiple stories in here!
+                        };
+                        var seen = await InstaApi.StoryProcessor.MarkMultipleStoriesAsSeenAsync(dic);
+                    }
+
+                }
+
+            }
+
+        }
     }
 }

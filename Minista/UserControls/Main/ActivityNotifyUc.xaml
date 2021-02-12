@@ -1,28 +1,31 @@
-﻿<UserControl x:Class="Minista.UserControls.Main.ActivityNotifyUc"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:Minista.UserControls.Main"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             Height="42"
-             d:DesignWidth="80">
+﻿<UserControl
+    x:Class="Minista.UserControls.Main.ActivityNotifyUc"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Minista.UserControls.Main"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Height="42"
+    d:DesignWidth="80"
+    mc:Ignorable="d">
 
-    <Grid Opacity="1.8"
-          Height="42">
+    <Grid Height="42" Opacity="1.8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Path x:Name="PathTop" StrokeThickness="0" Visibility="Collapsed"
-              Grid.Row="1"
-              Fill="#FF187CF5"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Top"
-              RenderTransformOrigin="0.5,0.5"
-              Margin="13,-7,0,0"
-              UseLayoutRounding="False">
+        <Path
+            x:Name="PathTop"
+            Grid.Row="1"
+            Margin="13,-7,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Fill="#FF187CF5"
+            RenderTransformOrigin="0.5,0.5"
+            StrokeThickness="0"
+            UseLayoutRounding="False"
+            Visibility="Collapsed">
             <Path.RenderTransform>
                 <CompositeTransform Rotation="-90" />
             </Path.RenderTransform>
@@ -35,20 +38,19 @@
                 </PathGeometry>
             </Path.Data>
         </Path>
-        <Path x:Name="PathBottom" 
-              Grid.Row="1"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Bottom"
-              RenderTransformOrigin="0.5,0.5"
-              Margin="13,0,0,-7"
-              StrokeThickness="0"
-              UseLayoutRounding="False">
+        <Path
+            x:Name="PathBottom"
+            Grid.Row="1"
+            Margin="13,0,0,-7"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            RenderTransformOrigin="0.5,0.5"
+            StrokeThickness="0"
+            UseLayoutRounding="False">
             <Path.Fill>
-                <LinearGradientBrush EndPoint="0.5,1"
-                                     StartPoint="0.5,0">
-                    <GradientStop Color="#FF187CF5"  />
-                    <GradientStop Color="#FF44AAF6"
-                                 />
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="#FF187CF5" />
+                    <GradientStop Color="#FF44AAF6" />
                 </LinearGradientBrush>
             </Path.Fill>
             <Path.RenderTransform>
@@ -63,17 +65,16 @@
                 </PathGeometry>
             </Path.Data>
         </Path>
-        <Grid x:Name="GridCommands"
-              Grid.Row="1"
-              CornerRadius="5"
-              Height="30"
-              Margin="5">
+        <Grid
+            x:Name="GridCommands"
+            Grid.Row="1"
+            Height="30"
+            Margin="5"
+            CornerRadius="5">
             <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1"
-                                     StartPoint="0.5,0">
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                     <GradientStop Color="#FF187CF5" />
-                    <GradientStop Color="#FF44AAF6"
-                                  Offset="1" />
+                    <GradientStop Offset="1" Color="#FF44AAF6" />
                 </LinearGradientBrush>
             </Grid.Background>
             <Grid.ColumnDefinitions>
@@ -84,91 +85,104 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Grid x:Name="CommentGrid"
-                  VerticalAlignment="Center"
-                  Margin="4.5 2"
-                  Visibility="Collapsed">
+            <Grid
+                x:Name="CommentGrid"
+                Margin="4.5,2"
+                VerticalAlignment="Center"
+                Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Foreground="White"
-                           Text=""
-                           VerticalAlignment="Center"
-                           FontSize="{StaticResource HeaderFontSize}"
-                           FontFamily="{StaticResource MaterialSymbolFont}" />
-                <TextBlock x:Name="CommentText"
-                           Foreground="White"
-                           Grid.Column="1"
-                           VerticalAlignment="Center"
-                           FontSize="{StaticResource TinyLargeFontSize}"
-                           Text="5"
-                           FontFamily="{StaticResource VazirFont}">
-                </TextBlock>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource MaterialSymbolFont}"
+                    FontSize="{StaticResource HeaderFontSize}"
+                    Foreground="White"
+                    Text="" />
+                <TextBlock
+                    x:Name="CommentText"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource TinyLargeFontSize}"
+                    Foreground="White"
+                    Text="5" />
             </Grid>
-            <Grid x:Name="LikeGrid"
-                  Grid.Column="1"
-                  VerticalAlignment="Center"
-                  Margin="4.5 2"
-                  Visibility="Collapsed">
+            <Grid
+                x:Name="LikeGrid"
+                Grid.Column="1"
+                Margin="4.5,2"
+                VerticalAlignment="Center"
+                Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Foreground="White"
-                           Text=""
-                           VerticalAlignment="Center"
-                           FontSize="{StaticResource HeaderFontSize}"
-                           FontFamily="{StaticResource MaterialSymbolFont}" />
-                <TextBlock x:Name="LikeText"
-                           Foreground="White"
-                           Grid.Column="1"
-                           VerticalAlignment="Center"
-                           FontSize="{StaticResource TinyLargeFontSize}"
-                           Text="5" 
-                           FontFamily="{StaticResource VazirFont}">
-                </TextBlock>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource MaterialSymbolFont}"
+                    FontSize="{StaticResource HeaderFontSize}"
+                    Foreground="White"
+                    Text="" />
+                <TextBlock
+                    x:Name="LikeText"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource TinyLargeFontSize}"
+                    Foreground="White"
+                    Text="5" />
             </Grid>
-            <Grid x:Name="TagGrid" Grid.Column="2" VerticalAlignment="Center"
-                  Margin="4.5 2"
-                  Visibility="Collapsed">
+            <Grid
+                x:Name="TagGrid"
+                Grid.Column="2"
+                Margin="4.5,2"
+                VerticalAlignment="Center"
+                Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Foreground="White"
-                           Text=""
-                           VerticalAlignment="Center"
-                           FontSize="{StaticResource HeaderFontSize}"
-                           FontFamily="{StaticResource MaterialSymbolFont}" />
-                <TextBlock x:Name="TagText" Foreground="White"
-                           Grid.Column="1"
-                           VerticalAlignment="Center"
-                           FontSize="{StaticResource TinyLargeFontSize}"
-                           Text="1"
-                           FontFamily="{StaticResource VazirFont}">
-                </TextBlock>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource MaterialSymbolFont}"
+                    FontSize="{StaticResource HeaderFontSize}"
+                    Foreground="White"
+                    Text="" />
+                <TextBlock
+                    x:Name="TagText"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource TinyLargeFontSize}"
+                    Foreground="White"
+                    Text="1" />
             </Grid>
-            <Grid x:Name="RequestGrid" Grid.Column="3"
-                  VerticalAlignment="Center"
-                  Margin="4.5 2"
-                  Visibility="Collapsed">
+            <Grid
+                x:Name="RequestGrid"
+                Grid.Column="3"
+                Margin="4.5,2"
+                VerticalAlignment="Center"
+                Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Foreground="White"
-                           Text=""
-                           VerticalAlignment="Center"
-                           FontSize="{StaticResource HeaderFontSize}"
-                           FontFamily="{StaticResource MaterialSymbolFont}" />
-                <TextBlock x:Name="RequestText" Foreground="White"
-                           Grid.Column="1"
-                           VerticalAlignment="Center"
-                           FontSize="{StaticResource TinyLargeFontSize}"
-                           Text="0"
-                           FontFamily="{StaticResource VazirFont}">
-                </TextBlock>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource MaterialSymbolFont}"
+                    FontSize="{StaticResource HeaderFontSize}"
+                    Foreground="White"
+                    Text="" />
+                <TextBlock
+                    x:Name="RequestText"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource TinyLargeFontSize}"
+                    Foreground="White"
+                    Text="0" />
             </Grid>
 
         </Grid>

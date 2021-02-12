@@ -321,7 +321,7 @@ namespace InstagramApiSharp.API.RealTime
             catch { }
             try
             {
-                Socket.Dispose();
+                Socket?.Dispose();
             }
             catch { }
         }

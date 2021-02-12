@@ -85,7 +85,7 @@ namespace Minista.Helpers
                             NavigationService.Navigate(storyView, new object[] { user, storyId, url });
                     }
                     else
-                        Helper.OpenProfile(n);
+                        Helper.OpenProfile(n.Replace("/",""));
                 }
                 else
                     url.OpenUrl();// Open in default Web Browser

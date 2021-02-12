@@ -9,7 +9,7 @@ using Windows.Media.Transcoding;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using FFmpegInterop;
+//using FFmpegInterop;
 using Windows.Foundation;
 using Windows.Media.Effects;
 using Minista.Classes;

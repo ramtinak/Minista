@@ -564,7 +564,7 @@ namespace Minista.Controls
                 private StorageFile m_file;
                 //private LowLagMediaRecording m_lowLag;
                 public MediaCapture m_mediaCapture;
-                public MediaCaptureInitializationSettings settings;
+                //public MediaCaptureInitializationSettings settings;
 
                 public StorageFile File
                 {

@@ -39,6 +39,10 @@ using Minista.Views.Main;
 using InstagramApiSharp.API;
 using Newtonsoft.Json;
 using static Helper;
+using InstagramApiSharp.API.Builder;
+using InstagramApiSharp.Classes;
+using InstagramApiSharp.Logger;
+using System.Net;
 
 namespace Minista
 {
@@ -323,12 +327,12 @@ namespace Minista
             }
             catch { }
         }
-        /*async*/ void NavigateToMainViewAsync()
+        async void NavigateToMainViewAsync()
         {
             try
             {
-                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, /*async*/ () =>
-                //{
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, /*async*/ () =>
+                {
                     if (Views.Direct.InboxView.Current != null)
                     {
                         Views.Direct.InboxView.Current.ResetPageCache();
@@ -458,7 +462,7 @@ namespace Minista
                     }
                     catch { }
                     SessionHelper.DontSaveSettings = false;
-                //});
+                });
             }
             catch { }
         }
@@ -1018,6 +1022,55 @@ namespace Minista
             }
         }
         public class cc : List<PushNotification2> { }
+
+        private async void aaaaaaaaaaaaabc_Click(object sender, RoutedEventArgs e)
+        {
+            var abc = await InstaApi.SeenMediaAsync(URLText.Text);
+        }
+
+        private async void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            // GetMediaIdFromUrlAsync
+            //GetMediaByIdAsync
+            var api = InstaApiBuilder.CreateBuilder()
+                .SetUser(UserSessionData.ForUsername("FAKEUSER").WithPassword("FAKEPASS"))
+                  .UseLogger(new DebugLogger(InstagramApiSharp.Logger.LogLevel.All))
+                .Build();
+
+            api.Invalidate();
+            //{ds_user=ire_bori; $Port}
+            //{csrftoken=Uw0qLl6txUewwV9LYcQvUmHXRgPM9ulV}
+            //{urlgen="{\"51.68.192.171\": 16276\054 \"178.131.20.96\": 50810\054 \"69.197.155.150\": 32097\054 \"62.102.128.176\": 50810}:1kwuGe:M2XfUKO7a1grxY-cvBNIWMTJkbU"}
+            //{ds_user_id=44579170833}
+            //{sessionid=44579170833%3AiORxCjSrsIJ2Mm%3A20; $Port}
+            //{shbid=13238; $Port}
+            //{shbts=1609709996.3197112; $Port}
+
+            //; csrftoken=
+            //var id = await api.MediaProcessor.GetMediaIdFromUrlAsync(new Uri("https://www.instagram.com/p/CJrWuBolTnb/?igshid=1x63rbrz5d3p2"));
+            var cookies = InstaApi.HttpRequestProcessor.HttpHandler.CookieContainer.GetCookies(new Uri(InstaApiConstants.INSTAGRAM_URL));
+            var user = await api.UserProcessor.GetUserAsync("instagram");
+
+
+            var userInfo = await api.UserProcessor.GetUserInfoByIdAsync(user.Value.Pk);
+            foreach (Cookie cookie in cookies)
+            {
+                if (cookie.Name == "sessionid")
+                //if(cookie.Name == "csrftoken")
+                {
+                    //
+                    cookie.Value = cookie.Value.Replace("sIJ2Mm", "J2sMIm");
+                    api.HttpRequestProcessor.HttpHandler.CookieContainer.Add(new Uri(InstaApiConstants.INSTAGRAM_URL), cookie);
+                }
+            }
+
+            var userStory1 = await api.StoryProcessor.GetUserStoryAndLivesAsync(user.Value.Pk);
+            var userStory2 = await api.StoryProcessor.GetUserStoryAsync(user.Value.Pk);
+
+            var medias = await api.UserProcessor.GetUserMediaByIdAsync(user.Value.Pk, InstagramApiSharp.PaginationParameters.MaxPagesToLoad(1));
+            //var media = await api.MediaProcessor.GetMediaByIdAsync(id.Value);
+
+        }
         //private void SettingsButtonClick(object sender, RoutedEventArgs e)
         //{
         //    NavigationService.Navigate(typeof(Views.Settings.SettingsView));

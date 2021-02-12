@@ -915,7 +915,7 @@ namespace Minista.Views.Main
                         var XXX = FeedList[FeedListIndex];
                         var YYY = Items[StoryIndex];
                         var seen = await Helper.InstaApi
-                            .StoryProcessor.MarkMultipleStoriesAsSeen2Async(dic);
+                            .StoryProcessor.MarkMultipleElectionStoriesAsSeenAsync(dic);
                         XXX.Seen = YYY.StoryItem.TakenAt.ToUnixTime();
 
                         MainView.Current?.SetSeens(XXX.Id, YYY.StoryItem.TakenAt.ToUnixTime());

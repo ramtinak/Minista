@@ -1,6 +1,5 @@
 ﻿//using Microsoft.Services.Store.Engagement;
 using InstagramApiSharp.Classes.Models;
-//using Microsoft.Services.Store.Engagement;
 using Minista.Helpers;
 using MinistaHelper.Push;
 using Newtonsoft.Json;
@@ -141,7 +140,6 @@ namespace Minista
             Helper.DeleteCachedFilesFolder();
             SettingsHelper.SaveSettings();
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
             try
             {
                 if(Helper.InstaApi?.PushClient != null)

@@ -24,7 +24,7 @@ using Minista.Views.Direct;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Media.Playback;
 using Windows.Media.Core;
-using FFmpegInterop;
+//using FFmpegInterop;
 using Windows.Graphics.Imaging;
 using Minista.Views.MediaConverter;
 using Windows.Foundation;

@@ -1106,7 +1106,7 @@ namespace Minista.Views.Stories
                                TakenAtUnix = StoryItem.TakenAtUnix.ToString()
                            }
                         };
-                        var seen = await Helper.InstaApi.StoryProcessor.MarkMultipleStoriesAsSeen2Async(dic);
+                        var seen = await Helper.InstaApi.StoryProcessor.MarkMultipleElectionStoriesAsSeenAsync(dic);
                         UserStoryUc.StoryFeed.Seen = StoryItem.TakenAtUnix;
                         MainView.Current?.SetSeens(StoryFeed.Id, StoryItem.TakenAtUnix);
                     }

@@ -151,7 +151,7 @@ namespace Minista.ViewModels.Broadcast
 
         #endregion UI Update
 
-        #region IDisposable
+        #region IDisposable 
         public async void Dispose()
         {
             try

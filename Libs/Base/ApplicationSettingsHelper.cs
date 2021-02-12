@@ -7,16 +7,6 @@ using Windows.Storage;
 
 public static class ApplicationSettingsHelper
 {
-    const string ChangeKey = "changesKey111";
-    public static bool GetChanges()
-    {
-        return LoadSettingsValue(ChangeKey) != null;
-    }
-    public static void SetChanges()
-    {
-        SaveSettingsValue(ChangeKey, "Nist");
-    }
-
     public static void RemoveSettingsValue(string key)
     {
         if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(key))
@@ -41,5 +31,4 @@ public static class ApplicationSettingsHelper
         else
             ApplicationData.Current.LocalSettings.Values[key] = value;
     }
-
 }

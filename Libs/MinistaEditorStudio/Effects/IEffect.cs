@@ -6,5 +6,5 @@ namespace MinistaEditorStudio.Effects
         double Minimum { get; }
         double Maximum { get; }
         ICanvasImage ApplyEffect(ICanvasImage source, float value);
-    } 
+    }
 }

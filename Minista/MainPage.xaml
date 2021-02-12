@@ -282,7 +282,7 @@
                                             Margin="5,2"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
-                                            Fill="{StaticResource SeperatorColor}"/>
+                                            Fill="{StaticResource SeperatorColor}" />
                                         <Button
                                             x:Name="UploadStoryButton"
                                             Grid.Row="4"
@@ -307,7 +307,7 @@
                                             Margin="5,2"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
-                                            Fill="{StaticResource SeperatorColor}"/>
+                                            Fill="{StaticResource SeperatorColor}" />
                                         <Button
                                             x:Name="UploadOldPostButton"
                                             Grid.Row="6"
@@ -678,11 +678,12 @@
             x:FieldModifier="public"
             Visibility="Collapsed" />
 
-        <ucMain:InAppChallengeUc x:Name="InAppChallenge" 
-                                 x:FieldModifier="public"
-                                 VerticalAlignment="Stretch"
-                                 HorizontalAlignment="Stretch"
-                                 Visibility="Collapsed"/>
+        <ucMain:InAppChallengeUc
+            x:Name="InAppChallenge"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            x:FieldModifier="public"
+            Visibility="Collapsed" />
         <Grid
             x:Name="LoadingGrid"
             Grid.RowSpan="3"
@@ -734,15 +735,33 @@
             x:Name="InAppNotify"
             Grid.RowSpan="2"
             AnimationDuration="00:00:00.2000000"
-            HorizontalOffset="0"
-            ShowDismissButton="True"
-            VerticalOffset="100"
-            Foreground="{StaticResource DefaultInnerForegroundColor}"
             Background="{StaticResource DefaultItemBackgroundColor}"
             BorderBrush="{StaticResource DefaultBackgroundColor}"
-            BorderThickness="1"/>
+            BorderThickness="1"
+            Foreground="{StaticResource DefaultInnerForegroundColor}"
+            HorizontalOffset="0"
+            ShowDismissButton="True"
+            VerticalOffset="100" />
         <!--  StackMode="Replace"  -->
-
+        <Button
+            x:Name="aaaaaaaaaaaaabc"
+            VerticalAlignment="Bottom"
+            Click="aaaaaaaaaaaaabc_Click"
+            Content="AAAAAAA"
+            Visibility="Collapsed" />
+        <Button
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Click="Button_Click_3"
+            Content="AAAAAAA"
+            Visibility="Collapsed" />
+        <TextBox
+            x:Name="URLText"
+            Width="350"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Text="https://www.instagram.com/p/CJqCvnGpBW_/?igshid=1ej8qed3p5tb7"
+            Visibility="Collapsed" />
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="aaaaa">
 

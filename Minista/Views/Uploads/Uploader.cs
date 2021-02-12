@@ -20,7 +20,7 @@ using static Helper;
 using InstagramApiSharp.Converters.Json;
 using Minista.Classes;
 using Windows.Media.Core;
-using FFmpegInterop;
+//using FFmpegInterop;
 using Minista.Helpers;
 using InstagramApiSharp;
 using Windows.Storage.Streams;

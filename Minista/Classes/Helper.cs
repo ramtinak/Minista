@@ -96,7 +96,18 @@ static class Helper
             }
             else
             {
-                _dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+                _dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
+                if (_dispatcher == null)
+                    _dispatcher = CoreWindow.GetForCurrentThread()?.Dispatcher;
+                if (_dispatcher == null)
+                {
+                    if (Window.Current?.Content is MainPage mainPage)
+                        _dispatcher = mainPage.Dispatcher;
+                    else
+                        _dispatcher = Window.Current?.Dispatcher;
+                }
+                if (_dispatcher == null)
+                    _dispatcher = MainPage.Current?.Dispatcher;
                 return _dispatcher;
             }
         }

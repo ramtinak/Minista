@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using InstagramApiSharp;
 using InstagramApiSharp.Classes;
 using InstagramApiSharp.Classes.Models;
+using InstagramApiSharp.Enums;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
@@ -34,6 +35,7 @@ namespace Minista.ItemsGenerators
         ScrollViewer Scroll;
         //PullToRefreshListView LV;
         bool IsLoading = true;
+        InstaFeedPaginationSource PaginationSource = InstaFeedPaginationSource.None;
         public MainPostsGenerator() { }
         public void SetLV(/*PullToRefreshListView listView*/ ScrollViewer scrollViewer /*Controls.PullToRefreshPanel pullToRefreshPanel*/)
         {
@@ -54,10 +56,10 @@ namespace Minista.ItemsGenerators
         }
         public async Task RunLoadMoreAsync(bool refresh = false)
         {
-            //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            //{
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
                 await LoadMoreItemsAsync(refresh);
-            //});
+            });
         }
         async Task LoadMoreItemsAsync(bool refresh = false)
         {
@@ -89,10 +91,12 @@ namespace Minista.ItemsGenerators
                                 seenIds.Add(m.Media.InstaIdentifier);
                        }
                     }
-                    result = await InstaApi.FeedProcessor.GetUserTimelineFeedAsync(Pagination, seenIds.ToArray(), true, SettingsHelper.Settings.RemoveAds);
+                    result = await InstaApi.FeedProcessor
+                        .GetUserTimelineFeedAsync(Pagination, seenIds.ToArray(), true,
+                        SettingsHelper.Settings.RemoveAds, PaginationSource = InstaFeedPaginationSource.None);
                 }
                 else
-                    result = await InstaApi.FeedProcessor.GetUserTimelineFeedAsync(Pagination, null, false, SettingsHelper.Settings.RemoveAds);
+                    result = await InstaApi.FeedProcessor.GetUserTimelineFeedAsync(Pagination, null, false, SettingsHelper.Settings.RemoveAds, PaginationSource);
 
                 FirstRun = false;
                 if (!result.Succeeded)
@@ -113,16 +117,43 @@ namespace Minista.ItemsGenerators
                     HasMoreItems = false;
 
                 Pagination.NextMaxId = result.Value.NextMaxId;
-                if (result.Value.Posts != null && result.Value.Posts.Any())
+                if (result.Value.Posts?.Count > 0)
                 {
                     if (refresh) Items.Clear();
+                    InstaAllCatchedUp decorator = null;
                     for (int i = 0; i < result.Value.Posts.Count; i++)
                     {
                         var item = result.Value.Posts[i];
-                        if (item.Type == InstagramApiSharp.Enums.InstaFeedsType.Media && item.Media != null)
+                        if (item.Type == InstaFeedsType.Media && item.Media != null)
                             item.Media.IsMain = true;
+                        else if (item.EndOfFeedDemarcator != null && item.Type == InstaFeedsType.EndOfFeedDemarcator)
+                            decorator = item.EndOfFeedDemarcator;
                     }
-
+                    if(Pagination.NextMaxId == "feed_recs_head_load" && decorator != null)
+                    {
+                        if (decorator.GroupSet?.Groups?.Count > 0)
+                        {
+                            var def = decorator.GroupSet.Groups.FirstOrDefault(x => x.Id == "past_posts");
+                            if (def != null)
+                            {
+                                Pagination.NextMaxId = def.NextMaxId;
+                                PaginationSource = InstaFeedPaginationSource.PastPosts;
+                                try
+                                {
+                                    if (def.FeedItems?.Count > 0)
+                                    {
+                                        for (int i = 0; i < def.FeedItems.Count; i++)
+                                            result.Value.Posts.Add(new InstaPost
+                                            {
+                                                Media = def.FeedItems[i],
+                                                Type = InstaFeedsType.Media
+                                            });
+                                    }
+                                }
+                                catch { }
+                            }
+                        }
+                    }
                     Items.AddRange(result.Value.Posts);
 
     
@@ -135,7 +166,7 @@ namespace Minista.ItemsGenerators
                             for(int i = 0; i< Items.Count;i++)
                             {
                                 var item = Items[i];
-                                if (item.Type == InstagramApiSharp.Enums.InstaFeedsType.StoriesNetego && item.StoriesNetego != null)
+                                if (item.Type == InstaFeedsType.StoriesNetego && item.StoriesNetego != null)
                                 {
                                     if (item.Stories?.Count == 0)
                                     {
@@ -179,7 +210,7 @@ namespace Minista.ItemsGenerators
 
                     if (Items.Count == 1)
                     {
-                        if (Items[0].Type == InstagramApiSharp.Enums.InstaFeedsType.SuggestedUsersCard)
+                        if (Items[0].Type == InstaFeedsType.SuggestedUsersCard)
                         {
                             Items[0].SelectedIndex = 0;
                         }
@@ -230,35 +261,35 @@ namespace Minista.ItemsGenerators
             }
             catch (Exception ex) { ex.PrintException("Scroll_ViewChanging"); }
         }
-        public /*async*/ void MuteRequested(long userPk)
+        public async void MuteRequested(long userPk)
         {
             try
             {
-                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                //{
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
                     if (Items.Count > 0)
                         foreach (var item in Items.ToList())
                         {
-                            if (item.Type == InstagramApiSharp.Enums.InstaFeedsType.Media && item.Media!= null)
+                            if (item.Type == InstaFeedsType.Media && item.Media != null)
                             {
                                 if (item.Media.User.Pk == userPk)
                                     Items.Remove(item);
                             }
                         }
-                //});
+                });
             }
             catch { }
         }
-        public /*async*/ void MuteHashtagRequested(string tagName)
+        public async void MuteHashtagRequested(string tagName)
         {
             try
             {
-                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                //{
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
                     if (Items.Count > 0)
                         foreach (var item in Items.ToList())
                         {
-                            if (item.Type == InstagramApiSharp.Enums.InstaFeedsType.Media && item.Media != null)
+                            if (item.Type == InstaFeedsType.Media && item.Media != null)
                             {
                                 if (item.Media.FollowHashtagInfo != null)
                                 {
@@ -267,16 +298,16 @@ namespace Minista.ItemsGenerators
                                 }
                             }
                         }
-                //});
+                });
             }
             catch { }
         }
-        public /*async*/ void RemoveItemRequested(string mediaId)
+        public async void RemoveItemRequested(string mediaId)
         {
             try
             {
-                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                //{
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
                     if (Items.Count > 0)
                         foreach (var item in Items.ToList())
                         {
@@ -286,16 +317,16 @@ namespace Minista.ItemsGenerators
                                 return;
                             }
                         }
-                //});
+                });
             }
             catch { }
         }
-        public /*async*/ void DontShowThisItemRequested(string mediaId)
+        public async void DontShowThisItemRequested(string mediaId)
         {
             try
             {
-                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                //{
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
                     if (Items.Count > 0)
                         foreach (var item in Items.ToList())
                         {
@@ -305,7 +336,7 @@ namespace Minista.ItemsGenerators
                                 return;
                             }
                         }
-                //});
+                });
             }
             catch { }
         }

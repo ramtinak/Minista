@@ -102,10 +102,10 @@ namespace Minista.ViewModels.Direct
         }
         public async Task RunLoadMoreAsync(bool refresh)
         {
-            //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            //{
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
                 await LoadMoreItemsAsync(refresh);
-            //});
+            });
         }
         async Task LoadMoreItemsAsync(bool refresh = false)
         {
@@ -209,7 +209,7 @@ namespace Minista.ViewModels.Direct
             }
             catch (Exception ex) { ex.PrintException("Scroll_ViewChanging"); }
         }
-        public /*async*/ void Search(string searchWord)
+        public async void Search(string searchWord)
         {
             try
             {
@@ -220,26 +220,26 @@ namespace Minista.ViewModels.Direct
                     return;
                 }
                 searchWord = searchWord.ToLower().Trim();
-                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                //{
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
                     try
                     {
                         if (Items.Count > 0)
                         {
                             ItemsSearch.Clear();
                             var list = Items.Where(x => x.Thread.Users.Any(u => u.UserName.ToLower().Contains(searchWord) ||
-                            u.FullName.ToLower().Contains(searchWord)) || x.Thread.Title.ToLower().Contains(searchWord)).ToList();                           
+                            u.FullName.ToLower().Contains(searchWord)) || x.Thread.Title.ToLower().Contains(searchWord)).ToList();
                             SearchVisibility = Visibility.Visible;
                             if (list.Count > 0)
                             {
-                                for(int i = 0;i< list.Count;i++)
-                                ItemsSearch.Add(GetDirectInboxUc(list[i].Thread));
+                                for (int i = 0; i < list.Count; i++)
+                                    ItemsSearch.Add(GetDirectInboxUc(list[i].Thread));
                             }
                         }
                     }
                     catch { }
-                        
-                //});
+
+                });
             }
             catch { }
         }
@@ -288,13 +288,13 @@ namespace Minista.ViewModels.Direct
         {
             try
             {
-                //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                //{
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
                     ThreadView.Current.ThreadVM.TypingText = text + " is typing";
                     ThreadView.Current.ThreadVM.TypingVisibility = Visibility.Visible;
                     await Task.Delay(4000);
                     HideTyping();
-                //});
+                });
             }
             catch { }
         }
@@ -569,8 +569,8 @@ namespace Minista.ViewModels.Direct
                 if (Helper.DontUseTimersAndOtherStuff) return;
                 if (Items?.Count > 0)
                 {
-                    //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                    //{
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
                         var presences = await InstaApi.MessagingProcessor.GetUsersPresenceAsync();
                         if (presences.Value?.Count > 0)
                         {
@@ -591,7 +591,7 @@ namespace Minista.ViewModels.Direct
                                     Items[i].SetUserPresence(null);
                         }
 
-                    //});
+                    });
                 }
             }
             catch { }

@@ -895,7 +895,7 @@
 
             </Grid>
 
-            <Grid x:Name="MenuGrid" Visibility="Collapsed" VerticalAlignment="Bottom" Height="78">
+            <Grid x:Name="MenuGrid" Visibility="Visible" VerticalAlignment="Bottom" Height="78">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
