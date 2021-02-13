@@ -746,10 +746,24 @@
             </DataTemplate>
             <DataTemplate x:Key="TextTemplate">
                 <Grid
+                    x:Name="MainTextGrid"
+                    Margin="10"
                     Holding="MenuGridHolding"
                     IsHoldingEnabled="True"
                     IsRightTapEnabled="True"
                     RightTapped="MenuGridRightTapped">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -770,6 +784,12 @@
                                 Text="Copy Text" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -802,10 +822,40 @@
                             BorderThickness="1"
                             CornerRadius="20">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
+                            <Grid
+                                x:Name="RepliedToMessageGrid"
+                                Margin="17,5,15,1"
+                                Tapped="RepliedToMessageGridTapped"
+                                Visibility="{Binding RepliedToMessage, Converter={StaticResource NullableToVisibilityConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle
+                                    Width="2.5"
+                                    Margin="5,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch"
+                                    Fill="{StaticResource DirectItemTimeForegroundColor}" />
+                                <Grid Grid.Column="1">
+                                    <TextBlock
+                                        Margin="0,1,5,1"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource TinyFontSize}"
+                                        Foreground="{StaticResource DirectItemTimeForegroundColor}"
+                                        Text="{Binding RepliedToMessage.Text}"
+                                        TextAlignment="DetectFromContent"
+                                        TextWrapping="Wrap" />
+
+                                </Grid>
+                            </Grid>
                             <TextBlock
+                                Grid.Row="1"
                                 Margin="15,1"
                                 VerticalAlignment="Center"
                                 DataContext="{Binding Text}"
@@ -815,7 +865,7 @@
                                 Foreground="{StaticResource DirectItemTextForegroundColor}"
                                 TextAlignment="DetectFromContent"
                                 TextWrapping="Wrap" />
-                            <Grid Grid.Row="1" HorizontalAlignment="Right">
+                            <Grid Grid.Row="2" HorizontalAlignment="Right">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />

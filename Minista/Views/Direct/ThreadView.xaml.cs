@@ -38,6 +38,7 @@ using Minista.Views.Main;
 using Windows.UI.Xaml.Hosting;
 using System.Numerics;
 using Windows.UI.Composition;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace Minista.Views.Direct
 {
@@ -1530,5 +1531,34 @@ namespace Minista.Views.Direct
             _ellipseVisual.StopAnimation("Scale");
         }
 
+        private void RepliedToMessageGridTapped(object sender, TappedRoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is Grid grid && grid?.DataContext is InstaDirectInboxItem inboxItem && inboxItem?.RepliedToMessage != null)
+                {
+                    var itemId = inboxItem.RepliedToMessage.ItemId;
+                    var selectedItem = ThreadVM.Items.FirstOrDefault(x => x.ItemId == itemId);
+                    if (selectedItem != null)
+                    {
+                        ItemsLV.ScrollIntoView(selectedItem, ScrollIntoViewAlignment.Leading);
+
+                        var rootGrid = ItemsLV.ItemsPanelRoot.Children
+                            .Where(x => x is ListViewItem lvi && lvi.ContentTemplateRoot is Grid)
+                            .Select(x => (x as ListViewItem).ContentTemplateRoot as Grid)
+                            .Where(x => x.DataContext is InstaDirectInboxItem directInboxItem && directInboxItem?.ItemId == itemId)
+                            .Select(x => x)
+                            .FirstOrDefault();
+
+                        if (rootGrid != null)
+                        {
+                            var storyboard = rootGrid.Resources["RepliedAnimation"] as Storyboard;
+                            storyboard?.Begin();
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
     }
 }

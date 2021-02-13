@@ -2,84 +2,90 @@
     x:Class="Minista.UserControls.Direct.RecordDirectVoiceUc"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Minista.UserControls.Direct"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Minista.UserControls.Direct"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
     Height="62"
-    d:DesignWidth="400">
+    d:DesignWidth="400"
+    mc:Ignorable="d">
 
-    <Grid  Background="#FF121212"
-           CornerRadius="25"
-           BorderBrush="#FF252525"
-           BorderThickness="2"           
-           Margin="3">
+    <Grid
+        Margin="3"
+        Background="#FF121212"
+        BorderBrush="#FF252525"
+        BorderThickness="2"
+        CornerRadius="25">
         <Grid x:Name="RecordGrid" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="RecordButton"
-                          Foreground="{StaticResource DefaultForegroundColor}"
-                          Content="Record"
-                          FontFamily="{StaticResource VazirFont}"
-                          FontSize="{StaticResource DefaultFontSize}"
-                          Click="RecordButtonClick"
-                          VerticalAlignment="Stretch"
-                          HorizontalAlignment="Stretch"
-                          Background="#FF1A1A1A" />
-            <AppBarButton x:Name="CloseButton"
-                          Foreground="{StaticResource DefaultForegroundColor}"
-                          Content=""
-                          Grid.Column="1"
-                          FontFamily="{StaticResource SymbolFont}"
-                          FontSize="{StaticResource BigBigFontSize}"
-                          Click="CloseButtonClick"
-                          VerticalAlignment="Stretch"
-                          HorizontalAlignment="Stretch"
-                          Margin="5 0 0 0" />
+            <Button
+                x:Name="RecordButton"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="#FF1A1A1A"
+                Click="RecordButtonClick"
+                Content="Record"
+                FontFamily="{StaticResource VazirFont}"
+                FontSize="{StaticResource DefaultFontSize}"
+                Foreground="{StaticResource DefaultForegroundColor}" />
+            <AppBarButton
+                x:Name="CloseButton"
+                Grid.Column="1"
+                Margin="5,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Click="CloseButtonClick"
+                Content=""
+                FontFamily="{StaticResource SymbolFont}"
+                FontSize="{StaticResource BigBigFontSize}"
+                Foreground="{StaticResource DefaultForegroundColor}" />
         </Grid>
-        <Grid x:Name="StopGrid"
-              Visibility="Collapsed">
+        <Grid x:Name="StopGrid" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <!---->
-            <AppBarButton x:Name="DeleteButton"
-                          Foreground="{StaticResource DefaultForegroundColor}"
-                          Content="罹"
-                          FontFamily="{StaticResource MaterialSymbolFont}"
-                          FontSize="{StaticResource BigBigFontSize}"
-                          Click="CloseButtonClick"
-                          VerticalAlignment="Stretch"
-                          HorizontalAlignment="Stretch"
-                          Margin="5 0 0 0" />
-            <Grid CornerRadius="6"
-                  Grid.Column="1"
-                  VerticalAlignment="Stretch"
-                  HorizontalAlignment="Stretch"
-                  Background="#FF1A1A1A">
-                <TextBlock x:Name="txtTime"
-                           Foreground="{StaticResource DefaultForegroundColor}"
-                           FontFamily="{StaticResource VazirFont}"
-                           FontSize="{StaticResource DefaultFontSize}"
-                           TextWrapping="Wrap"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Text="00"/>
+            <!--    -->
+            <AppBarButton
+                x:Name="DeleteButton"
+                Margin="5,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Click="CloseButtonClick"
+                Content="罹"
+                FontFamily="{StaticResource MaterialSymbolFont}"
+                FontSize="{StaticResource BigBigFontSize}"
+                Foreground="{StaticResource DefaultForegroundColor}" />
+            <Grid
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="#FF1A1A1A"
+                CornerRadius="6">
+                <TextBlock
+                    x:Name="txtTime"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource DefaultFontSize}"
+                    Foreground="{StaticResource DefaultForegroundColor}"
+                    Text="00"
+                    TextWrapping="Wrap" />
             </Grid>
-            <AppBarButton x:Name="StopAndSendButton"
-                          Foreground="{StaticResource DefaultForegroundColor}"
-                          Content=""
-                          Grid.Column="2"
-                          FontFamily="{StaticResource MaterialSymbolFont}"
-                          FontSize="{StaticResource BigBigFontSize}"
-                          Click="StopAndSendButtonClick"
-                          VerticalAlignment="Stretch"
-                          HorizontalAlignment="Stretch"
-                          Margin="5 0 0 0" />
+            <AppBarButton
+                x:Name="StopAndSendButton"
+                Grid.Column="2"
+                Margin="5,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Click="StopAndSendButtonClick"
+                Content=""
+                FontFamily="{StaticResource MaterialSymbolFont}"
+                FontSize="{StaticResource BigBigFontSize}"
+                Foreground="{StaticResource DefaultForegroundColor}" />
         </Grid>
 
     </Grid>

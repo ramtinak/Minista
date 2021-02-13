@@ -190,10 +190,10 @@
                             <TextBlock
                                 x:Name="UncheckedContentPresenter"
                                 Margin="{TemplateBinding Padding}"
-                                Foreground="{StaticResource DefaultForegroundColor}"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 AutomationProperties.AccessibilityView="Raw"
+                                Foreground="{StaticResource DefaultForegroundColor}"
                                 Text="{TemplateBinding UncheckedGlyph}" />
                         </Grid>
 
@@ -203,7 +203,7 @@
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             AutomationProperties.AccessibilityView="Raw"
-                                Foreground="{StaticResource DefaultForegroundColor}"
+                            Foreground="{StaticResource DefaultForegroundColor}"
                             Text=""
                             Visibility="Collapsed" />
                         <VisualStateManager.VisualStateGroups>
