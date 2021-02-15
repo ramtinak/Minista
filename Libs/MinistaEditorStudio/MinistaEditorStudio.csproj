@@ -127,9 +127,6 @@
     <Compile Include="UIs\TextUI.cs" />
     <Compile Include="Helpers\AspectRatioHelper.cs" />
     <Compile Include="EditorMode.cs" />
-    <Compile Include="EditorStudio.xaml.cs">
-      <DependentUpon>EditorStudio.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Helpers\PhotoHelper.cs" />
@@ -150,12 +147,6 @@
     <PackageReference Include="Win2D.uwp">
       <Version>1.25.0</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="EditorStudio.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MinistaControls\MinistaControls.csproj">

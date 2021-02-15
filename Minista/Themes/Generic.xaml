@@ -6,8 +6,7 @@
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:Minista"
-    xmlns:localControls="using:Minista.Controls"
-    xmlns:ugc="using:Minista.ControlsXYZ.X.UGCropper">
+    xmlns:localControls="using:Minista.Controls">
     <!--<ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ms-appx:///Minista.UI.Controls/ImageCropper/ImageCropperThumb.xaml" />
         <ResourceDictionary Source="ms-appx:///Minista.UI.Controls/ImageCropper/ImageCropper.xaml" />
@@ -1089,192 +1088,7 @@
     </Style>
 
 
-    <!--<Style TargetType="ugc:ImageCropper">
-        <Setter Property="HorizontalContentAlignment"
-                Value="Stretch" />
-        <Setter Property="VerticalContentAlignment"
-                Value="Stretch" />
-        <Setter Property="Background"
-                Value="{ThemeResource SystemControlPageBackgroundMediumAltMediumBrush}" />
-        <Setter Property="Padding"
-                Value="48" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ugc:ImageCropper">
-                    <Grid x:Name="LayoutRoot"
-                          Margin="{TemplateBinding Padding}">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0:0:0.3"
-                                                      To="Disabled">
-                                        <VisualTransition.GeneratedEasingFunction>
-                                            <CubicEase EasingMode="EaseInOut" />
-                                        </VisualTransition.GeneratedEasingFunction>
-                                    </VisualTransition>
-                                    <VisualTransition GeneratedDuration="0:0:0.3"
-                                                      From="Disabled">
-                                        <VisualTransition.GeneratedEasingFunction>
-                                            <CubicEase EasingMode="EaseInOut" />
-                                        </VisualTransition.GeneratedEasingFunction>
-                                    </VisualTransition>
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled">
-                                    <VisualState.Setters>
-                                        <Setter Target="ImageThumb.ManipulationMode"
-                                                Value="None" />
-                                        <Setter Target="ThumbsContainer.IsHitTestVisible"
-                                                Value="False" />
-                                        <Setter Target="Clip.IsHitTestVisible"
-                                                Value="False" />
-                                    </VisualState.Setters>
-                                    <Storyboard>
-                                        <DoubleAnimation From="0.6"
-                                                         To="1"
-                                                         Storyboard.TargetName="Clip"
-                                                         Storyboard.TargetProperty="Opacity" />
-                                        <DoubleAnimation From="1.0"
-                                                         To="0"
-                                                         Storyboard.TargetName="ThumbsContainer"
-                                                         Storyboard.TargetProperty="Opacity" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
 
-                        <Grid.Resources>
-                            <Style x:Key="CircularThumbStyle"
-                                   TargetType="ugc:ImageCropperThumb">
-                                <Setter Property="Background"
-                                        Value="White" />
-                                <Setter Property="BorderBrush"
-                                        Value="Black" />
-                                <Setter Property="BorderThickness"
-                                        Value="1" />
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="ugc:ImageCropperThumb">
-                                            <Grid Background="Transparent">
-                                                <Ellipse Width="20"
-                                                         Height="20"
-                                                         Fill="{TemplateBinding Background}"
-                                                         Stroke="{TemplateBinding BorderBrush}"
-                                                         StrokeThickness="{TemplateBinding BorderThickness}" />
-                                            </Grid>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                            <Style x:Key="SideThumbStyle"
-                                   TargetType="ugc:ImageCropperThumb">
-                                <Setter Property="Background"
-                                        Value="White" />
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="ugc:ImageCropperThumb">
-                                            <Grid Background="Transparent" />
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                            <Style x:Key="HorizontalSideThumbStyle"
-                                   BasedOn="{StaticResource SideThumbStyle}"
-                                   TargetType="ugc:ImageCropperThumb">
-                                <Setter Property="Height"
-                                        Value="20" />
-                                <Setter Property="Padding"
-                                        Value="0,9" />
-                            </Style>
-                            <Style x:Key="VerticalSideThumbStyle"
-                                   BasedOn="{StaticResource SideThumbStyle}"
-                                   TargetType="ugc:ImageCropperThumb">
-                                <Setter Property="Width"
-                                        Value="20" />
-                                <Setter Property="Padding"
-                                        Value="9,0" />
-                            </Style>
-                        </Grid.Resources>
-
-                        <Canvas>
-                            <Grid x:Name="ImageThumb"
-                                  RenderTransformOrigin="0.5,0.5"
-                                  ManipulationMode="Rotate,Scale,TranslateX,TranslateY">
-                                <Grid.RenderTransform>
-                                    <CompositeTransform x:Name="ImageThumbTransform" />
-                                </Grid.RenderTransform>
-                                <Image x:Name="ImageViewer"
-                                       Stretch="None" />
-                                <ContentPresenter HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-                            </Grid>
-
-                            <Path x:Name="Clip"
-                                  Opacity="0.6"
-                                  Fill="{TemplateBinding Background}"
-                                  Stroke="Transparent"
-                                  StrokeThickness="1">
-                                <Path.Data>
-                                    <GeometryGroup>
-                                        <RectangleGeometry x:Name="OuterClip" />
-                                        <RectangleGeometry x:Name="InnerClip" />
-                                    </GeometryGroup>
-                                </Path.Data>
-                            </Path>
-
-                            <Grid x:Name="ThumbsContainer">
-                                <Rectangle Stroke="White"
-                                           StrokeThickness="2"
-                                           Margin="-2" />
-
-                                <ugc:ImageCropperThumb x:Name="LeftThumb"
-                                                         Style="{StaticResource VerticalSideThumbStyle}"
-                                                         Margin="-11,-11,-10,-11"
-                                                         HorizontalAlignment="Left"
-                                                         VerticalAlignment="Stretch" />
-                                <ugc:ImageCropperThumb x:Name="TopThumb"
-                                                         Style="{StaticResource HorizontalSideThumbStyle}"
-                                                         Margin="-11,-11,-11,-10"
-                                                         HorizontalAlignment="Stretch"
-                                                         VerticalAlignment="Top" />
-                                <ugc:ImageCropperThumb x:Name="RightThumb"
-                                                         Style="{StaticResource VerticalSideThumbStyle}"
-                                                         Margin="-10,-11,-11,-11"
-                                                         HorizontalAlignment="Right"
-                                                         VerticalAlignment="Stretch" />
-                                <ugc:ImageCropperThumb x:Name="BottomThumb"
-                                                         Style="{StaticResource HorizontalSideThumbStyle}"
-                                                         Margin="-11,-10,-11,-11"
-                                                         HorizontalAlignment="Stretch"
-                                                         VerticalAlignment="Bottom" />
-
-                                <ugc:ImageCropperThumb x:Name="TopLeftThumb"
-                                                         Style="{StaticResource CircularThumbStyle}"
-                                                         Margin="-11,-11,-10,-10"
-                                                         HorizontalAlignment="Left"
-                                                         VerticalAlignment="Top" />
-                                <ugc:ImageCropperThumb x:Name="TopRightThumb"
-                                                         Style="{StaticResource CircularThumbStyle}"
-                                                         Margin="-10,-11,-11,-10"
-                                                         HorizontalAlignment="Right"
-                                                         VerticalAlignment="Top" />
-                                <ugc:ImageCropperThumb x:Name="BottomLeftThumb"
-                                                         Style="{StaticResource CircularThumbStyle}"
-                                                         Margin="-11,-10,-10,-11"
-                                                         HorizontalAlignment="Left"
-                                                         VerticalAlignment="Bottom" />
-                                <ugc:ImageCropperThumb x:Name="BottomRightThumb"
-                                                         Style="{StaticResource CircularThumbStyle}"
-                                                         Margin="-10,-10,-11,-11"
-                                                         HorizontalAlignment="Right"
-                                                         VerticalAlignment="Bottom" />
-                            </Grid>
-                        </Canvas>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
 
 
     <x:Double x:Key="Size">30</x:Double>
@@ -1293,73 +1107,6 @@
         </Ellipse>
     </DataTemplate>
 
-    <!--<Style TargetType="local:ImageCropper">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="local:ImageCropper">
-                    <Grid x:Name="PART_LayoutRoot"
-                          Background="#CC1F1F1F">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Image x:Name="PART_SourceImage"
-                               Stretch="Uniform" />
-                        <Canvas x:Name="PART_ImageCanvas"
-                                Visibility="Collapsed">
-                            <Path Fill="{StaticResource ApplicationSecondaryForegroundThemeBrush}"
-                                  Opacity="0.6">
-                                <Path.Data>
-                                    <GeometryGroup>
-                                        <RectangleGeometry Rect="{Binding OuterRect, Mode=OneWay}" />
-                                        <RectangleGeometry Rect="{Binding SelectedRect, Mode=OneWay}" />
-                                    </GeometryGroup>
-                                </Path.Data>
-                            </Path>
-                            <Path x:Name="PART_SelectRegion"
-                                  Fill="{StaticResource ApplicationPageBackgroundThemeBrush}"
-                                  Opacity="0">
-                                <Path.Data>
-                                    <RectangleGeometry Rect="{Binding SelectedRect, Mode=OneWay}" />
-                                </Path.Data>
-                            </Path>
-                            <ContentControl ContentTemplate="{StaticResource CornerTemplate}"
-                                            x:Name="PART_TopLeftCorner"
-                                            Tag="TopLeftCorner"
-                                            Canvas.Left="{Binding Path=TopLeftCornerCanvasLeft, Mode=OneWay}"
-                                            Canvas.Top="{Binding Path=TopLeftCornerCanvasTop, Mode=OneWay}" />
-                            <ContentControl ContentTemplate="{StaticResource CornerTemplate}"
-                                            x:Name="PART_TopRightCorner"
-                                            Tag="TopRightCorner"
-                                            Canvas.Left="{Binding Path=BottomRightCornerCanvasLeft, Mode=OneWay}"
-                                            Canvas.Top="{Binding Path=TopLeftCornerCanvasTop, Mode=OneWay}">
-                                <ContentControl.RenderTransform>
-                                    <RotateTransform Angle="90" />
-                                </ContentControl.RenderTransform>
-                            </ContentControl>
-                            <ContentControl ContentTemplate="{StaticResource CornerTemplate}"
-                                            x:Name="PART_BottomLeftCorner"
-                                            Tag="BottomLeftCorner"
-                                            Canvas.Left="{Binding Path=TopLeftCornerCanvasLeft, Mode=OneWay}"
-                                            Canvas.Top="{Binding Path=BottomRightCornerCanvasTop, Mode=OneWay}">
-                                <ContentControl.RenderTransform>
-                                    <RotateTransform Angle="270" />
-                                </ContentControl.RenderTransform>
-                            </ContentControl>
-                            <ContentControl ContentTemplate="{StaticResource CornerTemplate}"
-                                            x:Name="PART_BottomRightCorner"
-                                            Tag="BottomRightCorner"
-                                            Canvas.Left="{Binding Path=BottomRightCornerCanvasLeft, Mode=OneWay}"
-                                            Canvas.Top="{Binding Path=BottomRightCornerCanvasTop, Mode=OneWay}">
-                                <ContentControl.RenderTransform>
-                                    <RotateTransform Angle="180" />
-                                </ContentControl.RenderTransform>
-                            </ContentControl>
-                        </Canvas>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
 
     <Style TargetType="local:ContentPopup">
         <Setter Property="Foreground" Value="{ThemeResource ContentDialogForeground}" />
@@ -1601,6 +1348,163 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--<Style TargetType="controls:ImageCropper">
+        <Setter Property="IsTabStop"
+                Value="False" />
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="Background"
+                Value="{ThemeResource SystemControlBackgroundAltHighBrush}" />
+        <Setter Property="Mask"
+                Value="{ThemeResource SystemControlBackgroundAltMediumHighBrush}" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ImageCropper">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid x:Name="PART_LayoutGrid"
+                              Margin="{TemplateBinding Padding}"
+                              HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                            <Canvas x:Name="PART_ImageCanvas">
+                                <Grid>
+    -->
+    <!--<ScrollViewer x:Name="PART_ScrollingHost"
+                                                  MinZoomFactor="1"
+                                                  ZoomMode="Enabled"
+                                                  MaxZoomFactor="4"
+                                                  IsZoomInertiaEnabled="True"
+                                                  HorizontalContentAlignment="Stretch"
+                                                  VerticalContentAlignment="Stretch"
+                                                  VerticalScrollBarVisibility="Hidden"
+                                                  HorizontalScrollBarVisibility="Hidden"
+                                                  HorizontalScrollMode="Auto">
+                                        <Grid x:Name="PART_ScrollingPanel">
+                                            <Image x:Name="PART_SourceImage"
+                                                   Source="{TemplateBinding Source}" />
+                                        </Grid>
+                                    </ScrollViewer>-->
+    <!--
+                                    <Image x:Name="PART_SourceImage"
+                                           Source="{TemplateBinding Source}" />
+                                </Grid>
+    -->
+    <!--<Grid>-->
+    <!--
+                                <Path x:Name="PART_MaskAreaPath"
+                                      Fill="{TemplateBinding Mask}"
+                                      Stroke="Transparent"
+                                      VerticalAlignment="Stretch"
+                                      HorizontalAlignment="Stretch"
+                                      StrokeThickness="1">
+
+                                </Path>
+    -->
+    <!--</Grid>-->
+    <!--
+
+
+                                <controls:ImageCropperThumb x:Name="PART_TopThumb"
+                                                            extensions:Mouse.Cursor="SizeNorthSouth"
+                                                            Style="{TemplateBinding SecondaryThumbStyle}" />
+                                <controls:ImageCropperThumb x:Name="PART_BottomThumb"
+                                                            extensions:Mouse.Cursor="SizeNorthSouth"
+                                                            Style="{TemplateBinding SecondaryThumbStyle}" />
+                                <controls:ImageCropperThumb x:Name="PART_LeftThumb"
+                                                            extensions:Mouse.Cursor="SizeWestEast"
+                                                            Style="{TemplateBinding SecondaryThumbStyle}" />
+                                <controls:ImageCropperThumb x:Name="PART_RightThumb"
+                                                            extensions:Mouse.Cursor="SizeWestEast"
+                                                            Style="{TemplateBinding SecondaryThumbStyle}" />
+                                <controls:ImageCropperThumb x:Name="PART_UpperLeftThumb"
+                                                            extensions:Mouse.Cursor="SizeNorthwestSoutheast"
+                                                            Style="{TemplateBinding PrimaryThumbStyle}" />
+                                <controls:ImageCropperThumb x:Name="PART_UpperRightThumb"
+                                                            extensions:Mouse.Cursor="SizeNortheastSouthwest"
+                                                            Style="{TemplateBinding PrimaryThumbStyle}" />
+                                <controls:ImageCropperThumb x:Name="PART_LowerLeftThumb"
+                                                            extensions:Mouse.Cursor="SizeNortheastSouthwest"
+                                                            Style="{TemplateBinding PrimaryThumbStyle}" />
+                                <controls:ImageCropperThumb x:Name="PART_LowerRightThumb"
+                                                            extensions:Mouse.Cursor="SizeNorthwestSoutheast"
+                                                            Style="{TemplateBinding PrimaryThumbStyle}" />
+                            </Canvas>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="controls:ImageCropperThumb">
+        <Setter Property="IsTabStop"
+                Value="True" />
+        <Setter Property="UseSystemFocusVisuals"
+                Value="True" />
+        <Setter Property="Width"
+                Value="20" />
+        <Setter Property="Height"
+                Value="20" />
+        <Setter Property="Background"
+                Value="{ThemeResource SystemControlBackgroundChromeWhiteBrush}" />
+        <Setter Property="BorderBrush"
+                Value="{ThemeResource SystemControlForegroundChromeHighBrush}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ImageCropperThumb">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>-->
+
+
+
+
+
+
+
+
 
 
 </ResourceDictionary>

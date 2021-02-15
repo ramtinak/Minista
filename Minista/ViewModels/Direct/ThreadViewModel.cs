@@ -228,6 +228,7 @@ namespace Minista.ViewModels.Direct
                                     x.SendingType = InstaDirectInboxItemSendingType.Seen;
                         }
                         catch { }
+                        if(!x.HideInThread)
                         Items.Insert(0, x);
                     });
                 }

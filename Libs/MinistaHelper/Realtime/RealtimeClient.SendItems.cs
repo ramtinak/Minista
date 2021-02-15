@@ -367,6 +367,47 @@ namespace InstagramApiSharp.API.RealTime
             }
         }
 
+        public async Task<IResult<bool>> ReactionMessageAsync(string threadId, string itemId, string emoji)
+        {
+            try
+            {
+                //{"action":"item_ack","status_code":"404","payload":{"client_context":"6687658745131972483","message":"target item is not supported"},"status":"fail"}
+
+                //{"action":"item_ack","status_code":"400","payload":{"client_context":"6685052289622163080","message":"unknown reaction type"},"status":"fail"}
+                var token = ExtensionHelper.GetThreadToken();
+                var data = new Dictionary<string, string>
+                {
+                    {"action", "send_item"},
+                    {"item_type", "reaction"},
+                    {"reaction_type", "like"},
+                    {"node_type", "item"},
+                    {"reaction_status", "created"},
+                    {"thread_id", threadId},
+                    {"client_context", token},
+                    {"item_id", itemId},
+                    {"emoji", emoji},
+                };
+                var json = JsonConvert.SerializeObject(data);
+                var bytes = Encoding.UTF8.GetBytes(json);
+                var publishPacket = new PublishPacket(QualityOfService.AtLeastOnce, false, false)
+                {
+                    Payload = ZlibHelper.Compress(bytes).AsBuffer(),
+                    PacketId = (ushort)CryptographicBuffer.GenerateRandomNumber(),
+                    TopicName = "132"
+                };
+                await FbnsPacketEncoder.EncodePacket(publishPacket, _outboundWriter);
+
+                return Result.Success(true);
+            }
+            catch (SocketException socketException)
+            {
+                return Result.Fail(socketException, default(bool), ResponseType.NetworkProblem);
+            }
+            catch (Exception exception)
+            {
+                return Result.Fail<bool>(exception);
+            }
+        }
         private async Task<IResult<InstaDirectRespondPayload>> SendDirectItem(Dictionary<string, string> dic, string token = null)
         {
             try

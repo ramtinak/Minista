@@ -52,9 +52,19 @@ namespace Minista.Views.Posts
             Window.Current.SizeChanged -= CurrentSizeChanged;
         }
 
-        private void OnPageLoaded(object sender, RoutedEventArgs e)
+        private async void OnPageLoaded(object sender, RoutedEventArgs e)
         {
             SetCanvas();
+            await Helper.RunOnUI(async () =>
+            {
+                try
+                {
+                    CropGrid.Visibility = Visibility.Visible;
+                    await Task.Delay(2000);
+                    CropGrid.Visibility = Visibility.Collapsed;
+                }
+                catch { }
+            });
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -106,6 +116,11 @@ namespace Minista.Views.Posts
         {
             try
             {
+                try
+                {
+                    CropGrid.Visibility = Visibility.Collapsed;
+                }
+                catch { }
                 if (Path.GetExtension(file.Path).ToLower() == ".mp4" || Path.GetExtension(file.Path).ToLower() == ".mkv")
                 {
                     IsVideo = true;
@@ -301,7 +316,7 @@ namespace Minista.Views.Posts
         {
             try
             {
-                if (AspectRatioSlider.Value != -1)
+                if (AspectRatioSlider.Value != -1 && CropGrid.Visibility == Visibility.Visible)
                     ImageCropper.AspectRatio = AspectRatioSlider.Value;
             }
             catch { }

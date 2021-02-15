@@ -127,6 +127,7 @@
             <converters:MediaTypeConverter x:Name="MediaTypeConverter" />
             <converters:ReelShareConverter x:Name="ReelShareConverter" />
             <converters:NullableToVisibilityConverter x:Name="NullableToVisibilityConverter" />
+            <converters:NotNullableToVisibilityConverter x:Name="NotNullableToVisibilityConverter" />
             <converters:DirectLinkImageConverter x:Name="DirectLinkImageConverter" />
             <converters:NumericToSeparatorConverter x:Name="NumericToSeparatorConverter" />
             <converters:AddHashtagToStringConverter x:Name="AddHashtagToStringConverter" />
@@ -850,8 +851,24 @@
                                         Foreground="{StaticResource DirectItemTimeForegroundColor}"
                                         Text="{Binding RepliedToMessage.Text}"
                                         TextAlignment="DetectFromContent"
-                                        TextWrapping="Wrap" />
-
+                                        TextWrapping="Wrap"
+                                        Visibility="{Binding RepliedToMessage, Converter={StaticResource NotNullableToVisibilityConverter}}" />
+                                    <Grid MaxHeight="90" Visibility="{Binding RepliedToMessage.MediaShare, Converter={StaticResource NullableToVisibilityConverter}}"
+                                          CornerRadius="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <controls:ImageEx
+                                            MaxWidth="110"
+                                            MaxHeight="110"
+                                            Stretch="Uniform"
+                                            Tapped="MediaShareImageExTapped">
+                                            <controls:ImageEx.Source>
+                                                <BitmapImage UriSource="{Binding RepliedToMessage.MediaShare, Converter={StaticResource DirectMediaShareConverter}}" />
+                                            </controls:ImageEx.Source>
+                                        </controls:ImageEx>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                             <TextBlock

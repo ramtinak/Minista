@@ -691,6 +691,14 @@ static class Helper
         var outfile = await folder.CreateFileAsync(GenerateString("MINISTA_") + ".jpg", CreationCollisionOption.GenerateUniqueName);
         return outfile;
     }
+    static public async Task RunOnUI(Action action)
+    {
+        try
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,()=> action?.Invoke());
+        }
+        catch { }
+    }
     static public async Task RunInBackground(Action action)
     {
         try

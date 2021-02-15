@@ -42,7 +42,10 @@ namespace Minista
 
         private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-            e.Exception.PrintException("App_UnhandledException");
+           Helper.ShowErr( e.Message + "\r\nex: "+
+               e.Exception.PrintException("App_UnhandledException") +
+               "\r\nENV: " + Environment.StackTrace);
+            //Helper.ShowErr();
             e.Handled = true;
         }
         protected /*async*/ override void OnLaunched(LaunchActivatedEventArgs e)
