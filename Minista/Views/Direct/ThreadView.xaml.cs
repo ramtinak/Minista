@@ -922,7 +922,7 @@ namespace Minista.Views.Direct
                         text += "Text";
                         break;
                 }
-                var copyText = GenerateMenuFlyoutItem(data, type == InstaDirectThreadItemType.Profile ? "Copy Profile" : "Copy Text");
+                var copyText = GenerateMenuFlyoutItem(data, text);
                 copyText.Click += CopyTextFlyoutClick;
                 menuFlyout.Items.Add(copyText);
             }
