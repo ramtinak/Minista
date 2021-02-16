@@ -504,16 +504,6 @@ namespace Minista.ViewModels.Direct
             };
             uc.RightTapped += UcRightTapped;
             uc.Holding += UcHolding;
-            //<FlyoutBase.AttachedFlyout>
-            //    <MenuFlyout Placement="Top">
-            //        <MenuFlyoutItem Text="Unsend Message"
-            //                        DataContext="{Binding}"
-            //                        Click="UnsendMessageFlyoutClick" />
-            //        <MenuFlyoutItem Text="Copy Text"
-            //                        DataContext="{Binding}"
-            //                        Click="CopyTextFlyoutClick" />
-            //    </MenuFlyout>
-            //</FlyoutBase.AttachedFlyout>
             var deleteMenuFlyoutItem = new MenuFlyoutItem
             {
                 DataContext = thread,
@@ -527,7 +517,7 @@ namespace Minista.ViewModels.Direct
                     deleteMenuFlyoutItem,
                 }
             };
-            FlyoutBase.SetAttachedFlyout(uc, mediaFlyout);
+            uc.ContextFlyout = mediaFlyout;
             return uc;
         }
 
