@@ -883,14 +883,64 @@ namespace Minista.Views.Direct
             }
             catch { }
         }
+        MenuFlyout GenerateMenuFlyout(InstaDirectInboxItem data)
+        {
+            var type = data.ItemType;
+            var menuFlyout = new MenuFlyout();
+            if (data.UserId == Helper.CurrentUser.Pk)
+            {
+                var unsend = GenerateMenuFlyoutItem(data, "Unsend Message");
+                unsend.Click += UnsendMessageFlyoutClick;
+                menuFlyout.Items.Add(unsend);
+            }
+            var isEmptyReel = type == InstaDirectThreadItemType.ReelShare &&
+                data.ReelShareMedia?.Media?.Images?.Count == 0 && data.ReelShareMedia?.Media?.Videos?.Count == 0;
+
+            if (type != InstaDirectThreadItemType.Media && type != InstaDirectThreadItemType.RavenMedia && 
+                type != InstaDirectThreadItemType.VoiceMedia && type != InstaDirectThreadItemType.AnimatedMedia && !isEmptyReel)
+            {
+                var text = "Copy ";
+                switch(type)
+                {
+                    case  InstaDirectThreadItemType.MediaShare:
+                    case InstaDirectThreadItemType.FelixShare:
+                        text += "Caption";
+                        break;
+                    case InstaDirectThreadItemType.Location:
+                        text += "Location";
+                        break;
+                    case InstaDirectThreadItemType.Hashtag:
+                        text += "Hashtag";
+                        break;
+                    case InstaDirectThreadItemType.Link:
+                        text += "Url";
+                        break;
+                    case InstaDirectThreadItemType.Profile:
+                        text += "Profile";
+                        break;
+                    default:
+                        text += "Text";
+                        break;
+                }
+                var copyText = GenerateMenuFlyoutItem(data, type == InstaDirectThreadItemType.Profile ? "Copy Profile" : "Copy Text");
+                copyText.Click += CopyTextFlyoutClick;
+                menuFlyout.Items.Add(copyText);
+            }
+            return menuFlyout;
+        }
+        MenuFlyoutItem GenerateMenuFlyoutItem(InstaDirectInboxItem data, string text) =>
+            new MenuFlyoutItem { DataContext = data, Text = text };
 
         private void MenuGridRightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             "MenuGridRightTapped".PrintDebug();
             try
             {
-                if (sender is Grid item && item.DataContext is InstaDirectInboxItem data && data.UserId == Helper.CurrentUser.Pk)
+                if (sender is Grid item && item.DataContext is InstaDirectInboxItem data)
+                {
+                    item.ContextFlyout = GenerateMenuFlyout(data);
                     FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+                }
             }
             catch { }
         }
@@ -900,8 +950,11 @@ namespace Minista.Views.Direct
             "MenuGridHolding".PrintDebug();
             try
             {
-                if (sender is Grid item && item.DataContext is InstaDirectInboxItem data && data.UserId == Helper.CurrentUser.Pk)
+                if (sender is Grid item && item.DataContext is InstaDirectInboxItem data)
+                {
+                    item.ContextFlyout = GenerateMenuFlyout(data);
                     FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+                }
             }
             catch { }
         }
@@ -913,7 +966,7 @@ namespace Minista.Views.Direct
                 if (sender is MenuFlyoutItem item && item.DataContext is InstaDirectInboxItem data && data != null &&
                     data.UserId == Helper.CurrentUser.Pk)
                 {
-                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
                         var result = await Helper.InstaApi.MessagingProcessor.DeleteSelfMessageAsync(ThreadVM.CurrentThread.ThreadId, data.ItemId);
                         if (result.Succeeded)
@@ -930,8 +983,7 @@ namespace Minista.Views.Direct
         {
             try
             {
-                if (sender is MenuFlyoutItem item && item.DataContext is InstaDirectInboxItem data && data != null &&
-                    data.UserId == Helper.CurrentUser.Pk)
+                if (sender is MenuFlyoutItem item && item.DataContext is InstaDirectInboxItem data && data != null)
                 {
                     var type = data.ItemType;
                     var last = data;

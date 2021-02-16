@@ -3,7 +3,7 @@
  * Donation link: [ https://paypal.me/rmt4006 ] 
  * Donation email: RamtinJokar@outlook.com
  * 
- * Copyright (c) 2020 Summer [ Tabestaan 1399 ]
+ * Copyright (c) 2021 Winter [ Zemestan 1399 ]
  */
 using Newtonsoft.Json;
 namespace InstagramApiSharp.API.RealTime.Responses.Wrappers

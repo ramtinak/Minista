@@ -174,27 +174,11 @@
                 VoiceMediaTemplate="{StaticResource VoiceMediaTemplate}" />
 
             <DataTemplate x:Key="LikeTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Text" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -210,7 +194,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -269,11 +259,7 @@
             </DataTemplate>
 
             <DataTemplate x:Key="StoryShareTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -282,18 +268,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Text" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -309,7 +283,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -432,23 +412,7 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="EmptyStoryShareTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Text" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -468,7 +432,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -526,27 +496,11 @@
             </DataTemplate>
 
             <DataTemplate x:Key="NoTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Text" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -562,7 +516,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -607,27 +567,11 @@
             </DataTemplate>
 
             <DataTemplate x:Key="NotSupportedTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Text" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -643,7 +587,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -746,13 +696,7 @@
 
             </DataTemplate>
             <DataTemplate x:Key="TextTemplate">
-                <Grid
-                    x:Name="MainTextGrid"
-                    Margin="10"
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid x:Name="MainTextGrid" Margin="10">
                     <Grid.Resources>
                         <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
                             <DoubleAnimation
@@ -773,18 +717,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Text" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid
                         x:Name="MainTextGridBackgroundBrush"
                         Grid.RowSpan="2"
@@ -806,7 +738,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -853,8 +791,10 @@
                                         TextAlignment="DetectFromContent"
                                         TextWrapping="Wrap"
                                         Visibility="{Binding RepliedToMessage, Converter={StaticResource NotNullableToVisibilityConverter}}" />
-                                    <Grid MaxHeight="90" Visibility="{Binding RepliedToMessage.MediaShare, Converter={StaticResource NullableToVisibilityConverter}}"
-                                          CornerRadius="10">
+                                    <Grid
+                                        MaxHeight="90"
+                                        CornerRadius="10"
+                                        Visibility="{Binding RepliedToMessage.MediaShare, Converter={StaticResource NullableToVisibilityConverter}}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition />
@@ -957,11 +897,7 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="MediaShareTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -970,18 +906,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Caption" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1007,6 +931,10 @@
                         BorderThickness="1"
                         CornerRadius="15"
                         DoubleTapped="MediaShareGridDoubleTapped"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped"
                         Tapped="MediaShareGridTapped">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -1185,11 +1113,7 @@
 
             </DataTemplate>
             <DataTemplate x:Key="MediaTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -1198,14 +1122,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1233,7 +1149,11 @@
                         Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                         BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                         BorderThickness="1"
-                        CornerRadius="15">
+                        CornerRadius="15"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
@@ -1344,11 +1264,7 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="ProfileTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -1357,18 +1273,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Profile" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1393,7 +1297,11 @@
                         Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                         BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                         BorderThickness="1"
-                        CornerRadius="15">
+                        CornerRadius="15"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
@@ -1526,11 +1434,7 @@
             </DataTemplate>
 
             <DataTemplate x:Key="FelixShareTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -1539,18 +1443,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Caption" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1566,7 +1458,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -1731,11 +1629,7 @@
             </DataTemplate>
 
             <DataTemplate x:Key="RavenMediaTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -1744,14 +1638,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1767,7 +1653,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -1879,11 +1771,7 @@
             </DataTemplate>
 
             <DataTemplate x:Key="LocationMediaTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -1892,18 +1780,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Location" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1928,7 +1804,11 @@
                         Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                         BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                         BorderThickness="1"
-                        CornerRadius="15">
+                        CornerRadius="15"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
@@ -2045,11 +1925,7 @@
             </DataTemplate>
 
             <DataTemplate x:Key="ReelShareMediaTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -2058,18 +1934,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Text" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -2085,7 +1949,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -2225,23 +2095,11 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="EmptyReelShareMediaTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -2257,7 +2115,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -2334,11 +2198,7 @@
 
 
             <DataTemplate x:Key="HashtagMediaTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -2347,18 +2207,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Hashtag" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -2383,7 +2231,11 @@
                         Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                         BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                         BorderThickness="1"
-                        CornerRadius="15">
+                        CornerRadius="15"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
@@ -2498,11 +2350,7 @@
 
 
             <DataTemplate x:Key="VoiceMediaTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -2511,14 +2359,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -2543,7 +2383,11 @@
                         Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
                         BorderBrush="{StaticResource DirectItemBorderBrushColor}"
                         BorderThickness="1"
-                        CornerRadius="15">
+                        CornerRadius="15"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
@@ -2670,27 +2514,11 @@
             </DataTemplate>
 
             <DataTemplate x:Key="LinkMediaTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                            <MenuFlyoutItem
-                                Click="CopyTextFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Copy Url" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -2706,7 +2534,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -3151,11 +2985,7 @@
             </DataTemplate>
 
             <DataTemplate x:Key="AnimatedMediaTemplate">
-                <Grid
-                    Holding="MenuGridHolding"
-                    IsHoldingEnabled="True"
-                    IsRightTapEnabled="True"
-                    RightTapped="MenuGridRightTapped">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -3164,14 +2994,6 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout Placement="Top">
-                            <MenuFlyoutItem
-                                Click="UnsendMessageFlyoutClick"
-                                DataContext="{Binding}"
-                                Text="Unsend Message" />
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -3187,7 +3009,13 @@
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}">
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -4000,7 +3828,7 @@
                                         FontSize="{StaticResource BigFontSize}"
                                         Foreground="{StaticResource DefaultForegroundColor}">
                                         <AppBarButton.Flyout>
-                                            <MenuFlyout Placement="Top">
+                                            <MenuFlyout>
                                                 <MenuFlyoutItem
                                                     x:Name="GiphyMenuFlyoutItem"
                                                     Height="42"
@@ -4021,8 +3849,8 @@
                                                     Text="" />
                                             </MenuFlyout>
                                         </AppBarButton.Flyout>
-                                        <!--<FlyoutBase.AttachedFlyout>
-                                <MenuFlyout Placement="Top" >
+                                        <!--<Grid.ContextFlyout>
+                                <MenuFlyout >
                                     <MenuFlyoutItem x:Name="GiphyMenuFlyoutItem"
                                                     Text="Gif"
                                                     Height="42"
@@ -4042,7 +3870,7 @@
                                                     HorizontalAlignment="Center"
                                                     HorizontalContentAlignment="Center" />
                                 </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>-->
+                            </Grid.ContextFlyout>-->
 
                                     </AppBarButton>
 
