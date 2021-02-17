@@ -146,6 +146,8 @@
             <converters:DirectItemSendingMessageVisibilityConverter x:Key="DirectItemSendingMessageVisibilityConverter" />
             <converters:DirectItemSendingMessageColorConverter x:Key="DirectItemSendingMessageColorConverter" />
             <converters:DirectItemSendingMessageTikTextConverter x:Key="DirectItemSendingMessageTikTextConverter" />
+            <converters:RepliedToMessageImageConverter x:Key="RepliedToMessageImageConverter" />
+            <converters:RepliedToMessageImageVisibilityConverter x:Key="RepliedToMessageImageVisibilityConverter" />
 
 
             <selector:ThreadItemTemplateSelector
@@ -174,11 +176,29 @@
                 VoiceMediaTemplate="{StaticResource VoiceMediaTemplate}" />
 
             <DataTemplate x:Key="LikeTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -259,7 +279,19 @@
             </DataTemplate>
 
             <DataTemplate x:Key="StoryShareTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -268,6 +300,12 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -412,11 +450,29 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="EmptyStoryShareTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -496,11 +552,29 @@
             </DataTemplate>
 
             <DataTemplate x:Key="NoTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -567,11 +641,29 @@
             </DataTemplate>
 
             <DataTemplate x:Key="NotSupportedTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -620,11 +712,32 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="PlaceholderTemplate">
-                <Grid IsHoldingEnabled="True" IsRightTapEnabled="True">
+                <Grid
+                    x:Name="MainTextGrid"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -695,8 +808,8 @@
                 </Grid>
 
             </DataTemplate>
-            <DataTemplate x:Key="TextTemplate">
-                <Grid x:Name="MainTextGrid" Margin="10">
+            <DataTemplate x:Key="MediaShareTemplate">
+                <Grid x:Name="MainTextGrid">
                     <Grid.Resources>
                         <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
                             <DoubleAnimation
@@ -723,189 +836,6 @@
                         Grid.ColumnSpan="2"
                         Background="{StaticResource DirectItemSelfBackgroundColor}"
                         Opacity="0" />
-                    <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
-                        <Ellipse
-                            Grid.Column="0"
-                            Width="42"
-                            Height="42"
-                            Margin="10,5"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Bottom"
-                            StrokeThickness="0"
-                            Tapped="UserProfileEllipseTapped">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
-                            </Ellipse.Fill>
-                        </Ellipse>
-                    </Grid>
-                    <Grid
-                        Grid.Column="1"
-                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
-                        Holding="MenuGridHolding"
-                        IsHoldingEnabled="True"
-                        IsRightTapEnabled="True"
-                        RightTapped="MenuGridRightTapped">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <!--  Background="#FF373737"  -->
-
-                        <Grid
-                            MinWidth="70"
-                            MinHeight="60"
-                            MaxWidth="275"
-                            Margin="5"
-                            Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
-                            BorderBrush="{StaticResource DirectItemBorderBrushColor}"
-                            BorderThickness="1"
-                            CornerRadius="20">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid
-                                x:Name="RepliedToMessageGrid"
-                                Margin="17,5,15,1"
-                                Tapped="RepliedToMessageGridTapped"
-                                Visibility="{Binding RepliedToMessage, Converter={StaticResource NullableToVisibilityConverter}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle
-                                    Width="2.5"
-                                    Margin="5,0"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Stretch"
-                                    Fill="{StaticResource DirectItemTimeForegroundColor}" />
-                                <Grid Grid.Column="1">
-                                    <TextBlock
-                                        Margin="0,1,5,1"
-                                        VerticalAlignment="Center"
-                                        FontFamily="{StaticResource VazirFont}"
-                                        FontSize="{StaticResource TinyFontSize}"
-                                        Foreground="{StaticResource DirectItemTimeForegroundColor}"
-                                        Text="{Binding RepliedToMessage.Text}"
-                                        TextAlignment="DetectFromContent"
-                                        TextWrapping="Wrap"
-                                        Visibility="{Binding RepliedToMessage, Converter={StaticResource NotNullableToVisibilityConverter}}" />
-                                    <Grid
-                                        MaxHeight="90"
-                                        CornerRadius="10"
-                                        Visibility="{Binding RepliedToMessage.MediaShare, Converter={StaticResource NullableToVisibilityConverter}}">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <controls:ImageEx
-                                            MaxWidth="110"
-                                            MaxHeight="110"
-                                            Stretch="Uniform"
-                                            Tapped="MediaShareImageExTapped">
-                                            <controls:ImageEx.Source>
-                                                <BitmapImage UriSource="{Binding RepliedToMessage.MediaShare, Converter={StaticResource DirectMediaShareConverter}}" />
-                                            </controls:ImageEx.Source>
-                                        </controls:ImageEx>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                            <TextBlock
-                                Grid.Row="1"
-                                Margin="15,1"
-                                VerticalAlignment="Center"
-                                DataContext="{Binding Text}"
-                                DataContextChanged="TextBlockDataContextChanged"
-                                FontFamily="{StaticResource VazirFont}"
-                                FontSize="{StaticResource DefaultFontSize}"
-                                Foreground="{StaticResource DirectItemTextForegroundColor}"
-                                TextAlignment="DetectFromContent"
-                                TextWrapping="Wrap" />
-                            <Grid Grid.Row="2" HorizontalAlignment="Right">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock
-                                    Margin="0,0,10,5"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
-                                    FontFamily="{StaticResource VazirFont}"
-                                    FontSize="10.5"
-                                    Foreground="{StaticResource DirectItemTimeForegroundColor}"
-                                    Text="{Binding TimeStamp, Converter={StaticResource DirectItemDateTimeConverter}}"
-                                    TextWrapping="NoWrap"
-                                    ToolTipService.ToolTip="{Binding TimeStamp}" />
-
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Margin="0,0,10,5"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
-                                    FontFamily="{StaticResource MaterialSymbolFont}"
-                                    FontSize="{StaticResource TinyLargeFontSize}"
-                                    Foreground="{Binding SendingType, Converter={StaticResource DirectItemSendingMessageColorConverter}, UpdateSourceTrigger=PropertyChanged}"
-                                    Text="{Binding SendingType, Converter={StaticResource DirectItemSendingMessageTikTextConverter}, UpdateSourceTrigger=PropertyChanged}"
-                                    TextWrapping="NoWrap"
-                                    Visibility="{Binding Converter={StaticResource DirectItemSendingMessageVisibilityConverter}}" />
-                            </Grid>
-                        </Grid>
-
-                    </Grid>
-                    <Grid
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        MaxWidth="285"
-                        Margin="5,-5,5,5"
-                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
-                        BorderThickness="0"
-                        Visibility="{Binding Reactions.Visibility, Converter={StaticResource BooleanToVisibiltyConverter}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <ToggleButton
-                            x:Name="LikeButton"
-                            Width="36"
-                            Height="35"
-                            VerticalAlignment="Center"
-                            Background="Transparent"
-                            Click="LikeButtonClick"
-                            DataContextChanged="LikeButtonDataContextChanged"
-                            Foreground="{Binding Reactions.Liked, Converter={StaticResource CommentColorConverter}}"
-                            Style="{StaticResource CenterHeaderToggleButtonWithoutIconStyle}"
-                            Tag="{Binding Reactions.Liked, Converter={StaticResource MaterialHeartConverter}}">
-                            <interactivity:Interaction.Behaviors>
-                                <behaviors:PointersEvent />
-                            </interactivity:Interaction.Behaviors>
-                        </ToggleButton>
-                        <StackPanel
-                            Grid.Column="1"
-                            Margin="2,0"
-                            Orientation="Horizontal" />
-                        <Grid
-                            Grid.Column="1"
-                            Margin="2,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            Background="Black"
-                            Opacity="0"
-                            Tapped="LikedUsersGridTapped" />
-                    </Grid>
-
-                </Grid>
-            </DataTemplate>
-            <DataTemplate x:Key="MediaShareTemplate">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1113,7 +1043,19 @@
 
             </DataTemplate>
             <DataTemplate x:Key="MediaTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -1122,6 +1064,12 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1264,7 +1212,19 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="ProfileTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -1273,6 +1233,12 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1434,7 +1400,19 @@
             </DataTemplate>
 
             <DataTemplate x:Key="FelixShareTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -1443,6 +1421,12 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1629,7 +1613,19 @@
             </DataTemplate>
 
             <DataTemplate x:Key="RavenMediaTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -1638,6 +1634,12 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1771,7 +1773,19 @@
             </DataTemplate>
 
             <DataTemplate x:Key="LocationMediaTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -1780,6 +1794,12 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -1925,7 +1945,19 @@
             </DataTemplate>
 
             <DataTemplate x:Key="ReelShareMediaTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -1934,6 +1966,12 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -2095,11 +2133,29 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="EmptyReelShareMediaTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -2198,7 +2254,19 @@
 
 
             <DataTemplate x:Key="HashtagMediaTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -2350,7 +2418,19 @@
 
 
             <DataTemplate x:Key="VoiceMediaTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -2359,6 +2439,12 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -2514,11 +2600,29 @@
             </DataTemplate>
 
             <DataTemplate x:Key="LinkMediaTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -2671,7 +2775,22 @@
 
 
             <DataTemplate x:Key="LiveViewerInviteTemplate">
-                <Grid IsHoldingEnabled="True" IsRightTapEnabled="True">
+                <Grid
+                    x:Name="MainTextGrid"
+                    IsHoldingEnabled="True"
+                    IsRightTapEnabled="True">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -2680,6 +2799,12 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -2985,7 +3110,19 @@
             </DataTemplate>
 
             <DataTemplate x:Key="AnimatedMediaTemplate">
-                <Grid>
+                <Grid x:Name="MainTextGrid">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
@@ -2994,6 +3131,12 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
                     <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
                         <Ellipse
                             Grid.Column="0"
@@ -3219,6 +3362,209 @@
                 </controls:ImageEx>
             </DataTemplate>
 
+            <DataTemplate x:Key="TextTemplate">
+                <Grid x:Name="MainTextGrid" Margin="10">
+                    <Grid.Resources>
+                        <Storyboard x:Key="RepliedAnimation" x:Name="RepliedAnimationResource">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                EnableDependentAnimation="True"
+                                Storyboard.TargetName="MainTextGridBackgroundBrush"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.7"
+                                Duration="0:0:0.85" />
+                        </Storyboard>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="MainTextGridBackgroundBrush"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Background="{StaticResource DirectItemSelfBackgroundColor}"
+                        Opacity="0" />
+                    <Grid Grid.RowSpan="2" Visibility="{Binding Converter={StaticResource DirectItemUserVisibilityConverter}}">
+                        <Ellipse
+                            Grid.Column="0"
+                            Width="42"
+                            Height="42"
+                            Margin="10,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            StrokeThickness="0"
+                            Tapped="UserProfileEllipseTapped">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{Binding Converter={StaticResource DirectItemUserProfilePictureConverter}}" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </Grid>
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        Holding="MenuGridHolding"
+                        IsHoldingEnabled="True"
+                        IsRightTapEnabled="True"
+                        RightTapped="MenuGridRightTapped">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <!--  Background="#FF373737"  -->
+
+                        <Grid
+                            MinWidth="70"
+                            MinHeight="60"
+                            MaxWidth="275"
+                            Margin="5"
+                            Background="{Binding Converter={StaticResource ThreadItemBackgroundColorConverter}}"
+                            BorderBrush="{StaticResource DirectItemBorderBrushColor}"
+                            BorderThickness="1"
+                            CornerRadius="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid
+                                x:Name="RepliedToMessageGrid"
+                                Margin="17,5,15,1"
+                                Tapped="RepliedToMessageGridTapped"
+                                Visibility="{Binding RepliedToMessage, Converter={StaticResource NullableToVisibilityConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle
+                                    Width="2.5"
+                                    Margin="5,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch"
+                                    Fill="{StaticResource DirectItemTimeForegroundColor}" />
+                                <Grid Grid.Column="1">
+                                    <TextBlock
+                                        Margin="0,1,5,1"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource TinyFontSize}"
+                                        Foreground="{StaticResource DirectItemTimeForegroundColor}"
+                                        Text="{Binding RepliedToMessage.Text}"
+                                        TextAlignment="DetectFromContent"
+                                        TextWrapping="Wrap"
+                                        Visibility="{Binding RepliedToMessage, Converter={StaticResource NotNullableToVisibilityConverter}}" />
+
+                                    <Grid
+                                        MaxHeight="90"
+                                        HorizontalAlignment="Left"
+                                        CornerRadius="10"
+                                        Visibility="{Binding RepliedToMessage, Converter={StaticResource RepliedToMessageImageVisibilityConverter}}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <controls:ImageEx
+                                            MaxWidth="90"
+                                            MaxHeight="90"
+                                            Stretch="Uniform"
+                                            Tapped="MediaShareImageExTapped">
+                                            <controls:ImageEx.Source>
+                                                <BitmapImage UriSource="{Binding RepliedToMessage, Converter={StaticResource RepliedToMessageImageConverter}}" />
+                                            </controls:ImageEx.Source>
+                                        </controls:ImageEx>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="15,1"
+                                VerticalAlignment="Center"
+                                DataContext="{Binding Text}"
+                                DataContextChanged="TextBlockDataContextChanged"
+                                FontFamily="{StaticResource VazirFont}"
+                                FontSize="{StaticResource DefaultFontSize}"
+                                Foreground="{StaticResource DirectItemTextForegroundColor}"
+                                TextAlignment="DetectFromContent"
+                                TextWrapping="Wrap" />
+                            <Grid Grid.Row="2" HorizontalAlignment="Right">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Margin="0,0,10,5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource VazirFont}"
+                                    FontSize="10.5"
+                                    Foreground="{StaticResource DirectItemTimeForegroundColor}"
+                                    Text="{Binding TimeStamp, Converter={StaticResource DirectItemDateTimeConverter}}"
+                                    TextWrapping="NoWrap"
+                                    ToolTipService.ToolTip="{Binding TimeStamp}" />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="0,0,10,5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource MaterialSymbolFont}"
+                                    FontSize="{StaticResource TinyLargeFontSize}"
+                                    Foreground="{Binding SendingType, Converter={StaticResource DirectItemSendingMessageColorConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding SendingType, Converter={StaticResource DirectItemSendingMessageTikTextConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                    TextWrapping="NoWrap"
+                                    Visibility="{Binding Converter={StaticResource DirectItemSendingMessageVisibilityConverter}}" />
+                            </Grid>
+                        </Grid>
+
+                    </Grid>
+                    <Grid
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        MaxWidth="285"
+                        Margin="5,-5,5,5"
+                        HorizontalAlignment="{Binding Converter={StaticResource DirectItemHorizontalConverter}}"
+                        BorderThickness="0"
+                        Visibility="{Binding Reactions.Visibility, Converter={StaticResource BooleanToVisibiltyConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton
+                            x:Name="LikeButton"
+                            Width="36"
+                            Height="35"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            Click="LikeButtonClick"
+                            DataContextChanged="LikeButtonDataContextChanged"
+                            Foreground="{Binding Reactions.Liked, Converter={StaticResource CommentColorConverter}}"
+                            Style="{StaticResource CenterHeaderToggleButtonWithoutIconStyle}"
+                            Tag="{Binding Reactions.Liked, Converter={StaticResource MaterialHeartConverter}}">
+                            <interactivity:Interaction.Behaviors>
+                                <behaviors:PointersEvent />
+                            </interactivity:Interaction.Behaviors>
+                        </ToggleButton>
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="2,0"
+                            Orientation="Horizontal" />
+                        <Grid
+                            Grid.Column="1"
+                            Margin="2,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="Black"
+                            Opacity="0"
+                            Tapped="LikedUsersGridTapped" />
+                    </Grid>
+
+                </Grid>
+            </DataTemplate>
         </ResourceDictionary>
     </Page.Resources>
     <Page.DataContext>
@@ -3664,144 +4010,236 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <uc:RecordDirectVoiceUc
-                                x:Name="RecordDirectVoiceUc"
-                                x:FieldModifier="public"
-                                Visibility="Collapsed" />
                             <Grid
-                                Grid.Row="1"
-                                MinHeight="50"
-                                Margin="5,5,5,8"
-                                BorderBrush="{StaticResource DirectTextBoxBorderColor}"
-                                BorderThickness="1.8"
-                                CornerRadius="25">
+                                Height="48"
+                                Background="{StaticResource DefaultItemBackgroundColor}"
+                                Visibility="{Binding DirectReply, Converter={StaticResource NullableToVisibilityConverter}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="3" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <AppBarButton
-                                    x:Name="CameraButton"
-                                    VerticalAlignment="Center"
-                                    Click="CameraButtonClick"
-                                    Content=""
-                                    FontFamily="{StaticResource MaterialSymbolFont}"
-                                    FontSize="{StaticResource BigFontSize}"
-                                    Foreground="{StaticResource DefaultForegroundColor}" />
-
-                                <AppBarButton
-                                    x:Name="SendButton"
-                                    Grid.Column="2"
-                                    Width="75"
-                                    VerticalAlignment="Center"
-                                    Click="SendButtonClick"
-                                    Content="Send"
-                                    FontFamily="{StaticResource VazirFont}"
-                                    FontSize="{StaticResource DefaultFontSize}"
-                                    Foreground="{StaticResource DefaultForegroundColor}"
-                                    Visibility="Collapsed" />
-                                <TextBox
-                                    x:Name="TextMessage"
+                                <Rectangle
+                                    Width="2.5"
+                                    Margin="8,2"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch"
+                                    Fill="{StaticResource DirectItemTimeForegroundColor}" />
+                                <Ellipse
                                     Grid.Column="1"
-                                    MaxHeight="150"
-                                    Margin="1"
+                                    Width="41"
+                                    Height="41"
+                                    HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    AcceptsReturn="True"
-                                    Background="{x:Null}"
-                                    BorderThickness="0"
-                                    FontFamily="{StaticResource VazirFont}"
-                                    FontSize="{StaticResource DefaultFontSize}"
-                                    Foreground="{StaticResource DirectItemTextForegroundColor}"
-                                    IsSpellCheckEnabled="False"
-                                    LostFocus="TextMessageLostFocus"
-                                    PlaceholderText="Write a message..."
-                                    Style="{StaticResource CommentTextBoxCenter}"
-                                    TextAlignment="DetectFromContent"
-                                    TextChanging="TextMessageTextChanging"
-                                    TextWrapping="Wrap" />
+                                    StrokeThickness="0"
+                                    Visibility="{Binding DirectReply.UserProfile, Converter={StaticResource NullableToVisibilityConverter}}">
+                                    <Ellipse.Stroke>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="#D78F1EA0" />
+                                            <GradientStop Offset="1" Color="#D795007A" />
+                                        </LinearGradientBrush>
+                                    </Ellipse.Stroke>
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding DirectReply.UserProfile}" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <controls:ImageEx
+                                    Grid.Column="3"
+                                    Width="42"
+                                    Height="42"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Visibility="{Binding DirectReply.Image, Converter={StaticResource NullableToVisibilityConverter}}">
+                                    <controls:ImageEx.Background>
+                                        <ImageBrush Stretch="Fill">
+                                            <ImageBrush.ImageSource>
+                                                <BitmapImage UriSource="{Binding DirectReply.Image}" />
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </controls:ImageEx.Background>
+                                </controls:ImageEx>
+                                <Grid Grid.Column="4" Margin="4,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource DefaultFontSize}"
+                                        Foreground="{StaticResource DefaultInnerForegroundColor}"
+                                        Text="{Binding DirectReply.Username}"
+                                        Visibility="{Binding DirectReply.Username, Converter={StaticResource NullableToVisibilityConverter}}" />
 
-                                <Border
-                                    x:Name="RecordInfoBorder"
-                                    Grid.Row="1"
-                                    Grid.ColumnSpan="5"
-                                    Margin="0,0,48,0"
-                                    Background="{StaticResource DefaultBackgroundColor}"
-                                    Visibility="Collapsed">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel
-                                            x:Name="ElapsedPanel"
-                                            HorizontalAlignment="Left"
-                                            Orientation="Horizontal"
-                                            SizeChanged="ElapsedPanel_SizeChanged">
-                                            <Ellipse
-                                                Width="12"
-                                                Height="12"
-                                                Margin="12,0,8,0"
-                                                Fill="{StaticResource DirectVoiceRecoderEllipseForegroundColor}" />
-                                            <TextBlock
-                                                x:Name="ElapsedLabel"
-                                                Width="64"
-                                                Margin="0,0,0,1"
-                                                VerticalAlignment="Center"
-                                                Foreground="{StaticResource DirectVoiceRecoderTimeForegroundColor}"
-                                                Text="0:00,00" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            x:Name="SlidePanel"
-                                            Grid.Column="1"
-                                            Margin="0,0,84,0"
-                                            HorizontalAlignment="Right"
-                                            Orientation="Horizontal"
-                                            SizeChanged="SlidePanel_SizeChanged">
-                                            <FontIcon
-                                                Margin="0,1,4,0"
-                                                FontSize="12"
-                                                Foreground="{StaticResource DirectUploadProgressForegroundColor}"
-                                                Glyph="&#xE00E;" />
-                                            <TextBlock
-                                                Margin="0,0,0,0"
-                                                VerticalAlignment="Center"
-                                                Foreground="{StaticResource DirectUploadProgressForegroundColor}"
-                                                Style="{StaticResource CaptionTextBlockStyle}"
-                                                Text="SLIDE TO CANCEL" />
-                                        </StackPanel>
-
-
-                                        <HyperlinkButton
-                                            x:Name="ButtonCancelRecording"
-                                            Grid.Row="1"
-                                            Grid.ColumnSpan="4"
-                                            HorizontalAlignment="Center"
-                                            Click="ButtonCancelRecording_Click"
-                                            Content="Cancel"
-                                            Foreground="{StaticResource SystemControlHyperlinkTextBrush}"
-                                            Visibility="Collapsed" />
-                                    </Grid>
-                                </Border>
-
-
-
-
-
+                                    <TextBlock
+                                        Grid.Row="2"
+                                        Margin="1.5,-8,12,0"
+                                        VerticalAlignment="Top"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource DefaultFontSize}"
+                                        Foreground="{StaticResource DefaultForegroundColor}"
+                                        Text="{Binding DirectReply.TextToShow}"
+                                        TextAlignment="DetectFromContent"
+                                        TextWrapping="NoWrap" />
+                                </Grid>
+                                <AppBarButton
+                                    x:Name="CloseReplyButton"
+                                    Grid.Column="5"
+                                    VerticalAlignment="Center"
+                                    Background="{StaticResource DefaultItemBackgroundColor}"
+                                    Click="CloseReplyButtonClick"
+                                    Foreground="{StaticResource DefaultInnerForegroundColor}">
+                                    <AppBarButton.Icon>
+                                        <FontIcon FontSize="16" Glyph="" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <uc:RecordDirectVoiceUc
+                                    x:Name="RecordDirectVoiceUc"
+                                    x:FieldModifier="public"
+                                    Visibility="Collapsed" />
                                 <Grid
-                                    x:Name="RightGrid"
-                                    Grid.Column="2"
-                                    VerticalAlignment="Center">
+                                    Grid.Row="1"
+                                    MinHeight="50"
+                                    Margin="5,5,5,8"
+                                    BorderBrush="{StaticResource DirectTextBoxBorderColor}"
+                                    BorderThickness="1.8"
+                                    CornerRadius="25">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
+                                    <AppBarButton
+                                        x:Name="CameraButton"
+                                        VerticalAlignment="Center"
+                                        Click="CameraButtonClick"
+                                        Content=""
+                                        FontFamily="{StaticResource MaterialSymbolFont}"
+                                        FontSize="{StaticResource BigFontSize}"
+                                        Foreground="{StaticResource DefaultForegroundColor}" />
+
+                                    <AppBarButton
+                                        x:Name="SendButton"
+                                        Grid.Column="2"
+                                        Width="75"
+                                        VerticalAlignment="Center"
+                                        Click="SendButtonClick"
+                                        Content="Send"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource DefaultFontSize}"
+                                        Foreground="{StaticResource DefaultForegroundColor}"
+                                        Visibility="Collapsed" />
+                                    <TextBox
+                                        x:Name="TextMessage"
+                                        Grid.Column="1"
+                                        MaxHeight="150"
+                                        Margin="1"
+                                        VerticalAlignment="Center"
+                                        AcceptsReturn="True"
+                                        Background="{x:Null}"
+                                        BorderThickness="0"
+                                        FontFamily="{StaticResource VazirFont}"
+                                        FontSize="{StaticResource DefaultFontSize}"
+                                        Foreground="{StaticResource DirectItemTextForegroundColor}"
+                                        IsSpellCheckEnabled="False"
+                                        LostFocus="TextMessageLostFocus"
+                                        PlaceholderText="Write a message..."
+                                        Style="{StaticResource CommentTextBoxCenter}"
+                                        TextAlignment="DetectFromContent"
+                                        TextChanging="TextMessageTextChanging"
+                                        TextWrapping="Wrap" />
+
+                                    <Border
+                                        x:Name="RecordInfoBorder"
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="5"
+                                        Margin="0,0,48,0"
+                                        Background="{StaticResource DefaultBackgroundColor}"
+                                        Visibility="Collapsed">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel
+                                                x:Name="ElapsedPanel"
+                                                HorizontalAlignment="Left"
+                                                Orientation="Horizontal"
+                                                SizeChanged="ElapsedPanel_SizeChanged">
+                                                <Ellipse
+                                                    Width="12"
+                                                    Height="12"
+                                                    Margin="12,0,8,0"
+                                                    Fill="{StaticResource DirectVoiceRecoderEllipseForegroundColor}" />
+                                                <TextBlock
+                                                    x:Name="ElapsedLabel"
+                                                    Width="64"
+                                                    Margin="0,0,0,1"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{StaticResource DirectVoiceRecoderTimeForegroundColor}"
+                                                    Text="0:00,00" />
+                                            </StackPanel>
+                                            <StackPanel
+                                                x:Name="SlidePanel"
+                                                Grid.Column="1"
+                                                Margin="0,0,84,0"
+                                                HorizontalAlignment="Right"
+                                                Orientation="Horizontal"
+                                                SizeChanged="SlidePanel_SizeChanged">
+                                                <FontIcon
+                                                    Margin="0,1,4,0"
+                                                    FontSize="12"
+                                                    Foreground="{StaticResource DirectUploadProgressForegroundColor}"
+                                                    Glyph="&#xE00E;" />
+                                                <TextBlock
+                                                    Margin="0,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{StaticResource DirectUploadProgressForegroundColor}"
+                                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                                    Text="SLIDE TO CANCEL" />
+                                            </StackPanel>
+
+
+                                            <HyperlinkButton
+                                                x:Name="ButtonCancelRecording"
+                                                Grid.Row="1"
+                                                Grid.ColumnSpan="4"
+                                                HorizontalAlignment="Center"
+                                                Click="ButtonCancelRecording_Click"
+                                                Content="Cancel"
+                                                Foreground="{StaticResource SystemControlHyperlinkTextBrush}"
+                                                Visibility="Collapsed" />
+                                        </Grid>
+                                    </Border>
 
 
 
-                                    <!--<AppBarButton x:Name="VoiceButton"
+
+
+                                    <Grid
+                                        x:Name="RightGrid"
+                                        Grid.Column="2"
+                                        VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+
+
+                                        <!--<AppBarButton x:Name="VoiceButton"
                                                   Foreground="{StaticResource DefaultForegroundColor}"
                                                   Grid.Column="0"
                                                   Content=""
@@ -3809,47 +4247,47 @@
                                                   FontFamily="{StaticResource MaterialSymbolFont}"
                                                   FontSize="{StaticResource BigFontSize}"
                                                   Click="VoiceButtonClick" />-->
-                                    <AppBarButton
-                                        x:Name="FileSelectButton"
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center"
-                                        Click="FileSelectButtonClick"
-                                        Content="ﱩ"
-                                        FontFamily="{StaticResource MaterialSymbolFont}"
-                                        FontSize="{StaticResource BigBigFontSize}"
-                                        Foreground="{StaticResource DefaultForegroundColor}" />
-                                    <AppBarButton
-                                        x:Name="PlusButton"
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        Click="PlusButtonClick"
-                                        Content=""
-                                        FontFamily="{StaticResource MaterialSymbolFont}"
-                                        FontSize="{StaticResource BigFontSize}"
-                                        Foreground="{StaticResource DefaultForegroundColor}">
-                                        <AppBarButton.Flyout>
-                                            <MenuFlyout>
-                                                <MenuFlyoutItem
-                                                    x:Name="GiphyMenuFlyoutItem"
-                                                    Height="42"
-                                                    HorizontalContentAlignment="Center"
-                                                    Click="GiphyMenuFlyoutItemClick"
-                                                    FontFamily="{StaticResource VazirFont}"
-                                                    FontSize="{StaticResource BigFontSize}"
-                                                    Text="Gif" />
+                                        <AppBarButton
+                                            x:Name="FileSelectButton"
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Click="FileSelectButtonClick"
+                                            Content="ﱩ"
+                                            FontFamily="{StaticResource MaterialSymbolFont}"
+                                            FontSize="{StaticResource BigBigFontSize}"
+                                            Foreground="{StaticResource DefaultForegroundColor}" />
+                                        <AppBarButton
+                                            x:Name="PlusButton"
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Click="PlusButtonClick"
+                                            Content=""
+                                            FontFamily="{StaticResource MaterialSymbolFont}"
+                                            FontSize="{StaticResource BigFontSize}"
+                                            Foreground="{StaticResource DefaultForegroundColor}">
+                                            <AppBarButton.Flyout>
+                                                <MenuFlyout>
+                                                    <MenuFlyoutItem
+                                                        x:Name="GiphyMenuFlyoutItem"
+                                                        Height="42"
+                                                        HorizontalContentAlignment="Center"
+                                                        Click="GiphyMenuFlyoutItemClick"
+                                                        FontFamily="{StaticResource VazirFont}"
+                                                        FontSize="{StaticResource BigFontSize}"
+                                                        Text="Gif" />
 
 
-                                                <MenuFlyoutItem
-                                                    x:Name="HeartMenuFlyoutItem"
-                                                    HorizontalContentAlignment="Center"
-                                                    Click="HeartMenuFlyoutItemClick"
-                                                    FontFamily="{StaticResource MaterialSymbolFont}"
-                                                    FontSize="{StaticResource HeavyBigFontSize}"
-                                                    Foreground="{StaticResource DirectHeartButtonForegroundColor}"
-                                                    Text="" />
-                                            </MenuFlyout>
-                                        </AppBarButton.Flyout>
-                                        <!--<Grid.ContextFlyout>
+                                                    <MenuFlyoutItem
+                                                        x:Name="HeartMenuFlyoutItem"
+                                                        HorizontalContentAlignment="Center"
+                                                        Click="HeartMenuFlyoutItemClick"
+                                                        FontFamily="{StaticResource MaterialSymbolFont}"
+                                                        FontSize="{StaticResource HeavyBigFontSize}"
+                                                        Foreground="{StaticResource DirectHeartButtonForegroundColor}"
+                                                        Text="" />
+                                                </MenuFlyout>
+                                            </AppBarButton.Flyout>
+                                            <!--<Grid.ContextFlyout>
                                 <MenuFlyout >
                                     <MenuFlyoutItem x:Name="GiphyMenuFlyoutItem"
                                                     Text="Gif"
@@ -3872,40 +4310,40 @@
                                 </MenuFlyout>
                             </Grid.ContextFlyout>-->
 
-                                    </AppBarButton>
+                                        </AppBarButton>
 
 
-                                    <Grid
-                                        x:Name="ButtonRecord"
-                                        Grid.Column="2"
-                                        Width="58"
-                                        Height="52"
-                                        VerticalAlignment="Bottom"
-                                        Canvas.ZIndex="1000">
-                                        <Border
-                                            x:Name="Ellipse"
+                                        <Grid
+                                            x:Name="ButtonRecord"
+                                            Grid.Column="2"
                                             Width="58"
                                             Height="52"
-                                            Margin="0,0,-7,0"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Background="{StaticResource DirectHeartButtonForegroundColor}"
-                                            Visibility="Collapsed" />
-                                        <localControls:ChatRecordButton
-                                            x:Name="btnVoiceMessage"
-                                            AllowFocusOnInteraction="False"
-                                            Background="{x:Null}"
-                                            ManipulationDelta="VoiceButton_ManipulationDelta"
-                                            ManipulationMode="TranslateX,TranslateY"
-                                            RecordingLocked="VoiceButton_RecordingLocked"
-                                            RecordingStarted="VoiceButton_RecordingStarted"
-                                            RecordingStopped="VoiceButton_RecordingStopped" />
+                                            VerticalAlignment="Bottom"
+                                            Canvas.ZIndex="1000">
+                                            <Border
+                                                x:Name="Ellipse"
+                                                Width="58"
+                                                Height="52"
+                                                Margin="0,0,-7,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Background="{StaticResource DirectHeartButtonForegroundColor}"
+                                                Visibility="Collapsed" />
+                                            <localControls:ChatRecordButton
+                                                x:Name="btnVoiceMessage"
+                                                AllowFocusOnInteraction="False"
+                                                Background="{x:Null}"
+                                                ManipulationDelta="VoiceButton_ManipulationDelta"
+                                                ManipulationMode="TranslateX,TranslateY"
+                                                RecordingLocked="VoiceButton_RecordingLocked"
+                                                RecordingStarted="VoiceButton_RecordingStarted"
+                                                RecordingStopped="VoiceButton_RecordingStopped" />
+                                        </Grid>
                                     </Grid>
+
+
                                 </Grid>
-
-
                             </Grid>
-
                         </Grid>
                     </Grid>
                 </Grid>

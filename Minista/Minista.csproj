@@ -214,11 +214,13 @@
     <Compile Include="Converters\DirectItemSendingMessageConverter.cs" />
     <Compile Include="Converters\DirectItemWidthConverter.cs" />
     <Compile Include="Converters\LoginSessionConverter.cs" />
+    <Compile Include="Converters\RepliedToMessageImageConverter.cs" />
     <Compile Include="Converters\StoryViewerConverter.cs" />
     <Compile Include="Converters\UserTagCarouselItemVisibilityConverter.cs" />
     <Compile Include="CustomMTC\TVCustomMTC.cs" />
     <Compile Include="Helpers\HyperLinkHelper.cs" />
     <Compile Include="Helpers\MultiApiHelper.cs" />
+    <Compile Include="Helpers\PropertyCopyHelper.cs" />
     <Compile Include="Helpers\PushHelper.cs" />
     <Compile Include="Helpers\ThemeHelper.cs" />
     <Compile Include="Helpers\UriHelper.cs" />
@@ -228,6 +230,7 @@
     <Compile Include="ItemsGenerators\UserDetails\UserDetailsTaggedMediasGenerator.cs" />
     <Compile Include="ItemsGenerators\UserDetails\UserDetailsTVMediasGenerator.cs" />
     <Compile Include="Models\BusinessProfile.cs" />
+    <Compile Include="Models\Main\DirectReplyModel.cs" />
     <Compile Include="Selectors\MainStoryTemplateSelector.cs" />
     <Compile Include="Themes\MinistaTheme.cs" />
     <Compile Include="Themes\MinistaThemes.cs" />

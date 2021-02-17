@@ -115,7 +115,7 @@
                         DataContextChanged="TextBlockDataContextChanged"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="14"
-                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Tag="{Binding}"
                         TextAlignment="DetectFromContent"
                         TextWrapping="Wrap" />
@@ -185,11 +185,11 @@
                         Grid.ColumnSpan="4"
                         Padding="0"
                         VerticalAlignment="Center"
-                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Click="MoreTailChildCommentsButtonClick"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="13"
                         FontWeight="Normal"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Visibility="{Binding HasMoreTailChildComments, Converter={StaticResource BooleanToVisibiltyConverter}}">
                         <TextBlock
                             VerticalAlignment="Center"
@@ -213,10 +213,10 @@
                         Padding="0"
                         VerticalAlignment="Center"
                         Click="MoreHeadChildCommentsButtonClick"
-                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="13"
                         FontWeight="Normal"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Visibility="{Binding HasMoreHeadChildComments, Converter={StaticResource BooleanToVisibiltyConverter}}">
                         <TextBlock
                             VerticalAlignment="Center"
@@ -299,7 +299,7 @@
                         DataContextChanged="TextBlockDataContextChanged"
                         FontFamily="{StaticResource VazirFont}"
                         FontSize="14"
-                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
                         Tag="{Binding}"
                         TextAlignment="DetectFromContent"
                         TextWrapping="Wrap" />
@@ -337,11 +337,11 @@
                             Grid.Column="3"
                             Padding="0"
                             VerticalAlignment="Center"
-                                    Foreground="{StaticResource DefaultInnerForegroundColor}"
                             Click="ReplyButtonClick"
                             FontFamily="{StaticResource VazirFont}"
                             FontSize="13"
                             FontWeight="Normal"
+                            Foreground="{StaticResource DefaultInnerForegroundColor}"
                             Visibility="{Binding IsCommentsDisabled, Converter={StaticResource BooleanReverseToVisibiltyConverter}}">
                             <TextBlock
                                 VerticalAlignment="Center"
@@ -387,19 +387,18 @@
                     x:Name="TopLoading"
                     VerticalAlignment="Top"
                     Visibility="Collapsed" />
-                <winui:RefreshContainer x:Name="RefreshControl"
-                                                    Grid.Row="1">
+                <winui:RefreshContainer x:Name="RefreshControl" Grid.Row="1">
                     <ListView
-                    x:Name="ItemsLV"
-                    Grid.Row="1"
-                    Margin="5"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Foreground="{StaticResource DefaultInnerForegroundColor}"
-                    IsItemClickEnabled="False"
-                    ItemTemplate="{StaticResource MainTemplate}"
-                    ItemsSource="{Binding Items, Mode=OneWay}"
-                    SelectionMode="None">
+                        x:Name="ItemsLV"
+                        Grid.Row="1"
+                        Margin="5"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Foreground="{StaticResource DefaultInnerForegroundColor}"
+                        IsItemClickEnabled="False"
+                        ItemTemplate="{StaticResource MainTemplate}"
+                        ItemsSource="{Binding Items, Mode=OneWay}"
+                        SelectionMode="None">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -416,23 +415,24 @@
                     VerticalAlignment="Bottom"
                     Visibility="Collapsed" />
             </Grid>
-            <Button x:Name="RefreshButton"
-                    Background="{x:Null}"
-                    Grid.RowSpan="2"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Left"
-                    Margin="12 0 0 50"
-                    Click="RefreshButtonClick"
-                    Style="{StaticResource RefreshButtonStyle}"/>
+            <Button
+                x:Name="RefreshButton"
+                Grid.RowSpan="2"
+                Margin="12,0,0,50"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Background="{x:Null}"
+                Click="RefreshButtonClick"
+                Style="{StaticResource RefreshButtonStyle}" />
             <Button
                 x:Name="GoUpButton"
                 Grid.RowSpan="2"
-                Margin="0 0 12 50"
+                Margin="0,0,12,50"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Background="{x:Null}"
                 Click="GoUpButtonClick"
-                Style="{StaticResource GoUpButtonStyle}"/>
+                Style="{StaticResource GoUpButtonStyle}" />
         </Grid>
         <Grid Grid.Row="1" MaxWidth="640">
             <Grid.RowDefinitions>
@@ -502,8 +502,8 @@
                     Grid.Column="3"
                     VerticalAlignment="Center"
                     Background="{StaticResource DefaultItemBackgroundColor}"
-                    Foreground="{StaticResource DefaultInnerForegroundColor}"
-                    Click="CloseCommentButtonClick">
+                    Click="CloseCommentButtonClick"
+                    Foreground="{StaticResource DefaultInnerForegroundColor}">
                     <AppBarButton.Icon>
                         <FontIcon FontSize="16" Glyph="" />
                     </AppBarButton.Icon>
@@ -524,10 +524,10 @@
                     VerticalAlignment="Stretch"
                     AcceptsReturn="True"
                     FontFamily="{StaticResource VazirFont}"
-                    FontSize="{StaticResource DefaultFontSize}" 
-                    Style="{StaticResource TextBoxCenter}"
+                    FontSize="{StaticResource DefaultFontSize}"
                     IsSpellCheckEnabled="False"
                     PlaceholderText="Type a comment to send"
+                    Style="{StaticResource TextBoxCenter}"
                     TextAlignment="DetectFromContent"
                     TextWrapping="Wrap" />
 
@@ -536,8 +536,8 @@
                     Grid.Column="1"
                     VerticalAlignment="Center"
                     Background="{StaticResource DefaultItemBackgroundColor}"
-                    Foreground="{StaticResource DefaultInnerForegroundColor}"
-                    Click="CommentButtonClick">
+                    Click="CommentButtonClick"
+                    Foreground="{StaticResource DefaultInnerForegroundColor}">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="" />
                     </AppBarButton.Icon>

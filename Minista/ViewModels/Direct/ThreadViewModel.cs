@@ -19,11 +19,13 @@ using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Windows.UI.Xaml;
 using Minista.Views.Direct;
+using Minista.Models.Main;
 
 namespace Minista.ViewModels.Direct
 {
     public class ThreadViewModel : BaseModel, IGenerator
     {
+        
         public ThreadViewModel()
         {
             RefreshTimer.Tick += RefreshTimerTick;
@@ -41,6 +43,10 @@ namespace Minista.ViewModels.Direct
         InstaDirectInboxThread _currentThread;
         public InstaDirectInboxThread CurrentThread { get { return _currentThread; } set { _currentThread = value; OnPropertyChanged("CurrentThread"); } }
         public bool IsFakeThreadEnabled = false;
+        DirectReplyModel _directReply;
+        public DirectReplyModel DirectReply { get { return _directReply; } set { _directReply = value; OnPropertyChanged("DirectReply"); } }
+
+
         private Visibility _endChatVisibility = Visibility.Collapsed;
         public Visibility EndChatVisibility { get { return _endChatVisibility; } set { _endChatVisibility = value; OnPropertyChanged("EndChatVisibility"); } }
 

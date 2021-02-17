@@ -39,6 +39,7 @@ using Windows.UI.Xaml.Hosting;
 using System.Numerics;
 using Windows.UI.Composition;
 using Windows.UI.Xaml.Media.Animation;
+using Minista.Models.Main;
 
 namespace Minista.Views.Direct
 {
@@ -384,20 +385,11 @@ namespace Minista.Views.Direct
             }
             catch { }
         }
-        
+
         private void MediaShareImageExTapped(object sender, TappedRoutedEventArgs e)
         {
-            try
-            {
-                if (sender is ImageEx image && image != null)
-                {
-                    if (image.DataContext is InstaDirectInboxItem threadItem && threadItem?.ItemType == InstaDirectThreadItemType.MediaShare)
-                    {
-                        NavigationService.Navigate(typeof(Posts.SinglePostView), threadItem.MediaShare);
-                    }
-                }
-            }
-            catch { }
+            if (sender is ImageEx image && image.DataContext is InstaDirectInboxItem data)
+                HandleInnerItems(data);
         }
         bool singleTap;
 
@@ -424,32 +416,14 @@ namespace Minista.Views.Direct
 
         private void ProfileGridTapped(object sender, TappedRoutedEventArgs e)
         {
-            try
-            {
-                if (sender is Grid grid && grid != null)
-                {
-                    if (grid.DataContext is InstaDirectInboxItem threadItem && threadItem?.ItemType == InstaDirectThreadItemType.Profile)
-                    {
-                        Helper.OpenProfile(threadItem.ProfileMedia);
-                    }
-                }
-            }
-            catch { }
+            if (sender is Grid grid && grid.DataContext is InstaDirectInboxItem data)
+                HandleInnerItems(data);
         }
 
         private void FelixShareGridTapped(object sender, TappedRoutedEventArgs e)
         {
-            try
-            {
-                if (sender is Grid grid && grid != null)
-                {
-                    if (grid.DataContext is InstaDirectInboxItem threadItem && threadItem?.ItemType == InstaDirectThreadItemType.FelixShare)
-                    {
-                        NavigationService.Navigate(typeof(Posts.SinglePostView), threadItem.FelixShareMedia);
-                    }
-                }
-            }
-            catch { }
+            if (sender is Grid grid && grid.DataContext is InstaDirectInboxItem data)
+                HandleInnerItems(data);
         }
 
         private void TextMessageTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
@@ -507,45 +481,62 @@ namespace Minista.Views.Direct
                         TextMessage.Text = string.Empty;
                         return;
                     }
+                    var textToSend = TextMessage.Text.Trim();
+                    TextMessage.Text = string.Empty;
+
                     InstaDirectInboxItem item = new InstaDirectInboxItem
                     {
                         ItemType = InstaDirectThreadItemType.Text,
-                        Text = TextMessage.Text.Trim(),
+                        Text = textToSend,
                         UserId = Helper.InstaApi.GetLoggedUser().LoggedInUser.Pk,
                         SendingType = InstagramApiSharp.Enums.InstaDirectInboxItemSendingType.Pending,
                         TimeStamp = DateTime.Now
                     };
+                    if (ThreadVM.DirectReply != null)
+                    {
+                        DirectReplyModel copied = null;
+                        try
+                        {
+                            PropertyCopy.Copy(ThreadVM.DirectReply, copied);
+                            await Task.Delay(100);
+                        }
+                        catch { copied = ThreadVM.DirectReply; }
+
+                        item.RepliedToMessage = copied;
+                    }
+                    ThreadVM.DirectReply = null;
                     ThreadVM.AddItem(item, true, 1000);
                     ThreadVM.UpdateInbox(item, true);
-                    if (TextMessage.Text.Trim().StartsWith("http:") || TextMessage.Text.Trim().StartsWith("https:") ||
-                    TextMessage.Text.Trim().StartsWith("www."))
+                    if (item.RepliedToMessage == null && 
+                    (textToSend.StartsWith("http:") || 
+                    textToSend.StartsWith("https:") ||
+                    textToSend.StartsWith("www.")))
                     {
                         item.ItemType = InstaDirectThreadItemType.Link;
                         item.LinkMedia = new InstaWebLink
                         {
-                            Text = TextMessage.Text,
+                            Text = textToSend,
                             LinkContext = new InstaWebLinkContext
                             {
-                                LinkUrl = TextMessage.Text,
-                                LinkSummary = TextMessage.Text
+                                LinkUrl = textToSend,
+                                LinkSummary = textToSend
                             }
                         };
                         IResult<InstaDirectRespondPayload> result;
                         if(!string.IsNullOrEmpty(ThreadVM.CurrentThread.ThreadId))
-                        result = await Helper.InstaApi.MessagingProcessor.SendDirectLinkAsync(TextMessage.Text.Trim(),
-                            TextMessage.Text.Trim(), ThreadVM.CurrentThread.ThreadId);
+                        result = await Helper.InstaApi.MessagingProcessor.SendDirectLinkAsync(textToSend,
+                            textToSend, ThreadVM.CurrentThread.ThreadId);
                         else
                         {
                             var pks = new List<long>();
                             for (int i = 0; i < ThreadVM.CurrentThread.Users.Count; i++)
                                 pks.Add(ThreadVM.CurrentThread.Users[i].Pk);
-                            result = await Helper.InstaApi.MessagingProcessor.SendDirectLinkToRecipientsAsync(TextMessage.Text.Trim(),
-                          TextMessage.Text.Trim(), pks.EncodeRecipients());
+                            result = await Helper.InstaApi.MessagingProcessor.SendDirectLinkToRecipientsAsync(textToSend,
+                        textToSend, pks.EncodeRecipients());
                         }
                         if (result.Succeeded)
                         {
                             item.SendingType = InstagramApiSharp.Enums.InstaDirectInboxItemSendingType.Sent;
-                            TextMessage.Text = string.Empty;
                             item.ItemId = result.Value?.ItemId;
                             item.TimeStamp = DateTime.UtcNow;
                             ThreadVM.CurrentThread.ThreadId = result.Value.ThreadId;
@@ -560,20 +551,33 @@ namespace Minista.Views.Direct
                         catch { }
                         IResult<InstaDirectRespondPayload> result;
                         if (!string.IsNullOrEmpty(ThreadVM.CurrentThread.ThreadId))
-                            result = await Helper.InstaApi.MessagingProcessor.SendDirectTextAsync(null, ThreadVM.CurrentThread.ThreadId, 
-                                TextMessage.Text.Trim());
+                        {
+                            if (item.RepliedToMessage == null)
+                                result = await Helper.InstaApi.MessagingProcessor.SendDirectTextAsync(null, ThreadVM.CurrentThread.ThreadId,
+                                      textToSend);
+                            else
+                            {
+                              
+                                result = await Helper.InstaApi.MessagingProcessor.ReplyDirectMessageAsync(ThreadVM.CurrentThread.ThreadId,
+                                                            textToSend,
+                                                             item.RepliedToMessage.ItemId,
+                                                             item.RepliedToMessage.UserId,
+                                                             item.RepliedToMessage.ClientContext,
+                                                             item.RepliedToMessage.ItemTypeOriginalText);
+                  
+                            }
+                        }
                         else
                         {
                             var pks = new List<long>();
                             for (int i = 0; i < ThreadVM.CurrentThread.Users.Count; i++)
                                 pks.Add(ThreadVM.CurrentThread.Users[i].Pk);
-                            result = await Helper.InstaApi.MessagingProcessor.SendDirectTextAsync(pks.EncodeRecipients(),null,
-                                 TextMessage.Text.Trim());
+                            result = await Helper.InstaApi.MessagingProcessor.SendDirectTextAsync(pks.EncodeRecipients(), null,
+                                 textToSend);
                         }
                         if (result.Succeeded)
                         {
                             item.SendingType = InstagramApiSharp.Enums.InstaDirectInboxItemSendingType.Sent;
-                            TextMessage.Text = string.Empty;
                             item.ItemId = result.Value?.ItemId;
                             item.TimeStamp = DateTime.Now;
                             ThreadVM.CurrentThread.ThreadId = result.Value.ThreadId;
@@ -692,41 +696,35 @@ namespace Minista.Views.Direct
         {
             try
             {
-                    ME.Play();
+                ME.Play();
             }
             catch { }
         }
 
         private void MEMediaEnded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                //if (VoicePlayPauseButton != null)
-                //    VoicePlayPauseButton.Content = Helper.PlayMaterialIcon;
-            }
-            catch { }
+            //try
+            //{
+            //    if (VoicePlayPauseButton != null)
+            //        VoicePlayPauseButton.Content = Helper.PlayMaterialIcon;
+            //}
+            //catch { }
         }
 
         private void MEMediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            try
-            {
-                //if (VoicePlayPauseButton != null)
-                //    VoicePlayPauseButton.Content = Helper.PlayMaterialIcon;
-            }
-            catch { }
+            //try
+            //{
+            //    if (VoicePlayPauseButton != null)
+            //        VoicePlayPauseButton.Content = Helper.PlayMaterialIcon;
+            //}
+            //catch { }
         }
 
         private void LinkMediaGridTapped(object sender, TappedRoutedEventArgs e)
         {
-            try
-            {
-                if (sender is Grid grid && grid.DataContext is InstaDirectInboxItem directInboxItem && directInboxItem != null &&
-                        directInboxItem.ItemType == InstaDirectThreadItemType.Link && directInboxItem.LinkMedia != null &&
-                        directInboxItem.LinkMedia?.LinkContext?.LinkUrl != null)
-                    UriHelper.HandleUri(directInboxItem.LinkMedia.LinkContext.LinkUrl);
-            }
-            catch { }
+            if (sender is Grid grid && grid.DataContext is InstaDirectInboxItem data)
+                HandleInnerItems(data);
         }
 
         private void TextBlockDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
@@ -805,8 +803,6 @@ namespace Minista.Views.Direct
 
         }
 
-
-
         private void UserProfileEllipseTapped(object sender, TappedRoutedEventArgs e)
         {
             try
@@ -821,23 +817,14 @@ namespace Minista.Views.Direct
             catch { } 
         }
 
-        private void MediaImageExTapped(object sender, TappedRoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is Grid imageEx && imageEx.DataContext is InstaDirectInboxItem data && data != null &&
-                    data.ItemType == InstaDirectThreadItemType.Media && data.Media != null)
-                    NavigationService.Navigate(typeof(Infos.ImageVideoView), data.Media);
-            }
-            catch { }
-        }
 
-        private void ReelShareImageExTapped(object sender, TappedRoutedEventArgs e)
+        void HandleInnerItems(InstaDirectInboxItem data)
         {
             try
             {
-                if (sender is ImageEx imageEx && imageEx.DataContext is InstaDirectInboxItem data && data != null &&
-                    data.ItemType == InstaDirectThreadItemType.ReelShare && data.ReelShareMedia != null)
+                if (data.ItemType == InstaDirectThreadItemType.Media && data.Media != null)
+                    NavigationService.Navigate(typeof(Infos.ImageVideoView), data.Media);
+                else if (data.ItemType == InstaDirectThreadItemType.ReelShare && data.ReelShareMedia != null)
                 {
                     var reel = new InstaReelFeed
                     {
@@ -845,30 +832,54 @@ namespace Minista.Views.Direct
                         Id = data.ReelShareMedia.Media.Id,
                         User = data.ReelShareMedia.Media.User.ToUserShortFriendshipFull(),
                         CanReply = data.ReelShareMedia.Media.CanReply,
-                       
+
                     };
                     reel.Items.Add(data.ReelShareMedia.Media);
 
                     NavigationService.Navigate(SettingsHelper.GetStoryView(), reel);
                 }
+                else if (data.ItemType == InstaDirectThreadItemType.RavenMedia && data.VisualMedia != null &&
+                    !data.VisualMedia.IsExpired && data.VisualMedia.SeenCount != null)
+                    NavigationService.Navigate(typeof(RavenMediaView), new object[] { ThreadVM.CurrentThread, data });
+                else if (data.ItemType == InstaDirectThreadItemType.StoryShare && data.StoryShare != null && data.StoryShare.Media != null)
+                    NavigationService.Navigate(SettingsHelper.GetStoryView(),
+                        new object[] { data.StoryShare.Media.User.Pk, data.StoryShare.Media.Pk.ToString(),
+                            data.StoryShare.Media.Pk.ToString(), data.StoryShare.Media.Pk.ToString(), });
+                else if (data.ItemType == InstaDirectThreadItemType.Link && data.LinkMedia != null &&
+                        data.LinkMedia?.LinkContext?.LinkUrl != null)
+                    UriHelper.HandleUri(data.LinkMedia.LinkContext.LinkUrl);
+                else if (data.ItemType == InstaDirectThreadItemType.FelixShare)
+                    NavigationService.Navigate(typeof(Posts.SinglePostView), data.FelixShareMedia);
+                else if (data?.ItemType == InstaDirectThreadItemType.Profile)
+                    Helper.OpenProfile(data.ProfileMedia);
+                else if (data?.ItemType == InstaDirectThreadItemType.MediaShare)
+                    NavigationService.Navigate(typeof(Posts.SinglePostView), data.MediaShare);
             }
             catch { }
+        }
+        private void MediaImageExTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (sender is Grid imageEx && imageEx.DataContext is InstaDirectInboxItem data)
+                HandleInnerItems(data);
+        }
+
+        private void ReelShareImageExTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (sender is ImageEx imageEx && imageEx.DataContext is InstaDirectInboxItem data)
+                HandleInnerItems(data);
         }
 
         private void VisualMediaTapped(object sender, TappedRoutedEventArgs e)
         {
-            try
-            {
-                if (sender is Grid imageEx && imageEx.DataContext is InstaDirectInboxItem data && data != null &&
-                    data.ItemType == InstaDirectThreadItemType.RavenMedia && data.VisualMedia != null)
-                {
-                    if (!data.VisualMedia.IsExpired && data.VisualMedia.SeenCount != null)
-                        NavigationService.Navigate(typeof(RavenMediaView), new object[] { ThreadVM.CurrentThread, data });
-                }
-            }
-            catch { }
+            if (sender is Grid imageEx && imageEx.DataContext is InstaDirectInboxItem data)
+                HandleInnerItems(data);
         }
 
+        private void StoryShareGridTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (sender is Grid item && item.DataContext is InstaDirectInboxItem data)
+                HandleInnerItems(data);
+        }
         private void MediaElementTapped(object sender, TappedRoutedEventArgs e)
         {
             try
@@ -926,8 +937,26 @@ namespace Minista.Views.Direct
                 copyText.Click += CopyTextFlyoutClick;
                 menuFlyout.Items.Add(copyText);
             }
+            var replyMenu = GenerateMenuFlyoutItem(data, "Reply");
+            replyMenu.Click += ReplyMenuClick;
+            menuFlyout.Items.Add(replyMenu);
             return menuFlyout;
         }
+
+        private void ReplyMenuClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuFlyoutItem item && item.DataContext is InstaDirectInboxItem data)
+            {
+                ThreadVM.DirectReply = DirectReplyModel.GetReplyModel(data, ThreadVM.CurrentThread);
+
+                try
+                {
+                    TextMessage.Focus(FocusState.Keyboard);
+                }
+                catch { }
+            }
+        }
+
         MenuFlyoutItem GenerateMenuFlyoutItem(InstaDirectInboxItem data, string text) =>
             new MenuFlyoutItem { DataContext = data, Text = text };
 
@@ -1063,20 +1092,9 @@ namespace Minista.Views.Direct
             }
         }
 
-        private void StoryShareGridTapped(object sender, TappedRoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is Grid item && item.DataContext is InstaDirectInboxItem data && data != null &&
-                data.ItemType == InstaDirectThreadItemType.StoryShare && data.StoryShare != null && data.StoryShare.Media != null)
-                {
-                    NavigationService.Navigate(SettingsHelper.GetStoryView(), 
-                        new object[] { data.StoryShare.Media.User.Pk, data.StoryShare.Media.Pk.ToString(),
-                            data.StoryShare.Media.Pk.ToString(), data.StoryShare.Media.Pk.ToString(), });
-                }
-            }
-            catch { }
-        }
+        private void CloseReplyButtonClick(object sender, RoutedEventArgs e) =>
+            ThreadVM.DirectReply = null;
+
 
         #region LOADINGS
         public void ShowTopLoading() => TopLoading.Start();
@@ -1608,6 +1626,8 @@ namespace Minista.Views.Direct
                             storyboard?.Begin();
                         }
                     }
+                    else
+                        HandleInnerItems(inboxItem.RepliedToMessage);
                 }
             }
             catch { }

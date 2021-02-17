@@ -303,7 +303,7 @@ namespace Minista.ViewModels.Direct
         {
             try
             {
-                if (Helper.DontUseTimersAndOtherStuff) return;
+                if (DontUseTimersAndOtherStuff) return;
                 if (e?.Count > 0)
                 {
                     for (int i = 0; i < e.Count; i++)
@@ -317,7 +317,7 @@ namespace Minista.ViewModels.Direct
                             {
                                 var threadId = item.RealtimePath.Substring(item.RealtimePath.IndexOf(start) + start.Length);
                                 threadId = threadId.Substring(0, threadId.IndexOf("/"));
-                                if (item.RealtimePath?.Contains("/items/") ?? false)
+                                if (item.RealtimePath?.Contains("/items/") ?? false && !item.HideInThread)
                                 {
                                     var itemId = item.RealtimePath.Substring(item.RealtimePath.IndexOf("/items/") + "/items/".Length);
                                     if (itemId.Contains("/"))
