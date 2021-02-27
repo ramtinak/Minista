@@ -531,7 +531,8 @@ namespace Minista.ViewModels.Direct
                                 bool flag = false;
                                 results.ForEach(x =>
                                 {
-                                    Items.Add(x);
+                                    if (!x.HideInThread)
+                                        Items.Add(x);
                                     flag = true;
                                 });
                                 if (flag)

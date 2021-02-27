@@ -1420,6 +1420,10 @@
     </PackageReference>
   </ItemGroup>-->
   <ItemGroup>
+    <ProjectReference Include="..\..\Barname nevisi\Projects\PhotoEditorToolkit\PhotoEditorToolkit\PhotoEditorToolkit.csproj">
+      <Project>{3924d2d8-45c2-4205-bb9c-397af9ff4895}</Project>
+      <Name>PhotoEditorToolkit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Minista\InstagramApiSharp\InstagramApiSharp.csproj">
       <Project>{d7d254a4-843e-4e23-9513-ac89eb163168}</Project>
       <Name>InstagramApiSharp</Name>
