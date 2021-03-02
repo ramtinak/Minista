@@ -904,7 +904,7 @@ static class Helper
     {
         try
         {
-            if (time == TimeSpan.Zero) time = TimeSpan.FromSeconds(3.5);
+            if (time == TimeSpan.Zero) time = TimeSpan.FromSeconds(1.5);
 
             CreateCachedFolder();
             var folder = await ApplicationData.Current.LocalFolder.GetFolderAsync("Cache");

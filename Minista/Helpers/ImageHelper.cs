@@ -299,7 +299,7 @@ namespace Minista.Helpers
             return file;
         }
 
-        private static (Rect, Size) Scale(Rect rect, Size start, Size size, int min, int max)
+        public static (Rect, Size) Scale(Rect rect, Size start, Size size, int min, int max)
         {
             var width = rect.Width * size.Width / start.Width;
             var height = rect.Height * size.Height / start.Height;

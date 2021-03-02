@@ -30,9 +30,6 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
-                <!--<Grid.ColumnDefinitions>
-                    <ColumnDefinition
-                </Grid.ColumnDefinitions>-->
                 <AppBarButton
                     x:Name="ImportButton"
                     Width="190"
@@ -108,7 +105,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
-                <!--<RowDefinition Height="100" />-->
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -116,40 +112,24 @@
             </Grid.ColumnDefinitions>
 
             <Grid x:Name="MainWorkSapce">
-                <!--<Image x:Name="ImageView"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Stretch="Uniform"
-                       Tapped="ImageViewTapped"/>-->
-
                 <canvas:CanvasControl
                     x:Name="MainCanvas"
                     Width="200"
                     Height="200"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    DoubleTapped="MainCanvas_DoubleTapped"
-                    Draw="MainCanvas_Draw"
-                    ManipulationCompleted="MainCanvas_ManipulationCompleted"
-                    ManipulationDelta="MainCanvas_ManipulationDelta"
-                    ManipulationMode="TranslateX,TranslateY"
-                    ManipulationStarted="MainCanvas_ManipulationStarted"
-                    Tapped="MainCanvas_Tapped" />
+                    Draw="MainCanvas_Draw" />
 
                 <Grid x:Name="CropGrid" Visibility="Visible">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <controls:ImageCropper
-                        x:Name="ImageCropper"
+                    <editor:PhotoEditor
+                        x:Name="Editor"
                         HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Background="Transparent"
-                        Visibility="Collapsed" />
-
-                    <!--<editor:PhotoEditor-->
-                    <Grid Grid.Row="1" Height="65">
+                        VerticalAlignment="Stretch" />
+                    <!--<Grid Grid.Row="1" Height="65">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
@@ -179,33 +159,6 @@
                             StepFrequency="0.0001"
                             ValueChanged="AspectRatioSliderValueChanged"
                             Value="1.6201" />
-                        <!--<ComboBox x:Name="ComboAspectRatio"
-                                  MaxWidth="150"
-                                  Grid.Row="1"
-                                  VerticalAlignment="Center"
-                                  HorizontalAlignment="Stretch"
-                                  SelectionChanged="ComboAspectRatioSelectionChanged">
-                            <TextBlock         VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource DefaultFontSize}"
-                                               TextWrapping="NoWrap"
-                                               Text="1.91:1" />
-                            <TextBlock         VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource DefaultFontSize}"
-                                               TextWrapping="NoWrap"
-                                               Text="1:1" />
-                            <TextBlock         VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               FontFamily="{StaticResource VazirFont}"
-                                               FontSize="{StaticResource DefaultFontSize}"
-                                               TextWrapping="NoWrap"
-                                               Text="0.8:1" />
-
-                        </ComboBox>-->
-
                         <AppBarButton
                             x:Name="CropButton"
                             Grid.Row="1"
@@ -239,14 +192,9 @@
                             </Grid>
                         </AppBarButton>
 
-                    </Grid>
+                    </Grid>-->
 
                 </Grid>
-                <!--<MediaElement x:Name="ME"
-                                  Volume=".7"
-                                  Visibility="Collapsed" />
-                <Grid Background="Black" Opacity="0"
-                          Tapped="VideoViewTapped"/>-->
             </Grid>
             <TextBox
                 x:Name="CaptionText"
@@ -259,46 +207,6 @@
                 IsSpellCheckEnabled="False"
                 PlaceholderText="Caption"
                 TextWrapping="Wrap" />
-            <!--<Grid Grid.Row="2" Grid.ColumnSpan="2">
-                <ListView x:Name="LV"
-                          ScrollViewer.HorizontalScrollMode="Enabled"
-                          ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                          ScrollViewer.IsHorizontalRailEnabled="True"
-                          ItemsSource="{Binding Source={StaticResource groupItemsViewSource}}"
-                          VerticalAlignment="Stretch"
-                          HorizontalAlignment="Stretch"
-                          IsItemClickEnabled="True"
-                          SelectionMode="None">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Border BorderThickness=".6"
-                                    Margin="5"
-                                    BorderBrush="#FF1E1E1E"
-                                    Background="#FF2C2C2C"
-                                    CornerRadius="6"
-                                    Height="85"
-                                    Width="100">
-                                <Grid>
-                                    <Image Source="{Binding Thumbnail,UpdateSourceTrigger=PropertyChanged}"
-                                           Stretch="Fill" />
-                                    <TextBlock Text=""
-                                               FontFamily="ms-appx:///Assets/segmdl2.ttf#Segoe MDL2 Assets"
-                                               FontSize="13"
-                                               HorizontalAlignment="Left"
-                                               VerticalAlignment="Bottom"
-                                               Margin="10 0 0 5"
-                                               Visibility="{Binding VideoVisibility,UpdateSourceTrigger=PropertyChanged}" />
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>-->
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
@@ -307,7 +215,6 @@
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="640" />
-                        <!--<AdaptiveTrigger MinWindowWidth="584" />-->
                     </VisualState.StateTriggers>
                 </VisualState>
 

@@ -73,16 +73,15 @@ namespace Minista.Helpers
         StorageFile NotifyFile;
         StorageFile Thumbnail;
         double Duration;
-        public async void UploadVideo(StorageFile File, StorageFile thumbnail, string caption, BitmapDecoder decoder, Rect rectSize)
+        public async void UploadVideo(StorageFile File, StorageFile thumbnail, string caption, Rect rectSize)
         {
             try
             {
-                var videoInfo = await File.GetVideoInfoAsync();
-                bool isMatch = false;
-                if (videoInfo != null)
-                    isMatch = videoInfo.Height == decoder.PixelHeight && videoInfo.Width == decoder.PixelWidth;
-    
-                var files =await new VideoConverter().ConvertFiles(new List<StorageFile> { File }, false, new Size(decoder.PixelWidth, decoder.PixelHeight), rectSize);
+                var files = await new VideoConverter().ConvertFiles(new List<StorageFile> { File }, 
+                    false,
+                    new Size((uint)rectSize.Width, (uint)rectSize.Height),
+                    rectSize);
+
                 if (files.Count > 0)
                     UploadSingleVideo(files[0], thumbnail, caption);
 
@@ -93,7 +92,7 @@ namespace Minista.Helpers
                 UploadSingleVideo(File, thumbnail, caption);
             }
         }
-        /*public*/ async void UploadSingleVideo(StorageFile File, StorageFile thumbnail, string caption)
+        async void UploadSingleVideo(StorageFile File, StorageFile thumbnail, string caption)
         {
             Caption = caption;
             Thumbnail = thumbnail;
