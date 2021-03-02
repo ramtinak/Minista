@@ -201,6 +201,8 @@
 
                 <editor:PhotoEditor
                     x:Name="Editor"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     AspectRatio="0.62"
                     LargeChangeRatio="0.05"
                     MaximumRatio="0.9"

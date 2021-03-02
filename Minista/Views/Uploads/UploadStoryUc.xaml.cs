@@ -179,6 +179,7 @@ namespace Minista.Views.Uploads
                 Editing = true;
                 CanCrop = false;
                 LoadingUc.Start();
+                ResetEditor();
                 if (file.IsVideo())
                 {
                     VideoButton.Visibility = Visibility.Visible;
@@ -190,9 +191,9 @@ namespace Minista.Views.Uploads
 
                     ThumbnailFile = await file.GetSnapshotFromD3D(TimeSpan.Zero, true);
                     ThumbnailFile = await new PhotoHelper().SaveToImage(ThumbnailFile, false);
-                    await Editor.SetFileAsync(ThumbnailFile);
                     CropGrid.Opacity = 1;
                     CropGrid.Visibility = Visibility.Visible;
+                    await Editor.SetFileAsync(ThumbnailFile);
                     MainCanvas.Visibility = Visibility.Collapsed;
 
                     CanCrop = true;
@@ -206,9 +207,9 @@ namespace Minista.Views.Uploads
 
                     FileToUpload = await new PhotoHelper().SaveToImage(file, false);
 
-                    await Editor.SetFileAsync(file);
                     CropGrid.Opacity = 1;
                     CropGrid.Visibility = Visibility.Visible;
+                    await Editor.SetFileAsync(file);
                     MainCanvas.Visibility = Visibility.Collapsed;
 
                     CanCrop = true;
