@@ -44,13 +44,12 @@ namespace Minista.Views.Uploads
 {
     public sealed partial class UploadUc : UserControl
     {
-        //public ImageCropper ImageCropper;
         public bool Editing { get; set; } = true;
         public StorageFile FileToUpload, ThumbnailFile;
         private const double DefaultAspectRatio = 1.62d;
         public StorageUploadItem UploadItem => GetUploadItem();
-        BitmapDecoder BitmapDecoder;
-        Rect CurrentCroppedRectForVideo;
+        //BitmapDecoder BitmapDecoder;
+        //Rect CurrentCroppedRectForVideo;
         public bool IsVideo = false;
         private bool _canTagPeople = false;
         public bool CanTagPeople
@@ -93,12 +92,12 @@ namespace Minista.Views.Uploads
                 VideoEncodingQuality = quality,
                 //VideoToUpload = FileToUpload,
                 //ImageToUpload = ThumbnailFile ?? FileToUpload,
-                PixelHeight = BitmapDecoder.PixelHeight,
-                PixelWidth = BitmapDecoder.PixelWidth,
+                PixelHeight = (uint)Editor.ScaledSize.Height,
+                PixelWidth = (uint)Editor.ScaledSize.Width,
                 StartTime = TimeSpan.FromSeconds(TrimControl.RangeMin),
                 EndTime = TimeSpan.FromSeconds(TrimControl.RangeMax),
                 //AudioMuted = ToggleMuteAudio.IsChecked ?? false,
-               Rect = ImageCropper.CurrentCroppedRect
+               Rect = Editor.ScaledCropRect
             };
             upItem.UserTags = GetMediaTagUcs();
             upItem.ThisIsVideo(IsVideo);
@@ -138,9 +137,9 @@ namespace Minista.Views.Uploads
             CanCrop = false;
             OriginalFile = file;
         }
-        public void InitFile() => SetFile(OriginalFile);
+        public async Task InitFile() =>await SetFile(OriginalFile);
         public async Task InitFileAsync() => await SetFileAsync(OriginalFile); 
-        public async void SetFile(StorageFile file)
+        public async Task SetFile(StorageFile file)
         {
             try
             {
@@ -155,24 +154,13 @@ namespace Minista.Views.Uploads
                     ThumbnailFile = await file.GetSnapshotFromD3D(TimeSpan.Zero, true);
                     ThumbnailFile = await new PhotoHelper().SaveToImage(ThumbnailFile, false);
 
-                    double width = 0, height = 0;
-                    var decoder = await BitmapDecoder.CreateAsync(await ThumbnailFile.OpenReadAsync());
-                    width = decoder.PixelWidth;
-                    height = decoder.PixelHeight;
-                    var wRatio = AspectRatioHelper.GetAspectRatioForMedia(width, height);
-                    var hRatio = AspectRatioHelper.GetAspectRatioForMedia(height, width);
+                    CropGrid.Opacity = 1;
                     ImageX.Visibility = Visibility.Collapsed;
-
-                    AspectRatioSlider.Value = wRatio;
-                    ImageCropper.AspectRatio = wRatio;
-                    ImageCropper.CropShape = CropShape.Rectangular;
-                    await ImageCropper.LoadImageFromFile(ThumbnailFile);
-
                     CropGrid.Visibility = Visibility.Visible;
+                    await Task.Delay(1000);
+                    await Editor.SetFileAsync(ThumbnailFile);
 
-                    await Task.Delay(1500);
-                    ImageCropper.AspectRatio = DefaultAspectRatio;
-                    AspectRatioSlider.Value = DefaultAspectRatio;
+                    await Task.Delay(150);
                     CanCrop = true;
                     LoadingUc.Stop();
                 }
@@ -181,50 +169,15 @@ namespace Minista.Views.Uploads
                     VideoButton.Visibility = Visibility.Collapsed;
                     IsVideo = false;
                     ThumbnailFile = null;
-                    BitmapDecoder = null;
-                    var editNeeded = false;
-                    double width = 0, height = 0;
-                    var decoder = await BitmapDecoder.CreateAsync(await file.OpenReadAsync());
-                    width = decoder.PixelWidth;
-                    height = decoder.PixelHeight;
-                    var wRatio = AspectRatioHelper.GetAspectRatioForMedia(width, height);
-                    var hRatio = AspectRatioHelper.GetAspectRatioForMedia(height, width);
-                    if (wRatio > 1.91 && wRatio < 0.8)
-                        editNeeded = true;
-                    else
-                    {
-                        if (hRatio > 1.91 && hRatio < 0.8)
-                            editNeeded = true;
-                    }
-                    if (height > width)
-                        editNeeded = true;
 
-                    //in paeini comment bod
                     FileToUpload = await new PhotoHelper().SaveToImage(file, false);
 
-                    if (!editNeeded)
-                    {
-
-
-                        CropGrid.Visibility = Visibility.Visible;
-
-                        ImageX.Visibility = Visibility.Collapsed;
-
-                        AspectRatioSlider.Value = wRatio;
-                        ImageCropper.AspectRatio = wRatio;
-                        ImageCropper.CropShape = CropShape.Rectangular;
-                        await ImageCropper.LoadImageFromFile(file);
-                    }
-                    else
-                    {
-                        CropGrid.Visibility = Visibility.Visible;
-                        ImageX.Visibility = Visibility.Collapsed;
-                        AspectRatioSlider.Value = DefaultAspectRatio;
-                        ImageCropper.AspectRatio = DefaultAspectRatio;
-                        ImageCropper.CropShape = CropShape.Rectangular;
-                        await ImageCropper.LoadImageFromFile(file);
-                    }
-                    await Task.Delay(1500);
+                    CropGrid.Opacity = 1;
+                    ImageX.Visibility = Visibility.Collapsed;
+                    CropGrid.Visibility = Visibility.Visible;
+                    await Task.Delay(1000);
+                    await Editor.SetFileAsync(FileToUpload);
+                    await Task.Delay(150);
                     CanCrop = true;
                     LoadingUc.Stop();
                 }
@@ -241,93 +194,58 @@ namespace Minista.Views.Uploads
                 LoadingUc.Start();
                 await Helper.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
-
-                if (file.IsVideo())
-                {
-                    VideoButton.Visibility = Visibility.Visible;
-                    IsVideo = true;
-                    FileToUpload = file;
-                    ThumbnailFile = await file.GetSnapshotFromD3D(TimeSpan.Zero, true);
-                    ThumbnailFile = await new PhotoHelper().SaveToImage(ThumbnailFile, false);
-
-                    double width = 0, height = 0;
-                    var decoder = await BitmapDecoder.CreateAsync(await ThumbnailFile.OpenReadAsync());
-                    width = decoder.PixelWidth;
-                    height = decoder.PixelHeight;
-                    var wRatio = AspectRatioHelper.GetAspectRatioForMedia(width, height);
-                    var hRatio = AspectRatioHelper.GetAspectRatioForMedia(height, width);
-                    ImageX.Visibility = Visibility.Collapsed;
-
-                    AspectRatioSlider.Value = wRatio;
-                    ImageCropper.AspectRatio = wRatio;
-                    ImageCropper.CropShape = CropShape.Rectangular;
-                    await ImageCropper.LoadImageFromFile(ThumbnailFile);
-
-                    CropGrid.Visibility = Visibility.Visible;
-
-                    await Task.Delay(1500);
-                    ImageCropper.AspectRatio = DefaultAspectRatio;
-                    AspectRatioSlider.Value = DefaultAspectRatio;
-                    CanCrop = true;
-                    LoadingUc.Stop();
-                }
-                else
-                {
-                    VideoButton.Visibility = Visibility.Collapsed;
-                    IsVideo = false;
-                    ThumbnailFile = null;
-                    BitmapDecoder = null;
-                    var editNeeded = false;
-                    double width = 0, height = 0;
-                    var decoder = await BitmapDecoder.CreateAsync(await file.OpenReadAsync());
-                    width = decoder.PixelWidth;
-                    height = decoder.PixelHeight;
-                    var wRatio = AspectRatioHelper.GetAspectRatioForMedia(width, height);
-                    var hRatio = AspectRatioHelper.GetAspectRatioForMedia(height, width);
-                    if (wRatio > 1.91 && wRatio < 0.8)
-                        editNeeded = true;
-                    else
+                    if (file.IsVideo())
                     {
-                        if (hRatio > 1.91 && hRatio < 0.8)
-                            editNeeded = true;
-                    }
-                    if (height > width)
-                        editNeeded = true;
+                        VideoButton.Visibility = Visibility.Visible;
+                        IsVideo = true;
+                        FileToUpload = file;
+                        ThumbnailFile = await file.GetSnapshotFromD3D(TimeSpan.Zero, true);
+                        ThumbnailFile = await new PhotoHelper().SaveToImage(ThumbnailFile, false);
 
-                    //in paeini comment bod
-                    FileToUpload = await new PhotoHelper().SaveToImage(file, false);
-
-                    if (!editNeeded)
-                    {
-
-
-                        CropGrid.Visibility = Visibility.Visible;
-
+                        CropGrid.Opacity = 1;
                         ImageX.Visibility = Visibility.Collapsed;
+                        CropGrid.Visibility = Visibility.Visible;
+                        await Task.Delay(TimeSpan.FromSeconds(1000));
+                        await Editor.SetFileAsync(ThumbnailFile);
 
-                        AspectRatioSlider.Value = wRatio;
-                        ImageCropper.AspectRatio = wRatio;
-                        ImageCropper.CropShape = CropShape.Rectangular;
-                        await ImageCropper.LoadImageFromFile(file);
+
+                        await Task.Delay(1500);
+                        CanCrop = true;
+                        LoadingUc.Stop();
                     }
                     else
                     {
-                        CropGrid.Visibility = Visibility.Visible;
+                        VideoButton.Visibility = Visibility.Collapsed;
+                        IsVideo = false;
+                        ThumbnailFile = null;
+                        
+                        FileToUpload = await new PhotoHelper().SaveToImage(file, false);
+
+                        CropGrid.Opacity = 1;
                         ImageX.Visibility = Visibility.Collapsed;
-                        AspectRatioSlider.Value = DefaultAspectRatio;
-                        ImageCropper.AspectRatio = DefaultAspectRatio;
-                        ImageCropper.CropShape = CropShape.Rectangular;
-                        await ImageCropper.LoadImageFromFile(file);
-                    }
-                    //await Task.Delay(1500);
-                    CanCrop = true;
-                    LoadingUc.Stop();
+                        CropGrid.Visibility = Visibility.Visible;
+                        await Task.Delay(TimeSpan.FromSeconds(1000));
+                        await Editor.SetFileAsync(FileToUpload );
+                        await Task.Delay(200);
+                        CanCrop = true;
+                        LoadingUc.Stop();
                     }
                 });
             }
-            catch { }
+            catch (Exception ex)
+            {
+            }
         }
 
+        void ResetEditor()
+        {
+            Editor.LargeChangeRatio = 0.0001;
+            Editor.MaximumRatio = 1.9101;
+            Editor.MinimumRatio = 0.5001;
+            Editor.SmallChangeRatio = 0.0001;
+            Editor.StepFrequencyRatio = 0.0001;
+            Editor.AspectRatio = DefaultAspectRatio;
+        }
         void ShowImagePreview(StorageFile file)
         {
             try
@@ -364,15 +282,14 @@ namespace Minista.Views.Uploads
             try
             {
                 var MediaPlaybackItem = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(FileToUpload));
-                //FileToUpload
                 ME.SetPlaybackSource(MediaPlaybackItem);
                 ME.RemoveAllEffects();
                 var transform = new VideoTransformEffectDefinition
                 {
                     Rotation = MediaRotation.None,
-                    OutputSize = new Size(BitmapDecoder.PixelWidth, BitmapDecoder.PixelHeight),
+                    OutputSize = Editor.ScaledSize,
                     Mirror = MediaMirroringOptions.None,
-                    CropRectangle = CurrentCroppedRectForVideo
+                    CropRectangle = Editor.ScaledCropRect
                 };
 
                 ME.AddVideoEffect(transform.ActivatableClassId, true, transform.Properties);
@@ -424,9 +341,20 @@ namespace Minista.Views.Uploads
         //{
         //    Helper.ShowNotify("This option will be available in the next release...", 4000);
         //}
-        private void OnPageLoaded(object sender, RoutedEventArgs e)
+        private /*async*/ void OnPageLoaded(object sender, RoutedEventArgs e)
         {
             SetCanvas();
+            Editor.Completed += Editor_Completed;
+            //await Helper.RunOnUI(async () =>
+            //{
+            //    try
+            //    {
+            //        CropGrid.Visibility = Visibility.Visible;
+            //        await Task.Delay(2000);
+            //        CropGrid.Visibility = Visibility.Collapsed;
+            //    }
+            //    catch { }
+            //});
         }
 
         private void TrimControlValueChanged(object sender, Microsoft.Toolkit.Uwp.UI.Controls.RangeChangedEventArgs e)
@@ -442,17 +370,7 @@ namespace Minista.Views.Uploads
             }
             catch { }
         }
-
-        private void AspectRatioSliderValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            try
-            {
-                if (AspectRatioSlider.Value != -1)
-                    ImageCropper.AspectRatio = AspectRatioSlider.Value;
-            }
-            catch { }
-        }
-        private async void CropButtonClick(object sender, RoutedEventArgs e)
+        private async void Editor_Completed(object sender, EventArgs e)
         {
             try
             {
@@ -463,34 +381,28 @@ namespace Minista.Views.Uploads
                 }
                 if (IsVideo)
                 {
-                    using (var fileStream = await ThumbnailFile.OpenAsync(FileAccessMode.ReadWrite, StorageOpenOptions.None))
-                        await ImageCropper.SaveAsync(fileStream, BitmapFileFormat.Jpeg);
-                    ThumbnailFile = await new PhotoHelper().SaveToImage(ThumbnailFile, false);
-                    var decoder = await BitmapDecoder.CreateAsync(await ThumbnailFile.OpenReadAsync());
-                    BitmapDecoder = decoder;
-                    CurrentCroppedRectForVideo = ImageCropper.CurrentCroppedRect;
+                    var cacheFolder = await SessionHelper.LocalFolder.GetFolderAsync("Cache");
+                    var file = await cacheFolder.CreateFileAsync(15.GenerateRandomStringStatic() + ".jpg");
+
+                    await Editor.SaveToFileAsync(file);
+                    ThumbnailFile = await new PhotoHelper().SaveToImage(file, false);
+
                     ShowImagePreview(ThumbnailFile);
                 }
                 else
                 {
                     var cacheFolder = await SessionHelper.LocalFolder.GetFolderAsync("Cache");
                     var file = await cacheFolder.CreateFileAsync(15.GenerateRandomStringStatic() + ".jpg");
-                    //await ImageCropper.CroppedImage.SaveAsync(file);
-                    using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite, StorageOpenOptions.None))
-                        await ImageCropper.SaveAsync(fileStream, BitmapFileFormat.Jpeg);
-                    FileToUpload = await new PhotoHelper().SaveToImage(file, false, false);
 
-                    var decoder = await BitmapDecoder.CreateAsync(await FileToUpload.OpenReadAsync());
-                    BitmapDecoder = decoder;
-                    //CropGrid.Visibility = Visibility.Collapsed;
+                    await Editor.SaveToFileAsync(file);
+                    FileToUpload = await new PhotoHelper().SaveToImage(file, false, false);
                     ShowImagePreview(FileToUpload);
                 }
                 Editing = false;
-
             }
             catch (Exception ex)
             {
-                ex.PrintException("CropButtonClick");
+                ex.PrintException("Editor_Completed");
             }
         }
 

@@ -229,7 +229,7 @@ namespace Minista.Views.Uploads
                             {
                                 item.Started = true;
                                 item.Loadings.Start();
-                                tasks.Add(item.UploadUc.InitFileAsync());
+                                //tasks.Add(item.UploadUc.InitFileAsync());
                             }
                         }
                         catch { }
@@ -246,9 +246,18 @@ namespace Minista.Views.Uploads
                     }
                     if (!appendFiles && UploadUcListX.Count > 0) CPresenter.Content = UploadUcListX[0].UploadUc;
 
-                    await Task.WhenAll(tasks);
+                    //await Task.WhenAll(tasks);
+                    int ix = 0;
                     foreach (var item in UploadUcListX)
+                    {
+                        CPresenter.Content = UploadUcListX[ix].UploadUc;
+
+                        if (item.PlusVisibility == Visibility.Collapsed)
+                           await item.UploadUc.InitFile();
                         item.SetThumbIfExists();
+                        ix++;
+                    }
+
                     LoadingUc.Stop();
 
                 }

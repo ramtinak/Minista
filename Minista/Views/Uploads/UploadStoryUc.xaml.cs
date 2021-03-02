@@ -44,7 +44,6 @@ namespace Minista.Views.Uploads
         public StorageFile FileToUpload, ThumbnailFile;
         private const double DefaultAspectRatio = 0.62d;
         public StorageUploadItem UploadItem => GetUploadItem();
-        //BitmapDecoder BitmapDecoder;
         public bool IsVideo = false;
         bool CanCrop = false;
 
