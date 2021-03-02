@@ -120,15 +120,17 @@
                     VerticalAlignment="Center"
                     Draw="MainCanvas_Draw" />
 
-                <Grid x:Name="CropGrid" Visibility="Visible">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+                <Grid x:Name="CropGrid" Visibility="Collapsed">
                     <editor:PhotoEditor
                         x:Name="Editor"
                         HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch" />
+                        VerticalAlignment="Stretch"
+                        AspectRatio="1.9101"
+                        LargeChangeRatio="0.0001"
+                        MaximumRatio="1.9101"
+                        MinimumRatio="0.5001"
+                        SmallChangeRatio="0.0001"
+                        StepFrequencyRatio="0.0001" />
                 </Grid>
             </Grid>
             <TextBox

@@ -20,19 +20,35 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using InstagramApiSharp.Classes;
 using InstagramApiSharp.Classes.Models;
+using System.Threading.Tasks;
+
 namespace Minista.Views.Posts
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class UploadStoryView : Page
     {
         private StorageFile FileToUpload;
-        private const double DefaultAspectRatio = 0.562d;
+        private const double DefaultAspectRatio = 0.62d/*0.562d*/;
         public UploadStoryView()
         {
             this.InitializeComponent();
+            Loaded += UploadStoryView_Loaded;
         }
+
+        private async void UploadStoryView_Loaded(object sender, RoutedEventArgs e)
+        {
+            Editor.Completed += Editor_Completed;
+            await Helper.RunOnUI(async () =>
+            {
+                try
+                {
+                    CropGrid.Visibility = Visibility.Visible;
+                    await Task.Delay(2000);
+                    CropGrid.Visibility = Visibility.Collapsed;
+                }
+                catch { }
+            });
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -75,48 +91,18 @@ namespace Minista.Views.Posts
         {
             try
             {
-                var editNeeded = false;
-                double width = 0, height = 0;
-                var decoder = await BitmapDecoder.CreateAsync(await file.OpenReadAsync());
-                width = decoder.PixelWidth;
-                height = decoder.PixelHeight;
-                var wRatio = AspectRatioHelper.GetAspectRatioForMedia(width, height);
-                var hRatio = AspectRatioHelper.GetAspectRatioForMedia(height, width);
-                //if (wRatio > 1.91 && wRatio < 0.8)
-                //    editNeeded = true;
-                //else
-                //{
-                //    if (hRatio > 1.91 && hRatio < 0.8)
-                //        editNeeded = true;
-                //}
-                //if (height > width)
-                editNeeded = true;
-
-                if (!editNeeded)
-                {
-                    CropGrid.Visibility = Visibility.Visible;
-                    ImageView.Visibility = Visibility.Collapsed;
-                    UploadButton.IsEnabled = false;
-
-                    AspectRatioSlider.Value = wRatio;
-                    ImageCropper.AspectRatio = wRatio;
-                    ImageCropper.CropShape = CropShape.Rectangular;
-                    await ImageCropper.LoadImageFromFile(file);
-                }
-                else
-                {
-                    CropGrid.Visibility = Visibility.Visible;
-                    ImageView.Visibility = Visibility.Collapsed;
-                    UploadButton.IsEnabled = false;
-                    //Helper.ShowNotify("Your photo is not in a acceptable aspect ratio." +
-                    //    "\r\nYou need to crop it and then you can upload it.", 4500);
-
-
-                    AspectRatioSlider.Value = DefaultAspectRatio;
-                    ImageCropper.AspectRatio = DefaultAspectRatio;
-                    ImageCropper.CropShape = CropShape.Rectangular;
-                    await ImageCropper.LoadImageFromFile(file);
-                }
+                CropGrid.Opacity = 1;
+                CropGrid.Visibility = Visibility.Visible;
+                UploadButton.IsEnabled = false;
+                Editor.ResetUI();
+                Editor.LargeChangeRatio = 0.05;
+                Editor.MaximumRatio = 0.9;
+                Editor.MinimumRatio = 0.50;
+                Editor.SmallChangeRatio = 0.05;
+                Editor.StepFrequencyRatio = 0.05;
+                Editor.AspectRatio = DefaultAspectRatio;
+                var editedFile = await new PhotoHelper().SaveToImage(file, false, false);
+                await Editor.SetFileAsync(editedFile);
             }
             catch { }
         }
@@ -142,42 +128,26 @@ namespace Minista.Views.Posts
             {
                 ImageBytes = fileBytes
             };
-            //var result = await Helper.InstaApi.StoryProcessor.UploadStoryPhotoAsync(img, "");
-
-            uploader.UploadSinglePhoto(FileToUpload, "CaptionText.Text");
+            uploader.UploadSinglePhoto(FileToUpload, "");
             MainPage.Current?.ShowMediaUploadingUc();
             if (NavigationService.Frame.CanGoBack)
                 NavigationService.GoBack();
         }
-        private void AspectRatioSliderValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        private async void Editor_Completed(object sender, EventArgs e)
         {
             try
             {
-                if (AspectRatioSlider.Value != -1)
-                    ImageCropper.AspectRatio = AspectRatioSlider.Value;
-            }
-            catch { }
-        }
-
-        private async void CropButtonClick(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
-                Helper.CreateCachedFolder();
                 var cacheFolder = await SessionHelper.LocalFolder.GetFolderAsync("Cache");
                 var file = await cacheFolder.CreateFileAsync(15.GenerateRandomStringStatic() + ".jpg");
-                using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite, StorageOpenOptions.None))
-                    await ImageCropper.SaveAsync(fileStream, BitmapFileFormat.Jpeg);
-                FileToUpload = await new PhotoHelper().SaveToImage(file, false);
 
+                await Editor.SaveToFileAsync(file);
+                FileToUpload = await new PhotoHelper().SaveToImage(file, false, false);
                 ShowImagePreview(FileToUpload);
                 UploadButton.IsEnabled = true;
             }
             catch (Exception ex)
             {
-                ex.PrintException("CropButtonClick");
+                ex.PrintException("Editor_Completed");
             }
         }
     }

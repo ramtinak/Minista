@@ -38,7 +38,7 @@ namespace Minista.Views.Posts
     public sealed partial class UploadPostView : Page
     {
         private StorageFile FileToUpload, ThumbnailFile;
-        private const double DefaultAspectRatio = 1.6200d;
+        private const double DefaultAspectRatio = 1.6201d;
         public UploadPostView()
         {
             this.InitializeComponent();
@@ -211,18 +211,9 @@ namespace Minista.Views.Posts
             }
             catch(Exception ex)
             {
-                ex.PrintException("CropButtonClick");
+                ex.PrintException("Editor_Completed");
             }
         }
-
-
-
-
-
-
-
-
-
 
         #region Canvas
 
