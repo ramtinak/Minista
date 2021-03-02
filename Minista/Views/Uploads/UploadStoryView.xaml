@@ -2,19 +2,19 @@
     x:Class="Minista.Views.Uploads.UploadStoryView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Minista.Views.Uploads"
+    xmlns:behaviors="using:Minista.Behaviors"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:controls="using:Minista.UI.Controls"
+    xmlns:controlsx="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Minista.Converters"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
-      xmlns:controls="using:Minista.UI.Controls"
-      mc:Ignorable="d"
-      xmlns:converters="using:Minista.Converters"
-      xmlns:controlsx="using:Microsoft.Toolkit.Uwp.UI.Controls"
-      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-      xmlns:behaviors="using:Minista.Behaviors"
-      xmlns:loading="using:Minista.UserControls"
-      xmlns:vm="using:Minista.ViewModels.Posts">
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:loading="using:Minista.UserControls"
+    xmlns:local="using:Minista.Views.Uploads"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Minista.ViewModels.Posts"
+    mc:Ignorable="d">
     <Grid Background="{StaticResource DefaultBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -26,120 +26,119 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
                 <!--<Grid.ColumnDefinitions>
                     <ColumnDefinition
                 </Grid.ColumnDefinitions>-->
-                <AppBarButton x:Name="ImportButton"
-                              ToolTipService.ToolTip="Import medias"
-                              HorizontalAlignment="Stretch"
-                              Foreground="{StaticResource DefaultForegroundColor}"
-                              Width="190"
-                              Margin="2"
-                              FontFamily="{StaticResource VazirFont}"
-                              FontSize="{StaticResource DefaultFontSize}"
-                              Click="ImportButtonClick"
-                              Style="{StaticResource NotCenteredAppBarButton}"
-                              Background="#FF1B1B1B">
+                <AppBarButton
+                    x:Name="ImportButton"
+                    Width="190"
+                    Margin="2"
+                    HorizontalAlignment="Stretch"
+                    Background="#FF1B1B1B"
+                    Click="ImportButtonClick"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource DefaultFontSize}"
+                    Foreground="{StaticResource DefaultForegroundColor}"
+                    Style="{StaticResource NotCenteredAppBarButton}"
+                    ToolTipService.ToolTip="Import medias">
                     <interactivity:Interaction.Behaviors>
                         <behaviors:PointersEvent />
                     </interactivity:Interaction.Behaviors>
                     <Grid>
-                        <TextBlock Text="Import..."
-                                   Foreground="White"
-                                   Grid.Column="1"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   TextWrapping="NoWrap"
-                                   Margin="3" />
-                        <Grid Background="SaddleBrown"
-                              Opacity="0" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="3"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            Text="Import..."
+                            TextWrapping="NoWrap" />
+                        <Grid Background="SaddleBrown" Opacity="0" />
                     </Grid>
                 </AppBarButton>
-                <AppBarButton x:Name="UploadButton"
-                              ToolTipService.ToolTip="Upload"
-                              HorizontalAlignment="Stretch"
-                              Foreground="{StaticResource DefaultForegroundColor}"
-                              Width="190"
-                              Margin="2"
-                              FontFamily="{StaticResource VazirFont}"
-                              FontSize="{StaticResource DefaultFontSize}"
-                              Click="UploadButtonClick"
-                              Style="{StaticResource NotCenteredAppBarButton}"
-                              Background="#FF1B1B1B">
+                <AppBarButton
+                    x:Name="UploadButton"
+                    Width="190"
+                    Margin="2"
+                    HorizontalAlignment="Stretch"
+                    Background="#FF1B1B1B"
+                    Click="UploadButtonClick"
+                    FontFamily="{StaticResource VazirFont}"
+                    FontSize="{StaticResource DefaultFontSize}"
+                    Foreground="{StaticResource DefaultForegroundColor}"
+                    Style="{StaticResource NotCenteredAppBarButton}"
+                    ToolTipService.ToolTip="Upload">
                     <interactivity:Interaction.Behaviors>
                         <behaviors:PointersEvent />
                     </interactivity:Interaction.Behaviors>
                     <Grid>
-                        <TextBlock Text="Upload"
-                                   Foreground="White"
-                                   Grid.Column="1"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   FontFamily="{StaticResource VazirFont}"
-                                   FontSize="{StaticResource DefaultFontSize}"
-                                   TextWrapping="NoWrap"
-                                   Margin="3" />
-                        <Grid Background="SaddleBrown"
-                              Opacity="0" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="3"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource VazirFont}"
+                            FontSize="{StaticResource DefaultFontSize}"
+                            Foreground="White"
+                            Text="Upload"
+                            TextWrapping="NoWrap" />
+                        <Grid Background="SaddleBrown" Opacity="0" />
                     </Grid>
                 </AppBarButton>
             </StackPanel>
 
-            <Rectangle Fill="#FF363636"
-                       Height="1.5"
-                       Grid.Row="1"
-                       Margin="15 5"
-                       HorizontalAlignment="Stretch"
-                       VerticalAlignment="Stretch" />
+            <Rectangle
+                Grid.Row="1"
+                Height="1.5"
+                Margin="15,5"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Fill="#FF363636" />
         </Grid>
 
         <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition x:Name="Column2"
-                                  Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <local:UploadStoryUc x:Name="UploadStoryUc"
-                                 VerticalAlignment="Stretch"
-                                 HorizontalAlignment="Stretch" />
+            <local:UploadStoryUc
+                x:Name="UploadStoryUc"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch" />
         </Grid>
 
 
 
-        <Grid x:Name="ConvertionGrid"
-              Grid.RowSpan="4"
-              Grid.ColumnSpan="3"
-              Visibility="Collapsed">
+        <Grid
+            x:Name="ConvertionGrid"
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="3"
+            Visibility="Collapsed">
             <Grid Background="#F3151515">
-                <StackPanel VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
-                    <TextBlock x:Name="ContentText"
-                               Text=""
-                               TextAlignment="Center"
-                               FontFamily="{StaticResource VazirFont}"
-                               TextWrapping="Wrap"
-                               Foreground="White"
-                               HorizontalAlignment="Center" />
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock
+                        x:Name="ContentText"
+                        HorizontalAlignment="Center"
+                        FontFamily="{StaticResource VazirFont}"
+                        Foreground="White"
+                        Text=""
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
 
-                    <loading:LoadingUc x:Name="LoadingUc"
-                                       Visibility="Visible"
-                                       Grid.ColumnSpan="5"
-                                       Grid.RowSpan="5"
-                                       VerticalAlignment="Center" />
-                    <TextBlock x:Name="ResultText"
-                               FontFamily="{StaticResource VazirFont}"
-                               Text="0%"
-                               Foreground="White"
-                               HorizontalAlignment="Center" />
+                    <loading:LoadingUc
+                        x:Name="LoadingUc"
+                        Grid.RowSpan="5"
+                        Grid.ColumnSpan="5"
+                        VerticalAlignment="Center"
+                        Visibility="Visible" />
+                    <TextBlock
+                        x:Name="ResultText"
+                        HorizontalAlignment="Center"
+                        FontFamily="{StaticResource VazirFont}"
+                        Foreground="White"
+                        Text="0%" />
                 </StackPanel>
 
 

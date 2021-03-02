@@ -94,7 +94,6 @@ namespace Minista.Views.Posts
                 CropGrid.Opacity = 1;
                 CropGrid.Visibility = Visibility.Visible;
                 UploadButton.IsEnabled = false;
-                Editor.ResetUI();
                 Editor.LargeChangeRatio = 0.05;
                 Editor.MaximumRatio = 0.9;
                 Editor.MinimumRatio = 0.50;

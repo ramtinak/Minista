@@ -127,12 +127,9 @@ namespace Minista.Views.Posts
                     FileToUpload = file;
                     ThumbnailFile = await file.GetSnapshotFromD3D(TimeSpan.Zero, true);
                     ThumbnailFile = await new PhotoHelper().SaveToImage(ThumbnailFile, false);
-                    MainCanvas.Visibility = Visibility.Collapsed;
-                    UploadButton.IsEnabled = false;
-
-                    await Editor.SetFileAsync(ThumbnailFile);
                     CropGrid.Opacity = 1;
                     CropGrid.Visibility = Visibility.Visible;
+                    await Editor.SetFileAsync(ThumbnailFile);
                     MainCanvas.Visibility = Visibility.Collapsed;
                     UploadButton.IsEnabled = false;
 
