@@ -37,7 +37,7 @@ namespace Minista.Views.Posts
     /// </summary>
     public sealed partial class UploadPostView : Page
     {
-        private StorageFile FileToUpload, ThumbnailFile, OriginalThumbnail;
+        private StorageFile FileToUpload, ThumbnailFile;
         private const double DefaultAspectRatio = 1.6200d;
         public UploadPostView()
         {
@@ -126,7 +126,6 @@ namespace Minista.Views.Posts
                     IsVideo = true;
                     FileToUpload = file;
                     ThumbnailFile = await file.GetSnapshotFromD3D(TimeSpan.Zero, true);
-                    OriginalThumbnail = await new PhotoHelper().SaveToImage(ThumbnailFile, false);
                     ThumbnailFile = await new PhotoHelper().SaveToImage(ThumbnailFile, false);
                     MainCanvas.Visibility = Visibility.Collapsed;
                     UploadButton.IsEnabled = false;
@@ -196,7 +195,6 @@ namespace Minista.Views.Posts
 
                     await Editor.SaveToFileAsync(file);
                     ThumbnailFile = await new PhotoHelper().SaveToImage(file, false);
-                    var decoder = await BitmapDecoder.CreateAsync(await OriginalThumbnail.OpenReadAsync());
                     ShowImagePreview(ThumbnailFile);
                     UploadButton.IsEnabled = true;
                 }
