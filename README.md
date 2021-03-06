@@ -44,6 +44,37 @@ This application is in no way affiliated with, authorized, maintained, sponsored
 
 
 ## Version changes
+v3.0.x
+- [Change] minimum sdk from 14393 to 15063 for mobiles. 14393 is not supported anymore. 
+- [Update] all libraries for PC and drop support for 14393 in PC version. the default is sdk 16299 for PC!
+- [Deprecate] .mises file, old sessions won't work in Minista v3.x or later
+- [Add] Theme support [you can also edit them, there is no designer for this in this build]
+- [Add] support for post insights
+- [Add] support for telegram links [Note that you should enable it in settings!]
+- [Add] support for showing live broadcasts in stories in home page
+- [Add] support for Login Activity (active sessions) 
+- [Add] support for changing password
+- [Add] support for tag people for uploading media
+- [Add] support for like/comments in activities page
+- [Add] Live Support [View]
+- [Add] Minista Live Playback decoder. You can switch between LibVLC and Minista decoder in Settings.
+- [Add] Insights for story (#7)
+- [Add] download quality option to settings
+- [Add] support for compressing video based as original file [if codec is available]
+- [Rewrite] Story section [ you can switch to old one in settings ]
+- [Update] UI dialogs
+- [Update] video converter
+- [Bugfix] for Authenticator app, if sms is disabled
+- [Bugfix] for logout
+- [Bugfix] for push notifications
+- [Bugfix] for new line in bio [Core]
+- [Bugfix] for new line in comments
+- [Bugfix] for new line in post [Core]
+- [Bugfix] for comments [Core Bugfix]
+- [Bugfix] for height/width in story items
+- [Bugfix] for story link | swipe up/down for stories added
+- [Bugfix] for RemoveAds options
+
 v2.0.5:
 - Bugfix for push notifications
 - Bugfix for Facebook login
