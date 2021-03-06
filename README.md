@@ -44,6 +44,19 @@ This application is in no way affiliated with, authorized, maintained, sponsored
 
 
 ## Version changes
+v3.1.x
+- [Bugfix] for push notifications
+- [Bugfix/update uploading post [old way]
+- [Bugfix/update] uploading story [old way]
+- [Bugfix/update] uploading story [new way]
+- [Bugfix/update] for uploading post [new way]
+- [Bugfix/update] for uploading story [new way]
+- [Update] direct menu to support menu for all users
+- [Add] support for showing time when mouse hovered on time in direct messaging
+- [Add] support for replied message
+- [Add] reply feature to direct
+- [ + ] Minor improvements
+
 v3.0.x
 - [Change] minimum sdk from 14393 to 15063 for mobiles. 14393 is not supported anymore. 
 - [Update] all libraries for PC and drop support for 14393 in PC version. the default is sdk 16299 for PC!
