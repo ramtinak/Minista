@@ -119,4 +119,4 @@ v1.4.1:
 
 
 
-Iranian developers (c) 2020 - Ramtin Jokar
+Iranian developers (c) 2021 - Ramtin Jokar
