@@ -15,7 +15,7 @@ You can download Minista app from Microsoft Store: [Minista App](https://www.mic
 ## Donation
 Paypal: [Donate](https://www.paypal.me/rmt4006)
 
-ZarinPal [For Iranian]: [Donate](https://zarinp.al/ramtin)
+IDPay [For Iranian]: [Donate](https://idpay.ir/ramtinak)
 
 ## Open source projects
 Minista is using these libraries/projects to keep features working.
